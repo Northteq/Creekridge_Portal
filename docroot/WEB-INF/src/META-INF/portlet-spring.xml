@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.tamarack.creekridge.service.CreditAppLocalService" class="com.tamarack.creekridge.service.impl.CreditAppLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.CreditAppPersistence" class="com.tamarack.creekridge.service.persistence.CreditAppPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.CreditAppBankReferenceLocalService" class="com.tamarack.creekridge.service.impl.CreditAppBankReferenceLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.CreditAppBankReferencePersistence" class="com.tamarack.creekridge.service.persistence.CreditAppBankReferencePersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.CreditAppDocumentLocalService" class="com.tamarack.creekridge.service.impl.CreditAppDocumentLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.CreditAppDocumentPersistence" class="com.tamarack.creekridge.service.persistence.CreditAppDocumentPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.CreditAppPrincipalLocalService" class="com.tamarack.creekridge.service.impl.CreditAppPrincipalLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.CreditAppPrincipalPersistence" class="com.tamarack.creekridge.service.persistence.CreditAppPrincipalPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.CreditAppStatusLocalService" class="com.tamarack.creekridge.service.impl.CreditAppStatusLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.CreditAppStatusPersistence" class="com.tamarack.creekridge.service.persistence.CreditAppStatusPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.ProductLocalService" class="com.tamarack.creekridge.service.impl.ProductLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.ProductPersistence" class="com.tamarack.creekridge.service.persistence.ProductPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.ProposalOptionLocalService" class="com.tamarack.creekridge.service.impl.ProposalOptionLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.ProposalOptionPersistence" class="com.tamarack.creekridge.service.persistence.ProposalOptionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.PurchaseOptionLocalService" class="com.tamarack.creekridge.service.impl.PurchaseOptionLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.PurchaseOptionPersistence" class="com.tamarack.creekridge.service.persistence.PurchaseOptionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.RateFactorRuleLocalService" class="com.tamarack.creekridge.service.impl.RateFactorRuleLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.RateFactorRulePersistence" class="com.tamarack.creekridge.service.persistence.RateFactorRulePersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.TermLocalService" class="com.tamarack.creekridge.service.impl.TermLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.TermPersistence" class="com.tamarack.creekridge.service.persistence.TermPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.VendorLocalService" class="com.tamarack.creekridge.service.impl.VendorLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.VendorPersistence" class="com.tamarack.creekridge.service.persistence.VendorPersistenceImpl" parent="basePersistence" />
+	<bean id="com.tamarack.creekridge.service.VendorMessageLocalService" class="com.tamarack.creekridge.service.impl.VendorMessageLocalServiceImpl" />
+	<bean id="com.tamarack.creekridge.service.persistence.VendorMessagePersistence" class="com.tamarack.creekridge.service.persistence.VendorMessagePersistenceImpl" parent="basePersistence" />
+</beans>

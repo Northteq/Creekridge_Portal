@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<service-builder package-path="com.tamarack.creekridge">
+	<author>pmacha</author>
+	<namespace>eCreekRidge</namespace>
+
+	<entity name="CreditApp" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="creditAppId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Other fields -->
+		<column name="vendorId" type="long" />
+		<column name="creditAppStatusId" type="long" />
+		<column name="productId" type="long" />
+		<column name="termId" type="long" />
+		<column name="purchaseOptionId" type="long" />
+		<column name="rateFactorRuleId" type="long" />
+		<column name="paymentAmount" type="double" />
+		<column name="equipmentPrice" type="double" />
+		<column name="equipmentDesc" type="String" />
+		<column name="equipmentLocAsCustomerFlag" type="boolean" />
+		<column name="equipmentAddress1" type="String" />
+		<column name="equipmentAddress2" type="String" />
+		<column name="equipmentCity" type="String" />
+		<column name="equipmentState" type="String" />
+		<column name="equipmentZip" type="String" />
+		<column name="CustomerName" type="String" />
+		<column name="CustomerDBAName" type="String" />
+		<column name="CustomerAddress1" type="String" />
+		<column name="CustomerAddress2" type="String" />
+		<column name="CustomerCity" type="String" />
+		<column name="CustomerState" type="String" />
+		<column name="CustomerZip" type="String" />
+		<column name="CustomerContact" type="String" />
+		<column name="CustomerContactPhone" type="String" />
+		<column name="CustomerContactFax" type="String" />
+		<column name="CustomerContactEmail" type="String" />		
+		<column name="CustomerBusinessDesc" type="String" />
+		<column name="CustomerBusinessType" type="String" />
+		<column name="CustomerBusinessStartDate" type="Date" />
+		<column name="CustomerBusinessIncorporatedState" type="String" />
+		<column name="CustomerBusinessFederalTaxID" type="String" />
+	
+	      
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+        <finder name="CreditAppId" return-type="Collection">
+			<finder-column name="creditAppId" />
+		</finder>
+		<finder name="CreditAppStatusId" return-type="Collection">
+			<finder-column name="creditAppStatusId" />
+		</finder>
+		
+	</entity>
+	
+	<entity name="CreditAppPrincipal" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="principalId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+		<column name="creditAppId" type="long"/>
+		<column name="sequenceNumber" type="long" />
+		<column name="principalFirstName" type="String" />
+		<column name="principalMiddleName" type="String" />
+		<column name="principalLastName" type="String" />
+		<column name="principalSSN" type="String" />
+		<column name="principalHomePhoneNumber" type="String" />
+		<column name="principalAddress1" type="String" />
+		<column name="principalAddress2" type="String" />
+		<column name="principalCity" type="String" />
+		<column name="principalState" type="String" />
+		<column name="principalZip" type="String" />
+		<column name="principalEmail" type="String" />
+		
+		<!-- Order -->
+		<order by="asc">
+		
+		    <order-column name="principalFirstName" />
+		    <order-column name="sequenceNumber" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="PrincipalId" return-type="Collection">
+			<finder-column name="principalId" />
+		</finder>
+		<finder name="CreditAppId" return-type="Collection">
+			<finder-column name="creditAppId" />
+		</finder>
+		<finder name="SequenceNumber" return-type="Collection">
+			<finder-column name="sequenceNumber" />
+		</finder>
+
+	</entity>
+
+	<entity name="CreditAppBankReference" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="bankReferenceId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+        <!-- Other Fields -->
+        <column name="creditAppId" type="long" />
+		<column name="sequenceNumber" type="long" />
+		<column name="bankReferenceName" type="String" />
+		<column name="bankReferenceContact" type="String" />
+        <column name="bankReferencePhone" type="String" />
+        <column name="bankReferencAccountType" type="String" />
+        <column name="bankReferenceAccountNumber" type="String" />
+        
+        <!-- Order -->
+		<order by="asc">
+		    <order-column name="sequenceNumber" />
+			
+		</order>
+		<!-- Finder methods -->
+
+		<finder name="CreditAppId" return-type="Collection">
+			<finder-column name="creditAppId" />
+		</finder>
+		<finder name="SequenceNumber" return-type="Collection">
+			<finder-column name="sequenceNumber" />
+		</finder>
+	</entity>
+	
+	<entity name="CreditAppDocument" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="CreditAppDocumentId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+        <!-- Other Fields -->
+        <column name="creditAppId" type="long" />
+		<column name="sequenceNumber" type="long" />
+		<column name="documentTitle" type="String" />
+		<column name="documentFileName" type="String" />
+        <column name="documentFileLocation" type="String" />
+            
+        <!-- Order -->
+		<order by="asc">
+		    <order-column name="sequenceNumber" />
+			
+		</order>
+		<!-- Finder methods -->
+
+		<finder name="CreditAppId" return-type="Collection">
+			<finder-column name="creditAppId" />
+		</finder>
+		<finder name="SequenceNumber" return-type="Collection">
+			<finder-column name="sequenceNumber" />
+		</finder>
+	</entity>
+	
+	<entity name="CreditAppStatus" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="CreditAppStatusId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+        <!-- Other Fields -->
+        <column name="creditAppStatusName" type="String" />
+		    
+        <!-- Order -->
+		<order by="asc">
+		    <order-column name="creditAppStatusName" />
+			
+		</order>
+		<!-- Finder methods -->
+         <finder name="CreditAppStatusName" return-type="CreditAppStatus" unique="true">
+			<finder-column name="creditAppStatusName" />
+		</finder>
+		
+		
+	</entity>
+
+<entity name="ProposalOption" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="proposalOptionId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Other fields -->
+		<column name="creditAppId" type="long" />
+		<column name="productId" type="long" />
+		<column name="termId" type="long" />
+		<column name="purchaseOptionId" type="long" />
+		<column name="rateFactorRuleId" type="long" />
+		<column name="paymentAmount" type="double" />
+		<column name="equipmentPrice" type="double" />
+		<column name="includeInProposal" type="boolean" />
+		
+		
+		<finder name="CreditAppId" return-type="Collection">
+			<finder-column name="creditAppId" />
+		</finder>
+		<finder name="ProposalOptionId" return-type="Collection">
+			<finder-column name="proposalOptionId" />
+		</finder>
+		
+</entity>
+
+<entity name="PurchaseOption" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="purchaseOptionId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Other fields -->
+		<column name="purchaseOptionName" type="String" />
+		<column name="sequenceNumber" type="long" />
+		
+		<!-- Order -->
+		<order by="asc">
+		    <order-column name="sequenceNumber" />
+		    <order-column name="purchaseOptionName" />
+		</order>
+		<!-- Finder Method -->
+		<finder name="PurchaseOptionName" return-type="PurchaseOption" unique="true">
+			<finder-column name="purchaseOptionName" />
+		</finder>
+		<finder name="PurchaseOptionId" return-type="Collection">
+			<finder-column name="purchaseOptionId" />
+		</finder>
+		
+</entity>
+
+<entity name="Product" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="productId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Other fields -->
+		<column name="productName" type="String" />
+		<column name="sequenceNumber" type="long" />
+		
+		<!-- Order -->
+		<order by="asc">
+		    <order-column name="sequenceNumber" />
+		    <order-column name="productName" />
+		</order>
+		<!-- Finder Method -->
+		<finder name="ProductId" return-type="Collection">
+			<finder-column name="productId" />
+		</finder>
+		
+</entity>
+
+<entity name="Term" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="termId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Other fields -->
+		<column name="termMonths" type="long" />
+		<column name="termName" type="String" />
+		<column name="sequenceNumber" type="long" />
+		
+		<!-- Order -->
+		<order by="asc">
+		    <order-column name="sequenceNumber" />
+		</order>
+		
+		<finder name="TermId" return-type="Collection">
+			<finder-column name="termId" />
+		</finder>
+		
+</entity>
+
+<entity name="RateFactorRule" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="rateFactorRuleId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		
+		<!-- Other fields -->
+		<column name="productId" type="long" />
+		<column name="termId" type="long" />
+		<column name="purchaseOptionId" type="long" />
+		<column name="vendorId" type="long" />
+		
+		<column name="minPrice" type="double" />
+		<column name="rateFactor" type="double" />
+		<column name="effectiveDate" type="Date" />
+		<column name="active" type="boolean" />
+		<column name="expirationDate" type="Date" />
+		
+		<finder name="A_V" return-type="Collection">
+			<finder-column name="vendorId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="A_V_P" return-type="RateFactorRule" unique="true">
+			<finder-column name="active" />
+			<finder-column name="vendorId" />
+			<finder-column name="productId" />
+		
+		</finder>
+		<finder name="A_V_P_P" return-type="RateFactorRule" unique="true">
+			<finder-column name="active" />
+			<finder-column name="vendorId" />
+			<finder-column name="productId" />
+			<finder-column name="purchaseOptionId" />
+		</finder>
+		<finder name="A_V_P_T_P" return-type="RateFactorRule" unique="true">
+			<finder-column name="active" />
+			<finder-column name="vendorId" />
+			<finder-column name="productId" />
+			<finder-column name="termId" />
+			<finder-column name="purchaseOptionId" />
+		</finder>
+				
+		<finder name="VendorId" return-type="Collection">
+			<finder-column name="vendorId" />
+		</finder>
+		<finder name="rateFactorRuleId" return-type="Collection">
+			<finder-column name="rateFactorRuleId" />
+		</finder>
+		
+</entity>
+
+<entity name="Vendor" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="vendorId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		
+		<!-- Other fields -->
+		<column name="groupId" type="long" />
+		<column name="multiSelectProduct" type="boolean" />
+		<column name="multiSelectPurchaseOption" type="boolean" />
+		<column name="multiSelectTerm" type="boolean" />
+				
+	    <!-- Finder -->
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="VendorId" return-type="Collection">
+			<finder-column name="vendorId" />
+		</finder>
+		
+</entity>
+
+<entity name="VendorMessage" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="vendorId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		
+		<!-- Other fields -->
+		<column name="key" type="String" />
+		<column name="value" type="String" />
+				
+	    <!-- Finder -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="key" />
+		</finder>
+		
+</entity>
+
+</service-builder>
