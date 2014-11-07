@@ -24,9 +24,9 @@ List<String> termNameList=(ArrayList<String>)request.getAttribute("termNameList"
 List<String> productNameList=(ArrayList<String>)request.getAttribute("productNameList");
 List<String> purchaseOptionList=(ArrayList<String>)request.getAttribute("purchaseOptionList");
 
-List<String> termNameListResult=(ArrayList<String>)request.getAttribute("termNameListResult");
-List<String> productNameListResult=(ArrayList<String>)request.getAttribute("productNameListResult");
-List<String> purchaseOptionListResult=(ArrayList<String>)request.getAttribute("purchaseOptionListResult");
+List<String> termNameListResult=(ArrayList<String>)request.getSession().getAttribute("termNameListResult");
+List<String> productNameListResult=(ArrayList<String>)request.getSession().getAttribute("productNameListResult");
+List<String> purchaseOptionListResult=(ArrayList<String>)request.getSession().getAttribute("purchaseOptionListResult");
 
 if(termNameListResult == null){
 	termNameListResult= new ArrayList<String>();
@@ -36,10 +36,12 @@ if(productNameListResult == null){
 }
 if(purchaseOptionListResult == null){
 	purchaseOptionListResult= new ArrayList<String>();
+} else {
+
 }
-Map<String,String> termNameListMap=(HashMap<String,String>)request.getAttribute("termNameListMap");
-Map<String,String> productNameListMap=(HashMap<String,String>)request.getAttribute("productNameListMap");
-Map<String,String> purchaseOptionListMap=(HashMap<String,String>)request.getAttribute("purchaseOptionListMap");
+Map<String,String> termNameListMap=(HashMap<String,String>)request.getSession().getAttribute("termNameListMap");
+Map<String,String> productNameListMap=(HashMap<String,String>)request.getSession().getAttribute("productNameListMap");
+Map<String,String> purchaseOptionListMap=(HashMap<String,String>)request.getSession().getAttribute("purchaseOptionListMap");
 if(termNameListMap == null){
 	termNameListMap= new HashMap<String,String>();
 }
@@ -70,6 +72,14 @@ if (request.getAttribute("bankReferenceId") != null){
 long principalId=0;
 if (request.getAttribute("principalId") != null){
    principalId= new Long(request.getAttribute("principalId").toString());
+}
+int index;
+if (request.getAttribute("index") != null ){
+	 index=new Long(request.getAttribute("index").toString()).intValue();	
+} else if (request.getAttribute("index") == null && (com.liferay.portal.util.PortalUtil.getOriginalServletRequest(request).getParameter("creditAppId") != null)) {
+	index=2;
+} else {
+	index=0;
 }
 %>
 <portlet:actionURL var="submitPaymentCalculatorUrl" >
@@ -360,22 +370,21 @@ function editBankReferenceAccount(bankAccountReferenceId){
 
 <script type="text/javascript">
 function assignActionType(actionType) {
-	//alert(document.<portlet:namespace />creditApp.<portlet:namespace />useForApplication.value);
 	
    	document.<portlet:namespace />creditApp.<portlet:namespace />actionType.value = actionType;
 
 }
 
 function assignActionTypeResults(actionType) {
-	//alert(document.<portlet:namespace />creditApp.<portlet:namespace />useForApplication.value);
 	
    	document.<portlet:namespace />results.<portlet:namespace />actionType.value = actionType;
+  	document.<portlet:namespace />results.<portlet:namespace />equipmentPrice.value = document.<portlet:namespace />creditApp.<portlet:namespace />equipmentPrice.value;
 
 }
 function assignActionTypeCustomerEquipment(actionType) {
-	//alert(document.<portlet:namespace />creditApp.<portlet:namespace />useForApplication.value);
 	
    	document.<portlet:namespace />customerEquipment.<portlet:namespace />actionType.value = actionType;
+   	document.<portlet:namespace />customerEquipment.<portlet:namespace />equipmentPrice.value = document.<portlet:namespace />creditApp.<portlet:namespace />equipmentPrice.value;
 
 }
 
@@ -426,9 +435,9 @@ body {
   $(function() {
 
     //$( "#accordion" ).accordion();
-	  $("#accordion").accordion({ active: <%=request.getAttribute("index")%>, 
+	  $("#accordion").accordion({ active: <%=index %>, 
 		                          event: "click",  
-		                          alwaysOpen:false, 
+		                          alwaysOpen:true, 
 		                          header: "h4",
 		                          autoHeight: false,
 		                          heightStyle: "content", 
@@ -559,8 +568,6 @@ body {
 </td>
 </tr>
 	</table>
-
-
 </aui:form>
 </div>
 <% if (proposalOptionList.size() > 0) { %>
@@ -586,13 +593,13 @@ body {
 <tbody>
 	<%  
 		TempProposalOption proposalOption = new TempProposalOption();
-      for (int i=0;i<proposalOptionList.size();i++) {
+      for (int i=0;i < proposalOptionList.size();i++) {
       
     	  proposalOption=proposalOptionList.get(i);
       %>
 
 		<tr>
-			<td> <%="Option "+i%>
+			<td> <%="Option "+(i+1)%>
 
 			</td>
 			<td><%=ProductLocalServiceUtil.getProduct(proposalOption.getProductId()).getProductName()%> 
@@ -607,7 +614,7 @@ body {
 			</td>
 			<td nowrap="nowrap"><aui:input type="checkbox" checked="<%=proposalOption.getIncludeInProposal()%>" value="<%=proposalOption.getProposalId()%>" label="" name="<%=\"includeInProposal\" +i%>"></aui:input>
 			</td>
-			<% if(request.getSession().getAttribute("useForApplication") != null){ %>
+			<% if(request.getSession().getAttribute("useForApplication") != null ){ %>
 			<td nowrap="nowrap"><aui:input type="radio" label="" value="<%=proposalOption.getProposalId()%>" name="useForApplication" checked="<%=request.getSession().getAttribute(\"useForApplication\") != null ? new Long(proposalOption.getProposalId()).toString().equalsIgnoreCase(request.getSession().getAttribute(\"useForApplication\").toString()):false%>"></aui:input>
 			</td> 
 			<%} else { %>
@@ -618,10 +625,16 @@ body {
 	<%} %>
 	</tbody>
 	</table>
+<%if (request.getSession().getAttribute("creditAppId") == null || "".equalsIgnoreCase(request.getSession().getAttribute("creditAppId").toString())) {%>
 
     <aui:button-row>
 		<aui:button type="submit" name="Create Proposal or Credit Application" value="Create Proposal or Credit Application"  onClick="javascript:assignActionTypeResults('createCreditAppOrProposal');"/>
     </aui:button-row>
+ <%} else {%>
+  <aui:button-row>
+		<aui:button type="submit" name="Update Proposal Option" value="Update Proposal Option"  onClick="javascript:assignActionTypeResults('updateCreditProposal');"/>
+    </aui:button-row>
+    <%} %>
    </aui:form>
 </div>
 <%} else if (request.getSession().getAttribute("zeroRateFactor") != null){%>

@@ -225,8 +225,12 @@ for (int j=0;j<creditAppStatusList.size();j++){
 			<td> <%=statusMap.get(creditAppList.get(i).getCreditAppStatusId())%>
 			</td>
 			 <td><button  type="button"  name="edit" value="Edit" onclick="<%="javascript:window.location.href='/web/vendor1/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
-		     <td><button  type="button"  name="cancel"  value="Cancel" onclick="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><img src='<%= renderRequest.getContextPath() + "/images/remove.png" %>' /></button></td>
-	
+		     <%if( !"Submitted".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId()))){ %>
+		      <td><button  type="button"  name="cancel"  value="Cancel" onclick="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><img src='<%= renderRequest.getContextPath() + "/images/remove.png" %>' /></button></td>
+	          <%} else { %>
+	          <td>&nbsp;</td>
+	           
+	          <%} %>
 		</tr>
 	<%} 
 	}%>

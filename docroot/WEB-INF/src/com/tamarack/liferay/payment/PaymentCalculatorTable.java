@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -86,17 +87,20 @@ public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse
 		String actionType = ParamUtil.getString(uploadRequest, "actionType");
 		request.setAttribute("actionType",actionType);
 		if( "calculatePaymentAmount".equalsIgnoreCase(actionType)) {
-			   System.out.println("Yes calculatePaymentAmount ");
 			   setPaymentCalculatorResults(actionRequest, actionResponse);
 			   request.setAttribute("index", 1);
-		 } else if( "createCreditAppOrProposal".equalsIgnoreCase(actionType)) {
-				System.out.println("Yes createCreditAppOrProposal ");
-				createCreditOrProposal(actionRequest, actionResponse,user);
+		 } else if( "createCreditAppOrProposal".equalsIgnoreCase(actionType) ||"updateCreditProposal".equalsIgnoreCase(actionType)) {
+				createCreditOrProposal(actionRequest, actionResponse,user,true);
 				request.setAttribute("index", 2);
-		 }else {
+		 } else {
 		  CreditApp creditApp = null;
 		  try {
-			    creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
+			 
+			  creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
+			  if(ParamUtil.getDouble(actionRequest,"equipmentPrice") != creditApp.getEquipmentPrice()) {
+				  System.out.println("NEW EQUIPMENT PRICE: "+ParamUtil.getDouble(actionRequest,"equipmentPrice"));
+				  recalculatePaymentCalculatorResults(actionRequest, actionResponse,creditApp.getCreditAppId(),ParamUtil.getDouble(actionRequest,"equipmentPrice"));
+			  }
 				// Auditing Values
 				creditApp.setCompanyId(user.getCompanyId());
 				creditApp.setUserId(user.getUserId());
@@ -151,7 +155,7 @@ public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse
 				creditApp.setCustomerContactPhone(ParamUtil.getString(actionRequest,"customerContactPhone"));
 				creditApp.setCustomerContactFax(ParamUtil.getString(actionRequest,"customerContactFax"));
 				creditApp.setCustomerContactEmail(ParamUtil.getString(actionRequest,"customerContactEmail"));
-				
+				creditApp.setEquipmentPrice(ParamUtil.getDouble(actionRequest,"equipmentPrice"));
 				request.setAttribute("customerBusinessDesc",ParamUtil.getString(actionRequest,"customerBusinessDesc"));
 				request.setAttribute("customerBusinessFederalTaxID",ParamUtil.getString(actionRequest,"customerBusinessFederalTaxID"));
 				request.setAttribute("customerBusinessIncorporatedState",uploadRequest.getParameter("customerBusinessIncorporatedState"));
@@ -178,8 +182,6 @@ public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse
 				request.setAttribute("equipmentZip",ParamUtil.getString(actionRequest,"equipmentZip"));
 				request.setAttribute("equipmentDesc",ParamUtil.getString(actionRequest,"equipmentDesc"));
 				request.setAttribute("equipmentLocAsCustomerFlag",creditApp.getEquipmentLocAsCustomerFlag()?"EquipmentLocationSameAsCustomer":"DifferentLocation");
-				
-				
 				request.setAttribute("equipmentPrice",ParamUtil.getDouble(actionRequest,"equipmentPrice"));
 				request.setAttribute("actionType",ParamUtil.getString(actionRequest,"actionType"));
 				creditApp.setVendorId(themeDisplay.getScopeGroupId());
@@ -200,26 +202,33 @@ public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse
 			
 }
 
-public  void createCreditOrProposal(ActionRequest actionRequest,	ActionResponse actionResponse, User user) throws Exception {
+public  void createCreditOrProposal(ActionRequest actionRequest,	ActionResponse actionResponse, User user,boolean justUpdateProposal) throws Exception {
 	   CreditApp creditApp = null;
+	   String appStatus="";
 	   ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		creditApp = CreditAppLocalServiceUtil.createCreditApp(com.liferay.counter.service.CounterLocalServiceUtil.increment(CreditApp.class.getName()));
-		boolean optionSelected=false;
+	   boolean optionSelected=false;
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
 		UploadRequest uploadRequest=PortalUtil.getUploadPortletRequest(actionRequest);
-		// Auditing Values
+
+		if(request.getSession().getAttribute("creditAppId") != null && !"".equalsIgnoreCase(request.getSession().getAttribute("creditAppId").toString())) {
+		   creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
+		   appStatus="Saved";
+		} else  {
+		  creditApp = CreditAppLocalServiceUtil.createCreditApp(com.liferay.counter.service.CounterLocalServiceUtil.increment(CreditApp.class.getName()));
+		  appStatus="Draft";
+		}
 		
+		// Auditing Values
 		creditApp.setCompanyId(user.getCompanyId());
 		creditApp.setUserId(user.getUserId());
 		creditApp.setUserName(user.getScreenName());
 		creditApp.setModifiedDate(new Date());
 		creditApp.setCreateDate(new Date());
-		CreditAppStatus creditAppStatus=CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus("Draft");
+		CreditAppStatus creditAppStatus=CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus(appStatus);
 		creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
 		if(uploadRequest.getParameter("useForApplication") != null){
 		  Long userForApplication=new Long(uploadRequest.getParameter("useForApplication"));
-		
-		System.out.println("User Selected Option "+userForApplication);
+		  System.out.println("User Selected Option "+userForApplication);
 		
 		TempProposalOption tempProposalOption= new TempProposalOption();
  		@SuppressWarnings("unchecked")
@@ -245,9 +254,16 @@ public  void createCreditOrProposal(ActionRequest actionRequest,	ActionResponse 
  		double equipmentPrice=ParamUtil.getDouble(actionRequest,"equipmentPrice");
  	    request.setAttribute("equipmentPrice",equipmentPrice);
  	    creditApp.setEquipmentPrice(equipmentPrice);
- 		CreditAppLocalServiceUtil.addCreditApp(creditApp);
-	    request.getSession().setAttribute("creditAppId",creditApp.getCreditAppId());
-	    updateProposalOption(actionRequest, actionResponse);
+ 	   if(request.getSession().getAttribute("creditAppId") != null && !"".equalsIgnoreCase(request.getSession().getAttribute("creditAppId").toString())) {
+ 			CreditAppLocalServiceUtil.updateCreditApp(creditApp);
+ 			if(justUpdateProposal){
+ 				 updateProposalOption(actionRequest, actionResponse);
+ 			}
+ 	   } else {
+ 		  CreditAppLocalServiceUtil.addCreditApp(creditApp);	
+ 		  request.getSession().setAttribute("creditAppId",creditApp.getCreditAppId());
+	      updateProposalOption(actionRequest, actionResponse);
+ 	   }
 	  
 
 }
@@ -266,7 +282,7 @@ public void setPaymentCalculatorResults (ActionRequest actionRequest,	ActionResp
 	Map<String,String[]> m=uploadRequest.getParameterMap();
     Set<Entry<String, String[]>> s = m.entrySet();
     Iterator<Entry<String, String[]>> it = s.iterator();
-  
+    String regex = "[0-9]+";
     long tempProposalOptionId=0;
     while(it.hasNext()){
     	
@@ -275,18 +291,28 @@ public void setPaymentCalculatorResults (ActionRequest actionRequest,	ActionResp
         String key             = entry.getKey();
         String[] value         = entry.getValue();
           
-          if(key.contains("termOption")){
-        	  termnameListResult.add(value[0].toString());
-        	  termnameListMap.put(value[0].toString(), value[0].toString());
-        	  System.out.println("  Term Option "+key + " Value " + value[0]); 
-           }else if(key.contains("purchaseOption")){
-        	   purchaseOptionListResult.add(value[0].toString());
-        	   purchaseOptionListMap.put(value[0].toString(), value[0].toString());
-        	   System.out.println("  Purchase Option "+key + " Value " + value[0]); 
+          if(key.contains("termOption") && !key.contains("Checkbox")){
+        	  if(value[0].toString().matches(regex)){
+        	    termnameListResult.add(value[0].toString());
+        	    termnameListMap.put(value[0].toString(), value[0].toString());
+        	    System.out.println("  Term Option "+key + " Value " + value[0]); 
+        	  }
+        	
+           }else if(key.contains("purchaseOption") && !key.contains("Checkbox")){
+        	   if(value[0].toString().matches(regex)){
+        	     purchaseOptionListResult.add(value[0].toString());
+        	     purchaseOptionListMap.put(value[0].toString(), value[0].toString());
+        	     System.out.println("  Purchase Option "+key + " Value " + value[0]); 
+        	   }
+        	  
            } else if(key.contains("productPricing")){
-        	   productNameListResult.add(value[0].toString());
-        	   productNameListMap.put(value[0].toString(), value[0].toString());
-        	   System.out.println("  Product Option "+key + " Value " + value[0]); 
+        	   if(value[0].toString().matches(regex)){
+        		   productNameListResult.add(value[0].toString());
+        	   	   productNameListMap.put(value[0].toString(), value[0].toString());
+        	   	 System.out.println("  Product Option "+key + " Value " + value[0]); 
+        	   } 
+        	  
+        	   
            } else if(key.contains("useForApplication")){
         	 
         	  
@@ -294,17 +320,19 @@ public void setPaymentCalculatorResults (ActionRequest actionRequest,	ActionResp
     }  
     double equipmentPrice=ParamUtil.getDouble(actionRequest,"equipmentPrice");
     request.setAttribute("equipmentPrice",equipmentPrice);
-   	request.setAttribute("termNameListResult",termnameListResult);
-	request.setAttribute("purchaseOptionListResult",purchaseOptionListResult);
-	request.setAttribute("productNameListResult",productNameListResult);
-	request.setAttribute("termNameListMap",termnameListMap);
-	request.setAttribute("purchaseOptionListMap",purchaseOptionListMap);
-	request.setAttribute("productNameListMap",productNameListMap);
+    
+   	request.getSession().setAttribute("termNameListResult",termnameListResult);
+	request.getSession().setAttribute("purchaseOptionListResult",purchaseOptionListResult);
+	request.getSession().setAttribute("productNameListResult",productNameListResult);
+	request.getSession().setAttribute("termNameListMap",termnameListMap);
+	request.getSession().setAttribute("purchaseOptionListMap",purchaseOptionListMap);
+	request.getSession().setAttribute("productNameListMap",productNameListMap);
 	double tempMinPrice=0.0;
 	double paymentAmount=0.0;
 	
 	TempProposalOption tempproposal= new TempProposalOption();
 	List<TempProposalOption> tempProposalList= new ArrayList<TempProposalOption>();
+	int globalIndex=0;
 	for (int i=0;i<productNameListResult.size();i++){
 		
 		for (int j=0;j<purchaseOptionListResult.size();j++){
@@ -327,7 +355,7 @@ public void setPaymentCalculatorResults (ActionRequest actionRequest,	ActionResp
 			        tempMinPrice=rateFactorRule.getMinPrice();
 			        tempproposal.setRateFactorRuleId(rateFactorRule.getRateFactorRuleId());
 			        tempproposal.setEquipmentPrice(equipmentPrice);
-			        tempproposal.setProposalId(k);
+			        tempproposal.setProposalId(globalIndex++);
 			        
 			     if(equipmentPrice >= tempMinPrice){
 					paymentAmount=(equipmentPrice/TermLocalServiceUtil.getTerm(tempproposal.getTermId()).getTermMonths()) * (1+rateFactorRule.getRateFactor());
@@ -347,13 +375,74 @@ public void setPaymentCalculatorResults (ActionRequest actionRequest,	ActionResp
 			  }
 			}
 	     if (tempProposalList.size() > 0){
-		     // System.out.println("Temp Proporsal List size: "+tempProposalList.size());
+	    	 if(request.getSession().getAttribute("creditAppId") != null && !"".equalsIgnoreCase(request.getSession().getAttribute("creditAppId").toString())) {
+	    	    deleteInsertNewCreditApplicationProposal(themeDisplay.getUser(), new Long(request.getSession().getAttribute("creditAppId").toString()).longValue(), actionRequest,tempProposalList);
+	    	    createCreditOrProposal(actionRequest, actionResponse, themeDisplay.getUser(),false);
+	    	 }
 		      request.getSession().setAttribute("proposalOptionList",tempProposalList);
 	     } else {
 	    	  request.setAttribute("zeroRateFactor",PropsUtil.get("zeroRateFactor")); 
 	     }
 	   }
 
+
+public void recalculatePaymentCalculatorResults (ActionRequest actionRequest,	ActionResponse actionResponse,long creditAppId, double equipmentPrice) throws Exception{
+	ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
+	 long tempProposalOptionId=0;
+   
+	double tempMinPrice=0.0;
+	double paymentAmount=0.0;
+	
+	TempProposalOption tempproposal= new TempProposalOption();
+	List<TempProposalOption> tempProposalList= new ArrayList<TempProposalOption>();
+	int globalIndex=0;
+	
+	 List<ProposalOption> proposalOptionList = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditAppId);
+	 for (int i=0; i<proposalOptionList.size(); i++){ 
+		
+		     try{
+		    	 tempproposal= new TempProposalOption();
+		    	 tempproposal.setIncludeInProposal(proposalOptionList.get(i).isIncludeInProposal());
+                 tempproposal.setRateFactorRuleId(proposalOptionList.get(i).getRateFactorRuleId());
+                 tempproposal.setProposalId(tempProposalOptionId);
+		    	 tempproposal.setProductId(proposalOptionList.get(i).getProductId());
+		    	 
+		    	 tempproposal.setTermId(proposalOptionList.get(i).getTermId());
+		    	 tempproposal.setPurchaseOptionId(proposalOptionList.get(i).getPurchaseOptionId());
+			     RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(themeDisplay.getScopeGroupId(), true, tempproposal.getProductId(), tempproposal.getTermId(), tempproposal.getPurchaseOptionId());
+			      if( rateFactorRule.getRateFactor() == 0.0 || rateFactorRule.getRateFactor() == 0) {
+				     request.getSession().setAttribute("zeroRateFactor",PropsUtil.get("zeroRateFactor"));
+				     return;
+			       }
+			        tempMinPrice=rateFactorRule.getMinPrice();
+			        tempproposal.setRateFactorRuleId(rateFactorRule.getRateFactorRuleId());
+			        tempproposal.setEquipmentPrice(equipmentPrice);
+			        tempproposal.setProposalId(globalIndex++);
+			        
+			     if(equipmentPrice >= tempMinPrice){
+					paymentAmount=(equipmentPrice/TermLocalServiceUtil.getTerm(tempproposal.getTermId()).getTermMonths()) * (1+rateFactorRule.getRateFactor());
+					tempproposal.setPaymentAmount(paymentAmount);
+				}
+			     if(tempproposal.getProductId() > 0 && tempproposal.getTermId() > 0 && tempproposal.getPurchaseOptionId() > 0 ){
+						
+					    tempProposalList.add(tempproposal);
+					   
+					}
+			     
+		       } catch (Exception e){
+					
+				}
+		          tempProposalOptionId=tempProposalOptionId+1;
+			  
+	       } 
+	     if (tempProposalList.size() > 0){
+	    	  deleteInsertNewCreditApplicationProposal(themeDisplay.getUser(), creditAppId, actionRequest, tempProposalList);
+		      request.getSession().setAttribute("proposalOptionList",tempProposalList);
+	     } else {
+	    	  request.setAttribute("zeroRateFactor",PropsUtil.get("zeroRateFactor")); 
+	     }
+	   }
 public  void updateCreditAppPrincipal(ActionRequest actionRequest,	ActionResponse actionResponse) throws IOException, PortletException, Exception {
 	   
 	   TempPrincipal tempPrincipal = new TempPrincipal();
@@ -362,9 +451,7 @@ public  void updateCreditAppPrincipal(ActionRequest actionRequest,	ActionRespons
  	   ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
  	   User user = themeDisplay.getUser();
  	   String actionType = ParamUtil.getString(actionRequest, "principalActionType");
- 	   //System.out.println("Principal ActionType: "+actionType);
  	   Long principalId=ParamUtil.getLong(actionRequest,"creditAppPrincipalId");
- 	   //System.out.println("Principal principalId: "+principalId);
  	   CreditAppPrincipal creditAppPrincipal = null;
  	   HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
  	   request.setAttribute("actionType",actionType);
@@ -470,21 +557,39 @@ public  void updateProposalOption(ActionRequest actionRequest,	ActionResponse ac
  	        Map.Entry<String,String[]> entry = (Map.Entry<String,String[]>)it.next();
  	        String key             = entry.getKey();
  	        String[] value         = entry.getValue();
- 	        //System.out.println("  Check Key is "+key + " Value " + value[0]);   
- 	          if(key.contains("includeInProposal") && key.contains("Checkbox")){
+ 	           if(key.contains("includeInProposal") && key.contains("Checkbox")){
  	        	 proposalListResult.add(value[0].toString());
  	        	System.out.println(" includeInProposal Key is "+key + " Value " + value[0]);   
  	        	 
  	        }  
  	    }
  		   long creditAppId= new Long(request.getSession().getAttribute("creditAppId").toString()).longValue();
- 		
+ 		   if("updateCreditProposal".equalsIgnoreCase((String)request.getAttribute("actionType"))) {
+			 	 List<ProposalOption> proposalOptionList = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditAppId);
+				 for (int i=0; i<proposalOptionList.size(); i++){
+				    // Auditing Values
+					 proposalOption=proposalOptionList.get(i);
+					 proposalOption.setCompanyId(user.getCompanyId());
+					 proposalOption.setUserId(user.getUserId());
+					 proposalOption.setUserName(user.getScreenName());
+					 proposalOption.setModifiedDate(new Date());
+					 proposalOption.setCreateDate(new Date());
+					 //	Other fields
+					 if(proposalListResult.contains(new Long(proposalOption.getProposalOptionId()).toString())){
+					   proposalOption.setIncludeInProposal(true);
+					 } else {
+						 proposalOption.setIncludeInProposal(false); 
+					 }
+				
+					 ProposalOptionLocalServiceUtil.updateProposalOption(proposalOption);
+		
+				 }
+			 } else {
  			 @SuppressWarnings("unchecked")
  			 List<TempProposalOption> tempProposalList=(ArrayList<TempProposalOption>)request.getSession().getAttribute("proposalOptionList");
  			 for (int i=0; i<tempProposalList.size(); i++){
- 				
- 					 proposalOption = ProposalOptionLocalServiceUtil.createProposalOption(com.liferay.counter.service.CounterLocalServiceUtil.increment(ProposalOption.class.getName()));
- 					 // Auditing Values
+ 					proposalOption = ProposalOptionLocalServiceUtil.createProposalOption(CounterLocalServiceUtil.increment(ProposalOption.class.getName()));
+ 				 	 // Auditing Values
  					 proposalOption.setCompanyId(user.getCompanyId());
  					 proposalOption.setUserId(user.getUserId());
  					 proposalOption.setUserName(user.getScreenName());
@@ -504,9 +609,11 @@ public  void updateProposalOption(ActionRequest actionRequest,	ActionResponse ac
  					 } else {
  						 proposalOption.setIncludeInProposal(false); 
  					 }
+ 				
  					 ProposalOptionLocalServiceUtil.addProposalOption(proposalOption);
  		
  				 }
+			 }
  			 request.setAttribute("index", 2);
  			 }
  		
@@ -521,8 +628,7 @@ public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) t
 	List<String> purchaseOptionList= new ArrayList<String>();
 	List<String> productNameList= new ArrayList<String>();
 	try {
-		//List<RateFactorRule> rateFactorRule1=RateFactorRuleLocalServiceUtil.getRateFactorRules(-1, -1);
-		
+			
 	List<Term> termnameList1= new ArrayList<Term>();
 	List<PurchaseOption> purchaseOptionList1= new ArrayList<PurchaseOption>();
 	List<Product> productNameList1= new ArrayList<Product>();
@@ -574,25 +680,31 @@ public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) t
 	} else {
 	String clearCalculatorResults=PortalUtil.getOriginalServletRequest(request).getParameter("clear");
 	System.out.println("clearCalculatorResults " +clearCalculatorResults);
-	if("clear".equalsIgnoreCase(clearCalculatorResults)  || (request.getAttribute("actionType") == null && request.getHeader("referer").contains("payment-calculator"))) {
-		
-		   List<TempProposalOption> tempProposalList= new ArrayList<TempProposalOption>();
-		   System.out.println("proposalOption List " +request.getSession().getAttribute("proposalOptionList"));
-			
-		   request.getSession().setAttribute("proposalOptionList",tempProposalList);
-		   System.out.println("proposalOption List " +request.getSession().getAttribute("proposalOptionList"));
-			
-		   request.setAttribute("actionType","");
-		   request.getSession().setAttribute("creditAppId","");
-		  }
-    String bankAccountReferenceId=PortalUtil.getOriginalServletRequest(request).getParameter("bankAccountReferenceId");
-    
+	
+	  
 	Map<String,String> termnameListMap= new HashMap<String, String>();
 	Map<String,String> purchaseOptionListMap= new HashMap<String, String>();
 	Map<String,String> productNameListMap= new HashMap<String, String>();
 	List<String> termnameListResult= new ArrayList<String>();
 	List<String> purchaseOptionListResult= new ArrayList<String>();
 	List<String> productNameListResult= new ArrayList<String>();
+	if("clear".equalsIgnoreCase(clearCalculatorResults)  || (request.getAttribute("actionType") == null && request.getHeader("referer").contains("payment-calculator"))) {
+		    List<TempProposalOption> tempProposalList= new ArrayList<TempProposalOption>();
+		    System.out.println("proposalOption List " +request.getSession().getAttribute("proposalOptionList"));
+			request.getSession().setAttribute("proposalOptionList",tempProposalList);
+		    System.out.println("proposalOption List " +request.getSession().getAttribute("proposalOptionList"));
+			request.setAttribute("actionType","");
+		    request.getSession().setAttribute("creditAppId","");
+		    request.getSession().setAttribute("termNameListMap",termnameListMap);
+			request.getSession().setAttribute("purchaseOptionListMap",purchaseOptionListMap);
+			request.getSession().setAttribute("productNameListMap",productNameListMap);
+			request.getSession().setAttribute("termNameListResult",termnameListResult);
+			request.getSession().setAttribute("purchaseOptionListResult",purchaseOptionListResult);
+			request.getSession().setAttribute("productNameListResult",productNameListResult);
+			request.setAttribute("index", 0);
+		  }
+ String bankAccountReferenceId=PortalUtil.getOriginalServletRequest(request).getParameter("bankAccountReferenceId");
+
 	
 	if(request.getSession().getAttribute("creditAppId") != null && request.getHeader("referer").contains("payment-calculator")){
 		long creditAppId=new Long(request.getSession().getAttribute("creditAppId").toString()).longValue();
@@ -630,20 +742,10 @@ public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) t
 		request.setAttribute("proposalOptionList",creditAppProposalList);
 		request.setAttribute("equipmentPrice",creditApp.getEquipmentPrice());
 		
-	} //else {
-		//request.getSession().setAttribute("bankReferenceAccountList",new ArrayList<CreditAppBankReference>());
-		//request.getSession().setAttribute("creditAppPrincipalList",new ArrayList<CreditAppPrincipal>());
-	//}
-//	if("clear".equalsIgnoreCase(clearCalculatorResults) || request.getSession().getAttribute("equipmentPrice") == null || !request.getHeader("referer").contains("payment-calculator")){
-//	   request.getSession().setAttribute("equipmentPrice","");
-//	}
+	} 
 	
-	//request.getSession().setAttribute("actionType","getCalculatorResults");
-	
-	if( "clear".equalsIgnoreCase(clearCalculatorResults) || request.getAttribute("productNameListMap") == null || (request.getAttribute("actionType") == null && request.getHeader("referer").contains("payment-calculator")) ) {
-		request.setAttribute("termNameListMap",termnameListMap);
-		request.setAttribute("purchaseOptionListMap",purchaseOptionListMap);
-		request.setAttribute("productNameListMap",productNameListMap);
+	if( "clear".equalsIgnoreCase(clearCalculatorResults)  || (request.getAttribute("actionType") == null && request.getHeader("referer").contains("payment-calculator")) ) {
+		
 		//For Payment Calc
 		request.getSession().setAttribute("productList",new ArrayList<String>());
 		request.getSession().setAttribute("purchaseOptionList",new ArrayList<String>());
@@ -651,10 +753,10 @@ public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) t
 		
 	}
 	
-	if("clear".equalsIgnoreCase(clearCalculatorResults) || request.getAttribute("productNameListResult") == null || (request.getAttribute("actionType") == null && request.getHeader("referer").contains("payment-calculator"))) {
-		request.setAttribute("termNameListResult",termnameListResult);
-		request.setAttribute("purchaseOptionListResult",purchaseOptionListResult);
-		request.setAttribute("productNameListResult",productNameListResult);
+	if("clear".equalsIgnoreCase(clearCalculatorResults)  || (request.getAttribute("actionType") == null && request.getHeader("referer").contains("payment-calculator"))) {
+		request.getSession().setAttribute("termNameListResult",termnameListResult);
+		request.getSession().setAttribute("purchaseOptionListResult",purchaseOptionListResult);
+		request.getSession().setAttribute("productNameListResult",productNameListResult);
 		request.setAttribute("index", 0);
 	 }
 	
@@ -859,8 +961,8 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
     	  tempProposal.setTermId(proposalList.get(i).getTermId());
     	  tempProposal.setRateFactorRuleId(proposalList.get(i).getRateFactorRuleId());
     	  tempProposal.setIncludeInProposal(proposalList.get(i).getIncludeInProposal());
-    	  System.out.println("IncludeInProposal "+ proposalList.get(i).getIncludeInProposal());
-    	  System.out.println("IncludeInProposal "+ tempProposal.getIncludeInProposal());
+    	  System.out.println("IncludeInProposal from the database: "+ proposalList.get(i).getIncludeInProposal());
+    	  System.out.println("IncludeInProposal from the database with ProposalOptionId: "+ proposalList.get(i).getProposalOptionId());
     	  tempProposal.setProposalId(proposalList.get(i).getProposalOptionId());
     	  if(proposalList.get(i).getProductId() == creditApp.getProductId() && proposalList.get(i).getPurchaseOptionId() == creditApp.getPurchaseOptionId() && 
     			  proposalList.get(i).getTermId() == creditApp.getTermId() && proposalList.get(i).getRateFactorRuleId() == creditApp.getRateFactorRuleId()){
@@ -942,6 +1044,35 @@ public List<TempPrincipal> deleteCreditApplicationPrincipal (String principalId,
 		request.setAttribute("creditAppPrincipalList",tempPrincipalList);
 	return tempPrincipalList;	
 }
+
+public void deleteInsertNewCreditApplicationProposal (User user,Long creditAppId, ActionRequest resourceRequest,List<TempProposalOption> tempProposalList) throws Exception{
+		List<ProposalOption> creditAppPrincipalList= ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditAppId);
+	    
+		for ( ProposalOption proposalOption : creditAppPrincipalList ){
+		     ProposalOptionLocalServiceUtil.deleteProposalOption(proposalOption);
+	     }
+	    for (int i=0; i<tempProposalList.size(); i++){
+				ProposalOption proposalOption = ProposalOptionLocalServiceUtil.createProposalOption(CounterLocalServiceUtil.increment(ProposalOption.class.getName()));
+			 	 // Auditing Values
+				 proposalOption.setCompanyId(user.getCompanyId());
+				 proposalOption.setUserId(user.getUserId());
+				 proposalOption.setUserName(user.getScreenName());
+				 proposalOption.setModifiedDate(new Date());
+				 proposalOption.setCreateDate(new Date());
+				 //	Other fields
+	 			 
+				 proposalOption.setCreditAppId(creditAppId);
+				 proposalOption.setProductId(tempProposalList.get(i).getProductId());
+				 proposalOption.setPurchaseOptionId(tempProposalList.get(i).getPurchaseOptionId());
+				 proposalOption.setTermId(tempProposalList.get(i).getTermId());
+				 proposalOption.setRateFactorRuleId(tempProposalList.get(i).getRateFactorRuleId());
+				 proposalOption.setPaymentAmount(tempProposalList.get(i).getPaymentAmount());
+				 proposalOption.setEquipmentPrice(tempProposalList.get(i).getEquipmentPrice());
+			     ProposalOptionLocalServiceUtil.addProposalOption(proposalOption);
+	
+			 }
+		 }
+	
 public void serveResource(ResourceRequest resourceRequest,	ResourceResponse resourceResponse) throws IOException,	PortletException {
 	   System.out.println("From serverResource");
 	   JSONArray rateFactorTableJsonArray=JSONFactoryUtil.createJSONArray();
