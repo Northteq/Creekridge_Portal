@@ -1,37 +1,40 @@
-<%
+<%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- *
- *
- *
+ * Copyright (c) 2000-present Tamarack, Inc. All rights reserved.
+ * @author tamarack
  */
-%>
+--%>
 
-<h3>Welcome to <b>CreekRidgeCapital</b>.</h3><br>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"  %>
 
-<div>
-<div>
-<a href="/web/vendor1/payment-calculator">Pricing Calculation</a>
-</div><br><br><br>
+<portlet:defineObjects />
 
-<div>
-<a href="/web/vendor1/view-application">View Application </a>
-</div>
-<br><br><br>
-<div>
-<a href="/web/vendor1/document-material">Document & Materials</a>
-</div>
-<br><br><br>
-<div>
-<a href="/web/vendor1/contact-info">Contact Info</a>
-</div>
-<br><br><br>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+<div class="container">
+	<h3>
+		Welcome to <b>Creekridge Capital</b>
+	</h3>
+
+	<div class="span2">
+		<a class="btn btn-info btn-block" href="/web/vendor1/payment-calculator">Pricing Calculation</a>
+	</div>
+
+	<div class="span2">
+		<a class="btn btn-success btn-block" href="/web/vendor1/view-application" >View Application </a>
+	</div>
+	
+	<div class="span2">
+		<a class="btn btn-danger btn-block" href="/web/vendor1/document-material">Document &amp; Materials</a>
+	</div>
+	
+	<div class="span2">
+		<a class="btn btn-warning btn-block" href="/web/vendor1/contact-info">Contact Info</a>
+	</div>
+	
 
 </div>

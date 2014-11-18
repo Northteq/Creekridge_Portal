@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -55,12 +57,14 @@ public class PaymentCalculator extends MVCPortlet {
 	 */
 	public PaymentCalculator() {
 		super();
+		pcUtil = new PaymentCalculatorUtil();
 	}
 
 	private static Log _log = LogFactory.getLog(PaymentCalculator.class);
 	private  Long vendorId;
 	private  User currentUser;
 	private List <ProposalOptionWrapper> proposalOptionList;
+	private PaymentCalculatorUtil pcUtil;
 	
 	@Override
 	public void doView(RenderRequest renderRequest,
@@ -87,6 +91,10 @@ public class PaymentCalculator extends MVCPortlet {
 		}
 
 		super.doView(renderRequest, renderResponse);
+	}
+	
+	public void createApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("createApplication");
 	}
 	
 	public List<ProposalOptionWrapper> calculatePayments(String selectedOptions) throws Exception {
@@ -213,9 +221,7 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		JSONArray purchaseOptionIdList = options.getJSONArray("purchaseOptions");
 		_log.info("fetchRatefactorOptionByProduct JSON purchaseOptionIdList : " + purchaseOptionIdList);
-		
-		Double equipmentPrice = options.getDouble("equipmentPrice");
-		_log.info("fetchRatefactorOptionByProduct JSON equipmentPrice : " + equipmentPrice);
+
 		
 		DynamicQuery rateFactorCriteriaQuery = DynamicQueryFactoryUtil
 				.forClass(RateFactorRule.class,
@@ -252,29 +258,23 @@ public class PaymentCalculator extends MVCPortlet {
 			for (int i = 0; i < purchaseOptionIdList.length(); i++) {
 				if (i == 0) {
 					purchaseOptionCriteria = RestrictionsFactoryUtil.eq(
-							"purchaseOptionId",
-							new Long(purchaseOptionIdList.getString(i)).longValue());
+							"purchaseOptionId", purchaseOptionIdList.getLong(i));
 				} else {
 					purchaseOptionCriteria = RestrictionsFactoryUtil.or(
 							purchaseOptionCriteria, RestrictionsFactoryUtil.eq(
-									"purchaseOptionId", new Long(
-											purchaseOptionIdList.getString(i))
-											.longValue()));
+									"purchaseOptionId",purchaseOptionIdList.getLong(i)));
 				}
 			}
 		}
 		
 		
-		 if (productCriteria != null){
+		if (productCriteria != null){
 			rateFactorCriteriaQuery.add(productCriteria);
 			
 			if (purchaseOptionCriteria != null)
 				rateFactorCriteriaQuery.add(purchaseOptionCriteria);
-			
 		}
 		
-		
-
 		rateFactorCriteriaQuery.add(vendorIdCriteria);
 		rateFactorCriteriaQuery.add(activeFlagCriteria);
 
@@ -282,11 +282,10 @@ public class PaymentCalculator extends MVCPortlet {
 		List<RateFactorRule> rateFactorRuleList = RateFactorRuleLocalServiceUtil
 				.dynamicQuery(rateFactorCriteriaQuery);
 		
-		_log.info("fetched ratefactorrules: " + rateFactorRuleList);
-		
 		return rateFactorRuleList;
 	}
 	
+	//needed for the js table
 	public class ProposalOptionWrapper {
 		public ProposalOption propOption;
 		public String termName;
@@ -341,17 +340,20 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		String selectedOptionsParam = PortalUtil.getOriginalServletRequest(request).getParameter("selectedOptions");
 		
-		try {
-			rateFactorList = fetchRatefactorOption(selectedOptionsParam);
-		} catch (Exception e) {
-			_log.error (e);
+		if (selectedOptionsParam != null) {
+			try {
+				rateFactorList = fetchRatefactorOption(selectedOptionsParam);
+			} catch (Exception e) {
+				_log.error (e);
+				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
+			}
 		}
 		
 		if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"processProductsSelection")) {
 			try {
 				
-				_log.info ("rateFactorList size " + rateFactorList.size());
+				_log.info ("processProductsSelection rateFactorList size " + rateFactorList.size());
 				
 				
 				Set <Long> poSet = new HashSet <Long> ();
@@ -360,13 +362,15 @@ public class PaymentCalculator extends MVCPortlet {
 					_log.info(rateFactorValue);
 					if (!poSet.contains(rateFactorValue.getPurchaseOptionId())) {
 						poSet.add(rateFactorValue.getPurchaseOptionId());
-						PurchaseOption po = PurchaseOptionLocalServiceUtil.getPurchaseOption(new Long(rateFactorValue.getPurchaseOptionId()).longValue());
+						PurchaseOption po = PurchaseOptionLocalServiceUtil.getPurchaseOption(rateFactorValue.getPurchaseOptionId());
 						purchaseOptionList.add(po);
 					} 
 				}
 
 			} catch (Exception e) {
 				_log.error(e.getMessage());
+				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
+				
 			}
 			
 			resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(purchaseOptionList));
@@ -394,7 +398,8 @@ public class PaymentCalculator extends MVCPortlet {
 			} catch (Exception e) {
 				
 				_log. error(e);
-				e.printStackTrace();
+				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
+				
 			}
 		} else if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"calculatePayments")) {
@@ -404,9 +409,41 @@ public class PaymentCalculator extends MVCPortlet {
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
 				_log. error(e);
 			}
+		} else if (resourceRequest.getResourceID().equalsIgnoreCase(
+				"updateUseForApplication")) {
+			
+			String selectedProposalOptionId = PortalUtil.getOriginalServletRequest(request).getParameter("proposalOptionId");
+			
+			if (selectedProposalOptionId != null) {
+				for (ProposalOptionWrapper pow: proposalOptionList) {
+					if (pow.propOption.getProposalOptionId() == Long.valueOf(selectedProposalOptionId)) {
+						pow.propOption.setIncludeInProposal(true);
+					}
+				}
+				
+				resourceResponse.getWriter().write("{\"proposalOptionId\": \"" + selectedProposalOptionId + "\"}");
+			} else {
+				resourceResponse.getWriter().write("{ \"error\": \"selectedProposalOptionId not found " + selectedProposalOptionId + "\"}");
+			}
+			
+			
+			
+		} else if (resourceRequest.getResourceID().equalsIgnoreCase(
+				"updateIncludeInProposal")) {
+			
+			String selectedProposalOptionId = PortalUtil.getOriginalServletRequest(request).getParameter("purchaseOptionId");
+			String selectedValue = PortalUtil.getOriginalServletRequest(request).getParameter("isChecked");
+			
+			for (ProposalOptionWrapper pow: proposalOptionList) {
+				if (pow.propOption.getProposalOptionId() == Long.valueOf(selectedProposalOptionId)) {
+					pow.propOption.setUseForCreditApp(Boolean.valueOf(selectedValue));
+				}
+			}
+			
+			resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(proposalOptionList));
 		}
-
 		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
+
 }

@@ -16,12 +16,22 @@
 
 <portlet:resourceURL var="calculatePaymentsURL"
 	id="calculatePayments" />
+	
+<portlet:resourceURL var="updateUseForApplicationURL"
+	id="updateUseForApplication" />
+
+<portlet:resourceURL var="updateIncludeInProposalURL"
+	id="updateIncludeInProposal" />
+	
+<portlet:actionURL var="createApplicationURL" name="createApplication"/>
+
+
 
 <liferay-ui:panel-container accordion="true" extended="false">
 	<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" persistState="false" state="open">
 		<aui:form>
 			<aui:col span="3" first="true">
-				<aui:input id="equipmentPrice" name="equipmentPrice" size="7" style="width:150px"  label="Equipment Price" required="true"></aui:input>
+				<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px"  label="Equipment Price" required="true"></aui:input>
 			</aui:col>
 
 			<aui:col span="3" id="product">
@@ -30,7 +40,7 @@
 
 					<div id="productList">
 						<c:forEach items="${productOptions}" var="product">
-							<aui:input type="checkbox" name="productCheckbox"
+							<aui:input type="checkbox" name="${product.productId}"
 								label="${product.productName}" value="${product.productId}"
 								onchange="getPurchaseOptions()"></aui:input>
 						</c:forEach>
@@ -59,8 +69,9 @@
 					</aui:fieldset>
 				</div>
 			</aui:col>
+			
 			<aui:button-row>
-				<aui:button value="Clear"></aui:button>
+				<button class="btn btn-danger" type="reset">Clear</button>
 				<a class="btn btn-success" id="calculatePaymentsButton" onclick="calculatePayments()"> Calculate Payments </a>
 			
 			</aui:button-row>
@@ -68,10 +79,20 @@
 	</liferay-ui:panel>
 
 	<liferay-ui:panel title="Pricing Overview" state="collapsed" id="pricingOvervewResults">
-    	<div id="proposalOptionsSection"></div>
+    	
+    	<div id="proposalOptionsSection" style="display:none">
+    		<aui:form action="<%=createApplicationURL%>">	
+	    		<div id="proposalOptionsTable"></div>
+    		
+	    		<aui:button-row>
+	    			<button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button>
+	    		</aui:button-row>
+	    	</aui:form>
+    	</div>
+    	
  </liferay-ui:panel>
 
-	<liferay-ui:panel title="Application" state="collapsed">
+	<liferay-ui:panel title="Application" state="collapsed" id="applicationInfo">
         Application goes here
  </liferay-ui:panel>
 </liferay-ui:panel-container>
@@ -126,6 +147,13 @@ var createRateFactorRuleRequestObjectString = function () {
 	return JSON.stringify(selectedOptions);
 };
 
+var resetAllSections = function () {
+	$('#purchaseOptionsList').empty();
+	$('#termsList').empty();
+	$('#termSection').hide();
+	$('#purchaseOptionSection').hide();
+};
+
 var getPurchaseOptions = function () {
 	
 	var productBoxes = $('#productList input:checked');
@@ -134,47 +162,51 @@ var getPurchaseOptions = function () {
 		prodList[i] = $(el).val();
 	});
 	
-	var url = "<%=processProductsSelectionURL%>";
-	var dataJsonString = createRateFactorRuleRequestObjectString();
+	
+	if (prodList.length>0) {
+		var url = "<%=processProductsSelectionURL%>";
+		var dataJsonString = createRateFactorRuleRequestObjectString();
 
-	console.log('selectedProducts', dataJsonString);
+		console.log('selectedProducts', dataJsonString);
 
-	$.ajax({
-				type : "POST",
-				url : url,
-				cache : false,
-				dataType : "Json",
-				data : {
-					selectedOptions : dataJsonString
-				},
-				success : function(data) {
-					console.log('getPurchaseOptions success: ', data);
+		$.ajax({
+					type : "POST",
+					url : url,
+					cache : false,
+					dataType : "Json",
+					data : {
+						selectedOptions : dataJsonString
+					},
+					success : function(data) {
+						console.log('getPurchaseOptions success: ', data);
 
-					var poOptions = '';
-					$('#purchaseOptionsList').empty();
-					$('#termsList').empty();
-					$('#termSection').hide();
-					$('#purchaseOptionSection').hide();
-					
-					$.each(
-						data,
-						function(i, el) {
-							poOptions += '<label class="checkbox">'
-							poOptions += '<input type="checkbox" name="'+ el.purchaseOptionName + '" value="'+ el.purchaseOptionId+'"  onchange="getTermsOptions()">'
-									+ el.purchaseOptionName
-									+ '</input>';
-							poOptions += '</label>';
-						});
+						var poOptions = '';
+						resetAllSections();
+						
+						$.each(
+							data,
+							function(i, el) {
+								poOptions += '<label class="checkbox">'
+								poOptions += '<input type="checkbox" name="'+ el.purchaseOptionName + '" value="'+ el.purchaseOptionId+'"  onchange="getTermsOptions()">'
+										+ el.purchaseOptionName
+										+ '</input>';
+								poOptions += '</label>';
+							});
 
-					$('#purchaseOptionsList').append(poOptions);
-					$('#purchaseOptionSection').show();
-				},
-				error : function(XMLHttpRequest, textStatus, errorThrown) {
-					console.log(textStatus);
-					console.log(XMLHttpRequest);
-					console.log(errorThrown);
-				}
-			});
+						$('#purchaseOptionsList').append(poOptions);
+						$('#purchaseOptionSection').show();
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log(textStatus);
+						console.log(XMLHttpRequest);
+						console.log(errorThrown);
+					}
+				});
+	} else {
+		resetAllSections();
+	}
+	
+	
 
 };
 
@@ -222,6 +254,60 @@ var getTermsOptions = function () {
 
 };
 
+var updateUseForApplication = function ($this) {
+	
+	
+	var poId = $($this).val();
+	var url = '<%=updateUseForApplicationURL%>';
+	$.ajax({
+		type : "POST",
+		url : url,
+		cache : false,
+		dataType : "Json",
+		data : {
+			proposalOptionId : poId
+		},
+		success : function(data) {
+			console.log('updateUseForApplication success: ', data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(textStatus);
+			console.log(XMLHttpRequest);
+			console.log(errorThrown);
+		}
+	});
+};
+
+
+var updateUseInProposalSelection = function ($this) {
+	console.log('updateSelectedForProposal');
+	
+	var url = "<%=updateIncludeInProposalURL%>";	
+	var poId = $($this).val();
+	var isChecked = $($this).is(':checked');
+
+	$.ajax({
+			type : "POST",
+			url : url,
+			cache : false,
+			dataType : "Json",
+			data : {
+				purchaseOptionId : poId,
+				selectedValue: isChecked
+			},
+			success : function(data) {
+				console.log('updateUseInProposalSelection success: ', data);
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(textStatus);
+				console.log(XMLHttpRequest);
+				console.log(errorThrown);
+			}
+		});
+
+	
+};
+
 
 var calculatePayments = function () {
 	console.log('calculating payments');
@@ -255,8 +341,8 @@ var calculatePayments = function () {
 
 var buildProposalOptionsTable = function (remoteData) {
 	
-	$('#proposalOptionsSection').empty();
-	
+	$('#proposalOptionsTable').empty();
+	$('#proposalOptionsSection').hide();
 	YUI().use(
 		  'aui-datatable',
 		  'aui-datatype',
@@ -278,9 +364,9 @@ var buildProposalOptionsTable = function (remoteData) {
 			  	
 			  	//need to add input elements for some fields
 			  	if (o.column.name == 'useForCreditApp') {
-			  		return '<input type="radio" name="useForCreditApp" value="'+ o.data.propOption.proposalOptionId+ '"/>';
+			  		return '<input type="radio" name="useForCreditApp" value="'+ o.data.propOption.proposalOptionId+ '" onchange="updateUseForApplication($(this))"/>';
 			  	} else if (o.column.name == 'includeInProposal') {
-			  		return '<input type="checkbox" name="includeInProposal" value="'+ o.data.propOption.proposalOptionId+ '"/>';
+			  		return '<input type="checkbox" name="includeInProposal" value="'+ o.data.propOption.proposalOptionId+ '" onchange="updateUseInProposalSelection($(this))"/>';
 			  	} else {
 			  		return o.data.propOption[o.column.name];
 			  	}	
@@ -288,22 +374,33 @@ var buildProposalOptionsTable = function (remoteData) {
 				  
 			var nestedCols = [
 				{
-	             	label: 'Proposal Option',
+	             	label: 'Option #',
 	                key: 'proposalOptionId',
 	                sortable: true,
+	                className: 'purchaseOptionsColumn'
 				},
                 { 
                 	key: 'productName',
-                  	label: 'Product Name',
+                  	label: 'Product',
+                  	className: 'purchaseOptionsColumn'
                 },
                 { 
                 	key: 'prodOptionName',
                     label: 'Purchase Option',
+                    className: 'purchaseOptionsColumn'
                 },       
                 { 
                		key: 'termName',
                     label: 'Term',
-                },       
+                    className: 'purchaseOptionsColumn'
+                },
+                { 
+                    key: 'paymentAmount',
+                    label:'Payment Amount',
+                    sortable: true,
+                    formatter: currencyFormatter,
+                    className: 'purchaseOptionsColumn'
+                 },
                 {
                 	key: 'propOption',
                     label: 'Include in Proposal',
@@ -320,24 +417,20 @@ var buildProposalOptionsTable = function (remoteData) {
                   	name: 'useForCreditApp',
                   	 className: 'purchaseOptionsColumn'
 				  },
-                  {
+                 /*  {
                      key: 'eqPrice',
                      label:'Equipment Price',
                      formatter: currencyFormatter,
-                   },
-                   { 
-                       key: 'paymentAmount',
-                       label:'Payment Amount',
-                       sortable: true,
-                       formatter: currencyFormatter,
-                    }];
+                     className: 'purchaseOptionsColumn'
+                   }, */
+                   ];
 			    
 			    
 		    		var dataTable = new Y.DataTable({
 		    	        columns: nestedCols,
 		    	        data: remoteData
-		    		}).render('#proposalOptionsSection');
-			    
+		    		}).render('#proposalOptionsTable');
+		    		$('#proposalOptionsSection').show();
 			    	$('*[data-persist-id="pricingOvervewResults"]').click();
 			  }
 	);
