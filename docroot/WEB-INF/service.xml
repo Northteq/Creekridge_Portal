@@ -243,6 +243,7 @@
 		<column name="paymentAmount" type="double" />
 		<column name="equipmentPrice" type="double" />
 		<column name="includeInProposal" type="boolean" />
+        <column name="useForCreditApp" type="boolean" db-name="useForCreditApp"></column>
 		
 		
 		<finder name="CreditAppId" return-type="Collection">
@@ -374,19 +375,19 @@
 			<finder-column name="vendorId" />
 			<finder-column name="active" />
 		</finder>
-		<finder name="A_V_P" return-type="RateFactorRule" unique="true">
+		<finder name="A_V_P" return-type="RateFactorRule" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
 		
 		</finder>
-		<finder name="A_V_P_P" return-type="RateFactorRule" unique="true">
+		<finder name="A_V_P_P" return-type="RateFactorRule" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
 			<finder-column name="purchaseOptionId" />
 		</finder>
-		<finder name="A_V_P_T_P" return-type="RateFactorRule" unique="true">
+		<finder name="A_V_P_T_P" return-type="RateFactorRule" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />

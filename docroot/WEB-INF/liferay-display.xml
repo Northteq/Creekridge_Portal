@@ -4,8 +4,7 @@
 <display>
 	<category name="category.finance">
 		<portlet id="CreekRidgeCapital"></portlet>
-		<portlet id="paymentcalculatortable"></portlet>
-		<portlet id="insertPaymentCalculatorLookValuesPortlet"></portlet>
+		<portlet id="paymentcalculator"></portlet>
 		<portlet id="viewCreditApplicationPortlet"></portlet>
 	</category>
 </display>

@@ -23,7 +23,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,7 +60,7 @@ public class ViewOrCreateApplication extends MVCPortlet {
     public ViewOrCreateApplication() {
         super();
     }
-    private static Log _log = LogFactory.getLog(PaymentCalculatorTable.class);
+    private static Log _log = LogFactory.getLog(ViewOrCreateApplication.class);
 
 public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse actionResponse) throws Exception {
 	

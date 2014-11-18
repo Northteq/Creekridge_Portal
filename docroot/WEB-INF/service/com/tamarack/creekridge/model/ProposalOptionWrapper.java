@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.tamarack.creekridge.model;
@@ -64,6 +64,7 @@ public class ProposalOptionWrapper implements ProposalOption,
 		attributes.put("paymentAmount", getPaymentAmount());
 		attributes.put("equipmentPrice", getEquipmentPrice());
 		attributes.put("includeInProposal", getIncludeInProposal());
+		attributes.put("useForCreditApp", getUseForCreditApp());
 
 		return attributes;
 	}
@@ -152,6 +153,12 @@ public class ProposalOptionWrapper implements ProposalOption,
 
 		if (includeInProposal != null) {
 			setIncludeInProposal(includeInProposal);
+		}
+
+		Boolean useForCreditApp = (Boolean)attributes.get("useForCreditApp");
+
+		if (useForCreditApp != null) {
+			setUseForCreditApp(useForCreditApp);
 		}
 	}
 
@@ -485,6 +492,36 @@ public class ProposalOptionWrapper implements ProposalOption,
 	@Override
 	public void setIncludeInProposal(boolean includeInProposal) {
 		_proposalOption.setIncludeInProposal(includeInProposal);
+	}
+
+	/**
+	* Returns the use for credit app of this proposal option.
+	*
+	* @return the use for credit app of this proposal option
+	*/
+	@Override
+	public boolean getUseForCreditApp() {
+		return _proposalOption.getUseForCreditApp();
+	}
+
+	/**
+	* Returns <code>true</code> if this proposal option is use for credit app.
+	*
+	* @return <code>true</code> if this proposal option is use for credit app; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isUseForCreditApp() {
+		return _proposalOption.isUseForCreditApp();
+	}
+
+	/**
+	* Sets whether this proposal option is use for credit app.
+	*
+	* @param useForCreditApp the use for credit app of this proposal option
+	*/
+	@Override
+	public void setUseForCreditApp(boolean useForCreditApp) {
+		_proposalOption.setUseForCreditApp(useForCreditApp);
 	}
 
 	@Override

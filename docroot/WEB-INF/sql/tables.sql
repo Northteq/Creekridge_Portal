@@ -125,7 +125,8 @@ create table eCreekRidge_ProposalOption (
 	rateFactorRuleId LONG,
 	paymentAmount DOUBLE,
 	equipmentPrice DOUBLE,
-	includeInProposal BOOLEAN
+	includeInProposal BOOLEAN,
+	useForCreditApp BOOLEAN
 );
 
 create table eCreekRidge_PurchaseOption (

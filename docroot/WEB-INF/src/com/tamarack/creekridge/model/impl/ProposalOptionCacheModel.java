@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.tamarack.creekridge.model.impl;
@@ -38,7 +38,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{proposalOptionId=");
 		sb.append(proposalOptionId);
@@ -68,6 +68,8 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		sb.append(equipmentPrice);
 		sb.append(", includeInProposal=");
 		sb.append(includeInProposal);
+		sb.append(", useForCreditApp=");
+		sb.append(useForCreditApp);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,6 +112,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		proposalOptionImpl.setPaymentAmount(paymentAmount);
 		proposalOptionImpl.setEquipmentPrice(equipmentPrice);
 		proposalOptionImpl.setIncludeInProposal(includeInProposal);
+		proposalOptionImpl.setUseForCreditApp(useForCreditApp);
 
 		proposalOptionImpl.resetOriginalValues();
 
@@ -132,6 +135,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		paymentAmount = objectInput.readDouble();
 		equipmentPrice = objectInput.readDouble();
 		includeInProposal = objectInput.readBoolean();
+		useForCreditApp = objectInput.readBoolean();
 	}
 
 	@Override
@@ -158,6 +162,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		objectOutput.writeDouble(paymentAmount);
 		objectOutput.writeDouble(equipmentPrice);
 		objectOutput.writeBoolean(includeInProposal);
+		objectOutput.writeBoolean(useForCreditApp);
 	}
 
 	public long proposalOptionId;
@@ -174,4 +179,5 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 	public double paymentAmount;
 	public double equipmentPrice;
 	public boolean includeInProposal;
+	public boolean useForCreditApp;
 }
