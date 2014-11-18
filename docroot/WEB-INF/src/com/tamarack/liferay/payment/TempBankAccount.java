@@ -5,8 +5,6 @@ package com.tamarack.liferay.payment;
 
 import java.io.Serializable;
 
-import com.liferay.portal.kernel.util.ParamUtil;
-
 /**
  * @author pmacha
  *
