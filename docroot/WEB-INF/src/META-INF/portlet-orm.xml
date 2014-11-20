@@ -1,0 +1,371 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.CreditAppModelImpl">
+		<attributes>
+			<id name="creditAppId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="vendorId" />
+			<basic name="creditAppStatusId" />
+			<basic name="productId" />
+			<basic name="termId" />
+			<basic name="purchaseOptionId" />
+			<basic name="rateFactorRuleId" />
+			<basic name="paymentAmount" />
+			<basic name="equipmentPrice" />
+			<basic name="equipmentDesc" />
+			<basic name="equipmentLocAsCustomerFlag" />
+			<basic name="equipmentAddress1" />
+			<basic name="equipmentAddress2" />
+			<basic name="equipmentCity" />
+			<basic name="equipmentState" />
+			<basic name="equipmentZip" />
+			<basic name="CustomerName" />
+			<basic name="CustomerDBAName" />
+			<basic name="CustomerAddress1" />
+			<basic name="CustomerAddress2" />
+			<basic name="CustomerCity" />
+			<basic name="CustomerState" />
+			<basic name="CustomerZip" />
+			<basic name="CustomerContact" />
+			<basic name="CustomerContactPhone" />
+			<basic name="CustomerContactFax" />
+			<basic name="CustomerContactEmail" />
+			<basic name="CustomerBusinessDesc" />
+			<basic name="CustomerBusinessType" />
+			<basic name="CustomerBusinessStartDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="CustomerBusinessIncorporatedState" />
+			<basic name="CustomerBusinessFederalTaxID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.CreditAppBankReferenceModelImpl">
+		<attributes>
+			<id name="bankReferenceId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="creditAppId" />
+			<basic name="sequenceNumber" />
+			<basic name="bankReferenceName" />
+			<basic name="bankReferenceContact" />
+			<basic name="bankReferencePhone" />
+			<basic name="bankReferencAccountType" />
+			<basic name="bankReferenceAccountNumber" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.CreditAppDocumentModelImpl">
+		<attributes>
+			<id name="CreditAppDocumentId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="creditAppId" />
+			<basic name="sequenceNumber" />
+			<basic name="documentTitle" />
+			<basic name="documentFileName" />
+			<basic name="documentFileLocation" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.CreditAppPrincipalModelImpl">
+		<attributes>
+			<id name="principalId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="creditAppId" />
+			<basic name="sequenceNumber" />
+			<basic name="principalFirstName" />
+			<basic name="principalMiddleName" />
+			<basic name="principalLastName" />
+			<basic name="principalSSN" />
+			<basic name="principalHomePhoneNumber" />
+			<basic name="principalAddress1" />
+			<basic name="principalAddress2" />
+			<basic name="principalCity" />
+			<basic name="principalState" />
+			<basic name="principalZip" />
+			<basic name="principalEmail" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.CreditAppStatusModelImpl">
+		<attributes>
+			<id name="CreditAppStatusId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="creditAppStatusName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.ProductModelImpl">
+		<attributes>
+			<id name="productId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="productName" />
+			<basic name="sequenceNumber" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.ProposalOptionModelImpl">
+		<attributes>
+			<id name="proposalOptionId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="creditAppId" />
+			<basic name="productId" />
+			<basic name="termId" />
+			<basic name="purchaseOptionId" />
+			<basic name="rateFactorRuleId" />
+			<basic name="paymentAmount" />
+			<basic name="equipmentPrice" />
+			<basic name="includeInProposal" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.PurchaseOptionModelImpl">
+		<attributes>
+			<id name="purchaseOptionId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="purchaseOptionName" />
+			<basic name="sequenceNumber" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl">
+		<attributes>
+			<id name="rateFactorRuleId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="productId" />
+			<basic name="termId" />
+			<basic name="purchaseOptionId" />
+			<basic name="vendorId" />
+			<basic name="minPrice" />
+			<basic name="rateFactor" />
+			<basic name="effectiveDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
+			<basic name="expirationDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.TermModelImpl">
+		<attributes>
+			<id name="termId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="termMonths" />
+			<basic name="termName" />
+			<basic name="sequenceNumber" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.VendorModelImpl">
+		<attributes>
+			<id name="vendorId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="groupId" />
+			<basic name="multiSelectProduct" />
+			<basic name="multiSelectPurchaseOption" />
+			<basic name="multiSelectTerm" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.tamarack.creekridge.model.impl.VendorMessageModelImpl">
+		<attributes>
+			<id name="vendorId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="key">
+				<column name="KEY_" />
+			</basic>
+			<basic name="value" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.tamarack.creekridge.model.impl.CreditAppImpl" name="CreditApp">
+		<table name="eCreekRidge_CreditApp" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.CreditAppBankReferenceImpl" name="CreditAppBankReference">
+		<table name="eCreekRidge_CreditAppBankReference" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.CreditAppDocumentImpl" name="CreditAppDocument">
+		<table name="eCreekRidge_CreditAppDocument" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.CreditAppPrincipalImpl" name="CreditAppPrincipal">
+		<table name="eCreekRidge_CreditAppPrincipal" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.CreditAppStatusImpl" name="CreditAppStatus">
+		<table name="eCreekRidge_CreditAppStatus" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.ProductImpl" name="Product">
+		<table name="eCreekRidge_Product" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.ProposalOptionImpl" name="ProposalOption">
+		<table name="eCreekRidge_ProposalOption" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.PurchaseOptionImpl" name="PurchaseOption">
+		<table name="eCreekRidge_PurchaseOption" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.RateFactorRuleImpl" name="RateFactorRule">
+		<table name="eCreekRidge_RateFactorRule" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.TermImpl" name="Term">
+		<table name="eCreekRidge_Term" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.VendorImpl" name="Vendor">
+		<table name="eCreekRidge_Vendor" />
+		<attributes />
+	</entity>
+	<entity class="com.tamarack.creekridge.model.impl.VendorMessageImpl" name="VendorMessage">
+		<table name="eCreekRidge_VendorMessage" />
+		<attributes />
+	</entity>
+</entity-mappings>
