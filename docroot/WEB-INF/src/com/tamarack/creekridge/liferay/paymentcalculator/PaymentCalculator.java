@@ -73,18 +73,27 @@ public class PaymentCalculator extends MVCPortlet {
 	private  User currentUser;
 	private List <ProposalOptionWrapper> proposalOptionList;
 	private CreditApp creditApp;
-	private Long creditAppId;
 	private String errorMessage = "";
 	private String successMessage = "";
 	private Boolean hasProposalIncluded = false;
 	
-	@Override
-	public void doView(RenderRequest renderRequest,
-			RenderResponse renderResponse) throws IOException, PortletException {
+	@Override 
+	public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
 		
-		creditAppId = null;
+		_log.info("processAction started");
+		super.processAction(actionRequest, actionResponse);
+		
+		_log.info("processAction ended");
+	}
+	
+	@Override 
+	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+		
+		_log.info("render started");
+	
 		//page variables available
 		List<Product> productOptions = new ArrayList<Product>();
+		creditApp = null;
 		
 		//need to be able to access data outside of form from the page
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(renderRequest);
@@ -93,7 +102,6 @@ public class PaymentCalculator extends MVCPortlet {
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		vendorId = themeDisplay.getLayout().getGroupId();
 		currentUser = themeDisplay.getUser();
-		_log.info ("Current vendorID: " + vendorId);
 		
 		request.getSession().setAttribute("errorMessage", errorMessage);
 		
@@ -102,50 +110,80 @@ public class PaymentCalculator extends MVCPortlet {
 			productOptions = ProductLocalServiceUtil.getProducts(-1, -1);
 			renderRequest.setAttribute("productOptions", productOptions);
 			
-			if (request.getSession().getAttribute("creditAppId") != null) {
-				creditAppId = Long.valueOf((String) request.getSession().getAttribute("creditAppId"));
+			Long creditAppId = ParamUtil.getLong(renderRequest, "creditAppId");
+				
+			_log.info("creditAppId: " + creditAppId);
+			if (creditAppId != 0) {
 				creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
-				request.getSession().setAttribute("creditApp", creditApp);
-				renderRequest.setAttribute("creditAppId", creditApp.getCreditAppId());
-			} else {
-				creditApp = null;
 			}
 			
+			if (creditApp != null) {
 			
+				
+				_log.info("credit app not null " + creditApp);
+				renderRequest.setAttribute("creditApp", creditApp);
+				renderRequest.setAttribute("creditAppId", creditApp.getCreditAppId());
+				
+				//populate proposal options if any
+				List <ProposalOptionWrapper> powList = new ArrayList<ProposalOptionWrapper>();
+				
+				for (ProposalOption po: ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditApp.getCreditAppId())) {
+					powList.add (new ProposalOptionWrapper(po));
+				}
+				
+				renderRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(powList));
+			}
 			
-			_log.info("doView creditAppId : " + creditAppId);
-			_log.info("doView creditApp : " + creditApp);
+			 
+			_log.info("render creditApp : " + creditApp);
 				
 		} catch (Exception e) {
 			_log.error(e);
 		}
-
-		super.doView(renderRequest, renderResponse);
+		
+		
+		super.render(renderRequest, renderResponse);
+		
+		_log.info("render ended");
 	}
+	
+	@Override
+	public void doView(RenderRequest renderRequest,
+			RenderResponse renderResponse) throws IOException, PortletException {
+		
+		
+		_log.info("doView started");
+		
+		super.doView(renderRequest, renderResponse);
+		
+		_log.info("doView started ended");
+	}
+
 	
 	public void createApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
 		
 	}
 	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
-		_log.info("saveApplicationInfo action called");
 		
-		//need to be able to access data outside of form from the page
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
+		errorMessage = "";
+		successMessage = "";
+		SessionMessages.clear(actionRequest);
+		
+		_log.info("saveApplicationInfo actionrequest started: ");
+		Long creditAppId = ParamUtil.getLong(actionRequest,"creditAppId");
 		
 		try {
-			
-			if (request.getSession().getAttribute("creditAppId") == null) {
+			_log.info("creditAppId: " + creditAppId);
+			if (creditAppId == 0) {
 				creditApp = CreditAppLocalServiceUtil.createCreditApp(CounterLocalServiceUtil.increment(CreditApp.class.getName()));
-				_log.info(creditApp);
-				creditApp = CreditAppLocalServiceUtil.addCreditApp(creditApp);
 				
 				CreditAppStatus creditAppStatus = CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus("Draft");
-				_log.info(creditAppStatus);
+				_log.info("getting status for the application " + creditAppStatus);
+				
 				if (creditAppStatus != null) {
 					creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
 				}
-				
 				
 				
 				creditApp.setCompanyId(currentUser.getCompanyId());
@@ -154,33 +192,42 @@ public class PaymentCalculator extends MVCPortlet {
 				creditApp.setModifiedDate(new Date());
 				creditApp.setCreateDate(new Date());
 				creditApp.setVendorId(vendorId);
+				creditApp.setEquipmentPrice(ParamUtil.getDouble(actionRequest, "equipmentPrice"));
 				
+				//update app info
+				creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 				
 				successMessage = "Application has been created.";
+				_log.info(successMessage + creditApp);
+				
+				
 			} else {
-				creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()));
+				creditApp = CreditAppLocalServiceUtil.getCreditApp(ParamUtil.getLong(actionRequest, "creditAppId"));
 				successMessage = "Application has been updated.";
+				_log.info(successMessage + creditApp);
 			}
 			
-			request.getSession().setAttribute("creditAppId", String.valueOf(creditApp.getCreditAppId()));
+			
 			
 			
 			//map form fields to the application
 			if (proposalOptionList == null || proposalOptionList.isEmpty()) {
 				_log.info("proposalOptionList is empty");
 				errorMessage = "Please run the calculator to get pricing options.";
-				SessionErrors.add (actionRequest, "error");
-				return;
+				actionResponse.setRenderParameter("calculatorSectionState", "open");
+				
 			} else {
+				_log.info("proposalOptionList is populated" + proposalOptionList.size());
 				
 				
 				for (ProposalOptionWrapper pow: proposalOptionList) {
+					_log.info("pow.propOption: " + pow.propOption);
+					
 					if (pow.propOption.getIncludeInProposal()) {
-						pow.propOption.setCreditAppId(creditAppId);
+						pow.propOption.setCreditAppId(creditApp.getCreditAppId());
 						pow.propOption = ProposalOptionLocalServiceUtil.updateProposalOption(pow.propOption);
 						hasProposalIncluded = true;
-						
-						_log.info("one propOption found...");
+
 					}
 					
 					if (pow.propOption.getUseForCreditApp()) {
@@ -194,10 +241,15 @@ public class PaymentCalculator extends MVCPortlet {
 				
 				if (!hasProposalIncluded) {
 					errorMessage = "You need to include at least one pricing option.";
-					SessionErrors.add (actionRequest, "error");
-					return;
+					
+					
+					
 				}
 			}
+			
+			//map fields to applicaiton
+			creditApp.setCustomerName(ParamUtil.getString(actionRequest,"customerName"));
+			creditApp.setCustomerDBAName(ParamUtil.getString(actionRequest,"customerDBAName"));
 			
 			
 			
@@ -205,15 +257,20 @@ public class PaymentCalculator extends MVCPortlet {
 			creditApp.setModifiedDate(new Date());
 			creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 			
-			SessionMessages.add(actionRequest, "success");
+			
+			
+			
+			if (errorMessage != "")
+				SessionErrors.add (actionRequest, "error");
+			
+			
+			if (successMessage != "")
+				SessionMessages.add(actionRequest, "success");
 			
 		} catch (Exception e) {
-			errorMessage = e.getMessage();
-			SessionErrors.clear(actionRequest);
-			_log.error(e.getStackTrace().toString());
+			errorMessage = String.valueOf(e);
+			_log.error(e);
 		}
-		
-		
 		
 		
 		
@@ -249,8 +306,7 @@ public class PaymentCalculator extends MVCPortlet {
 				creditApp.setCustomerAddress1(ParamUtil.getString(actionRequest,"customerAddress1"));
 				creditApp.setCustomerAddress2(ParamUtil.getString(actionRequest,"customerAddress1"));
 				
-				creditApp.setCustomerName(ParamUtil.getString(actionRequest,"customerName"));
-				creditApp.setCustomerDBAName(ParamUtil.getString(actionRequest,"customerDBAName"));
+				
 				
 				
 				creditApp.setCustomerState(ParamUtil.getString(actionRequest,"customerState"));
@@ -278,12 +334,7 @@ public class PaymentCalculator extends MVCPortlet {
 				request.getSession().setAttribute("customerAddress1",ParamUtil.getString(actionRequest,"customerAddress1"));
 				request.getSession().setAttribute("customerAddress1",ParamUtil.getString(actionRequest,"customerAddress1"));
 				
-				request.getSession().setAttribute("customerName",ParamUtil.getString(actionRequest,"customerName"));
-				request.getSession().setAttribute("customerDBAName",ParamUtil.getString(actionRequest,"customerDBAName"));
-				request.getSession().setAttribute("customerContact",ParamUtil.getString(actionRequest,"customerContact"));
-				request.getSession().setAttribute("customerContactPhone",ParamUtil.getString(actionRequest,"customerContactPhone"));
-				request.getSession().setAttribute("customerContactFax",ParamUtil.getString(actionRequest,"customerContactFax"));
-				request.getSession().setAttribute("customerContactEmail",ParamUtil.getString(actionRequest,"customerContactEmail"));
+				
 				
 				
 				request.getSession().setAttribute("customerState",ParamUtil.getString(actionRequest,"customerState"));
@@ -301,11 +352,23 @@ public class PaymentCalculator extends MVCPortlet {
 				creditApp.setVendorId(rateFactorRule.getVendorId());
 */		
 		
+		_log.info("actionResponse.setRenderParameter");
+		actionResponse.setRenderParameter("creditAppId", String.valueOf(creditApp.getCreditAppId()));
+		_log.info("creditAppId: " + String.valueOf(creditApp.getCreditAppId()));
 		
 		
-		actionResponse.setRenderParameter("calculatorSectionState", "collapsed");
-		actionResponse.setRenderParameter("pricingOvervewSectionState", "collapsed");
-		actionResponse.setRenderParameter("appicationInfoSectionState", "open");
+		if (actionResponse.getRenderParameterMap().get("calculatorSectionState") == null) {
+			actionResponse.setRenderParameter("calculatorSectionState", "collapsed");
+		}
+		
+		if (actionResponse.getRenderParameterMap().get("pricingOvervewSectionState") == null) {
+			actionResponse.setRenderParameter("pricingOvervewSectionState", "collapsed");
+		}
+		
+		if (actionResponse.getRenderParameterMap().get("appicationInfoSectionState") == null) {
+			actionResponse.setRenderParameter("appicationInfoSectionState", "open");
+		}
+		
 	}
 	
 	public List<ProposalOptionWrapper> calculatePayments(String selectedOptions) throws Exception {
@@ -643,8 +706,8 @@ public class PaymentCalculator extends MVCPortlet {
 				"updateIncludeInProposal")) {
 			
 			String selectedProposalOptionId = PortalUtil.getOriginalServletRequest(request).getParameter("purchaseOptionId");
-			String selectedValue = PortalUtil.getOriginalServletRequest(request).getParameter("isChecked");
-			
+			String selectedValue = PortalUtil.getOriginalServletRequest(request).getParameter("selectedValue");
+		
 			for (ProposalOptionWrapper pow: proposalOptionList) {
 				if (pow.propOption.getProposalOptionId() == Long.valueOf(selectedProposalOptionId)) {
 					pow.propOption.setIncludeInProposal(Boolean.valueOf(selectedValue));

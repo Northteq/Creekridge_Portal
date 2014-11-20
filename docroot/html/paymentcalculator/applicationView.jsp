@@ -16,7 +16,7 @@
 		<liferay-ui:panel collapsible="false" title="Customer Detail">
 
 			<aui:input name="customerName" label="Customer Name" value="${creditApp.customerName}"></aui:input>
-			<aui:input name="customerDBAName" label="DBA Name"></aui:input>
+			<aui:input name="customerDBAName" label="DBA Name" value="${creditApp.customerDBAName}"></aui:input>
 		</liferay-ui:panel>
 	</aui:col>
 
@@ -83,10 +83,7 @@
 			</liferay-ui:panel>
 		</aui:col>
 </liferay-ui:panel> --%>
-<aui:button-row>
-	<button type="submit" class="btn btn-info" id="createApplicationButton" onclick="createApplication()"> Create Application </button>
-	<button type="submit" class="btn btn-info" id="createApplicationButton" onclick="createApplication()"> Create Application </button>
-</aui:button-row>
+
 
 <!-- old code from Pius  -->
 

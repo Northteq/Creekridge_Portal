@@ -33,15 +33,22 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	id="updateIncludeInProposal" />
 	
 
-<portlet:actionURL name="saveApplicationInfo" var="saveApplicationInfoURL"/>
-<portlet:actionURL name="createApplication" var="createApplicationInfoURL"/>
+<portlet:actionURL name="saveApplicationInfo" var="saveApplicationInfoURL">
+	<portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
+</portlet:actionURL>
+<portlet:actionURL name="createApplication" var="createApplicationInfoURL">
+<portlet:param name="mvcPath" value="view.jsp" />
+</portlet:actionURL>
 
 
 <liferay-ui:error key="error" message="${errorMessage}" />
 <liferay-ui:success key="success" message="${successMessage}"/>
-
 <aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" >
-	<c:if test="${creditApp.creditAppId != null}"><h3>Application ${creditApp.creditAppId} </h3> </c:if>
+	<aui:input type="hidden" value="${creditAppId}" name="creditAppId"/>
+	
+	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
+	
+	
 
 	<liferay-ui:panel-container accordion="true" extended="false">
 		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="<%=calculatorSectionState %>">
@@ -87,8 +94,8 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 				</aui:col>
 				
 				<aui:button-row>
-					<button class="btn btn-danger" type="reset">Clear</button>
-					<a class="btn btn-success" id="calculatePaymentsButton" onclick="calculatePayments()"> Calculate Payments </a>
+					<button class="btn btn-danger" type="reset" onclick="resetAllSections();">Clear</button>
+					<button class="btn btn-success" type="submit" id="calculatePaymentsButton" onclick="return calculatePayments()"> Calculate Payments </button>
 				
 				</aui:button-row>
 		</liferay-ui:panel>
@@ -102,6 +109,7 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	   		
 	    		<aui:button-row>
 	    			<button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button>
+	    			<a class="btn btn-success" id="navigateToCalculator" onclick="navigateToCalculator()">Back to Calculator</a>
 	    		</aui:button-row>
 	    	</div>
 	 	</liferay-ui:panel>
@@ -113,12 +121,28 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	 	</liferay-ui:panel>
 	 	
 	</liferay-ui:panel-container>
-
+	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 </aui:form>
 
 
 <script type="text/javascript">
 
+var navigateToCalculator = function () {
+	$("*[data-persist-id='paymentCalculator']").click();
+};
+
+$(document).ready(function () {
+	
+	var proposals = jQuery.parseJSON('${proposalList}');
+	
+	console.log ("proposals on load", proposals);
+	
+	if (proposals != '') {
+		
+		buildProposalOptionsTable(proposals);
+	}
+		
+});
 
 
 var createRateFactorRuleRequestObjectString = function () {
@@ -303,7 +327,7 @@ var updateUseInProposalSelection = function ($this) {
 	var url = "<%=updateIncludeInProposalURL%>";	
 	var poId = $($this).val();
 	var isChecked = $($this).is(':checked');
-
+	
 	$.ajax({
 			type : "POST",
 			url : url,
@@ -354,7 +378,7 @@ var calculatePayments = function () {
 			}
 		});
 
-	
+	return false;
 };
 
 var buildProposalOptionsTable = function (remoteData) {
@@ -382,9 +406,30 @@ var buildProposalOptionsTable = function (remoteData) {
 			  	
 			  	//need to add input elements for some fields
 			  	if (o.column.name == 'useForCreditApp') {
-			  		return '<input type="radio" name="useForCreditApp" value="'+ o.data.propOption.proposalOptionId+ '" onchange="updateUseForApplication($(this))"/>';
+			  		var radioBox = '<input type="radio" name="useForCreditApp"';
+			  		radioBox += 'value="'+ o.data.propOption.proposalOptionId+ '"';
+			  		
+			  		if (o.data.propOption.useForCreditApp) {
+			  			radioBox += 'checked ';
+			  		}
+			  		
+			  		radioBox += ' onchange="updateUseForApplication($(this))"/>';
+			  		
+			  		return  radioBox;
+			  	
+			  	
 			  	} else if (o.column.name == 'includeInProposal') {
-			  		return '<input type="checkbox" name="includeInProposal" value="'+ o.data.propOption.proposalOptionId+ '" onchange="updateUseInProposalSelection($(this))"/>';
+			  		
+			  		var inputBox = '<input type="checkbox" name="includeInProposal"';
+			  		inputBox += ' value="'+ o.data.propOption.proposalOptionId + '"';
+			  		
+			  		if (o.data.propOption.includeInProposal) {
+			  			inputBox += 'checked ';
+			  		}
+			  		
+			  		inputBox += ' onchange="updateUseInProposalSelection($(this))"/>';
+			  		
+			  		return inputBox;
 			  	} else {
 			  		return o.data.propOption[o.column.name];
 			  	}	

@@ -33,11 +33,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>lib</name>
-			<type>2</type>
-			<location>/Users/olegforce/Desktop/Liferay/liferay-plugins-sdk-6.2/portlets/CreekRidgeCapital-portlet/docroot/WEB-INF/lib</location>
-		</link>
-	</linkedResources>
 </projectDescription>

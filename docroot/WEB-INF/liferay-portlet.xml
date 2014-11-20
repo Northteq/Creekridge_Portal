@@ -3,7 +3,7 @@
 
 <liferay-portlet-app>
 
-	
+
 
 	<portlet>
 		<portlet-name>CreekRidgeCapital</portlet-name>
@@ -13,9 +13,11 @@
 		<css-class-wrapper>CreekRidgeCapital-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
-		
 		<portlet-name>paymentcalculator</portlet-name>
 		<icon>/icon.png</icon>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>my-greeting</friendly-url-mapping>
+		<friendly-url-routes>com/liferay/samples/paymentcalculator-url-routes.xml</friendly-url-routes>
 		<instanceable>false</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
@@ -23,8 +25,9 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>paymentcalculatortable-portlet
 		</css-class-wrapper>
+
 	</portlet>
-	
+
 	<portlet>
 		<portlet-name>viewCreditApplicationPortlet</portlet-name>
 		<icon>/icon.png</icon>
@@ -36,7 +39,7 @@
 		<css-class-wrapper>viewCreditApplicationPortlet-portlet
 		</css-class-wrapper>
 	</portlet>
-	
+
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
