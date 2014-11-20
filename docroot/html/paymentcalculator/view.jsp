@@ -7,6 +7,15 @@
 
 <%@ include file="init.jsp"%>
 
+<%
+
+String calculatorSectionState = ParamUtil.getString(request, "calculatorSectionState", "open");
+String pricingOvervewSectionState = ParamUtil.getString(request, "pricingOvervewSectionState", "collapsed");
+String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfoSectionState", "collapsed");
+
+
+%>
+
 <portlet:resourceURL var="processProductsSelectionURL"
 	id="processProductsSelection" />
 	
@@ -23,84 +32,93 @@
 <portlet:resourceURL var="updateIncludeInProposalURL"
 	id="updateIncludeInProposal" />
 	
-<portlet:actionURL var="createApplicationURL" name="createApplication"/>
+
+<portlet:actionURL name="saveApplicationInfo" var="saveApplicationInfoURL"/>
+<portlet:actionURL name="createApplication" var="createApplicationInfoURL"/>
 
 
+<liferay-ui:error key="error" message="${errorMessage}" />
+<liferay-ui:success key="success" message="${successMessage}"/>
 
-<liferay-ui:panel-container accordion="true" extended="false">
-	<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" persistState="false" state="open">
-		<aui:form>
-			<aui:col span="3" first="true">
-				<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px"  label="Equipment Price" required="true"></aui:input>
-			</aui:col>
+<aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" >
+	<c:if test="${creditApp.creditAppId != null}"><h3>Application ${creditApp.creditAppId} </h3> </c:if>
 
-			<aui:col span="3" id="product">
-				<h4>Pricing Products</h4>
-				<aui:fieldset column="true">
-
-					<div id="productList">
-						<c:forEach items="${productOptions}" var="product">
-							<aui:input type="checkbox" name="${product.productId}"
-								label="${product.productName}" value="${product.productId}"
-								onchange="getPurchaseOptions()"></aui:input>
-						</c:forEach>
+	<liferay-ui:panel-container accordion="true" extended="false">
+		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="<%=calculatorSectionState %>">
+				
+				<aui:col span="3" first="true">
+					<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px"  label="Equipment Price" required="true" value="${creditApp.equipmentPrice}"></aui:input>
+				</aui:col>
+	
+				<aui:col span="3" id="product">
+					<h4>Pricing Products</h4>
+					<aui:fieldset column="true">
+	
+						<div id="productList">
+							<c:forEach items="${productOptions}" var="product">
+								<aui:input type="checkbox" name="${product.productId}"
+									label="${product.productName}" value="${product.productId}"
+									onchange="getPurchaseOptions()"></aui:input>
+							</c:forEach>
+						</div>
+					</aui:fieldset>
+				</aui:col>
+	
+				<aui:col span="3" id="purchaseOption">
+					<div id="purchaseOptionSection" style="display: none">
+	
+						<h4>Purchase Options</h4>
+						<aui:fieldset column="true">
+							<div id="purchaseOptionsList"></div>
+	
+						</aui:fieldset>
 					</div>
-				</aui:fieldset>
-			</aui:col>
-
-			<aui:col span="3" id="purchaseOption">
-				<div id="purchaseOptionSection" style="display: none">
-
-					<h4>Purchase Options</h4>
-					<aui:fieldset column="true">
-						<div id="purchaseOptionsList"></div>
-
-					</aui:fieldset>
-				</div>
-			</aui:col>
-
-			<aui:col span="2" last="true" id="term">
-				<div id="termSection" style="display: none">
-
-					<h4>Terms</h4>
-					<aui:fieldset column="true">
-						<div id="termsList"></div>
-
-					</aui:fieldset>
-				</div>
-			</aui:col>
-			
-			<aui:button-row>
-				<button class="btn btn-danger" type="reset">Clear</button>
-				<a class="btn btn-success" id="calculatePaymentsButton" onclick="calculatePayments()"> Calculate Payments </a>
-			
-			</aui:button-row>
-		</aui:form>
-	</liferay-ui:panel>
-
-	<liferay-ui:panel title="Pricing Overview" state="collapsed" id="pricingOvervewResults">
-    	
-    	<div id="proposalOptionsSection" style="display:none">
-    		<aui:form action="<%=createApplicationURL%>">	
+				</aui:col>
+	
+				<aui:col span="2" last="true" id="term">
+					<div id="termSection" style="display: none">
+	
+						<h4>Terms</h4>
+						<aui:fieldset column="true">
+							<div id="termsList"></div>
+	
+						</aui:fieldset>
+					</div>
+				</aui:col>
+				
+				<aui:button-row>
+					<button class="btn btn-danger" type="reset">Clear</button>
+					<a class="btn btn-success" id="calculatePaymentsButton" onclick="calculatePayments()"> Calculate Payments </a>
+				
+				</aui:button-row>
+		</liferay-ui:panel>
+		
+		<!-- PRICING OVERVIEW PANEL  -->
+	
+		<liferay-ui:panel title="Pricing Overview" id="pricingOvervewResults" state="<%=pricingOvervewSectionState%>">
+	    	<div id="proposalOptionsSection" style="display:none">
+	    			
 	    		<div id="proposalOptionsTable"></div>
-    		
+	   		
 	    		<aui:button-row>
 	    			<button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button>
 	    		</aui:button-row>
-	    	</aui:form>
-    	</div>
-    	
- </liferay-ui:panel>
+	    	</div>
+	 	</liferay-ui:panel>
+	 	
+	 		<!-- APPLICATION PANEL  -->
+	
+		<liferay-ui:panel title="Application" id="applicationInfo" state="<%=appicationInfoSectionState %>">
+	        <c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
+	 	</liferay-ui:panel>
+	 	
+	</liferay-ui:panel-container>
 
-	<liferay-ui:panel title="Application" state="collapsed" id="applicationInfo">
-        Application goes here
- </liferay-ui:panel>
-</liferay-ui:panel-container>
+</aui:form>
 
-
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/paymentcalculator.js"></script> --%>
 
 <script type="text/javascript">
+
 
 
 var createRateFactorRuleRequestObjectString = function () {
@@ -438,9 +456,7 @@ var buildProposalOptionsTable = function (remoteData) {
 	
 };
 
-
 </script>
-
 
 <style>
 .purchaseOptionsColumn {

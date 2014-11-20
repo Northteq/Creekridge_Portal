@@ -2,6 +2,9 @@
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
+
+	
+
 	<portlet>
 		<portlet-name>CreekRidgeCapital</portlet-name>
 		<icon>/icon.png</icon>
@@ -10,6 +13,7 @@
 		<css-class-wrapper>CreekRidgeCapital-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
+		
 		<portlet-name>paymentcalculator</portlet-name>
 		<icon>/icon.png</icon>
 		<instanceable>false</instanceable>

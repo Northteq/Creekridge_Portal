@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0">
 	<portlet>
 		<portlet-name>CreekRidgeCapital</portlet-name>
 		<display-name>CreekRidge Capital Home</display-name>
@@ -47,6 +50,14 @@
 			<name>add-process-action-success-action</name>
 			<value>false</value>
 		</init-param>
+
+
+		<!-- https://www.liferay.com/documentation/liferay-portal/6.2/development/-/ai/passing-info-from-action-to-render-phase-liferay-portal-6-2-dev-guide-en  -->
+		<!-- <init-param>
+			<name>copy-request-parameters</name>
+			<value>true</value>
+		</init-param> -->
+
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -70,12 +81,11 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
-	
+
 	<portlet>
 		<portlet-name>viewCreditApplicationPortlet</portlet-name>
 		<display-name>View Credit Application</display-name>
-		<portlet-class>com.tamarack.liferay.payment.ViewApplication
-		</portlet-class>
+		<portlet-class>com.tamarack.liferay.payment.ViewApplication</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/viewCreditApplication/view.jsp</value>
@@ -107,5 +117,5 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
-	
+
 </portlet-app>

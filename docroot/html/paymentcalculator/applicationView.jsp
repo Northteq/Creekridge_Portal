@@ -11,7 +11,82 @@
 
 
 
+<liferay-ui:panel collapsible="false" title="Customer Information">
+	<aui:col span="3" first="true" id="customerDetailCol">
+		<liferay-ui:panel collapsible="false" title="Customer Detail">
 
+			<aui:input name="customerName" label="Customer Name" value="${creditApp.customerName}"></aui:input>
+			<aui:input name="customerDBAName" label="DBA Name"></aui:input>
+		</liferay-ui:panel>
+	</aui:col>
+
+	<aui:col span="3" id="customerInfoCol">
+		<liferay-ui:panel collapsible="false" title="Customer Contact Info">
+			<aui:input name="customerContact" label="Customer Contact"></aui:input>
+			<aui:input name="contactPhone" label="Conatct Phone"></aui:input>
+		</liferay-ui:panel>
+	</aui:col>
+</liferay-ui:panel>
+
+
+<%-- <liferay-ui:panel collapsible="true" title="Principal Information">
+
+		<aui:col span="3" first="true" id="customerDetailCol">
+			<liferay-ui:panel collapsible="false" title="Customer Detail">
+				<aui:input name="First Name"></aui:input>
+				<aui:input name="First Name"></aui:input>
+				<aui:input name="First Name"></aui:input>
+				<aui:input name="First Name"></aui:input>
+
+			</liferay-ui:panel>
+		</aui:col>
+
+		<aui:col span="3" id="customerInfoCol">
+			<liferay-ui:panel collapsible="false" title="Customer Contact Info">
+				<aui:fieldset column="true">
+
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</aui:col>
+</liferay-ui:panel> --%>
+
+<%-- <liferay-ui:panel collapsible="true"
+	title="Credit Application Bank Reference Information">
+
+		<aui:col span="3" first="true" id="customerDetailCol">
+			<liferay-ui:panel collapsible="false" title="Customer Detail">
+				<aui:input name="First Name"></aui:input>
+				<aui:input name="First Name"></aui:input>
+				<aui:input name="First Name"></aui:input>
+				<aui:input name="First Name"></aui:input>
+
+			</liferay-ui:panel>
+		</aui:col>
+
+		<aui:col span="3" id="customerInfoCol">
+			<liferay-ui:panel collapsible="false" title="Customer Contact Info">
+				<aui:fieldset column="true">
+
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+					<aui:input name="First Name"></aui:input>
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</aui:col>
+</liferay-ui:panel> --%>
+<aui:button-row>
+	<button type="submit" class="btn btn-info" id="createApplicationButton" onclick="createApplication()"> Create Application </button>
+	<button type="submit" class="btn btn-info" id="createApplicationButton" onclick="createApplication()"> Create Application </button>
+</aui:button-row>
 
 <!-- old code from Pius  -->
 

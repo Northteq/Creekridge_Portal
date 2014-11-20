@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="docroot/WEB-INF/lib"/>
-	<classpathentry kind="src" path="docroot/WEB-INF/tld"/>
 	<classpathentry kind="src" path="docroot/WEB-INF/src"/>
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
