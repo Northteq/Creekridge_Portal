@@ -286,6 +286,14 @@ public class CreditAppLocalServiceWrapper implements CreditAppLocalService,
 			arguments);
 	}
 
+	@Override
+	public com.tamarack.creekridge.model.CreditApp addCreditApp(
+		com.liferay.portal.model.User user, long vendorId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.addCreditApp(user, vendorId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

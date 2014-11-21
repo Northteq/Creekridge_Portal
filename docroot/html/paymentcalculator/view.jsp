@@ -41,8 +41,11 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 </portlet:actionURL>
 
 
-<liferay-ui:error key="error" message="${errorMessage}" />
-<liferay-ui:success key="success" message="${successMessage}"/>
+<liferay-ui:error key="errorProposalRequired" message="error-one-proposal-required" />
+<liferay-ui:error key="runCalculatorRequired" message="error-run-calculator-required" />
+<liferay-ui:success key="appSaved" message="app-saved-successfully"/>
+<liferay-ui:success key="appUpdated" message="app-updated-successfully"/>
+
 <aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" >
 	<aui:input type="hidden" value="${creditAppId}" name="creditAppId"/>
 	

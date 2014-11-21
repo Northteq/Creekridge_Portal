@@ -679,7 +679,8 @@ public class CreditAppPrincipalWrapper implements CreditAppPrincipal,
 	}
 
 	@Override
-	public int compareTo(CreditAppPrincipal creditAppPrincipal) {
+	public int compareTo(
+		com.tamarack.creekridge.model.CreditAppPrincipal creditAppPrincipal) {
 		return _creditAppPrincipal.compareTo(creditAppPrincipal);
 	}
 
@@ -689,17 +690,17 @@ public class CreditAppPrincipalWrapper implements CreditAppPrincipal,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<CreditAppPrincipal> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.CreditAppPrincipal> toCacheModel() {
 		return _creditAppPrincipal.toCacheModel();
 	}
 
 	@Override
-	public CreditAppPrincipal toEscapedModel() {
+	public com.tamarack.creekridge.model.CreditAppPrincipal toEscapedModel() {
 		return new CreditAppPrincipalWrapper(_creditAppPrincipal.toEscapedModel());
 	}
 
 	@Override
-	public CreditAppPrincipal toUnescapedModel() {
+	public com.tamarack.creekridge.model.CreditAppPrincipal toUnescapedModel() {
 		return new CreditAppPrincipalWrapper(_creditAppPrincipal.toUnescapedModel());
 	}
 

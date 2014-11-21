@@ -248,4 +248,9 @@ public interface CreditAppLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.tamarack.creekridge.model.CreditApp addCreditApp(
+		com.liferay.portal.model.User user, long vendorId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

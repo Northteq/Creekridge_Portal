@@ -465,7 +465,7 @@ public class VendorWrapper implements Vendor, ModelWrapper<Vendor> {
 	}
 
 	@Override
-	public int compareTo(Vendor vendor) {
+	public int compareTo(com.tamarack.creekridge.model.Vendor vendor) {
 		return _vendor.compareTo(vendor);
 	}
 
@@ -475,17 +475,17 @@ public class VendorWrapper implements Vendor, ModelWrapper<Vendor> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Vendor> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.Vendor> toCacheModel() {
 		return _vendor.toCacheModel();
 	}
 
 	@Override
-	public Vendor toEscapedModel() {
+	public com.tamarack.creekridge.model.Vendor toEscapedModel() {
 		return new VendorWrapper(_vendor.toEscapedModel());
 	}
 
 	@Override
-	public Vendor toUnescapedModel() {
+	public com.tamarack.creekridge.model.Vendor toUnescapedModel() {
 		return new VendorWrapper(_vendor.toUnescapedModel());
 	}
 

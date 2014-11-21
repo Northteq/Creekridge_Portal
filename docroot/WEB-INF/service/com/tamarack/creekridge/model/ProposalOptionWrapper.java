@@ -588,7 +588,8 @@ public class ProposalOptionWrapper implements ProposalOption,
 	}
 
 	@Override
-	public int compareTo(ProposalOption proposalOption) {
+	public int compareTo(
+		com.tamarack.creekridge.model.ProposalOption proposalOption) {
 		return _proposalOption.compareTo(proposalOption);
 	}
 
@@ -598,17 +599,17 @@ public class ProposalOptionWrapper implements ProposalOption,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<ProposalOption> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.ProposalOption> toCacheModel() {
 		return _proposalOption.toCacheModel();
 	}
 
 	@Override
-	public ProposalOption toEscapedModel() {
+	public com.tamarack.creekridge.model.ProposalOption toEscapedModel() {
 		return new ProposalOptionWrapper(_proposalOption.toEscapedModel());
 	}
 
 	@Override
-	public ProposalOption toUnescapedModel() {
+	public com.tamarack.creekridge.model.ProposalOption toUnescapedModel() {
 		return new ProposalOptionWrapper(_proposalOption.toUnescapedModel());
 	}
 

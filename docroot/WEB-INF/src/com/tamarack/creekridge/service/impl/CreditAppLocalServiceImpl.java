@@ -14,6 +14,20 @@
 
 package com.tamarack.creekridge.service.impl;
 
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.tamarack.creekridge.liferay.paymentcalculator.PaymentCalculator;
+import com.tamarack.creekridge.model.CreditApp;
+import com.tamarack.creekridge.model.CreditAppStatus;
+import com.tamarack.creekridge.service.CreditAppLocalService;
+import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 import com.tamarack.creekridge.service.base.CreditAppLocalServiceBaseImpl;
 
 /**
@@ -36,5 +50,38 @@ public class CreditAppLocalServiceImpl extends CreditAppLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.tamarack.creekridge.service.CreditAppLocalServiceUtil} to access the credit app local service.
 	 */
+	
+	private static Log _log = LogFactory.getLog(CreditAppLocalService.class);
+	
+	
+	
+	public CreditApp addCreditApp (User user, long vendorId) throws PortalException, SystemException {
+		
+		CreditApp newApp = creditAppPersistence.create(CounterLocalServiceUtil.increment(CreditApp.class.getName()));
+		newApp.setCompanyId(user.getCompanyId());
+		newApp.setUserId(user.getUserId());
+		newApp.setUserName(user.getScreenName());
+		newApp.setModifiedDate(new Date());
+		newApp.setCreateDate(new Date());
+		newApp.setVendorId(vendorId);
+		CreditAppStatus creditAppStatus;
+		
+		try {
+			
+			_log.info("getting app status value for \"Draft\"");
+			creditAppStatus = CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus("Draft");
+			if (creditAppStatus != null) {
+				_log.info("\"Draft\" status id found");
+				newApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
+			}
+		} catch (Exception e) {
+			_log.error(e);
+		}
+			
+		//resourceLocalService.addResources(user.getCompanyId(), user.getGroupId(), CreditApp.class.getName(), false);
+		
+		return creditAppPersistence.update(newApp);
+		
+	}
 	
 }

@@ -51,7 +51,6 @@
 			<value>false</value>
 		</init-param>
 
-
 		<!-- https://www.liferay.com/documentation/liferay-portal/6.2/development/-/ai/passing-info-from-action-to-render-phase-liferay-portal-6-2-dev-guide-en  -->
 		<!-- <init-param>
 			<name>copy-request-parameters</name>
@@ -63,6 +62,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Payment Calculator</title>
 			<short-title>Payment Calculator</short-title>
@@ -99,6 +99,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
+		
 		<portlet-info>
 			<title>View Credit Application</title>
 			<short-title>View Credit Application</short-title>

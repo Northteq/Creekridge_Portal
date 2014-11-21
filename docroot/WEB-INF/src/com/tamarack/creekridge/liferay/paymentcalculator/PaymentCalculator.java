@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -73,9 +74,8 @@ public class PaymentCalculator extends MVCPortlet {
 	private  User currentUser;
 	private List <ProposalOptionWrapper> proposalOptionList;
 	private CreditApp creditApp;
-	private String errorMessage = "";
-	private String successMessage = "";
-	private Boolean hasProposalIncluded = false;
+	private boolean hasProposalIncluded = false;
+	private boolean isAppCreated=false;
 	
 	@Override 
 	public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
@@ -95,15 +95,12 @@ public class PaymentCalculator extends MVCPortlet {
 		List<Product> productOptions = new ArrayList<Product>();
 		creditApp = null;
 		
-		//need to be able to access data outside of form from the page
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(renderRequest);
-		
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest
 				.getAttribute(WebKeys.THEME_DISPLAY);
+		
 		vendorId = themeDisplay.getLayout().getGroupId();
 		currentUser = themeDisplay.getUser();
 		
-		request.getSession().setAttribute("errorMessage", errorMessage);
 		
 		try {
 
@@ -166,54 +163,36 @@ public class PaymentCalculator extends MVCPortlet {
 	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
 		
-		errorMessage = "";
-		successMessage = "";
-		SessionMessages.clear(actionRequest);
-		
+
 		_log.info("saveApplicationInfo actionrequest started: ");
 		Long creditAppId = ParamUtil.getLong(actionRequest,"creditAppId");
 		
 		try {
 			_log.info("creditAppId: " + creditAppId);
+			
+			
 			if (creditAppId == 0) {
-				creditApp = CreditAppLocalServiceUtil.createCreditApp(CounterLocalServiceUtil.increment(CreditApp.class.getName()));
-				
-				CreditAppStatus creditAppStatus = CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus("Draft");
-				_log.info("getting status for the application " + creditAppStatus);
-				
-				if (creditAppStatus != null) {
-					creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
-				}
-				
-				
-				creditApp.setCompanyId(currentUser.getCompanyId());
-				creditApp.setUserId(currentUser.getUserId());
-				creditApp.setUserName(currentUser.getScreenName());
-				creditApp.setModifiedDate(new Date());
-				creditApp.setCreateDate(new Date());
-				creditApp.setVendorId(vendorId);
-				creditApp.setEquipmentPrice(ParamUtil.getDouble(actionRequest, "equipmentPrice"));
-				
-				//update app info
-				creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
-				
-				successMessage = "Application has been created.";
-				_log.info(successMessage + creditApp);
-				
+				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, vendorId);
+				_log.info("Application has been created. " + creditApp);
+				isAppCreated = true;
 				
 			} else {
 				creditApp = CreditAppLocalServiceUtil.getCreditApp(ParamUtil.getLong(actionRequest, "creditAppId"));
-				successMessage = "Application has been updated.";
-				_log.info(successMessage + creditApp);
+				_log.info("Application has been updated. " + creditApp);
+				
 			}
 			
-			
-			
-			
+
 			//map form fields to the application
+			creditApp.setEquipmentPrice(ParamUtil.getDouble(actionRequest, "equipmentPrice"));
+			creditApp.setCustomerName(ParamUtil.getString(actionRequest,"customerName"));
+			creditApp.setCustomerDBAName(ParamUtil.getString(actionRequest,"customerDBAName"));
+			
+			
+			//process proposalOptions
 			if (proposalOptionList == null || proposalOptionList.isEmpty()) {
 				_log.info("proposalOptionList is empty");
-				errorMessage = "Please run the calculator to get pricing options.";
+				SessionErrors.add(actionRequest, "runCalculatorRequired");
 				actionResponse.setRenderParameter("calculatorSectionState", "open");
 				
 			} else {
@@ -240,16 +219,9 @@ public class PaymentCalculator extends MVCPortlet {
 				}
 				
 				if (!hasProposalIncluded) {
-					errorMessage = "You need to include at least one pricing option.";
-					
-					
-					
+					SessionErrors.add(actionRequest, "error-one-proposal-required");	
 				}
 			}
-			
-			//map fields to applicaiton
-			creditApp.setCustomerName(ParamUtil.getString(actionRequest,"customerName"));
-			creditApp.setCustomerDBAName(ParamUtil.getString(actionRequest,"customerDBAName"));
 			
 			
 			
@@ -257,18 +229,13 @@ public class PaymentCalculator extends MVCPortlet {
 			creditApp.setModifiedDate(new Date());
 			creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 			
-			
-			
-			
-			if (errorMessage != "")
-				SessionErrors.add (actionRequest, "error");
-			
-			
-			if (successMessage != "")
-				SessionMessages.add(actionRequest, "success");
-			
+			if (isAppCreated) {
+				SessionMessages.add(actionRequest, "appSaved");
+			} else {
+				SessionMessages.add(actionRequest, "appUpdated");
+			}
+		
 		} catch (Exception e) {
-			errorMessage = String.valueOf(e);
 			_log.error(e);
 		}
 		
