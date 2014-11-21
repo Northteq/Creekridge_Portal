@@ -8,7 +8,4 @@
 		<portlet id="insertPaymentCalculatorLookValuesPortlet"></portlet>
 		<portlet id="viewCreditApplicationPortlet"></portlet>
 	</category>
-	<category name="category.sample">
-		<portlet id="view-invoices"></portlet>
-	</category>
 </display>

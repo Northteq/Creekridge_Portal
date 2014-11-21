@@ -16,12 +16,8 @@
 <%@page import="com.liferay.portal.model.User"%>
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@page import="com.liferay.portal.theme.ThemeDisplay"%>
-<%@page import="com.liferay.portal.util.PortalUtil"%>
-
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
-
-
 <%@page import="java.util.*"%>
 <portlet:defineObjects />
 
@@ -253,9 +249,9 @@ for (int j=0;j<creditAppStatusList.size();j++){
 			<td> <%=statusMap.get(creditAppList.get(i).getCreditAppStatusId())%>
 			</td>
 			<%if( "Submitted".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId()))){ %>
-			 <td><button  type="button"  name="view" value="View" onclick="<%="javascript:window.location.href='"+PortalUtil.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()+"/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
+			 <td><button  type="button"  name="view" value="View" onclick="<%="javascript:window.location.href='/web/vendor1/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
 		     <%} else { %>
-		      <td><button  type="button"  name="edit" value="Edit" onclick="<%="javascript:window.location.href='"+PortalUtil.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()+"/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
+		      <td><button  type="button"  name="edit" value="Edit" onclick="<%="javascript:window.location.href='/web/vendor1/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
 		    
 		     <%} %>
 		     

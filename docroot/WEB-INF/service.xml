@@ -214,7 +214,7 @@
 			
 		</order>
 		<!-- Finder methods -->
-         <finder name="CreditAppStatusName" return-type="CreditAppStatus">
+         <finder name="CreditAppStatusName" return-type="CreditAppStatus" unique="true">
 			<finder-column name="creditAppStatusName" />
 		</finder>
 		
@@ -277,7 +277,7 @@
 		    <order-column name="purchaseOptionName" />
 		</order>
 		<!-- Finder Method -->
-		<finder name="PurchaseOptionName" return-type="PurchaseOption">
+		<finder name="PurchaseOptionName" return-type="PurchaseOption" unique="true">
 			<finder-column name="purchaseOptionName" />
 		</finder>
 		<finder name="PurchaseOptionId" return-type="Collection">
@@ -374,19 +374,19 @@
 			<finder-column name="vendorId" />
 			<finder-column name="active" />
 		</finder>
-		<finder name="A_V_P" return-type="RateFactorRule">
+		<finder name="A_V_P" return-type="RateFactorRule" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
 		
 		</finder>
-		<finder name="A_V_P_P" return-type="RateFactorRule">
+		<finder name="A_V_P_P" return-type="RateFactorRule" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
 			<finder-column name="purchaseOptionId" />
 		</finder>
-		<finder name="A_V_P_T_P" return-type="RateFactorRule">
+		<finder name="A_V_P_T_P" return-type="RateFactorRule" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
