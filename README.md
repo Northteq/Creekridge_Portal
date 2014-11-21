@@ -8,10 +8,9 @@ Instructions:
 
 
 1. Delete the folder with current creek ridge portlets if any in sdk/portlets
-
-go to command line and navigate to the sdk/portlets (Windows key + R and type cmd  for those who are on those ) 
-
-execute (no quotes) -  "git clone https://github.com/TamarackConsulting/Creekridge_Portal.git  CreekRidgeCapital-portlet"
+2. Open command line (Windows key + R and type cmd)
+3. Navigate to the {liferay sdk folder}/portlets
+4. Execute (no quotes) - <code> "git clone https://github.com/TamarackConsulting/Creekridge_Portal.git  CreekRidgeCapital-portlet" </code>
 
 this should create a folder in portlets. 
 
