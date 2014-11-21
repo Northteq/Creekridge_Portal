@@ -31,7 +31,6 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 
 <portlet:resourceURL var="updateIncludeInProposalURL"
 	id="updateIncludeInProposal" />
-	
 
 <portlet:actionURL name="saveApplicationInfo" var="saveApplicationInfoURL">
 	<portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
@@ -48,7 +47,6 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 
 <aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" >
 	<aui:input type="hidden" value="${creditAppId}" name="creditAppId"/>
-	
 	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 	
 	
