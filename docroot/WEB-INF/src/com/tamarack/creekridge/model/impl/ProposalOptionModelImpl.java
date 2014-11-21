@@ -74,9 +74,10 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 			{ "rateFactorRuleId", Types.BIGINT },
 			{ "paymentAmount", Types.DOUBLE },
 			{ "equipmentPrice", Types.DOUBLE },
-			{ "includeInProposal", Types.BOOLEAN }
+			{ "includeInProposal", Types.BOOLEAN },
+			{ "useForCreditApp", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_ProposalOption (proposalOptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creditAppId LONG,productId LONG,termId LONG,purchaseOptionId LONG,rateFactorRuleId LONG,paymentAmount DOUBLE,equipmentPrice DOUBLE,includeInProposal BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_ProposalOption (proposalOptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creditAppId LONG,productId LONG,termId LONG,purchaseOptionId LONG,rateFactorRuleId LONG,paymentAmount DOUBLE,equipmentPrice DOUBLE,includeInProposal BOOLEAN,useForCreditApp BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table eCreekRidge_ProposalOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY proposalOption.proposalOptionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_ProposalOption.proposalOptionId ASC";
@@ -148,6 +149,7 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 		attributes.put("paymentAmount", getPaymentAmount());
 		attributes.put("equipmentPrice", getEquipmentPrice());
 		attributes.put("includeInProposal", getIncludeInProposal());
+		attributes.put("useForCreditApp", getUseForCreditApp());
 
 		return attributes;
 	}
@@ -236,6 +238,12 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 
 		if (includeInProposal != null) {
 			setIncludeInProposal(includeInProposal);
+		}
+
+		Boolean useForCreditApp = (Boolean)attributes.get("useForCreditApp");
+
+		if (useForCreditApp != null) {
+			setUseForCreditApp(useForCreditApp);
 		}
 	}
 
@@ -423,6 +431,21 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 		_includeInProposal = includeInProposal;
 	}
 
+	@Override
+	public boolean getUseForCreditApp() {
+		return _useForCreditApp;
+	}
+
+	@Override
+	public boolean isUseForCreditApp() {
+		return _useForCreditApp;
+	}
+
+	@Override
+	public void setUseForCreditApp(boolean useForCreditApp) {
+		_useForCreditApp = useForCreditApp;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -468,6 +491,7 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 		proposalOptionImpl.setPaymentAmount(getPaymentAmount());
 		proposalOptionImpl.setEquipmentPrice(getEquipmentPrice());
 		proposalOptionImpl.setIncludeInProposal(getIncludeInProposal());
+		proposalOptionImpl.setUseForCreditApp(getUseForCreditApp());
 
 		proposalOptionImpl.resetOriginalValues();
 
@@ -583,12 +607,14 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 
 		proposalOptionCacheModel.includeInProposal = getIncludeInProposal();
 
+		proposalOptionCacheModel.useForCreditApp = getUseForCreditApp();
+
 		return proposalOptionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{proposalOptionId=");
 		sb.append(getProposalOptionId());
@@ -618,6 +644,8 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 		sb.append(getEquipmentPrice());
 		sb.append(", includeInProposal=");
 		sb.append(getIncludeInProposal());
+		sb.append(", useForCreditApp=");
+		sb.append(getUseForCreditApp());
 		sb.append("}");
 
 		return sb.toString();
@@ -625,7 +653,7 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.tamarack.creekridge.model.ProposalOption");
@@ -687,6 +715,10 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 			"<column><column-name>includeInProposal</column-name><column-value><![CDATA[");
 		sb.append(getIncludeInProposal());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>useForCreditApp</column-name><column-value><![CDATA[");
+		sb.append(getUseForCreditApp());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -716,6 +748,7 @@ public class ProposalOptionModelImpl extends BaseModelImpl<ProposalOption>
 	private double _paymentAmount;
 	private double _equipmentPrice;
 	private boolean _includeInProposal;
+	private boolean _useForCreditApp;
 	private long _columnBitmask;
 	private ProposalOption _escapedModel;
 }

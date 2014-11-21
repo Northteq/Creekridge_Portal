@@ -44,6 +44,7 @@ public class ProposalOptionSoap implements Serializable {
 		soapModel.setPaymentAmount(model.getPaymentAmount());
 		soapModel.setEquipmentPrice(model.getEquipmentPrice());
 		soapModel.setIncludeInProposal(model.getIncludeInProposal());
+		soapModel.setUseForCreditApp(model.getUseForCreditApp());
 
 		return soapModel;
 	}
@@ -212,6 +213,18 @@ public class ProposalOptionSoap implements Serializable {
 		_includeInProposal = includeInProposal;
 	}
 
+	public boolean getUseForCreditApp() {
+		return _useForCreditApp;
+	}
+
+	public boolean isUseForCreditApp() {
+		return _useForCreditApp;
+	}
+
+	public void setUseForCreditApp(boolean useForCreditApp) {
+		_useForCreditApp = useForCreditApp;
+	}
+
 	private long _proposalOptionId;
 	private long _companyId;
 	private long _userId;
@@ -226,4 +239,5 @@ public class ProposalOptionSoap implements Serializable {
 	private double _paymentAmount;
 	private double _equipmentPrice;
 	private boolean _includeInProposal;
+	private boolean _useForCreditApp;
 }

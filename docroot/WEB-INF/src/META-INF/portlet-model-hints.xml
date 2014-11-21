@@ -123,6 +123,7 @@
 		<field name="paymentAmount" type="double" />
 		<field name="equipmentPrice" type="double" />
 		<field name="includeInProposal" type="boolean" />
+		<field name="useForCreditApp" type="boolean" />
 	</model>
 	<model name="com.tamarack.creekridge.model.PurchaseOption">
 		<field name="purchaseOptionId" type="long" />

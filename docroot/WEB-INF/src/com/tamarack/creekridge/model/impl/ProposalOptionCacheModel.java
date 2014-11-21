@@ -38,7 +38,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{proposalOptionId=");
 		sb.append(proposalOptionId);
@@ -68,6 +68,8 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		sb.append(equipmentPrice);
 		sb.append(", includeInProposal=");
 		sb.append(includeInProposal);
+		sb.append(", useForCreditApp=");
+		sb.append(useForCreditApp);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,6 +112,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		proposalOptionImpl.setPaymentAmount(paymentAmount);
 		proposalOptionImpl.setEquipmentPrice(equipmentPrice);
 		proposalOptionImpl.setIncludeInProposal(includeInProposal);
+		proposalOptionImpl.setUseForCreditApp(useForCreditApp);
 
 		proposalOptionImpl.resetOriginalValues();
 
@@ -132,6 +135,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		paymentAmount = objectInput.readDouble();
 		equipmentPrice = objectInput.readDouble();
 		includeInProposal = objectInput.readBoolean();
+		useForCreditApp = objectInput.readBoolean();
 	}
 
 	@Override
@@ -158,6 +162,7 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 		objectOutput.writeDouble(paymentAmount);
 		objectOutput.writeDouble(equipmentPrice);
 		objectOutput.writeBoolean(includeInProposal);
+		objectOutput.writeBoolean(useForCreditApp);
 	}
 
 	public long proposalOptionId;
@@ -174,4 +179,5 @@ public class ProposalOptionCacheModel implements CacheModel<ProposalOption>,
 	public double paymentAmount;
 	public double equipmentPrice;
 	public boolean includeInProposal;
+	public boolean useForCreditApp;
 }

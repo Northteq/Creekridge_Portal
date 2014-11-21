@@ -243,6 +243,7 @@
 		<column name="paymentAmount" type="double" />
 		<column name="equipmentPrice" type="double" />
 		<column name="includeInProposal" type="boolean" />
+        <column name="useForCreditApp" type="boolean"></column>
 		
 		
 		<finder name="CreditAppId" return-type="Collection">

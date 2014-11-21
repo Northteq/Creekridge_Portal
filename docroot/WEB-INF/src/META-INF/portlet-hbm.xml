@@ -157,6 +157,7 @@
 		<property name="paymentAmount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="equipmentPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="includeInProposal" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="useForCreditApp" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.tamarack.creekridge.model.impl.PurchaseOptionImpl" table="eCreekRidge_PurchaseOption">
 		<cache usage="read-write" />

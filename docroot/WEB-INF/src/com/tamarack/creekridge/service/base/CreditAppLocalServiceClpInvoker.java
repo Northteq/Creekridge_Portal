@@ -113,6 +113,12 @@ public class CreditAppLocalServiceClpInvoker {
 		_methodName77 = "setBeanIdentifier";
 
 		_methodParameterTypes77 = new String[] { "java.lang.String" };
+
+		_methodName82 = "addCreditApp";
+
+		_methodParameterTypes82 = new String[] {
+				"com.liferay.portal.model.User", "long"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +222,12 @@ public class CreditAppLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName82.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+			return CreditAppLocalServiceUtil.addCreditApp((com.liferay.portal.model.User)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +267,6 @@ public class CreditAppLocalServiceClpInvoker {
 	private String[] _methodParameterTypes76;
 	private String _methodName77;
 	private String[] _methodParameterTypes77;
+	private String _methodName82;
+	private String[] _methodParameterTypes82;
 }

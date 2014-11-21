@@ -196,6 +196,7 @@
 			<basic name="paymentAmount" />
 			<basic name="equipmentPrice" />
 			<basic name="includeInProposal" />
+			<basic name="useForCreditApp" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

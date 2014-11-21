@@ -293,6 +293,27 @@ public interface ProposalOptionModel extends AuditedModel,
 	 */
 	public void setIncludeInProposal(boolean includeInProposal);
 
+	/**
+	 * Returns the use for credit app of this proposal option.
+	 *
+	 * @return the use for credit app of this proposal option
+	 */
+	public boolean getUseForCreditApp();
+
+	/**
+	 * Returns <code>true</code> if this proposal option is use for credit app.
+	 *
+	 * @return <code>true</code> if this proposal option is use for credit app; <code>false</code> otherwise
+	 */
+	public boolean isUseForCreditApp();
+
+	/**
+	 * Sets whether this proposal option is use for credit app.
+	 *
+	 * @param useForCreditApp the use for credit app of this proposal option
+	 */
+	public void setUseForCreditApp(boolean useForCreditApp);
+
 	@Override
 	public boolean isNew();
 

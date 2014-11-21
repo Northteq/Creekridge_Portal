@@ -1234,6 +1234,7 @@ public class ProposalOptionPersistenceImpl extends BasePersistenceImpl<ProposalO
 		proposalOptionImpl.setPaymentAmount(proposalOption.getPaymentAmount());
 		proposalOptionImpl.setEquipmentPrice(proposalOption.getEquipmentPrice());
 		proposalOptionImpl.setIncludeInProposal(proposalOption.isIncludeInProposal());
+		proposalOptionImpl.setUseForCreditApp(proposalOption.isUseForCreditApp());
 
 		return proposalOptionImpl;
 	}

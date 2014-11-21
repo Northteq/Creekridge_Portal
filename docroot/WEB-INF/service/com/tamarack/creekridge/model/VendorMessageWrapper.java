@@ -379,8 +379,7 @@ public class VendorMessageWrapper implements VendorMessage,
 	}
 
 	@Override
-	public int compareTo(
-		com.tamarack.creekridge.model.VendorMessage vendorMessage) {
+	public int compareTo(VendorMessage vendorMessage) {
 		return _vendorMessage.compareTo(vendorMessage);
 	}
 
@@ -390,17 +389,17 @@ public class VendorMessageWrapper implements VendorMessage,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.VendorMessage> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<VendorMessage> toCacheModel() {
 		return _vendorMessage.toCacheModel();
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.VendorMessage toEscapedModel() {
+	public VendorMessage toEscapedModel() {
 		return new VendorMessageWrapper(_vendorMessage.toEscapedModel());
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.VendorMessage toUnescapedModel() {
+	public VendorMessage toUnescapedModel() {
 		return new VendorMessageWrapper(_vendorMessage.toUnescapedModel());
 	}
 

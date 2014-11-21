@@ -64,6 +64,7 @@ public class ProposalOptionWrapper implements ProposalOption,
 		attributes.put("paymentAmount", getPaymentAmount());
 		attributes.put("equipmentPrice", getEquipmentPrice());
 		attributes.put("includeInProposal", getIncludeInProposal());
+		attributes.put("useForCreditApp", getUseForCreditApp());
 
 		return attributes;
 	}
@@ -152,6 +153,12 @@ public class ProposalOptionWrapper implements ProposalOption,
 
 		if (includeInProposal != null) {
 			setIncludeInProposal(includeInProposal);
+		}
+
+		Boolean useForCreditApp = (Boolean)attributes.get("useForCreditApp");
+
+		if (useForCreditApp != null) {
+			setUseForCreditApp(useForCreditApp);
 		}
 	}
 
@@ -487,6 +494,36 @@ public class ProposalOptionWrapper implements ProposalOption,
 		_proposalOption.setIncludeInProposal(includeInProposal);
 	}
 
+	/**
+	* Returns the use for credit app of this proposal option.
+	*
+	* @return the use for credit app of this proposal option
+	*/
+	@Override
+	public boolean getUseForCreditApp() {
+		return _proposalOption.getUseForCreditApp();
+	}
+
+	/**
+	* Returns <code>true</code> if this proposal option is use for credit app.
+	*
+	* @return <code>true</code> if this proposal option is use for credit app; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isUseForCreditApp() {
+		return _proposalOption.isUseForCreditApp();
+	}
+
+	/**
+	* Sets whether this proposal option is use for credit app.
+	*
+	* @param useForCreditApp the use for credit app of this proposal option
+	*/
+	@Override
+	public void setUseForCreditApp(boolean useForCreditApp) {
+		_proposalOption.setUseForCreditApp(useForCreditApp);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _proposalOption.isNew();
@@ -551,8 +588,7 @@ public class ProposalOptionWrapper implements ProposalOption,
 	}
 
 	@Override
-	public int compareTo(
-		com.tamarack.creekridge.model.ProposalOption proposalOption) {
+	public int compareTo(ProposalOption proposalOption) {
 		return _proposalOption.compareTo(proposalOption);
 	}
 
@@ -562,17 +598,17 @@ public class ProposalOptionWrapper implements ProposalOption,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.ProposalOption> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<ProposalOption> toCacheModel() {
 		return _proposalOption.toCacheModel();
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.ProposalOption toEscapedModel() {
+	public ProposalOption toEscapedModel() {
 		return new ProposalOptionWrapper(_proposalOption.toEscapedModel());
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.ProposalOption toUnescapedModel() {
+	public ProposalOption toUnescapedModel() {
 		return new ProposalOptionWrapper(_proposalOption.toUnescapedModel());
 	}
 
