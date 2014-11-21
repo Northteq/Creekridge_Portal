@@ -27,14 +27,38 @@ List<CreditApp> creditAppList=CreditAppLocalServiceUtil.getCreditApps(-1, -1);
 List<CreditAppStatus> creditAppStatusList=CreditAppStatusLocalServiceUtil.getCreditAppStatuses(-1, -1);
 boolean isOmniAdmin=themeDisplay.getPermissionChecker().isOmniadmin();
 boolean isGroupOwner = themeDisplay.getPermissionChecker().isGroupOwner(themeDisplay.getScopeGroupId());
+boolean isSiteMember =themeDisplay.getPermissionChecker().isGroupMember(themeDisplay.getScopeGroupId());
 boolean isCreekRidgeSalesManager=false;
+boolean isVendorSaleRep=false;
 User user = themeDisplay.getUser();
-for (int i=0;i<user.getRoles().size();i++){
-	System.out.println(user.getRoles().get(i).getName());
-	if("CreekRidge Sales Manager".equalsIgnoreCase(user.getRoles().get(i).getName())){
-		isCreekRidgeSalesManager=true;
-		break;
+if(isSiteMember) {
+List<com.liferay.portal.model.UserGroupRole> userGroupRoles = com.liferay.portal.service.UserGroupRoleLocalServiceUtil.getUserGroupRoles(themeDisplay.getUserId());
+List<com.liferay.portal.model.UserGroupRole> siteRoles = new ArrayList<com.liferay.portal.model.UserGroupRole>();
+for (com.liferay.portal.model.UserGroupRole userGroupRole : userGroupRoles) {
+	int roleType = userGroupRole.getRole().getType();
+		if (roleType == com.liferay.portal.model.RoleConstants.TYPE_SITE) {
+ 			siteRoles.add(userGroupRole);
+ 			System.out.println(" Custom Role "+userGroupRole.getRole().getName());
+ 			if("salesManager".equalsIgnoreCase(userGroupRole.getRole().getName())){
+	 			isCreekRidgeSalesManager=true;
+				break;
+			}
+ 		}
 	}
+
+if(!isCreekRidgeSalesManager) {
+	for (com.liferay.portal.model.UserGroupRole userGroupRole : userGroupRoles) {
+		int roleType = userGroupRole.getRole().getType();
+			if (roleType == com.liferay.portal.model.RoleConstants.TYPE_SITE) {
+ 			siteRoles.add(userGroupRole);
+ 			System.out.println(" Custom Role "+userGroupRole.getRole().getName());
+ 			if("salesRep".equalsIgnoreCase(userGroupRole.getRole().getName())){
+				isVendorSaleRep=true;
+				break;
+	         }
+          }
+      }
+  }
 }
 Map<Long,String> statusMap= new HashMap<Long,String>();
 for (int j=0;j<creditAppStatusList.size();j++){
@@ -204,8 +228,8 @@ for (int j=0;j<creditAppStatusList.size();j++){
 	<%  
 	
       for (int i=0;i<creditAppList.size();i++) {
-       if( !"Cancelled".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId())) && !"Draft".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId()))){
-    	  
+       if( !"Cancelled".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId())) && !"Draft".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId())))
+    	if((isVendorSaleRep && creditAppList.get(i).getUserId() == themeDisplay.getUserId()) || isCreekRidgeSalesManager || isOmniAdmin )  {
       %>
 
 		<tr>
@@ -224,7 +248,13 @@ for (int j=0;j<creditAppStatusList.size();j++){
 			</td>
 			<td> <%=statusMap.get(creditAppList.get(i).getCreditAppStatusId())%>
 			</td>
-			 <td><button  type="button"  name="edit" value="Edit" onclick="<%="javascript:window.location.href='/web/vendor1/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
+			<%if( "Submitted".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId()))){ %>
+			 <td><button  type="button"  name="view" value="View" onclick="<%="javascript:window.location.href='/web/vendor1/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
+		     <%} else { %>
+		      <td><button  type="button"  name="edit" value="Edit" onclick="<%="javascript:window.location.href='/web/vendor1/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><img src='<%= renderRequest.getContextPath() + "/images/edit.png" %>'/></button></td>
+		    
+		     <%} %>
+		     
 		     <%if( !"Submitted".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId()))){ %>
 		      <td><button  type="button"  name="cancel"  value="Cancel" onclick="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><img src='<%= renderRequest.getContextPath() + "/images/remove.png" %>' /></button></td>
 	          <%} else { %>
