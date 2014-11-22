@@ -1,12 +1,10 @@
 Creekridge_Portal
 =================
-
 Contains the code for the Creekridge Capital portal.
 
 
 Instructions: 
-
-
+------------------
 1. Delete the folder with current creek ridge portlets if any in sdk/portlets
 2. Open command line (Windows key + R and type cmd)
 3. Navigate to the <code> {liferay sdk folder}/portlets </code>
@@ -15,7 +13,7 @@ Instructions:
 6. Run ANT clean and ANT compile targets.
 7. If you are having issues, go to service.xml and right click >  Liferay > Build Services (do NOT build WSSD!)
 
-Altnernative to steps 2-4 using Eclipse:
+Alternative to steps 2-4 using Eclipse:
 ----------------------------------------
 Note: Steps 2-4 from above can also be done from Eclipse using the following steps:
 2. From Eclipse, click on File > Import
