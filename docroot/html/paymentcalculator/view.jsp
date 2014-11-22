@@ -16,6 +16,9 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 
 %>
 
+
+
+
 <portlet:resourceURL var="processProductsSelectionURL"
 	id="processProductsSelection" />
 	
@@ -45,15 +48,13 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 <liferay-ui:success key="appSaved" message="app-saved-successfully"/>
 <liferay-ui:success key="appUpdated" message="app-updated-successfully"/>
 
-<aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" >
-	<aui:input type="hidden" value="${creditAppId}" name="creditAppId"/>
-	
-	
-	<c:if test="${creditAppId != 0}">
-		<h3>Application ${creditAppId} </h3> 
+<aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post">
+	<aui:input type="hidden" name="creditAppId" value="${creditApp.creditAppId}"/>
+	<c:if test="${creditApp.creditAppId != 0}">
+		<h3>Application ${creditApp.creditAppId} </h3> 
  	</c:if>
 	
-	<c:if test="${creditAppId == 0}">
+	<c:if test="${creditApp.creditAppId == 0}">
 		<h3>New Application</h3> 
  	</c:if>
  	
@@ -137,22 +138,32 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 </aui:form>
 
 
+
+
 <script type="text/javascript">
+
+var processProductsSelectionURL = "<%=processProductsSelectionURL%>";
+var processPurchaseOptionsSelectionURL = "<%=processPurchaseOptionsSelectionURL%>";
+var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
+var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
+var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
+
 
 var navigateToCalculator = function () {
 	$("*[data-persist-id='paymentCalculator']").click();
 };
 
 $(document).ready(function () {
-	
 	var proposals = jQuery.parseJSON('${proposalList}');
 	
 	console.log ("proposals on load", proposals);
 	
 	if (proposals != '') {
-		
 		buildProposalOptionsTable(proposals);
 	}
+	
+	$(".alert-error:contains('Your request failed to complete.')").hide();
+	
 		
 });
 
@@ -218,14 +229,14 @@ var getPurchaseOptions = function () {
 	
 	
 	if (prodList.length>0) {
-		var url = "<%=processProductsSelectionURL%>";
+		
 		var dataJsonString = createRateFactorRuleRequestObjectString();
 
 		console.log('selectedProducts', dataJsonString);
 
 		$.ajax({
 					type : "POST",
-					url : url,
+					url : processProductsSelectionURL,
 					cache : false,
 					dataType : "Json",
 					data : {
@@ -267,14 +278,14 @@ var getPurchaseOptions = function () {
 
 var getTermsOptions = function () {
 
-	var url = "<%=processPurchaseOptionsSelectionURL%>";	
+	
 	var dataJsonString = createRateFactorRuleRequestObjectString();
 
 	console.log('selectedProducts', dataJsonString);
 
 	$.ajax({
 			type : "POST",
-			url : url,
+			url : processPurchaseOptionsSelectionURL,
 			cache : false,
 			dataType : "Json",
 			data : {
@@ -312,10 +323,9 @@ var updateUseForApplication = function ($this) {
 	
 	
 	var poId = $($this).val();
-	var url = '<%=updateUseForApplicationURL%>';
 	$.ajax({
 		type : "POST",
-		url : url,
+		url : updateUseForApplicationURL,
 		cache : false,
 		dataType : "Json",
 		data : {
@@ -333,16 +343,13 @@ var updateUseForApplication = function ($this) {
 };
 
 
-var updateUseInProposalSelection = function ($this) {
-	console.log('updateSelectedForProposal');
-	
-	var url = "<%=updateIncludeInProposalURL%>";	
+var updateUseInProposalSelection = function ($this) {	
 	var poId = $($this).val();
 	var isChecked = $($this).is(':checked');
 	
 	$.ajax({
 			type : "POST",
-			url : url,
+			url : updateIncludeInProposalURL,
 			cache : false,
 			dataType : "Json",
 			data : {
@@ -364,16 +371,12 @@ var updateUseInProposalSelection = function ($this) {
 
 
 var calculatePayments = function () {
-	console.log('calculating payments');
 	
-	var url = "<%=calculatePaymentsURL%>";	
 	var dataJsonString = createRateFactorRuleRequestObjectString();
-
-	console.log('selectedProducts', dataJsonString);
 
 	$.ajax({
 			type : "POST",
-			url : url,
+			url : calculatePaymentsURL,
 			cache : false,
 			dataType : "Json",
 			data : {
@@ -491,14 +494,7 @@ var buildProposalOptionsTable = function (remoteData) {
                   	allowHTML: true,
                   	name: 'useForCreditApp',
                   	 className: 'purchaseOptionsColumn'
-				  },
-                 /*  {
-                     key: 'eqPrice',
-                     label:'Equipment Price',
-                     formatter: currencyFormatter,
-                     className: 'purchaseOptionsColumn'
-                   }, */
-                   ];
+				  }];
 			    
 			    
 		    		var dataTable = new Y.DataTable({
@@ -508,9 +504,7 @@ var buildProposalOptionsTable = function (remoteData) {
 		    		$('#proposalOptionsSection').show();
 			    	$('*[data-persist-id="pricingOvervewResults"]').click();
 			  }
-	);
-	
-	
+	);	
 };
 
 </script>

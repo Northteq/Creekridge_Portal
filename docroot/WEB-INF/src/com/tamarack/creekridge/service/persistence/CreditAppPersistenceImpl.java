@@ -1217,6 +1217,7 @@ public class CreditAppPersistenceImpl extends BasePersistenceImpl<CreditApp>
 		creditAppImpl.setUserName(creditApp.getUserName());
 		creditAppImpl.setCreateDate(creditApp.getCreateDate());
 		creditAppImpl.setModifiedDate(creditApp.getModifiedDate());
+		creditAppImpl.setGroupId(creditApp.getGroupId());
 		creditAppImpl.setVendorId(creditApp.getVendorId());
 		creditAppImpl.setCreditAppStatusId(creditApp.getCreditAppStatusId());
 		creditAppImpl.setProductId(creditApp.getProductId());

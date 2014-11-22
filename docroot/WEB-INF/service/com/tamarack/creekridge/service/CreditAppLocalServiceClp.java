@@ -117,7 +117,8 @@ public class CreditAppLocalServiceClp implements CreditAppLocalService {
 		_methodName19 = "addCreditApp";
 
 		_methodParameterTypes19 = new String[] {
-				"com.liferay.portal.model.User", "long"
+				"com.liferay.portal.model.User",
+				"com.liferay.portal.theme.ThemeDisplay"
 			};
 	}
 
@@ -673,7 +674,8 @@ public class CreditAppLocalServiceClp implements CreditAppLocalService {
 
 	@Override
 	public com.tamarack.creekridge.model.CreditApp addCreditApp(
-		com.liferay.portal.model.User user, long vendorId)
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -681,7 +683,11 @@ public class CreditAppLocalServiceClp implements CreditAppLocalService {
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
-					new Object[] { ClpSerializer.translateInput(user), vendorId });
+					new Object[] {
+						ClpSerializer.translateInput(user),
+						
+					ClpSerializer.translateInput(themeDisplay)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

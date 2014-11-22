@@ -379,7 +379,8 @@ public class PurchaseOptionWrapper implements PurchaseOption,
 	}
 
 	@Override
-	public int compareTo(PurchaseOption purchaseOption) {
+	public int compareTo(
+		com.tamarack.creekridge.model.PurchaseOption purchaseOption) {
 		return _purchaseOption.compareTo(purchaseOption);
 	}
 
@@ -389,17 +390,17 @@ public class PurchaseOptionWrapper implements PurchaseOption,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<PurchaseOption> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.PurchaseOption> toCacheModel() {
 		return _purchaseOption.toCacheModel();
 	}
 
 	@Override
-	public PurchaseOption toEscapedModel() {
+	public com.tamarack.creekridge.model.PurchaseOption toEscapedModel() {
 		return new PurchaseOptionWrapper(_purchaseOption.toEscapedModel());
 	}
 
 	@Override
-	public PurchaseOption toUnescapedModel() {
+	public com.tamarack.creekridge.model.PurchaseOption toUnescapedModel() {
 		return new PurchaseOptionWrapper(_purchaseOption.toUnescapedModel());
 	}
 

@@ -24,6 +24,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="vendorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="creditAppStatusId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="productId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

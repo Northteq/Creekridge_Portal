@@ -19,6 +19,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="groupId" />
 			<basic name="vendorId" />
 			<basic name="creditAppStatusId" />
 			<basic name="productId" />

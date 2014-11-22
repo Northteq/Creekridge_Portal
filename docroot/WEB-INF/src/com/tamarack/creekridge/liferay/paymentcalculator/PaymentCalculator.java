@@ -67,10 +67,11 @@ public class PaymentCalculator extends MVCPortlet {
 	}
 
 	private static Log _log = LogFactory.getLog(PaymentCalculator.class);
-	private  Long vendorId;
-	private  User currentUser;
+	private Long vendorId;
+	private User currentUser;
+	private ThemeDisplay themeDisplay;
 	private List <ProposalOptionWrapper> proposalOptionList;
-	private CreditApp creditApp;
+
 	private boolean hasProposalIncluded = false;
 	private boolean isAppCreated=false;
 	
@@ -90,9 +91,9 @@ public class PaymentCalculator extends MVCPortlet {
 	
 		//page variables available
 		List<Product> productOptions = new ArrayList<Product>();
-		creditApp = null;
+		CreditApp creditApp;
 		
-		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest
+		themeDisplay = (ThemeDisplay) renderRequest
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		vendorId = themeDisplay.getLayout().getGroupId();
@@ -104,19 +105,23 @@ public class PaymentCalculator extends MVCPortlet {
 			productOptions = ProductLocalServiceUtil.getProducts(-1, -1);
 			renderRequest.setAttribute("productOptions", productOptions);
 			
-			Long creditAppId = ParamUtil.getLong(renderRequest, "creditAppId");
+			
 				
-			_log.info("creditAppId: " + creditAppId);
-			if (creditAppId != 0) {
-				creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			creditApp = (CreditApp) renderRequest.getAttribute("creditApp");
+			if (creditApp == null) { //try page parameter
+				HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+				String appId = httpReq.getParameter("creditAppId");
+				
+				if (appId != null) {
+					creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long (appId));
+				}
 			}
 			
-			if (creditApp != null) {
+			_log.info("creditApp: " + creditApp);
 			
-				
-				_log.info("credit app not null " + creditApp);
+			if (creditApp != null) {
+
 				renderRequest.setAttribute("creditApp", creditApp);
-				renderRequest.setAttribute("creditAppId", creditApp.getCreditAppId());
 				
 				//populate proposal options if any
 				List <ProposalOptionWrapper> powList = new ArrayList<ProposalOptionWrapper>();
@@ -128,30 +133,16 @@ public class PaymentCalculator extends MVCPortlet {
 				renderRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(powList));
 			}
 			
-			 
-			_log.info("render creditApp : " + creditApp);
 				
 		} catch (Exception e) {
 			_log.error(e);
 		}
 		
-		
 		super.render(renderRequest, renderResponse);
 		
 		_log.info("render ended");
 	}
-	
-	@Override
-	public void doView(RenderRequest renderRequest,
-			RenderResponse renderResponse) throws IOException, PortletException {
-		
-		
-		_log.info("doView started");
-		
-		super.doView(renderRequest, renderResponse);
-		
-		_log.info("doView started ended");
-	}
+
 
 	
 	public void createApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
@@ -160,16 +151,24 @@ public class PaymentCalculator extends MVCPortlet {
 	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
 		
-
+		CreditApp creditApp = null;
 		_log.info("saveApplicationInfo actionrequest started: ");
-		Long creditAppId = ParamUtil.getLong(actionRequest,"creditAppId");
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		
+		
+		_log.info(actionRequest.getMethod());
+		
+		if (actionRequest.getMethod() == "GET")
+			return;
 		
 		try {
 			_log.info("creditAppId: " + creditAppId);
 			
+			if (creditAppId != 0)
+				creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
 			
-			if (creditAppId == 0) {
-				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, vendorId);
+			if (creditApp == null) {
+				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, themeDisplay);
 				_log.info("Application has been created. " + creditApp);
 				isAppCreated = true;
 				
@@ -179,12 +178,7 @@ public class PaymentCalculator extends MVCPortlet {
 				
 			}
 			
-
-			//map form fields to the application
-			creditApp.setEquipmentPrice(ParamUtil.getDouble(actionRequest, "equipmentPrice"));
-			creditApp.setCustomerName(ParamUtil.getString(actionRequest,"customerName"));
-			creditApp.setCustomerDBAName(ParamUtil.getString(actionRequest,"customerDBAName"));
-			
+			creditApp = PaymentCalculatorUtil.populateAppFromRequest(actionRequest, creditApp);
 			
 			//process proposalOptions
 			if (proposalOptionList == null || proposalOptionList.isEmpty()) {
@@ -236,91 +230,7 @@ public class PaymentCalculator extends MVCPortlet {
 			_log.error(e);
 		}
 		
-		
-		
-/*
- * 
- * 
-				long purchaseOptionId=ParamUtil.getLong(actionRequest,"purchaseOptionId");
-				long termId=ParamUtil.getLong(actionRequest,"termId");
-				long ratefactorId=ParamUtil.getLong(actionRequest,"ratefactorId");
-				double equipmentPrice=ParamUtil.getDouble(actionRequest,"equipmentPrice");
-				
-				RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
-				request.getSession().setAttribute("rateFactorRuleId",new Long(rateFactorRule.getRateFactorRuleId()).toString());	
-				request.getSession().setAttribute("equipmentPrice",equipmentPrice);	
-				
-				Double rateFactorValue=rateFactorRule.getRateFactor();
-				Double paymentAmount= rateFactorValue *1;
-				// Auditing Values
-		
-				
-				
-				CreditAppStatus creditAppStatus=CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus(actionType);
-				creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
-				creditApp.setCustomerBusinessDesc(ParamUtil.getString(actionRequest,"customerBusinessDesc"));
-				creditApp.setCustomerBusinessFederalTaxID(ParamUtil.getString(actionRequest,"customerBusinessFederalTaxID"));
-				creditApp.setCustomerBusinessIncorporatedState(ParamUtil.getString(actionRequest,"customerBusinessIncorporatedState"));
-				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-				sdf.setLenient(true);
-				Date customerBusinessStartDate = null;
-				customerBusinessStartDate = sdf.parse(ParamUtil.getString(actionRequest,"customerBusinessStartDate"));
-				creditApp.setCustomerBusinessStartDate(customerBusinessStartDate);
-				creditApp.setCustomerBusinessType(ParamUtil.getString(actionRequest,"customerBusinessType"));
-				creditApp.setCustomerAddress1(ParamUtil.getString(actionRequest,"customerAddress1"));
-				creditApp.setCustomerAddress2(ParamUtil.getString(actionRequest,"customerAddress1"));
-				
-				
-				
-				
-				creditApp.setCustomerState(ParamUtil.getString(actionRequest,"customerState"));
-				creditApp.setCustomerCity(ParamUtil.getString(actionRequest,"customerCity"));
-				creditApp.setCustomerZip(ParamUtil.getString(actionRequest,"customerZip"));
-				creditApp.setEquipmentAddress1(ParamUtil.getString(actionRequest,"equipmentAddress1"));
-				creditApp.setEquipmentAddress2(ParamUtil.getString(actionRequest,"equipmentAddress2"));
-				creditApp.setEquipmentState(ParamUtil.getString(actionRequest,"equipmentState"));
-				creditApp.setEquipmentCity(ParamUtil.getString(actionRequest,"equipmentCity"));
-				creditApp.setEquipmentZip(ParamUtil.getString(actionRequest,"equipmentZip"));
-				creditApp.setEquipmentDesc(ParamUtil.getString(actionRequest,"equipmentDesc"));
-				creditApp.setEquipmentLocAsCustomerFlag(ParamUtil.getBoolean(actionRequest,"equipmentLocAsCustomerFlag"));
-				
-				
-				creditApp.setCustomerContact(ParamUtil.getString(actionRequest,"customerContact"));
-				creditApp.setCustomerContactPhone(ParamUtil.getString(actionRequest,"customerContactPhone"));
-				creditApp.setCustomerContactFax(ParamUtil.getString(actionRequest,"customerContactFax"));
-				creditApp.setCustomerContactEmail(ParamUtil.getString(actionRequest,"customerContactEmail"));
-				
-				request.getSession().setAttribute("customerBusinessDesc",ParamUtil.getString(actionRequest,"customerBusinessDesc"));
-				request.getSession().setAttribute("customerBusinessFederalTaxID",ParamUtil.getString(actionRequest,"customerBusinessFederalTaxID"));
-				request.getSession().setAttribute("customerBusinessIncorporatedState",ParamUtil.getString(actionRequest,"customerBusinessIncorporatedState"));
-				request.getSession().setAttribute("customerBusinessStartDate",ParamUtil.getString(actionRequest,"customerBusinessStartDate"));
-				request.getSession().setAttribute("customerBusinessType",ParamUtil.getString(actionRequest,"customerBusinessType"));
-				request.getSession().setAttribute("customerAddress1",ParamUtil.getString(actionRequest,"customerAddress1"));
-				request.getSession().setAttribute("customerAddress1",ParamUtil.getString(actionRequest,"customerAddress1"));
-				
-				
-				
-				
-				request.getSession().setAttribute("customerState",ParamUtil.getString(actionRequest,"customerState"));
-				request.getSession().setAttribute("customerCity",ParamUtil.getString(actionRequest,"customerCity"));
-				request.getSession().setAttribute("customerZip",ParamUtil.getString(actionRequest,"customerZip"));
-				request.getSession().setAttribute("equipmentAddress1",ParamUtil.getString(actionRequest,"equipmentAddress1"));
-				request.getSession().setAttribute("equipmentAddress2",ParamUtil.getString(actionRequest,"equipmentAddress2"));
-				request.getSession().setAttribute("equipmentState",ParamUtil.getString(actionRequest,"equipmentState"));
-				request.getSession().setAttribute("equipmentCity",ParamUtil.getString(actionRequest,"equipmentCity"));
-				request.getSession().setAttribute("equipmentZip",ParamUtil.getString(actionRequest,"equipmentZip"));
-				request.getSession().setAttribute("equipmentDesc",ParamUtil.getString(actionRequest,"equipmentDesc"));
-				request.getSession().setAttribute("equipmentLocAsCustomerFlag",ParamUtil.getBoolean(actionRequest,"equipmentLocAsCustomerFlag"));
-				request.getSession().setAttribute("equipmentPrice",ParamUtil.getDouble(actionRequest,"equipmentPrice"));
-				request.getSession().setAttribute("actionType",ParamUtil.getString(actionRequest,"actionType"));
-				creditApp.setVendorId(rateFactorRule.getVendorId());
-*/		
-		
-		_log.info("actionResponse.setRenderParameter");
-		actionResponse.setRenderParameter("creditAppId", String.valueOf(creditApp.getCreditAppId()));
-		_log.info("creditAppId: " + String.valueOf(creditApp.getCreditAppId()));
-		
-		
+
 		if (actionResponse.getRenderParameterMap().get("calculatorSectionState") == null) {
 			actionResponse.setRenderParameter("calculatorSectionState", "collapsed");
 		}
@@ -332,6 +242,9 @@ public class PaymentCalculator extends MVCPortlet {
 		if (actionResponse.getRenderParameterMap().get("appicationInfoSectionState") == null) {
 			actionResponse.setRenderParameter("appicationInfoSectionState", "open");
 		}
+		
+		_log.info("Setting attribute : creditApp=" + creditApp );
+		actionRequest.setAttribute("creditApp", creditApp);
 		
 	}
 	

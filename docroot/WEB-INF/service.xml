@@ -17,6 +17,11 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+		
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+		
 		<!-- Other fields -->
 		<column name="vendorId" type="long" />
 		<column name="creditAppStatusId" type="long" />
@@ -43,14 +48,14 @@
 		<column name="CustomerContact" type="String" />
 		<column name="CustomerContactPhone" type="String" />
 		<column name="CustomerContactFax" type="String" />
-		<column name="CustomerContactEmail" type="String" />		
+		<column name="CustomerContactEmail" type="String" />
 		<column name="CustomerBusinessDesc" type="String" />
 		<column name="CustomerBusinessType" type="String" />
 		<column name="CustomerBusinessStartDate" type="Date" />
 		<column name="CustomerBusinessIncorporatedState" type="String" />
 		<column name="CustomerBusinessFederalTaxID" type="String" />
-	
-	      
+
+
 		<!-- Order -->
 
 		<order by="desc">
@@ -58,15 +63,15 @@
 		</order>
 
 		<!-- Finder methods -->
-        <finder name="CreditAppId" return-type="Collection">
+		<finder name="CreditAppId" return-type="Collection">
 			<finder-column name="creditAppId" />
 		</finder>
 		<finder name="CreditAppStatusId" return-type="Collection">
 			<finder-column name="creditAppStatusId" />
 		</finder>
-		
+
 	</entity>
-	
+
 	<entity name="CreditAppPrincipal" local-service="true" remote-service="false">
 
 		<!-- PK fields -->

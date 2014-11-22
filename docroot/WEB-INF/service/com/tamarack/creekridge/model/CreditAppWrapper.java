@@ -55,6 +55,7 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("groupId", getGroupId());
 		attributes.put("vendorId", getVendorId());
 		attributes.put("creditAppStatusId", getCreditAppStatusId());
 		attributes.put("productId", getProductId());
@@ -130,6 +131,12 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long vendorId = (Long)attributes.get("vendorId");
@@ -487,6 +494,26 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_creditApp.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the group ID of this credit app.
+	*
+	* @return the group ID of this credit app
+	*/
+	@Override
+	public long getGroupId() {
+		return _creditApp.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this credit app.
+	*
+	* @param groupId the group ID of this credit app
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_creditApp.setGroupId(groupId);
 	}
 
 	/**
@@ -1187,7 +1214,7 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 	}
 
 	@Override
-	public int compareTo(CreditApp creditApp) {
+	public int compareTo(com.tamarack.creekridge.model.CreditApp creditApp) {
 		return _creditApp.compareTo(creditApp);
 	}
 
@@ -1197,17 +1224,17 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<CreditApp> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.CreditApp> toCacheModel() {
 		return _creditApp.toCacheModel();
 	}
 
 	@Override
-	public CreditApp toEscapedModel() {
+	public com.tamarack.creekridge.model.CreditApp toEscapedModel() {
 		return new CreditAppWrapper(_creditApp.toEscapedModel());
 	}
 
 	@Override
-	public CreditApp toUnescapedModel() {
+	public com.tamarack.creekridge.model.CreditApp toUnescapedModel() {
 		return new CreditAppWrapper(_creditApp.toUnescapedModel());
 	}
 

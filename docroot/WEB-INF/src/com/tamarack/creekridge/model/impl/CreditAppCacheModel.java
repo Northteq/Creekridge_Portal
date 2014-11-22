@@ -38,7 +38,7 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(75);
+		StringBundler sb = new StringBundler(77);
 
 		sb.append("{creditAppId=");
 		sb.append(creditAppId);
@@ -52,6 +52,8 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", vendorId=");
 		sb.append(vendorId);
 		sb.append(", creditAppStatusId=");
@@ -148,6 +150,7 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 			creditAppImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		creditAppImpl.setGroupId(groupId);
 		creditAppImpl.setVendorId(vendorId);
 		creditAppImpl.setCreditAppStatusId(creditAppStatusId);
 		creditAppImpl.setProductId(productId);
@@ -327,6 +330,7 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		groupId = objectInput.readLong();
 		vendorId = objectInput.readLong();
 		creditAppStatusId = objectInput.readLong();
 		productId = objectInput.readLong();
@@ -376,6 +380,7 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(vendorId);
 		objectOutput.writeLong(creditAppStatusId);
 		objectOutput.writeLong(productId);
@@ -543,6 +548,7 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long groupId;
 	public long vendorId;
 	public long creditAppStatusId;
 	public long productId;

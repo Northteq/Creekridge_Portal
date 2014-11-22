@@ -8,7 +8,7 @@
 <%@ include file="init.jsp"%>
 
 <!-- EXISTING APPLICATION -->
-	<c:if test="${creditAppId != 0}">
+	<c:if test="${creditApp.creditAppId != null}">
 	
 		<div class="span2">
 			<button type="submit" class="btn btn-info" id="createApplicationButton"> Update Application </button>
@@ -20,10 +20,9 @@
 	
 	</c:if>
 	
-	
 	<!-- NEW APPLICATION  -->
 	
-	<c:if test="${creditAppId == 0}">
+	<c:if test="${creditApp.creditAppId == null}">
 	
 		<div class="span2">
 			<button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button>

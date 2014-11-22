@@ -8,6 +8,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="groupId" type="long" />
 		<field name="vendorId" type="long" />
 		<field name="creditAppStatusId" type="long" />
 		<field name="productId" type="long" />

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<model-resource>
+  <model-name>
+    com.tamarack.creekridge.model.CreditApp
+  </model-name>
+  <portlet-ref>
+    <portlet-name>payment-calculator</portlet-name>
+  </portlet-ref>
+  <permissions>
+    <supports>
+      <action-key>DELETE</action-key>
+      <action-key>PERMISSIONS</action-key>
+      <action-key>UPDATE</action-key>
+      <action-key>VIEW</action-key>
+      <action-key>SAVE-APPLICATION-INFO</action-key>
+    </supports>
+    <community-defaults>
+      <action-key>VIEW</action-key>
+    </community-defaults>
+    <guest-defaults>
+      <action-key>VIEW</action-key>
+    </guest-defaults>
+    <guest-unsupported>
+      <action-key>UPDATE</action-key>
+    </guest-unsupported>
+  </permissions>
+</model-resource>

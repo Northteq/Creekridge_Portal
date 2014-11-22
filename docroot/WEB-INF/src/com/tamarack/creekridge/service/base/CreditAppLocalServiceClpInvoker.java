@@ -117,7 +117,8 @@ public class CreditAppLocalServiceClpInvoker {
 		_methodName82 = "addCreditApp";
 
 		_methodParameterTypes82 = new String[] {
-				"com.liferay.portal.model.User", "long"
+				"com.liferay.portal.model.User",
+				"com.liferay.portal.theme.ThemeDisplay"
 			};
 	}
 
@@ -225,7 +226,7 @@ public class CreditAppLocalServiceClpInvoker {
 		if (_methodName82.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
 			return CreditAppLocalServiceUtil.addCreditApp((com.liferay.portal.model.User)arguments[0],
-				((Long)arguments[1]).longValue());
+				(com.liferay.portal.theme.ThemeDisplay)arguments[1]);
 		}
 
 		throw new UnsupportedOperationException();
