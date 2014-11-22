@@ -16,6 +16,7 @@ Instructions:
 Alternative to steps 2-4 using Eclipse:
 ----------------------------------------
 Note: Steps 2-4 from above can also be done from Eclipse using the following steps:
+
 2. From Eclipse, click on File > Import
 3. From the import screen, click on Git > "Projects from Git" > Click Next
 4. From the "Import Projects from Git" screen, click on Clone URI.
