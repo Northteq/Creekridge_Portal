@@ -2,9 +2,12 @@
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> master
 	<portlet>
 		<portlet-name>CreekRidgeCapital</portlet-name>
 		<icon>/icon.png</icon>
@@ -13,11 +16,16 @@
 		<css-class-wrapper>CreekRidgeCapital-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
+<<<<<<< HEAD
 		<portlet-name>paymentcalculator</portlet-name>
 		<icon>/icon.png</icon>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>my-greeting</friendly-url-mapping>
 		<friendly-url-routes>com/tamarack/creekridge/liferay/paymentcalculator/paymentcalculator-url-routes.xml</friendly-url-routes>
+=======
+		<portlet-name>paymentcalculatortable</portlet-name>
+		<icon>/icon.png</icon>
+>>>>>>> master
 		<instanceable>false</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
@@ -25,9 +33,25 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>paymentcalculatortable-portlet
 		</css-class-wrapper>
+<<<<<<< HEAD
 
 	</portlet>
 
+=======
+	</portlet>
+	<portlet>
+		<portlet-name>insertPaymentCalculatorLookValuesPortlet</portlet-name>
+		<icon>/icon.png</icon>
+		<instanceable>false</instanceable>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>insertPaymentCalculatorLookValuesPortlet-portlet
+		</css-class-wrapper>
+	</portlet>
+	
+>>>>>>> master
 	<portlet>
 		<portlet-name>viewCreditApplicationPortlet</portlet-name>
 		<icon>/icon.png</icon>
@@ -39,7 +63,22 @@
 		<css-class-wrapper>viewCreditApplicationPortlet-portlet
 		</css-class-wrapper>
 	</portlet>
+<<<<<<< HEAD
 
+=======
+	
+	<portlet>
+		<portlet-name>payment-calculator</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>
+			payment-calculator-portlet
+		</css-class-wrapper>
+	</portlet>
+>>>>>>> master
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

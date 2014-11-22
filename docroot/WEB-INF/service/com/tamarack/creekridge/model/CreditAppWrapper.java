@@ -55,6 +55,10 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+<<<<<<< HEAD
+=======
+		attributes.put("groupId", getGroupId());
+>>>>>>> master
 		attributes.put("vendorId", getVendorId());
 		attributes.put("creditAppStatusId", getCreditAppStatusId());
 		attributes.put("productId", getProductId());
@@ -132,6 +136,15 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 			setModifiedDate(modifiedDate);
 		}
 
+<<<<<<< HEAD
+=======
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+>>>>>>> master
 		Long vendorId = (Long)attributes.get("vendorId");
 
 		if (vendorId != null) {
@@ -490,6 +503,29 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	* Returns the group ID of this credit app.
+	*
+	* @return the group ID of this credit app
+	*/
+	@Override
+	public long getGroupId() {
+		return _creditApp.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this credit app.
+	*
+	* @param groupId the group ID of this credit app
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_creditApp.setGroupId(groupId);
+	}
+
+	/**
+>>>>>>> master
 	* Returns the vendor ID of this credit app.
 	*
 	* @return the vendor ID of this credit app

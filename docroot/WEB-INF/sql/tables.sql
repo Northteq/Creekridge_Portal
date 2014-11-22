@@ -5,6 +5,10 @@ create table eCreekRidge_CreditApp (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+<<<<<<< HEAD
+=======
+	groupId LONG,
+>>>>>>> master
 	vendorId LONG,
 	creditAppStatusId LONG,
 	productId LONG,

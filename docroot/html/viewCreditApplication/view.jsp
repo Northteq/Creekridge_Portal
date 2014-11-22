@@ -228,7 +228,11 @@ for (int j=0;j<creditAppStatusList.size();j++){
 	<%  
 	
       for (int i=0;i<creditAppList.size();i++) {
+<<<<<<< HEAD
        if( !"Cancelled".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId())) && !"Draft".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId())))
+=======
+       if( !"Cancelled".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId())) && !"Cancelled".equalsIgnoreCase(statusMap.get(creditAppList.get(i).getCreditAppStatusId())))
+>>>>>>> master
     	if((isVendorSaleRep && creditAppList.get(i).getUserId() == themeDisplay.getUserId()) || isCreekRidgeSalesManager || isOmniAdmin )  {
       %>
 

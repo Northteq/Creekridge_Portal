@@ -36,6 +36,10 @@ public class CreditAppSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+<<<<<<< HEAD
+=======
+		soapModel.setGroupId(model.getGroupId());
+>>>>>>> master
 		soapModel.setVendorId(model.getVendorId());
 		soapModel.setCreditAppStatusId(model.getCreditAppStatusId());
 		soapModel.setProductId(model.getProductId());
@@ -167,6 +171,17 @@ public class CreditAppSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+<<<<<<< HEAD
+=======
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+>>>>>>> master
 	public long getVendorId() {
 		return _vendorId;
 	}
@@ -428,6 +443,10 @@ public class CreditAppSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+<<<<<<< HEAD
+=======
+	private long _groupId;
+>>>>>>> master
 	private long _vendorId;
 	private long _creditAppStatusId;
 	private long _productId;

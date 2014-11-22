@@ -250,7 +250,12 @@ public interface CreditAppLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public com.tamarack.creekridge.model.CreditApp addCreditApp(
+<<<<<<< HEAD
 		com.liferay.portal.model.User user, long vendorId)
+=======
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+>>>>>>> master
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

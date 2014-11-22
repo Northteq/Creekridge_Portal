@@ -68,6 +68,10 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+<<<<<<< HEAD
+=======
+			{ "groupId", Types.BIGINT },
+>>>>>>> master
 			{ "vendorId", Types.BIGINT },
 			{ "creditAppStatusId", Types.BIGINT },
 			{ "productId", Types.BIGINT },
@@ -100,7 +104,11 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 			{ "CustomerBusinessIncorporatedState", Types.VARCHAR },
 			{ "CustomerBusinessFederalTaxID", Types.VARCHAR }
 		};
+<<<<<<< HEAD
 	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_CreditApp (creditAppId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,vendorId LONG,creditAppStatusId LONG,productId LONG,termId LONG,purchaseOptionId LONG,rateFactorRuleId LONG,paymentAmount DOUBLE,equipmentPrice DOUBLE,equipmentDesc VARCHAR(75) null,equipmentLocAsCustomerFlag BOOLEAN,equipmentAddress1 VARCHAR(75) null,equipmentAddress2 VARCHAR(75) null,equipmentCity VARCHAR(75) null,equipmentState VARCHAR(75) null,equipmentZip VARCHAR(75) null,CustomerName VARCHAR(75) null,CustomerDBAName VARCHAR(75) null,CustomerAddress1 VARCHAR(75) null,CustomerAddress2 VARCHAR(75) null,CustomerCity VARCHAR(75) null,CustomerState VARCHAR(75) null,CustomerZip VARCHAR(75) null,CustomerContact VARCHAR(75) null,CustomerContactPhone VARCHAR(75) null,CustomerContactFax VARCHAR(75) null,CustomerContactEmail VARCHAR(75) null,CustomerBusinessDesc VARCHAR(75) null,CustomerBusinessType VARCHAR(75) null,CustomerBusinessStartDate DATE null,CustomerBusinessIncorporatedState VARCHAR(75) null,CustomerBusinessFederalTaxID VARCHAR(75) null)";
+=======
+	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_CreditApp (creditAppId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,vendorId LONG,creditAppStatusId LONG,productId LONG,termId LONG,purchaseOptionId LONG,rateFactorRuleId LONG,paymentAmount DOUBLE,equipmentPrice DOUBLE,equipmentDesc VARCHAR(75) null,equipmentLocAsCustomerFlag BOOLEAN,equipmentAddress1 VARCHAR(75) null,equipmentAddress2 VARCHAR(75) null,equipmentCity VARCHAR(75) null,equipmentState VARCHAR(75) null,equipmentZip VARCHAR(75) null,CustomerName VARCHAR(75) null,CustomerDBAName VARCHAR(75) null,CustomerAddress1 VARCHAR(75) null,CustomerAddress2 VARCHAR(75) null,CustomerCity VARCHAR(75) null,CustomerState VARCHAR(75) null,CustomerZip VARCHAR(75) null,CustomerContact VARCHAR(75) null,CustomerContactPhone VARCHAR(75) null,CustomerContactFax VARCHAR(75) null,CustomerContactEmail VARCHAR(75) null,CustomerBusinessDesc VARCHAR(75) null,CustomerBusinessType VARCHAR(75) null,CustomerBusinessStartDate DATE null,CustomerBusinessIncorporatedState VARCHAR(75) null,CustomerBusinessFederalTaxID VARCHAR(75) null)";
+>>>>>>> master
 	public static final String TABLE_SQL_DROP = "drop table eCreekRidge_CreditApp";
 	public static final String ORDER_BY_JPQL = " ORDER BY creditApp.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_CreditApp.modifiedDate DESC";
@@ -165,6 +173,10 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+<<<<<<< HEAD
+=======
+		attributes.put("groupId", getGroupId());
+>>>>>>> master
 		attributes.put("vendorId", getVendorId());
 		attributes.put("creditAppStatusId", getCreditAppStatusId());
 		attributes.put("productId", getProductId());
@@ -242,6 +254,15 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 			setModifiedDate(modifiedDate);
 		}
 
+<<<<<<< HEAD
+=======
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+>>>>>>> master
 		Long vendorId = (Long)attributes.get("vendorId");
 
 		if (vendorId != null) {
@@ -527,6 +548,19 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 	}
 
 	@Override
+<<<<<<< HEAD
+=======
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	@Override
+>>>>>>> master
 	public long getVendorId() {
 		return _vendorId;
 	}
@@ -998,6 +1032,10 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 		creditAppImpl.setUserName(getUserName());
 		creditAppImpl.setCreateDate(getCreateDate());
 		creditAppImpl.setModifiedDate(getModifiedDate());
+<<<<<<< HEAD
+=======
+		creditAppImpl.setGroupId(getGroupId());
+>>>>>>> master
 		creditAppImpl.setVendorId(getVendorId());
 		creditAppImpl.setCreditAppStatusId(getCreditAppStatusId());
 		creditAppImpl.setProductId(getProductId());
@@ -1129,6 +1167,11 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 			creditAppCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+<<<<<<< HEAD
+=======
+		creditAppCacheModel.groupId = getGroupId();
+
+>>>>>>> master
 		creditAppCacheModel.vendorId = getVendorId();
 
 		creditAppCacheModel.creditAppStatusId = getCreditAppStatusId();
@@ -1335,7 +1378,11 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(75);
+=======
+		StringBundler sb = new StringBundler(77);
+>>>>>>> master
 
 		sb.append("{creditAppId=");
 		sb.append(getCreditAppId());
@@ -1349,6 +1396,11 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+<<<<<<< HEAD
+=======
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+>>>>>>> master
 		sb.append(", vendorId=");
 		sb.append(getVendorId());
 		sb.append(", creditAppStatusId=");
@@ -1418,7 +1470,11 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 
 	@Override
 	public String toXmlString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(115);
+=======
+		StringBundler sb = new StringBundler(118);
+>>>>>>> master
 
 		sb.append("<model><model-name>");
 		sb.append("com.tamarack.creekridge.model.CreditApp");
@@ -1449,6 +1505,13 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+<<<<<<< HEAD
+=======
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+>>>>>>> master
 			"<column><column-name>vendorId</column-name><column-value><![CDATA[");
 		sb.append(getVendorId());
 		sb.append("]]></column-value></column>");
@@ -1591,6 +1654,10 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+<<<<<<< HEAD
+=======
+	private long _groupId;
+>>>>>>> master
 	private long _vendorId;
 	private long _creditAppStatusId;
 	private long _originalCreditAppStatusId;

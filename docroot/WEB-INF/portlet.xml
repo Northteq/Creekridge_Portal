@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 
+<<<<<<< HEAD
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
@@ -7,6 +8,12 @@
 	<portlet>
 		<portlet-name>CreekRidgeCapital</portlet-name>
 		<display-name>CreekRidge Capital Home</display-name>
+=======
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
+	<portlet>
+		<portlet-name>CreekRidgeCapital</portlet-name>
+		<display-name>CreekRidgeCapital Home</display-name>
+>>>>>>> master
 		<portlet-class>com.tamarack.liferay.payment.HomePageNavigation</portlet-class>
 		<init-param>
 			<name>view-template</name>
@@ -21,7 +28,11 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
+<<<<<<< HEAD
 			<title>CreekRidge Capital Home</title>
+=======
+			<title>CreekRidgeCapital</title>
+>>>>>>> master
 			<short-title>CreekRidgeCapital</short-title>
 			<keywords>CreekRidgeCapital</keywords>
 		</portlet-info>
@@ -39,17 +50,28 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
+<<<<<<< HEAD
 		<portlet-name>paymentcalculator</portlet-name>
 		<display-name>Payment Calculator</display-name>
 		<portlet-class>com.tamarack.creekridge.liferay.paymentcalculator.PaymentCalculator</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/paymentcalculator/view.jsp</value>
+=======
+		<portlet-name>paymentcalculatortable</portlet-name>
+		<display-name>Payment Calculator Table</display-name>
+		<portlet-class>com.tamarack.liferay.payment.PaymentCalculatorTable
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/paymentcalculatortable/view.jsp</value>
+>>>>>>> master
 		</init-param>
 		<init-param>
 			<name>add-process-action-success-action</name>
 			<value>false</value>
 		</init-param>
+<<<<<<< HEAD
 
 		<!-- https://www.liferay.com/documentation/liferay-portal/6.2/development/-/ai/passing-info-from-action-to-render-phase-liferay-portal-6-2-dev-guide-en  -->
 		<!-- <init-param>
@@ -57,6 +79,151 @@
 			<value>true</value>
 		</init-param> -->
 
+=======
+>>>>>>> master
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+<<<<<<< HEAD
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Payment Calculator</title>
+			<short-title>Payment Calculator</short-title>
+=======
+		<resource-bundle>content/Language</resource-bundle>
+		<portlet-info>
+			<title>Payment Calculator Table</title>
+			<short-title>Payment Calculator Table</short-title>
+>>>>>>> master
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+<<<<<<< HEAD
+
+	<portlet>
+		<portlet-name>viewCreditApplicationPortlet</portlet-name>
+		<display-name>View Credit Application</display-name>
+		<portlet-class>com.tamarack.liferay.payment.ViewApplication</portlet-class>
+=======
+	
+	
+	
+	<portlet>
+		<portlet-name>viewCreditApplicationPortlet</portlet-name>
+		<display-name>View Credit Application</display-name>
+		<portlet-class>com.tamarack.liferay.payment.ViewApplication
+		</portlet-class>
+>>>>>>> master
+		<init-param>
+			<name>view-template</name>
+			<value>/html/viewCreditApplication/view.jsp</value>
+		</init-param>
+		<init-param>
+			<name>add-process-action-success-action</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+<<<<<<< HEAD
+		
+=======
+		<resource-bundle>content/Language</resource-bundle>
+>>>>>>> master
+		<portlet-info>
+			<title>View Credit Application</title>
+			<short-title>View Credit Application</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+<<<<<<< HEAD
+
+=======
+	
+	<portlet>
+		<portlet-name>insertPaymentCalculatorLookValuesPortlet</portlet-name>
+		<display-name>Payment Calculator Look Values </display-name>
+		<portlet-class>com.tamarack.liferay.payment.InsertPaymentCalculatorLookValuesPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/lookValuesPortlet/view.jsp</value>
+		</init-param>
+		<init-param>
+			<name>add-process-action-success-action</name>
+			<value>false</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<resource-bundle>/content/Language.porperties</resource-bundle>
+		<portlet-info>
+			<title>Payment Calculator Look Values</title>
+			<short-title>Payment Calculator Look Values</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>payment-calculator</portlet-name>
+		<display-name>Payment Calculator</display-name>
+		<portlet-class>
+			com.tamarack.creekridge.liferay.paymentcalculator.PaymentCalculator
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/paymentcalculator/view.jsp</value>
+		</init-param>
+		<init-param>
+			<name>add-process-action-error-action</name>
+			<value>false</value>
+		</init-param>
+		<init-param>
+			<name>add-process-action-success-action</name>
+			<value>false</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -81,42 +248,5 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
-
-	<portlet>
-		<portlet-name>viewCreditApplicationPortlet</portlet-name>
-		<display-name>View Credit Application</display-name>
-		<portlet-class>com.tamarack.liferay.payment.ViewApplication</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/viewCreditApplication/view.jsp</value>
-		</init-param>
-		<init-param>
-			<name>add-process-action-success-action</name>
-			<value>false</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		
-		<portlet-info>
-			<title>View Credit Application</title>
-			<short-title>View Credit Application</short-title>
-			<keywords></keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-
+>>>>>>> master
 </portlet-app>

@@ -276,10 +276,18 @@ public class CreditAppLocalServiceUtil {
 	}
 
 	public static com.tamarack.creekridge.model.CreditApp addCreditApp(
+<<<<<<< HEAD
 		com.liferay.portal.model.User user, long vendorId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().addCreditApp(user, vendorId);
+=======
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addCreditApp(user, themeDisplay);
+>>>>>>> master
 	}
 
 	public static void clearService() {

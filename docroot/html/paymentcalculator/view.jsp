@@ -16,6 +16,12 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 
 %>
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> master
 <portlet:resourceURL var="processProductsSelectionURL"
 	id="processProductsSelection" />
 	
@@ -45,11 +51,26 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 <liferay-ui:success key="appSaved" message="app-saved-successfully"/>
 <liferay-ui:success key="appUpdated" message="app-updated-successfully"/>
 
+<<<<<<< HEAD
 <aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" >
 	<aui:input type="hidden" value="${creditAppId}" name="creditAppId"/>
 	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 	
 	
+=======
+<aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post">
+	<aui:input type="hidden" name="creditAppId" value="${creditApp.creditAppId}"/>
+	<c:if test="${creditApp.creditAppId != 0}">
+		<h3>Application ${creditApp.creditAppId} </h3> 
+ 	</c:if>
+	
+	<c:if test="${creditApp.creditAppId == 0}">
+		<h3>New Application</h3> 
+ 	</c:if>
+ 	
+ 	
+ 	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
+>>>>>>> master
 
 	<liferay-ui:panel-container accordion="true" extended="false">
 		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="<%=calculatorSectionState %>">
@@ -122,26 +143,57 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	 	</liferay-ui:panel>
 	 	
 	</liferay-ui:panel-container>
+<<<<<<< HEAD
 	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 </aui:form>
 
 
 <script type="text/javascript">
 
+=======
+	
+	
+	
+</aui:form>
+
+
+
+
+<script type="text/javascript">
+
+var processProductsSelectionURL = "<%=processProductsSelectionURL%>";
+var processPurchaseOptionsSelectionURL = "<%=processPurchaseOptionsSelectionURL%>";
+var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
+var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
+var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
+
+
+>>>>>>> master
 var navigateToCalculator = function () {
 	$("*[data-persist-id='paymentCalculator']").click();
 };
 
 $(document).ready(function () {
+<<<<<<< HEAD
 	
+=======
+>>>>>>> master
 	var proposals = jQuery.parseJSON('${proposalList}');
 	
 	console.log ("proposals on load", proposals);
 	
 	if (proposals != '') {
+<<<<<<< HEAD
 		
 		buildProposalOptionsTable(proposals);
 	}
+=======
+		buildProposalOptionsTable(proposals);
+	}
+	
+	$(".alert-error:contains('Your request failed to complete.')").hide();
+	
+>>>>>>> master
 		
 });
 
@@ -207,14 +259,22 @@ var getPurchaseOptions = function () {
 	
 	
 	if (prodList.length>0) {
+<<<<<<< HEAD
 		var url = "<%=processProductsSelectionURL%>";
+=======
+		
+>>>>>>> master
 		var dataJsonString = createRateFactorRuleRequestObjectString();
 
 		console.log('selectedProducts', dataJsonString);
 
 		$.ajax({
 					type : "POST",
+<<<<<<< HEAD
 					url : url,
+=======
+					url : processProductsSelectionURL,
+>>>>>>> master
 					cache : false,
 					dataType : "Json",
 					data : {
@@ -256,14 +316,22 @@ var getPurchaseOptions = function () {
 
 var getTermsOptions = function () {
 
+<<<<<<< HEAD
 	var url = "<%=processPurchaseOptionsSelectionURL%>";	
+=======
+	
+>>>>>>> master
 	var dataJsonString = createRateFactorRuleRequestObjectString();
 
 	console.log('selectedProducts', dataJsonString);
 
 	$.ajax({
 			type : "POST",
+<<<<<<< HEAD
 			url : url,
+=======
+			url : processPurchaseOptionsSelectionURL,
+>>>>>>> master
 			cache : false,
 			dataType : "Json",
 			data : {
@@ -301,10 +369,16 @@ var updateUseForApplication = function ($this) {
 	
 	
 	var poId = $($this).val();
+<<<<<<< HEAD
 	var url = '<%=updateUseForApplicationURL%>';
 	$.ajax({
 		type : "POST",
 		url : url,
+=======
+	$.ajax({
+		type : "POST",
+		url : updateUseForApplicationURL,
+>>>>>>> master
 		cache : false,
 		dataType : "Json",
 		data : {
@@ -322,16 +396,24 @@ var updateUseForApplication = function ($this) {
 };
 
 
+<<<<<<< HEAD
 var updateUseInProposalSelection = function ($this) {
 	console.log('updateSelectedForProposal');
 	
 	var url = "<%=updateIncludeInProposalURL%>";	
+=======
+var updateUseInProposalSelection = function ($this) {	
+>>>>>>> master
 	var poId = $($this).val();
 	var isChecked = $($this).is(':checked');
 	
 	$.ajax({
 			type : "POST",
+<<<<<<< HEAD
 			url : url,
+=======
+			url : updateIncludeInProposalURL,
+>>>>>>> master
 			cache : false,
 			dataType : "Json",
 			data : {
@@ -353,6 +435,7 @@ var updateUseInProposalSelection = function ($this) {
 
 
 var calculatePayments = function () {
+<<<<<<< HEAD
 	console.log('calculating payments');
 	
 	var url = "<%=calculatePaymentsURL%>";	
@@ -363,6 +446,14 @@ var calculatePayments = function () {
 	$.ajax({
 			type : "POST",
 			url : url,
+=======
+	
+	var dataJsonString = createRateFactorRuleRequestObjectString();
+
+	$.ajax({
+			type : "POST",
+			url : calculatePaymentsURL,
+>>>>>>> master
 			cache : false,
 			dataType : "Json",
 			data : {
@@ -480,6 +571,7 @@ var buildProposalOptionsTable = function (remoteData) {
                   	allowHTML: true,
                   	name: 'useForCreditApp',
                   	 className: 'purchaseOptionsColumn'
+<<<<<<< HEAD
 				  },
                  /*  {
                      key: 'eqPrice',
@@ -488,6 +580,9 @@ var buildProposalOptionsTable = function (remoteData) {
                      className: 'purchaseOptionsColumn'
                    }, */
                    ];
+=======
+				  }];
+>>>>>>> master
 			    
 			    
 		    		var dataTable = new Y.DataTable({
@@ -497,9 +592,13 @@ var buildProposalOptionsTable = function (remoteData) {
 		    		$('#proposalOptionsSection').show();
 			    	$('*[data-persist-id="pricingOvervewResults"]').click();
 			  }
+<<<<<<< HEAD
 	);
 	
 	
+=======
+	);	
+>>>>>>> master
 };
 
 </script>

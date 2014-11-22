@@ -288,10 +288,18 @@ public class CreditAppLocalServiceWrapper implements CreditAppLocalService,
 
 	@Override
 	public com.tamarack.creekridge.model.CreditApp addCreditApp(
+<<<<<<< HEAD
 		com.liferay.portal.model.User user, long vendorId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _creditAppLocalService.addCreditApp(user, vendorId);
+=======
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.addCreditApp(user, themeDisplay);
+>>>>>>> master
 	}
 
 	/**

@@ -16,9 +16,15 @@ package com.tamarack.creekridge.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
+<<<<<<< HEAD
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+=======
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.GroupedModel;
+>>>>>>> master
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +46,11 @@ import java.util.Date;
  * @see com.tamarack.creekridge.model.impl.CreditAppModelImpl
  * @generated
  */
+<<<<<<< HEAD
 public interface CreditAppModel extends AuditedModel, BaseModel<CreditApp> {
+=======
+public interface CreditAppModel extends BaseModel<CreditApp>, GroupedModel {
+>>>>>>> master
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -174,6 +184,25 @@ public interface CreditAppModel extends AuditedModel, BaseModel<CreditApp> {
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Returns the group ID of this credit app.
+	 *
+	 * @return the group ID of this credit app
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this credit app.
+	 *
+	 * @param groupId the group ID of this credit app
+	 */
+	@Override
+	public void setGroupId(long groupId);
+
+	/**
+>>>>>>> master
 	 * Returns the vendor ID of this credit app.
 	 *
 	 * @return the vendor ID of this credit app

@@ -17,6 +17,14 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+<<<<<<< HEAD
+=======
+		
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+		
+>>>>>>> master
 		<!-- Other fields -->
 		<column name="vendorId" type="long" />
 		<column name="creditAppStatusId" type="long" />
@@ -43,14 +51,23 @@
 		<column name="CustomerContact" type="String" />
 		<column name="CustomerContactPhone" type="String" />
 		<column name="CustomerContactFax" type="String" />
+<<<<<<< HEAD
 		<column name="CustomerContactEmail" type="String" />		
+=======
+		<column name="CustomerContactEmail" type="String" />
+>>>>>>> master
 		<column name="CustomerBusinessDesc" type="String" />
 		<column name="CustomerBusinessType" type="String" />
 		<column name="CustomerBusinessStartDate" type="Date" />
 		<column name="CustomerBusinessIncorporatedState" type="String" />
 		<column name="CustomerBusinessFederalTaxID" type="String" />
+<<<<<<< HEAD
 	
 	      
+=======
+
+
+>>>>>>> master
 		<!-- Order -->
 
 		<order by="desc">
@@ -58,15 +75,25 @@
 		</order>
 
 		<!-- Finder methods -->
+<<<<<<< HEAD
         <finder name="CreditAppId" return-type="Collection">
+=======
+		<finder name="CreditAppId" return-type="Collection">
+>>>>>>> master
 			<finder-column name="creditAppId" />
 		</finder>
 		<finder name="CreditAppStatusId" return-type="Collection">
 			<finder-column name="creditAppStatusId" />
 		</finder>
+<<<<<<< HEAD
 		
 	</entity>
 	
+=======
+
+	</entity>
+
+>>>>>>> master
 	<entity name="CreditAppPrincipal" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -243,7 +270,11 @@
 		<column name="paymentAmount" type="double" />
 		<column name="equipmentPrice" type="double" />
 		<column name="includeInProposal" type="boolean" />
+<<<<<<< HEAD
         <column name="useForCreditApp" type="boolean" db-name="useForCreditApp"></column>
+=======
+        <column name="useForCreditApp" type="boolean"></column>
+>>>>>>> master
 		
 		
 		<finder name="CreditAppId" return-type="Collection">

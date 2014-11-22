@@ -81,6 +81,10 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+<<<<<<< HEAD
+=======
+		attributes.put("groupId", getGroupId());
+>>>>>>> master
 		attributes.put("vendorId", getVendorId());
 		attributes.put("creditAppStatusId", getCreditAppStatusId());
 		attributes.put("productId", getProductId());
@@ -158,6 +162,15 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 			setModifiedDate(modifiedDate);
 		}
 
+<<<<<<< HEAD
+=======
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+>>>>>>> master
 		Long vendorId = (Long)attributes.get("vendorId");
 
 		if (vendorId != null) {
@@ -502,6 +515,32 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 	}
 
 	@Override
+<<<<<<< HEAD
+=======
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+
+		if (_creditAppRemoteModel != null) {
+			try {
+				Class<?> clazz = _creditAppRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_creditAppRemoteModel, groupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+>>>>>>> master
 	public long getVendorId() {
 		return _vendorId;
 	}
@@ -1319,6 +1358,10 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+<<<<<<< HEAD
+=======
+		clone.setGroupId(getGroupId());
+>>>>>>> master
 		clone.setVendorId(getVendorId());
 		clone.setCreditAppStatusId(getCreditAppStatusId());
 		clone.setProductId(getProductId());
@@ -1399,7 +1442,11 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(75);
+=======
+		StringBundler sb = new StringBundler(77);
+>>>>>>> master
 
 		sb.append("{creditAppId=");
 		sb.append(getCreditAppId());
@@ -1413,6 +1460,11 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+<<<<<<< HEAD
+=======
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+>>>>>>> master
 		sb.append(", vendorId=");
 		sb.append(getVendorId());
 		sb.append(", creditAppStatusId=");
@@ -1482,7 +1534,11 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 
 	@Override
 	public String toXmlString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(115);
+=======
+		StringBundler sb = new StringBundler(118);
+>>>>>>> master
 
 		sb.append("<model><model-name>");
 		sb.append("com.tamarack.creekridge.model.CreditApp");
@@ -1513,6 +1569,13 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+<<<<<<< HEAD
+=======
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+>>>>>>> master
 			"<column><column-name>vendorId</column-name><column-value><![CDATA[");
 		sb.append(getVendorId());
 		sb.append("]]></column-value></column>");
@@ -1649,6 +1712,10 @@ public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp 
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+<<<<<<< HEAD
+=======
+	private long _groupId;
+>>>>>>> master
 	private long _vendorId;
 	private long _creditAppStatusId;
 	private long _productId;

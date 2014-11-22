@@ -8,7 +8,18 @@
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util"  %>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.*"%>
+<<<<<<< HEAD
 <%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
+=======
+<%@page import="com.liferay.util.*"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@page import="com.liferay.portal.util.PortalUtil" %>
+<%@page import="com.liferay.portal.theme.ThemeDisplay" %>
+<%@page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+
+<%@page import="com.tamarack.creekridge.model.CreditApp"%>
+>>>>>>> master
 <portlet:defineObjects/>
 <liferay-theme:defineObjects/>
 

@@ -38,7 +38,11 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 	Externalizable {
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(75);
+=======
+		StringBundler sb = new StringBundler(77);
+>>>>>>> master
 
 		sb.append("{creditAppId=");
 		sb.append(creditAppId);
@@ -52,6 +56,11 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+<<<<<<< HEAD
+=======
+		sb.append(", groupId=");
+		sb.append(groupId);
+>>>>>>> master
 		sb.append(", vendorId=");
 		sb.append(vendorId);
 		sb.append(", creditAppStatusId=");
@@ -148,6 +157,10 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 			creditAppImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+<<<<<<< HEAD
+=======
+		creditAppImpl.setGroupId(groupId);
+>>>>>>> master
 		creditAppImpl.setVendorId(vendorId);
 		creditAppImpl.setCreditAppStatusId(creditAppStatusId);
 		creditAppImpl.setProductId(productId);
@@ -327,6 +340,10 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+<<<<<<< HEAD
+=======
+		groupId = objectInput.readLong();
+>>>>>>> master
 		vendorId = objectInput.readLong();
 		creditAppStatusId = objectInput.readLong();
 		productId = objectInput.readLong();
@@ -376,6 +393,10 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+<<<<<<< HEAD
+=======
+		objectOutput.writeLong(groupId);
+>>>>>>> master
 		objectOutput.writeLong(vendorId);
 		objectOutput.writeLong(creditAppStatusId);
 		objectOutput.writeLong(productId);
@@ -543,6 +564,10 @@ public class CreditAppCacheModel implements CacheModel<CreditApp>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+<<<<<<< HEAD
+=======
+	public long groupId;
+>>>>>>> master
 	public long vendorId;
 	public long creditAppStatusId;
 	public long productId;
