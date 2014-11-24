@@ -17,7 +17,7 @@ package com.tamarack.creekridge.service;
 import com.liferay.portal.service.InvokableLocalService;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public class CreditAppLocalServiceClp implements CreditAppLocalService {
@@ -120,6 +120,10 @@ public class CreditAppLocalServiceClp implements CreditAppLocalService {
 				"com.liferay.portal.model.User",
 				"com.liferay.portal.theme.ThemeDisplay"
 			};
+
+		_methodName20 = "getCreditAppByGroupId";
+
+		_methodParameterTypes20 = new String[] { "long" };
 	}
 
 	@Override
@@ -712,6 +716,35 @@ public class CreditAppLocalServiceClp implements CreditAppLocalService {
 		return (com.tamarack.creekridge.model.CreditApp)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.tamarack.creekridge.model.CreditApp>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -751,4 +784,6 @@ public class CreditAppLocalServiceClp implements CreditAppLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

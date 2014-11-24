@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.CreditAppStatus;
 import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public abstract class CreditAppStatusActionableDynamicQuery

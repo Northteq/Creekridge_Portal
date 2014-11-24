@@ -19,7 +19,7 @@ import com.tamarack.creekridge.service.TermLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public class TermLocalServiceClpInvoker {

@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link VendorMessage}.
  * </p>
  *
- * @author pmacha
+ * @author tamarack
  * @see VendorMessage
  * @generated
  */

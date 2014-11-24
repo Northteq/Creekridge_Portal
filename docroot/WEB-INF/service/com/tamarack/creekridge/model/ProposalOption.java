@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the ProposalOption service. Represents a row in the &quot;eCreekRidge_ProposalOption&quot; database table, with each column mapped to a property of this class.
  *
- * @author pmacha
+ * @author tamarack
  * @see ProposalOptionModel
  * @see com.tamarack.creekridge.model.impl.ProposalOptionImpl
  * @see com.tamarack.creekridge.model.impl.ProposalOptionModelImpl

@@ -29,7 +29,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author pmacha
+ * @author tamarack
  * @see PurchaseOptionLocalServiceUtil
  * @see com.tamarack.creekridge.service.base.PurchaseOptionLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.PurchaseOptionLocalServiceImpl

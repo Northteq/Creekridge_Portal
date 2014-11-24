@@ -19,7 +19,7 @@ import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public class CreditAppLocalServiceClpInvoker {
@@ -120,6 +120,10 @@ public class CreditAppLocalServiceClpInvoker {
 				"com.liferay.portal.model.User",
 				"com.liferay.portal.theme.ThemeDisplay"
 			};
+
+		_methodName83 = "getCreditAppByGroupId";
+
+		_methodParameterTypes83 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -229,6 +233,11 @@ public class CreditAppLocalServiceClpInvoker {
 				(com.liferay.portal.theme.ThemeDisplay)arguments[1]);
 		}
 
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+			return CreditAppLocalServiceUtil.getCreditAppByGroupId(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -270,4 +279,6 @@ public class CreditAppLocalServiceClpInvoker {
 	private String[] _methodParameterTypes77;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
 }

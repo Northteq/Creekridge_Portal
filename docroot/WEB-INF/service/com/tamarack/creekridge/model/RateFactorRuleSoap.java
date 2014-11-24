@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services.
  *
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public class RateFactorRuleSoap implements Serializable {

@@ -19,7 +19,7 @@ import com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public class RateFactorRuleLocalServiceClpInvoker {

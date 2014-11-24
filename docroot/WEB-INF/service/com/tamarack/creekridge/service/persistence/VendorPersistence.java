@@ -25,7 +25,7 @@ import com.tamarack.creekridge.model.Vendor;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author pmacha
+ * @author tamarack
  * @see VendorPersistenceImpl
  * @see VendorUtil
  * @generated

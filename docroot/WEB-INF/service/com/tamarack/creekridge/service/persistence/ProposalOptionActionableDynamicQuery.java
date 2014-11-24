@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.ProposalOption;
 import com.tamarack.creekridge.service.ProposalOptionLocalServiceUtil;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public abstract class ProposalOptionActionableDynamicQuery

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
 <service-builder package-path="com.tamarack.creekridge">
-	<author>pmacha</author>
+	<author>tamarack</author>
 	<namespace>eCreekRidge</namespace>
 
 	<entity name="CreditApp" local-service="true" remote-service="false">
@@ -69,6 +69,9 @@
 		<finder name="CreditAppStatusId" return-type="Collection">
 			<finder-column name="creditAppStatusId" />
 		</finder>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
 
 	</entity>
 

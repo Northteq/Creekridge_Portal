@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author pmacha
+ * @author tamarack
  */
 public class VendorClp extends BaseModelImpl<Vendor> implements Vendor {
 	public VendorClp() {

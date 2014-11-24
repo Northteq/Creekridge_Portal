@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CreditAppPrincipalLocalService}.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppPrincipalLocalService
  * @generated
  */

@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CreditAppLocalService}.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppLocalService
  * @generated
  */
@@ -286,6 +286,12 @@ public class CreditAppLocalServiceWrapper implements CreditAppLocalService,
 			arguments);
 	}
 
+	/**
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
 	@Override
 	public com.tamarack.creekridge.model.CreditApp addCreditApp(
 		com.liferay.portal.model.User user,
@@ -293,6 +299,18 @@ public class CreditAppLocalServiceWrapper implements CreditAppLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _creditAppLocalService.addCreditApp(user, themeDisplay);
+	}
+
+	/**
+	* @param standard
+	* @return List<Student>
+	* @throws SystemException
+	*/
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.getCreditAppByGroupId(groupId);
 	}
 
 	/**

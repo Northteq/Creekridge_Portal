@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing CreditAppPrincipal in entity cache.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppPrincipal
  * @generated
  */

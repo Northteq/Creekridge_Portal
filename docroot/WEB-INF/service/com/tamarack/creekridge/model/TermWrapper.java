@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link Term}.
  * </p>
  *
- * @author pmacha
+ * @author tamarack
  * @see Term
  * @generated
  */

@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link VendorMessageLocalService}.
  *
- * @author pmacha
+ * @author tamarack
  * @see VendorMessageLocalService
  * @generated
  */

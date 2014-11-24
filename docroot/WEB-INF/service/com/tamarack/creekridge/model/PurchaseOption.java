@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the PurchaseOption service. Represents a row in the &quot;eCreekRidge_PurchaseOption&quot; database table, with each column mapped to a property of this class.
  *
- * @author pmacha
+ * @author tamarack
  * @see PurchaseOptionModel
  * @see com.tamarack.creekridge.model.impl.PurchaseOptionImpl
  * @see com.tamarack.creekridge.model.impl.PurchaseOptionModelImpl
