@@ -1,3 +1,9 @@
+<%--
+/**
+ * Copyright (c) 2000-present Tamarack, Inc. All rights reserved.
+ * @author tamarack
+ */
+--%>
 
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
@@ -7,23 +13,19 @@
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security"  %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util"  %>
 <%@ taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="java.util.*"%>
-<%@page import="com.liferay.util.*"%>
-<%@page import="com.liferay.portal.kernel.util.ListUtil"%>
-<%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
-<%@page import="com.liferay.portal.util.PortalUtil" %>
-<%@page import="com.liferay.portal.theme.ThemeDisplay" %>
-<%@page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@page import="com.tamarack.creekridge.service.persistence.CreditAppUtil" %>
-
 
 
 <%@page import="com.tamarack.creekridge.model.CreditApp"%>
+<%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>
+<%@page import="com.liferay.portal.kernel.util.ListUtil"%>
+<%@page import="java.util.*"%>
+<%@page import="com.liferay.util.*"%>
+<%@page import="com.liferay.portal.kernel.dao.search.ResultRow"%>
+<%@page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@page import="com.liferay.portal.util.PortalUtil" %>
+<%@page import="com.liferay.portal.theme.ThemeDisplay" %>
+
+
 <portlet:defineObjects/>
 <liferay-theme:defineObjects/>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
-
-

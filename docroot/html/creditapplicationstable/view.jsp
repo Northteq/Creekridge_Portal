@@ -5,13 +5,13 @@
  */
 --%>
 
-<%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>
+
 <%@ include file="init.jsp"%>
 
 
 <liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5">
     <liferay-ui:search-container-results>
-    <%
+    <% 
     
     
     List <CreditApp> tempResults = CreditAppLocalServiceUtil.getCreditAppByGroupId(scopeGroupId);
@@ -36,24 +36,24 @@
         />
 
         <liferay-ui:search-container-column-text
-            name="description"
-            value="<%= String.valueOf(creditApp.getCreditAppStatusId()) %>"
+            name="credit-app-status"
+            property="creditAppStatusId"
+        />
+
+        <liferay-ui:search-container-column-date
+            name="create-date"
+            property="createDate"
         />
 
         <liferay-ui:search-container-column-text
-            name="streetAddress"
-            value="<%= String.valueOf(creditApp.getCreateDate()) %>"
-        />
-
-        <liferay-ui:search-container-column-text
-            name="city"
-            value="<%= String.valueOf(creditApp.getEquipmentPrice()) %>"
+            name="equipment-price"
+            property="equipmentPrice"
         />
         
-        <liferay-ui:search-container-column-jsp
+        <%-- <liferay-ui:search-container-column-jsp
         path="/creditapplicationstable/appTableActions.jsp"
         align="right"
- 		/>
+ 		/> --%>
 
     </liferay-ui:search-container-row>
 

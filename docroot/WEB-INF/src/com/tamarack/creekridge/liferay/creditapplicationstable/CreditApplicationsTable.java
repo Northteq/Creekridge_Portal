@@ -10,7 +10,7 @@ import javax.portlet.RenderResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.liferay.portal.kernel.dao.search.ResultRow;
+
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 
@@ -35,7 +35,7 @@ public class CreditApplicationsTable extends MVCPortlet {
 		_log.info("render ended");
 	}
 	
-	public void viewApplication (ActionRequest actionRequest, ActionRequest actionResponse) {
-		//actionResponse.sendRedirect("/payment-calculator");
-	}
+//	public void viewApplication (ActionRequest actionRequest, ActionRequest actionResponse) {
+//		//actionResponse.sendRedirect("/payment-calculator");
+//	}
 }
