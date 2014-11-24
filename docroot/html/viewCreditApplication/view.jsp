@@ -1,3 +1,16 @@
+
+
+
+
+
+
+
+
+<!-- CHECK THIS OUT!!!!   http://www.liferay.com/documentation/liferay-portal/6.2/development/-/ai/creating-user-interfaces-for-service-bui-liferay-portal-6-2-dev-guide-04-en -->
+
+
+
+
 <%@page import="com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil"%>
 <%@page import="com.tamarack.creekridge.model.CreditAppStatus"%>
 <%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>

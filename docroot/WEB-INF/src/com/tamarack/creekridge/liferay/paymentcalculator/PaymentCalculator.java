@@ -1,7 +1,6 @@
 package com.tamarack.creekridge.liferay.paymentcalculator;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,7 +10,6 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -36,18 +34,22 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.tamarack.creekridge.model.CreditApp;
+import com.tamarack.creekridge.model.CreditAppStatus;
 import com.tamarack.creekridge.model.Product;
 import com.tamarack.creekridge.model.ProposalOption;
 import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.model.Term;
 import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
+import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 import com.tamarack.creekridge.service.ProductLocalServiceUtil;
 import com.tamarack.creekridge.service.ProposalOptionLocalServiceUtil;
 import com.tamarack.creekridge.service.PurchaseOptionLocalServiceUtil;
@@ -145,27 +147,44 @@ public class PaymentCalculator extends MVCPortlet {
 
 
 	
-	public void createApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
+	public void submitApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
+		if (actionRequest.getMethod() == "GET")
+			return;
 		
+		saveApplicationInfo (actionRequest, actionResponse);
+		
+		CreditApp creditApp = null;
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		try {
+			
+			creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			CreditAppStatus creditAppStatus = CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus("Submitted");
+			creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
+			CreditAppLocalServiceUtil.updateCreditApp(creditApp);
+			
+			_log.info("Credit App has been submitted" + creditApp);
+			SessionMessages.add(actionRequest, "appSubmitted");
+			
+		} catch (Exception e) {
+			_log.error(e);
+		}
 	}
 	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
 		
+		if (actionRequest.getMethod() == "GET")
+			return;
+		
 		CreditApp creditApp = null;
 		_log.info("saveApplicationInfo actionrequest started: ");
 		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
-		
-		
-		_log.info(actionRequest.getMethod());
-		
-		if (actionRequest.getMethod() == "GET")
-			return;
 		
 		try {
 			_log.info("creditAppId: " + creditAppId);
 			
 			if (creditAppId != 0)
 				creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+				
 			
 			if (creditApp == null) {
 				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, themeDisplay);
@@ -173,7 +192,7 @@ public class PaymentCalculator extends MVCPortlet {
 				isAppCreated = true;
 				
 			} else {
-				creditApp = CreditAppLocalServiceUtil.getCreditApp(ParamUtil.getLong(actionRequest, "creditAppId"));
+				creditApp.setCreditAppStatusId(2);
 				_log.info("Application has been updated. " + creditApp);
 				
 			}

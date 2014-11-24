@@ -36,10 +36,11 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	id="updateIncludeInProposal" />
 
 <portlet:actionURL name="saveApplicationInfo" var="saveApplicationInfoURL">
-	<portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
-<portlet:actionURL name="createApplication" var="createApplicationInfoURL">
-<portlet:param name="mvcPath" value="view.jsp" />
+
+<portlet:actionURL name="submitApplication" var="submitApplicationURL">
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
 
 
@@ -47,9 +48,28 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 <liferay-ui:error key="runCalculatorRequired" message="error-run-calculator-required" />
 <liferay-ui:success key="appSaved" message="app-saved-successfully"/>
 <liferay-ui:success key="appUpdated" message="app-updated-successfully"/>
+<liferay-ui:success key="appSubmitted" message="app-submitted-successfully"/>
 
-<aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post">
-	<aui:input type="hidden" name="creditAppId" value="${creditApp.creditAppId}"/>
+
+
+<script type="text/javascript" charset="utf-8">
+function processAppButton(action){
+	
+	var formEl = $('[name="<portlet:namespace/>applicationForm"]');
+	console.log (formEl);
+	console.log (action);
+  if(action==0){
+	  formEl.attr('action',"<%=saveApplicationInfoURL%>");
+  }else{
+	  formEl.attr('action',"<%=submitApplicationURL%>");
+  }
+ 
+}
+</script>
+
+<c:if test="${creditApp.creditAppStatusId != 3}">
+
+<aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" name="applicationForm">
 	<c:if test="${creditApp.creditAppId != 0}">
 		<h3>Application ${creditApp.creditAppId} </h3> 
  	</c:if>
@@ -105,8 +125,8 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 				</aui:col>
 				
 				<aui:button-row>
-					<button class="btn btn-danger" type="reset" onclick="resetAllSections();">Clear</button>
-					<button class="btn btn-success" type="submit" id="calculatePaymentsButton" onclick="return calculatePayments()"> Calculate Payments </button>
+					<button class="btn btn-danger" type="reset" onclick="resetAllSections();"><i class="icon-remove"></i> Clear</button>
+					<button class="btn btn-success" type="submit" id="calculatePaymentsButton" onclick="return calculatePayments()"><i class="icon-th"></i> Calculate Payments </button>
 				
 				</aui:button-row>
 		</liferay-ui:panel>
@@ -128,7 +148,7 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	 		<!-- APPLICATION PANEL  -->
 	
 		<liferay-ui:panel title="Application" id="applicationInfo" state="<%=appicationInfoSectionState %>">
-	        <c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
+	        <c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
 	 	</liferay-ui:panel>
 	 	
 	</liferay-ui:panel-container>
@@ -514,3 +534,19 @@ var buildProposalOptionsTable = function (remoteData) {
 	text-align:center !important;
 }
 </style>
+
+
+
+</c:if>
+
+
+
+
+<!-- SUBMITTED APPS  -->
+
+
+<c:if test="${creditApp.creditAppStatusId == 3}">
+
+<c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
+
+</c:if>
