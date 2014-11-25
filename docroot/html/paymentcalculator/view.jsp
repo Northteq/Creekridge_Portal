@@ -145,12 +145,12 @@ function processAppButton(action){
 	    	</div>
 	 	</liferay-ui:panel>
 	 	
-	 		<!-- APPLICATION PANEL  -->
-	
-		<liferay-ui:panel title="Application" id="applicationInfo" state="<%=appicationInfoSectionState %>">
-	        <c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
-	 	</liferay-ui:panel>
-	 	
+	 	<!-- APPLICATION PANEL  -->
+		<c:if test="${creditApp.creditAppId != null}">
+			<liferay-ui:panel title="Application" id="applicationInfo" state="<%=appicationInfoSectionState %>" >
+		        <c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
+		 	</liferay-ui:panel>
+	 	</c:if>
 	</liferay-ui:panel-container>
 	
 	

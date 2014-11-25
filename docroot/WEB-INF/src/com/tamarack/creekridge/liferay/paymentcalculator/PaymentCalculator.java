@@ -149,7 +149,7 @@ public class PaymentCalculator extends MVCPortlet {
 	
 	public void submitApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
 		if (actionRequest.getMethod() == "GET")
-			return;
+			return; //simply refresh as new
 		
 		saveApplicationInfo (actionRequest, actionResponse);
 		
