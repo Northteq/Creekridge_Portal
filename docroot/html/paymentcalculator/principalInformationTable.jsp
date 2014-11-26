@@ -12,8 +12,8 @@
 <liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5">
     <liferay-ui:search-container-results>
     <% 
-    Long creditAppId = (Long) request.getAttribute("creditAppId");
-    List <CreditAppPrincipal> tempResults = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditAppId);
+    //Long creditAppId = (Long) request.getAttribute("creditAppId");
+    List <CreditAppPrincipal> tempResults = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(14303);
     results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
     total = tempResults.size(); 
     
@@ -33,7 +33,7 @@
             name="principal-number"
             property="principalId"
         />
-
+<%-- 
         <liferay-ui:search-container-column-text
             name="credit-app-status"
             property="creditAppStatusId"
@@ -47,7 +47,7 @@
         <liferay-ui:search-container-column-text
             name="equipment-price"
             property="equipmentPrice"
-        />
+        /> --%>
         
         <%-- <liferay-ui:search-container-column-jsp
         path="/creditapplicationstable/appTableActions.jsp"
