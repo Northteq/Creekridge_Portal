@@ -92,8 +92,14 @@
 		 	</liferay-ui:panel>
 		 	
 		 	<liferay-ui:panel title="Principal Information" id="equipmentInfo" state="<%=equipmentInfoSectionState %>" >
-		 		<aui:fieldset column="true">
-		 		</aui:fieldset>
+		 
+					<aui:button name="enterPrincipalButton" id="enterPrincipalButton" 
+					 value="Add New Principal"> </aui:button>
+				
+
+		 		
+		 		
+		 
 		 	</liferay-ui:panel>
 		 	
 		 	<liferay-ui:panel title="Credit Application Bank Reference Information" id="equipmentInfo" state="<%=equipmentInfoSectionState %>" >
@@ -101,3 +107,37 @@
 			
 				</aui:fieldset>
 		 	</liferay-ui:panel>
+		 	
+		<portlet:renderURL var="enterPrincipalURL" windowState="<%=LiferayWindowState.POP_UP.toString()%>">  
+			<portlet:param name="mvcPath" value="/html/paymentcalculator/enterPrincipal.jsp"/>
+		</portlet:renderURL>		 	
+		 	
+		<aui:script>
+			AUI().use('aui-base',
+				'aui-dialog-iframe',
+				 
+				function(A) {
+				A.one('#<portlet:namespace />enterPrincipalButton').on('click', function(event){ 
+					var popUpWindow=Liferay.Util.Window.getWindow({
+											dialog: {
+												centered: true,
+												constrain2view: true,
+												//cssClass: 'yourCSSclassName',
+												modal: true,
+												resizable: false,
+												width: 600,
+												
+											}
+										}
+									).plug(
+										A.Plugin.DialogIframe, {
+											autoLoad: false,
+											uri: '<%=enterPrincipalURL%>'
+										}).render();
+					popUpWindow.show();
+					popUpWindow.titleNode.html("Enter Principal");
+					
+				
+				});
+			});
+		</aui:script>

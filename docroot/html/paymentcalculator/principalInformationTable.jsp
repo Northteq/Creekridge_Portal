@@ -12,10 +12,10 @@
 <liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5">
     <liferay-ui:search-container-results>
     <% 
-    
-    List <CreditApp> tempResults = CreditAppLocalServiceUtil.getCreditAppByGroupId(scopeGroupId);
+    Long creditAppId = (Long) request.getAttribute("creditAppId");
+    List <CreditAppPrincipal> tempResults = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditAppId);
     results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
-    total = tempResults.size();
+    total = tempResults.size(); 
     
     pageContext.setAttribute ("results", results);
     pageContext.setAttribute ("total", total);
@@ -25,13 +25,13 @@
    </liferay-ui:search-container-results>
 
     <liferay-ui:search-container-row
-        className="com.tamarack.creekridge.model.CreditApp"
-        keyProperty="creditAppId"
-        modelVar="creditApp" escapedModel="<%= false %>">
+        className="com.tamarack.creekridge.model.CreditAppPrincipal"
+        keyProperty="principalId"
+        modelVar="principal" escapedModel="<%= false %>">
         
         <liferay-ui:search-container-column-text
-            name="application-number"
-            property="creditAppId"
+            name="principal-number"
+            property="principalId"
         />
 
         <liferay-ui:search-container-column-text
