@@ -97,7 +97,7 @@
 					 value="Add New Principal"> </aui:button>
 				
 
-		 		
+		 			<c:import url="/html/paymentcalculator/principalInformationTable.jsp"></c:import>
 		 		
 		 
 		 	</liferay-ui:panel>
