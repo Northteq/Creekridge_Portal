@@ -258,8 +258,8 @@ public class PaymentCalculator extends MVCPortlet {
 			actionResponse.setRenderParameter("pricingOvervewSectionState", "collapsed");
 		}
 		
-		if (actionResponse.getRenderParameterMap().get("appicationInfoSectionState") == null) {
-			actionResponse.setRenderParameter("appicationInfoSectionState", "open");
+		if (actionResponse.getRenderParameterMap().get("customerInfoSectionState") == null) {
+			actionResponse.setRenderParameter("customerInfoSectionState", "open");
 		}
 		
 		_log.info("Setting attribute : creditApp=" + creditApp );

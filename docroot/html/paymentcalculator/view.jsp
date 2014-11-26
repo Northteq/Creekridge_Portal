@@ -11,8 +11,6 @@
 
 String calculatorSectionState = ParamUtil.getString(request, "calculatorSectionState", "open");
 String pricingOvervewSectionState = ParamUtil.getString(request, "pricingOvervewSectionState", "collapsed");
-String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfoSectionState", "collapsed");
-
 
 %>
 
@@ -147,11 +145,13 @@ function processAppButton(action){
 	 	
 	 	<!-- APPLICATION PANEL  -->
 		<c:if test="${creditApp.creditAppId != null}">
-			<liferay-ui:panel title="Application" id="applicationInfo" state="<%=appicationInfoSectionState %>" >
-		        <c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
-		 	</liferay-ui:panel>
+		
+			<c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
+			
 	 	</c:if>
+	 	
 	</liferay-ui:panel-container>
+	
 	
 	
 	
