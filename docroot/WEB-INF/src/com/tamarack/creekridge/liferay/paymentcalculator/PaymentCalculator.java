@@ -1,7 +1,6 @@
 package com.tamarack.creekridge.liferay.paymentcalculator;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,8 +34,6 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -119,7 +116,7 @@ public class PaymentCalculator extends MVCPortlet {
 				
 				if (appId != null) {
 					creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long (appId));
-				}
+				} 
 			}
 			
 			_log.info("creditApp: " + creditApp);
@@ -149,6 +146,8 @@ public class PaymentCalculator extends MVCPortlet {
 	}
 	
 	public void addCreditAppPrincipal (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("addCreditAppPrincipal started");
+		
 		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
 		
 		try {
@@ -156,11 +155,38 @@ public class PaymentCalculator extends MVCPortlet {
 			principal = PaymentCalculatorUtil.populatePrincipalFromRequest(actionRequest, principal);
 			principal.setCreditAppId(creditAppId);
 			CreditAppPrincipalLocalServiceUtil.updateCreditAppPrincipal(principal);
+			
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+			actionRequest.setAttribute("principalInfoSectionState", "open");
 		} catch (Exception e) {
 			_log.error(e); 
 		}
+		
+		_log.info("addCreditAppPrincipal ended");
 	}
 
+	public void deleteCreditAppPrincipal (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("deleteCreditAppPrincipal started");
+		
+		long principalId = ParamUtil.getLong(actionRequest, "resourcePrimKey");
+		_log.info("resourcePrimKey" + principalId);
+		long creditAppId = ParamUtil.getLong(actionRequest, "appId");
+		_log.info("creditAppId" + creditAppId);
+		try {
+			
+			CreditAppPrincipalLocalServiceUtil.deleteCreditAppPrincipal(principalId);
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+			actionRequest.setAttribute("principalInfoSectionState", "open");
+		} catch (Exception e) {
+			_log.error(e); 
+		}
+		
+		_log.info("deleteCreditAppPrincipal ended");
+	}
 
 	
 	public void submitApplication (ActionRequest actionRequest, ActionResponse actionResponse) {

@@ -21,6 +21,9 @@
 <%@page import="com.tamarack.creekridge.model.CreditAppPrincipal"%>
 <%@page import="com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil"%>
 <%@page import="com.liferay.portal.kernel.util.ListUtil"%>
+<%@page import="com.liferay.portal.kernel.dao.search.ResultRow"%>
+<%@page import=" javax.servlet.http.HttpServletRequest"%>
+
 <portlet:defineObjects/>
 <liferay-theme:defineObjects/>
 

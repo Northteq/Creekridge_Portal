@@ -6,22 +6,34 @@
 --%>
 
 
-<%@ include file="init.jsp"%>
+<%@ include file="../init.jsp"%>
 
 
-<liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5">
+<%
+	CreditApp creditApp = (CreditApp) request.getAttribute("creditApp");
+%>
+<%=themeDisplay.getLayout().getFriendlyURL() %>
+<liferay-portlet:renderURL varImpl="iteratorURL">
+       <portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
+       <portlet:param name="creditAppId" value="<%=String.valueOf(creditApp.getCreditAppId()) %>" />
+       <portlet:param name="principalInfoSectionState" value="open" />
+</liferay-portlet:renderURL>
+
+<liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5"  iteratorURL="<%=iteratorURL %>">
     <liferay-ui:search-container-results>
     <% 
-    CreditApp creditApp = (CreditApp) request.getAttribute("creditApp");
+    
     List <CreditAppPrincipal> tempResults = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId());
     results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
     total = tempResults.size(); 
     
     pageContext.setAttribute ("results", results);
     pageContext.setAttribute ("total", total);
-    
-    
+   	
     %>
+    
+    
+    
    </liferay-ui:search-container-results>
 
     <liferay-ui:search-container-row
@@ -48,6 +60,24 @@
             name="principal-last-name"
             property="principalLastName"
         />
+        
+    
+        <liferay-ui:search-container-column-date
+            name="principal-create-date"
+            property="createDate"
+        />
+        
+        <liferay-ui:search-container-column-date
+            name="principal-modified-date"
+            property="modifiedDate"
+        />
+        
+        
+         <liferay-ui:search-container-column-jsp
+        path="/html/paymentcalculator/principals/principalActions.jsp"
+        align="right"
+        name="Actions"
+ 		/>
   
 <%-- 
         <liferay-ui:search-container-column-text
@@ -72,5 +102,25 @@
 
     </liferay-ui:search-container-row>
 
-    <liferay-ui:search-iterator />
+    <liferay-ui:search-iterator searchContainer="<%=searchContainer %>"/>
 </liferay-ui:search-container>
+
+
+<aui:script>
+    Liferay.provide(window, 'refreshPortlet', function() {
+        var curPortlet = '#p_p_id<portlet:namespace/>';
+        Liferay.Portlet.refresh(curPortlet);
+    },
+    ['aui-dialog','aui-dialog-iframe']
+    );
+</aui:script>
+
+<aui:script>
+    Liferay.provide(window, 'closePopup', function(dialogId) {
+        var A = AUI();
+        var dialog = Liferay.Util.Window.getById(dialogId);
+        dialog.destroy();
+    },
+    ['liferay-util-window']
+    );
+</aui:script>

@@ -5,6 +5,7 @@
  */
 --%>
 
+<%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>
 <%@ include file="init.jsp"%>
 
 <%
@@ -12,8 +13,19 @@
 String calculatorSectionState = ParamUtil.getString(request, "calculatorSectionState", "open");
 String pricingOvervewSectionState = ParamUtil.getString(request, "pricingOvervewSectionState", "collapsed");
 
+
+
+HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+long appId = ParamUtil.getLong(request, "creditAppId");
+
+if (appId != 0) {
+	request.setAttribute("creditApp", CreditAppLocalServiceUtil.getCreditApp(appId));
+}
+
 %>
 
+appId = 
+<%=appId %>>
 
 <script src="<%= renderRequest.getContextPath()%>/js/paymentcalculator.js" type="text/javascript"></script>
 
