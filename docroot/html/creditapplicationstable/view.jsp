@@ -7,7 +7,9 @@
 
 
 <%@ include file="init.jsp"%>
-
+<portlet:renderURL var="appTableActionsURL" windowState="<%=LiferayWindowState.POP_UP.toString()%>">   
+	<portlet:param name="mvcPath" value="/html/creditapplicationstable/appTableActions.jsp"/>
+</portlet:renderURL>
 
 <liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5">
     <liferay-ui:search-container-results>
@@ -49,12 +51,15 @@
             property="equipmentPrice"
         />
         
-        <%-- <liferay-ui:search-container-column-jsp
-        path="/creditapplicationstable/appTableActions.jsp"
+        <liferay-ui:search-container-column-jsp
+        path="/html/creditapplicationstable/appTableActions.jsp"
         align="right"
- 		/> --%>
+        name="Actions"
+ 		/>
 
     </liferay-ui:search-container-row>
 
     <liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+

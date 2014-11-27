@@ -25,7 +25,7 @@
 <%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@page import="com.liferay.portal.util.PortalUtil" %>
 <%@page import="com.liferay.portal.theme.ThemeDisplay" %>
-
+<%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
 
 <portlet:defineObjects/>
 <liferay-theme:defineObjects/>

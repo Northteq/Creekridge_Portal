@@ -1,6 +1,7 @@
 package com.tamarack.creekridge.liferay.paymentcalculator;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,6 +43,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.tamarack.creekridge.model.CreditApp;
+import com.tamarack.creekridge.model.CreditAppPrincipal;
 import com.tamarack.creekridge.model.CreditAppStatus;
 import com.tamarack.creekridge.model.Product;
 import com.tamarack.creekridge.model.ProposalOption;
@@ -49,6 +51,7 @@ import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.model.Term;
 import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
+import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 import com.tamarack.creekridge.service.ProductLocalServiceUtil;
 import com.tamarack.creekridge.service.ProposalOptionLocalServiceUtil;
@@ -143,6 +146,19 @@ public class PaymentCalculator extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 		
 		_log.info("render ended");
+	}
+	
+	public void addCreditAppPrincipal (ActionRequest actionRequest, ActionResponse actionResponse) {
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		
+		try {
+			CreditAppPrincipal principal = CreditAppPrincipalLocalServiceUtil.addCreditAppPrincipal(currentUser, themeDisplay);
+			principal = PaymentCalculatorUtil.populatePrincipalFromRequest(actionRequest, principal);
+			principal.setCreditAppId(creditAppId);
+			CreditAppPrincipalLocalServiceUtil.updateCreditAppPrincipal(principal);
+		} catch (Exception e) {
+			_log.error(e); 
+		}
 	}
 
 

@@ -64,8 +64,13 @@ public class PaymentCalculatorUtil {
 		return creditApp;
 	}
 	
-	public static CreditAppPrincipal populatePrincipalFromRequest (ActionRequest actionRequest, CreditApp creditApp) {
-		return null;
+	public static CreditAppPrincipal populatePrincipalFromRequest (ActionRequest actionRequest, CreditAppPrincipal principal) {
+		
+		principal.setPrincipalFirstName(ParamUtil.getString (actionRequest, "principalFirstName"));
+		principal.setPrincipalMiddleName(ParamUtil.getString (actionRequest, "principalMiddleName"));
+		principal.setPrincipalLastName(ParamUtil.getString (actionRequest, "principalLastName"));
+		
+		return principal;
 	}
 	
 }

@@ -93,8 +93,11 @@
 		 	
 		 	<liferay-ui:panel title="Principal Information" id="equipmentInfo" state="<%=equipmentInfoSectionState %>" >
 		 
-					<aui:button name="enterPrincipalButton" id="enterPrincipalButton" 
-					 value="Add New Principal"> </aui:button>
+					<aui:button-row>
+						<aui:button name="enterPrincipalButton" id="enterPrincipalButton" 
+					 		value="Add New Principal"> </aui:button>
+					 	
+					</aui:button-row>
 				
 
 		 			<c:import url="/html/paymentcalculator/principalInformationTable.jsp"></c:import>
@@ -110,6 +113,7 @@
 		 	
 		<portlet:renderURL var="enterPrincipalURL" windowState="<%=LiferayWindowState.POP_UP.toString()%>">  
 			<portlet:param name="mvcPath" value="/html/paymentcalculator/enterPrincipal.jsp"/>
+			<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
 		</portlet:renderURL>		 	
 		 	
 		<aui:script>

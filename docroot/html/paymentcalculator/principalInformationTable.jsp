@@ -12,8 +12,8 @@
 <liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5">
     <liferay-ui:search-container-results>
     <% 
-    //Long creditAppId = (Long) request.getAttribute("creditAppId");
-    List <CreditAppPrincipal> tempResults = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(14303);
+    CreditApp creditApp = (CreditApp) request.getAttribute("creditApp");
+    List <CreditAppPrincipal> tempResults = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId());
     results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
     total = tempResults.size(); 
     
@@ -30,9 +30,25 @@
         modelVar="principal" escapedModel="<%= false %>">
         
         <liferay-ui:search-container-column-text
-            name="principal-number"
+            
             property="principalId"
         />
+        
+        <liferay-ui:search-container-column-text
+            name="principal-first-name"
+            property="principalFirstName"
+        />
+        
+        <liferay-ui:search-container-column-text
+            name="principal-middle-name"
+            property="principalMiddleName"
+        />
+        
+        <liferay-ui:search-container-column-text
+            name="principal-last-name"
+            property="principalLastName"
+        />
+  
 <%-- 
         <liferay-ui:search-container-column-text
             name="credit-app-status"
