@@ -18,8 +18,6 @@
 
 
 <aui:container>
-app = 
-${creditAppId}
 	<aui:form action="<%=addCreditAppPrincipalURL %>" method="post" name="principalForm">
 	
 		<aui:fieldset>
