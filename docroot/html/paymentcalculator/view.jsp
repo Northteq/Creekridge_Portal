@@ -22,10 +22,10 @@ if (appId != 0) {
 	request.setAttribute("creditApp", CreditAppLocalServiceUtil.getCreditApp(appId));
 }
 
-%>
+Boolean viewMode = ParamUtil.getBoolean(request, "viewMode");
+request.setAttribute("viewMode", viewMode);
 
-appId = 
-<%=appId %>>
+%>
 
 <script src="<%= renderRequest.getContextPath()%>/js/paymentcalculator.js" type="text/javascript"></script>
 
@@ -77,7 +77,26 @@ function processAppButton(action){
 }
 </script>
 
-<c:if test="${creditApp.creditAppStatusId != 3}">
+<portlet:renderURL portletMode="view" var="viewAppURL">
+	<portlet:param name="viewMode" value="<%= String.valueOf(true)%>" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
+</portlet:renderURL>
+
+
+
+<c:if test="${creditApp.creditAppStatusId != 3 && viewMode==false}">
+
+	<c:if test="${creditApp.creditAppId != 0}">
+		<liferay-ui:icon
+		   image="tool"
+		   message="Preview Credit App"
+		   label="<%= true%>"
+		   method="get"
+		   url="<%= viewAppURL%>"
+		   useDialog="<%= false%>"
+		   
+		  />
+	</c:if>
 
 <aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" name="applicationForm">
 	<c:if test="${creditApp.creditAppId != 0}">
@@ -94,8 +113,8 @@ function processAppButton(action){
 	<liferay-ui:panel-container accordion="true" extended="false">
 		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="<%=calculatorSectionState %>">
 				
-				<aui:col span="3" first="true">
-					<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px"  label="Equipment Price" required="true" value="${creditApp.equipmentPrice}"></aui:input>
+				<aui:col span="3" first="true">	
+				 	<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px" required="true" value="${creditApp.equipmentPrice}"></aui:input>
 				</aui:col>
 	
 				<aui:col span="3" id="product">
@@ -149,7 +168,7 @@ function processAppButton(action){
 	    		<div id="proposalOptionsTable"></div>
 	   		
 	    		<aui:button-row>
-	    			<button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button>
+	    			<!-- <button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button> -->
 	    			<a class="btn btn-success" id="navigateToCalculator" onclick="navigateToCalculator()">Back to Calculator</a>
 	    		</aui:button-row>
 	    	</div>
@@ -157,20 +176,11 @@ function processAppButton(action){
 	 	
 	 	<!-- APPLICATION PANEL  -->
 		<c:if test="${creditApp.creditAppId != null}">
-		
 			<c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
-			
 	 	</c:if>
 	 	
 	</liferay-ui:panel-container>
-	
-	
-	
-	
 </aui:form>
-
-
-
 
 <script type="text/javascript">
 
@@ -180,16 +190,11 @@ var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
 var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
 var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 
-
-
 $(document).ready(function () {
 	
 	var proposals;
 	var proposalsString = '${proposalList}';
 	try {
-		
-		console.log ('${proposalList}', proposalsString);
-		
 		if (proposalsString != "") {
 			proposals = jQuery.parseJSON('${proposalList}');
 			buildProposalOptionsTable(proposals);
@@ -200,8 +205,6 @@ $(document).ready(function () {
 	}
 
 	$(".alert-error:contains('Your request failed to complete.')").hide();
-	
-		
 });
 
 </script>
@@ -212,18 +215,11 @@ $(document).ready(function () {
 }
 </style>
 
-
-
 </c:if>
 
+<!-- VIEW MODE -->
 
 
-
-<!-- SUBMITTED APPS  -->
-
-
-<c:if test="${creditApp.creditAppStatusId == 3}">
-
-<c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
-
+<c:if test="${creditApp.creditAppStatusId == 3 || viewMode}">
+	<c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
 </c:if>

@@ -68,8 +68,6 @@ var getPurchaseOptions = function () {
 		
 		var dataJsonString = createRateFactorRuleRequestObjectString();
 
-		console.log('selectedProducts', dataJsonString);
-
 		$.ajax({
 					type : "POST",
 					url : processProductsSelectionURL,
@@ -157,7 +155,9 @@ var getTermsOptions = function () {
 
 var updateUseForApplication = function ($this) {
 	
+	//autoselect the uinclude in proposal
 	
+	updateUseInProposalSelection ($($this).parent().prev().children().prop('checked', true));
 	var poId = $($this).val();
 	$.ajax({
 		type : "POST",
@@ -253,7 +253,6 @@ var buildProposalOptionsTable = function (remoteData) {
 			}
 				  
 			var propFormatter =	function (o) {
-			  	console.log ('propFormatter', o);
 			  	
 			  	//need to add input elements for some fields
 			  	if (o.column.name == 'useForCreditApp') {

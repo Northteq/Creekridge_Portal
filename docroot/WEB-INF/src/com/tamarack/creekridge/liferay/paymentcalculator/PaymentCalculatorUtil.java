@@ -60,7 +60,7 @@ public class PaymentCalculatorUtil {
 		creditApp.setCustomerContactPhone(ParamUtil.getString(actionRequest,"customerContactPhone"));
 		creditApp.setCustomerContactFax(ParamUtil.getString(actionRequest,"customerContactFax"));
 		creditApp.setCustomerContactEmail(ParamUtil.getString(actionRequest,"customerContactEmail"));
-		_log.info ("populateAppFromRequest: " + creditApp);
+		//_log.info ("populateAppFromRequest: " + creditApp);
 		return creditApp;
 	}
 	

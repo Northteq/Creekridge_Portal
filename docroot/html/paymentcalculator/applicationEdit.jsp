@@ -9,22 +9,13 @@
 <% 
 
 	//keep track of panel state
-	String customerInfoSectionState = ParamUtil.getString(request, "customerInfoSectionState", "collapsed");
-	String customerContactInfoSectionState	= ParamUtil.getString(request, "customerContactInfoSectionState", "collapsed");
-	String customerAddressInfoState = ParamUtil.getString(request, "customerAddressInfoState", "collapsed");
-	String businessInfoSectionState = ParamUtil.getString(request, "businessInfoSectionState", "collapsed");
-	String equipmentInfoSectionState = ParamUtil.getString(request, "equipmentInfoSectionState", "collapsed");
-	 
-	
+	String customerAndEquipmentInfoSectionState = ParamUtil.getString(request, "customerAndEquipmentInfoSectionState", "collapsed");
 	String principalInfoSectionState = (String) request.getAttribute("principalInfoSectionState");
 	
 	if(principalInfoSectionState == null || principalInfoSectionState == "") 
 		principalInfoSectionState = ParamUtil.getString(request, "principalInfoSectionState");
 	
 	System.out.println ("principalInfoSectionState " + principalInfoSectionState);
-	
-	
-	
 	
 	State[] statesList=StateUtil.STATES;
 	renderRequest.setAttribute("statesList", statesList);
@@ -41,48 +32,44 @@
 		 	
 
 
-<liferay-ui:panel title="Customer Info" id="customerInfo" state="<%=customerInfoSectionState %>" >
-		         <aui:fieldset column="false" label="Customer Info">
+<liferay-ui:panel title="Customer and Equipment Info" id="customerAndEquipmentInfo" state="<%=customerAndEquipmentInfoSectionState %>" >
+		        
+		        <aui:fieldset column="false" label="Customer">
 					<aui:input inlineField="true" name="customerName" value="${creditApp.customerName}"></aui:input>
 					<aui:input inlineField="true"  name="customerDBAName" label="DBA Name" value="${creditApp.customerDBAName}"></aui:input>
 				</aui:fieldset>
 				
-				<aui:fieldset column="false" label="Customer Contact Info">
-					<aui:input inlineField="true" name="customerContact" label="Customer Contact"></aui:input>
-					<aui:input inlineField="true" name="contactPhone" label="Conatct Phone"></aui:input>
-					<aui:input inlineField="true" name="contactFax" label="Conatct Fax"></aui:input>
+				<aui:fieldset column="false" label="Customer Contact">
+					<aui:input inlineField="true" name="customerContact" value="${creditApp.customerContact}"></aui:input>
+					<aui:input inlineField="true" name="customerContactEmail" type="email" value="${creditApp.customerContactEmail}"></aui:input>
+					<aui:input inlineField="true" name="customerContactPhone" type="tel" value="${creditApp.customerContactPhone}"></aui:input>
+					<aui:input inlineField="true" name="customerContactFax" value="${creditApp.customerContactFax}"></aui:input>
 				</aui:fieldset>
 				
-				<aui:fieldset column="false" label="Customer Address Info">
-					<aui:input inlineField="true" name="customerAddress1"></aui:input>
-					<aui:input inlineField="true" name="customerAddress2"></aui:input>
-					<aui:input inlineField="true" name="customerCity"></aui:input>
+				<aui:fieldset column="false" label="Customer Address">
+					<aui:input inlineField="true" name="customerAddress1" value="${creditApp.customerAddress1}"></aui:input>
+					<aui:input inlineField="true" name="customerAddress2" value="${creditApp.customerAddress2}"></aui:input>
+					<aui:input inlineField="true" name="customerCity" value="${creditApp.customerCity}"></aui:input>
 					
 					<aui:select inlineField="true" name="customerState" showEmptyOption="true">
-						 
-						 <% State[] customerState=StateUtil.STATES;
-						   for (int i=0; i<customerState.length;i++){%>
-						   	 <aui:option value="<%= customerState[i].getId()%>" label="<%= customerState[i].getName()%>">
-						   	 
-						   	 </aui:option>
-						  <% } %>
+					  	<c:forEach items="${statesList}" var="state">
+				            <aui:option value="${state.id}" label="${state.name}" selected="${creditApp.customerState == state.id}"/>
+				        </c:forEach>
 					 </aui:select>
-					 <aui:input inlineField="true" name="customerZip"></aui:input>
+					 <aui:input inlineField="true" name="customerZip" value="${creditApp.customerZip}"></aui:input>
 		
 				</aui:fieldset>
 				
-				<aui:fieldset column="false" span="12">
-					<aui:input inlineField="true" type="textarea" rows="3" name="customerBusinessDesc"></aui:input>
+				<aui:fieldset column="false" span="12" label="Business Information">
+					
 					
 					<aui:select inlineField="true" name="customerBusinessType" showEmptyOption="true">
 				        <c:forEach items="${corpTypeList}" var="corpType">
 				            <aui:option value="${corpType}" label="${corpType}" selected="${creditApp.customerBusinessType == corpType}"/>
 				        </c:forEach>
 				    </aui:select>
-					
-					<aui:input inlineField="true" name="customerBusinessStartDate" value="${creditApp.customerBusinessStartDate}"></aui:input>
-					
-					
+					<fmt:formatDate value="${creditApp.customerBusinessStartDate}" pattern="MM/dd/yyyy" var="busStartDate"/> 
+					<aui:input id="customerBusinessStartDate" inlineField="true" name="customerBusinessStartDate" value="${busStartDate}" type="date"></aui:input>
 					
 					<aui:select inlineField="true" name="customerBusinessIncorporatedState" showEmptyOption="true">
 				        <c:forEach items="${statesList}" var="state">
@@ -94,21 +81,36 @@
 		
 				</aui:fieldset>
 				
-		 	</liferay-ui:panel>
-		 	
-		 	
-		 
-		 	
-		 	<liferay-ui:panel title="Equipment Info" id="equipmentInfo" state="<%=equipmentInfoSectionState %>" >
-		 		<aui:fieldset  column="true">
-					<label class="control-label">Equipment Price</label>
-					<span>${creditApp.equipmentPrice}</span>
+				<aui:fieldset>
+					<aui:input type="textarea" rows="3" name="customerBusinessDesc"></aui:input>
 				</aui:fieldset>
+				
+				<aui:fieldset  label="Equipment Info">
+					<fmt:formatNumber value="${creditApp.equipmentPrice}" type="CURRENCY" var="eqPrice"/> 
+				 	<label>Equipment Price</label>${eqPrice} <br/> <br/>
+					<aui:input type="checkbox" name="equipmentLocAsCustomerFlag" value="${creditApp.equipmentLocAsCustomerFlag}" onchange="copyCustomerAddress($(this))"></aui:input>
+					
+				</aui:fieldset>
+				
+				<aui:fieldset>
+					<aui:input inlineField="true" type="text" value="${creditApp.equipmentAddress1}" name="equipmentAddress1" />
+					<aui:input inlineField="true" type="text" value="${creditApp.equipmentAddress2}" name="equipmentAddress2" />
+					<aui:input inlineField="true" type="text" value="${creditApp.equipmentCity}" name="equipmentCity" />
+					<aui:select inlineField="true" name="equipmentState" showEmptyOption="true">
+				        <c:forEach items="${statesList}" var="state">
+				            <aui:option value="${state.id}" label="${state.name}" selected="${creditApp.equipmentState == state.id}"/>
+				        </c:forEach>
+				    </aui:select>
+				    <aui:input inlineField="true" type="text" value="${creditApp.equipmentZip}" name="equipmentZip" />
+				</aui:fieldset>
+				
+				<aui:fieldset>
+					<aui:input type="textarea" rows="3" name="equipmentDesc" value="${creditApp.equipmentDesc}"></aui:input>
+				</aui:fieldset>
+				
 		 	</liferay-ui:panel>
 		 	
-		 	
-		 	
-		 	<liferay-ui:panel title="Principal Information" id="principalInfo" state="<%=principalInfoSectionState %>" >
+		 	<liferay-ui:panel title="principal-info-section" id="principalInfo" state="<%=principalInfoSectionState %>" >
 		 
 					<aui:button-row>
 						<aui:button name="enterPrincipalButton" id="enterPrincipalButton" 
@@ -116,7 +118,7 @@
 					 	
 					</aui:button-row>
 				
-					<liferay-ui:icon
+					<%-- <liferay-ui:icon
 					    image="tool"
 					    message="Add Principal"
 					    label="<%= true%>"
@@ -124,23 +126,12 @@
 					    url="<%= enterPrincipalURL%>"
 					    useDialog="<%= true%>"
 					    
-				    />
+				    /> --%>
 		
 		 			<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
 		 		
 		 
 		 	</liferay-ui:panel>
-		 	
-		 	<liferay-ui:panel title="Credit Application Bank Reference Information" id="equipmentInfo" state="<%=equipmentInfoSectionState %>" >
-		 		<aui:fieldset column="true">
-			
-				</aui:fieldset>
-		 	</liferay-ui:panel>
-		 	
-		
-		 	
-		 	
-		 	
 		 	
 		<aui:script>
 			AUI().use('aui-base',
@@ -168,3 +159,45 @@
 				});
 			});
 		</aui:script>
+		
+		
+		<aui:script>
+		AUI().use('aui-datepicker',
+			function(A) {
+				new A.DatePicker({
+			        trigger: '#<portlet:namespace/>customerBusinessStartDate',
+			        calendar: {
+			            selectionMode: 'multiple',
+			            showPrevMonth: true,
+			            showNextMonth: true,
+			            yearRange: [ 1970, 2009 ],
+		          	},
+		          	year:true,
+			        popover: {
+			          zIndex: 1
+			        },
+			        on: {
+			          selectionChange: function(event) {
+			            console.log(event.newSelection)
+			          }
+			        }
+			      }
+			    );
+			  });
+	</aui:script>
+	
+	
+	<script>
+	
+	var copyCustomerAddress = function (sameAddressEl) {
+		
+		if ($(sameAddressEl).is(':checked')) {
+			$('#<portlet:namespace/>equipmentAddress1').val($('#<portlet:namespace/>customerAddress1').val());
+			$('#<portlet:namespace/>equipmentAddress2').val($('#<portlet:namespace/>customerAddress2').val());
+			$('#<portlet:namespace/>equipmentCity').val($('#<portlet:namespace/>customerCity').val());
+			$('#<portlet:namespace/>equipmentState').val($('#<portlet:namespace/>customerState').val());
+			$('#<portlet:namespace/>equipmentZip').val($('#<portlet:namespace/>customerZip').val());
+		}
+		
+	};
+	</script>

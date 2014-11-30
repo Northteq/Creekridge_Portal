@@ -106,8 +106,6 @@ public class PaymentCalculator extends MVCPortlet {
 
 			productOptions = ProductLocalServiceUtil.getProducts(-1, -1);
 			renderRequest.setAttribute("productOptions", productOptions);
-			
-			
 				
 			creditApp = (CreditApp) renderRequest.getAttribute("creditApp");
 			if (creditApp == null) { //try page parameter
@@ -124,18 +122,16 @@ public class PaymentCalculator extends MVCPortlet {
 			if (creditApp != null) {
 
 				renderRequest.setAttribute("creditApp", creditApp);
-				
-				//populate proposal options if any
-				List <ProposalOptionWrapper> powList = new ArrayList<ProposalOptionWrapper>();
-				
+				proposalOptionList = new ArrayList<ProposalOptionWrapper>();
 				for (ProposalOption po: ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditApp.getCreditAppId())) {
-					powList.add (new ProposalOptionWrapper(po));
+					proposalOptionList.add (new ProposalOptionWrapper(po));
 				}
 				
-				renderRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(powList));
+				//need to figure out if we want to switch back to the action vs ajax
+				renderRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(proposalOptionList));
+				renderRequest.setAttribute("proposalOptionList", proposalOptionList);
 			}
 			
-				
 		} catch (Exception e) {
 			_log.error(e);
 		}
@@ -155,7 +151,6 @@ public class PaymentCalculator extends MVCPortlet {
 			principal = PaymentCalculatorUtil.populatePrincipalFromRequest(actionRequest, principal);
 			principal.setCreditAppId(creditAppId);
 			CreditAppPrincipalLocalServiceUtil.updateCreditAppPrincipal(principal);
-			
 			
 			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
 			actionRequest.setAttribute("creditApp", creditApp);
@@ -190,8 +185,6 @@ public class PaymentCalculator extends MVCPortlet {
 
 	
 	public void submitApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
-		if (actionRequest.getMethod() == "GET")
-			return; //simply refresh as new
 		
 		saveApplicationInfo (actionRequest, actionResponse);
 		
@@ -213,20 +206,23 @@ public class PaymentCalculator extends MVCPortlet {
 	}
 	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
-		
-		if (actionRequest.getMethod() == "GET")
-			return;
-		
+
 		CreditApp creditApp = null;
 		_log.info("saveApplicationInfo actionrequest started: ");
-		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
 		
 		try {
+			
+			long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+			
 			_log.info("creditAppId: " + creditAppId);
 			
 			if (creditAppId != 0)
 				creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
-				
+			
+			if (actionRequest.getMethod() == "GET") {
+				actionRequest.setAttribute("creditApp", creditApp);
+				return;
+			}
 			
 			if (creditApp == null) {
 				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, themeDisplay);
@@ -248,7 +244,7 @@ public class PaymentCalculator extends MVCPortlet {
 				actionResponse.setRenderParameter("calculatorSectionState", "open");
 				
 			} else {
-				_log.info("proposalOptionList is populated" + proposalOptionList.size());
+				_log.info("proposalOptionList is populated: " + proposalOptionList.size());
 				
 				
 				for (ProposalOptionWrapper pow: proposalOptionList) {
@@ -320,7 +316,6 @@ public class PaymentCalculator extends MVCPortlet {
 		JSONArray productIdList = selectedOptionsObject.getJSONArray("products");
 		_log.info("calculatePayments JSON productIdList : " + productIdList);
 		
-		
 		JSONArray purchaseOptionIdList = selectedOptionsObject.getJSONArray("purchaseOptions");
 		_log.info("calculatePayments JSON purchaseOptionIdList : " + purchaseOptionIdList);
 		
@@ -376,6 +371,11 @@ public class PaymentCalculator extends MVCPortlet {
 			 
 		}
 		
+		if (proposalOptionList.size()==1){
+			proposalOptionList.get(0).propOption.setIncludeInProposal(true);
+			proposalOptionList.get(0).propOption.setUseForCreditApp(true);
+		}
+		
 		return proposalOptionList;
 		
 	}
@@ -410,8 +410,7 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		//orderby price
 		rateFactorCriteriaQuery.addOrder(OrderFactoryUtil.desc("minPrice"));
-		
-		
+
 		@SuppressWarnings("unchecked")
 		List<RateFactorRule> rateFactorRuleList = RateFactorRuleLocalServiceUtil
 				.dynamicQuery(rateFactorCriteriaQuery);
@@ -442,14 +441,12 @@ public class PaymentCalculator extends MVCPortlet {
 		Criterion productCriteria = null;
 		Criterion purchaseOptionCriteria = null;
 		
-		
 		//only rules that are active and belong to a site/vendorId
 		Criterion vendorIdCriteria = RestrictionsFactoryUtil.eq("vendorId",
 				vendorId);
 		Criterion activeFlagCriteria = RestrictionsFactoryUtil.eq("active",
 				true);
 		
-
 		// build query for product ids
 		if (productIdList.length()>0) {
 			for (int i = 0; i < productIdList.length(); i++) {
@@ -478,8 +475,6 @@ public class PaymentCalculator extends MVCPortlet {
 				}
 			}
 		}
-		
-		
 		if (productCriteria != null){
 			rateFactorCriteriaQuery.add(productCriteria);
 			
@@ -505,10 +500,8 @@ public class PaymentCalculator extends MVCPortlet {
 		public String prodOptionName;
 		public Double eqPrice;
 		public Double paymentAmount;
-		public Boolean useForCreditApp;
-		public Boolean includeInProposal;
+	
 		public Long proposalOptionId;
-		
 		
 		public ProposalOptionWrapper (ProposalOption propOption) {
 			this.propOption = propOption;
@@ -519,8 +512,7 @@ public class PaymentCalculator extends MVCPortlet {
 				this.prodOptionName = PurchaseOptionLocalServiceUtil.getPurchaseOption(propOption.getPurchaseOptionId()).getPurchaseOptionName();
 				this.eqPrice = propOption.getEquipmentPrice();
 				this.paymentAmount = propOption.getPaymentAmount();
-				this.useForCreditApp = propOption.getUseForCreditApp();
-				this.includeInProposal = propOption.getIncludeInProposal();
+				
 				
 			} catch (SystemException e) {
 				_log.error(e);
@@ -530,20 +522,13 @@ public class PaymentCalculator extends MVCPortlet {
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
 
 	public void serveResource(ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse) throws IOException,
 			PortletException {
-		
-		
-		
 		HttpServletRequest request = PortalUtil
 				.getHttpServletRequest(resourceRequest);
-
-		
 		List <RateFactorRule> rateFactorList = new ArrayList <RateFactorRule>();
 		List <PurchaseOption> purchaseOptionList = new ArrayList <PurchaseOption> ();
 		List <Term> termList = new ArrayList <Term> ();
@@ -564,12 +549,8 @@ public class PaymentCalculator extends MVCPortlet {
 		if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"processProductsSelection")) {
 			try {
-				
 				_log.info ("processProductsSelection rateFactorList size " + rateFactorList.size());
-				
-				
 				Set <Long> poSet = new HashSet <Long> ();
-				
 				for (RateFactorRule rateFactorValue : rateFactorList) {
 					_log.info(rateFactorValue);
 					if (!poSet.contains(rateFactorValue.getPurchaseOptionId())) {
@@ -578,13 +559,10 @@ public class PaymentCalculator extends MVCPortlet {
 						purchaseOptionList.add(po);
 					} 
 				}
-
 			} catch (Exception e) {
 				_log.error(e.getMessage());
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
-				
 			}
-			
 			resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(purchaseOptionList));
 		}
 		
@@ -593,10 +571,7 @@ public class PaymentCalculator extends MVCPortlet {
 			try {
 				
 				_log.info ("rateFactorList size " + rateFactorList.size());
-				
-				
 				Set <Long> termSet = new HashSet <Long> ();
-				
 				for (RateFactorRule rateFactorValue : rateFactorList) {
 					_log.info(rateFactorValue);
 					if (!termSet.contains(rateFactorValue.getTermId())) {
@@ -608,10 +583,8 @@ public class PaymentCalculator extends MVCPortlet {
 				
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(termList));
 			} catch (Exception e) {
-				
 				_log. error(e);
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
-				
 			}
 		} else if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"calculatePayments")) {
@@ -630,19 +603,17 @@ public class PaymentCalculator extends MVCPortlet {
 				for (ProposalOptionWrapper pow: proposalOptionList) {
 					if (pow.propOption.getProposalOptionId() == Long.valueOf(selectedProposalOptionId)) {
 						pow.propOption.setUseForCreditApp(true);
+						pow.propOption.setIncludeInProposal(true);
+					} else {
+						pow.propOption.setUseForCreditApp(false);
 					}
-				}
-				
+				}	
 				resourceResponse.getWriter().write("{\"proposalOptionId\": \"" + selectedProposalOptionId + "\"}");
 			} else {
 				resourceResponse.getWriter().write("{ \"error\": \"selectedProposalOptionId not found " + selectedProposalOptionId + "\"}");
 			}
-			
-			
-			
 		} else if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"updateIncludeInProposal")) {
-			
 			String selectedProposalOptionId = PortalUtil.getOriginalServletRequest(request).getParameter("purchaseOptionId");
 			String selectedValue = PortalUtil.getOriginalServletRequest(request).getParameter("selectedValue");
 		
@@ -650,12 +621,13 @@ public class PaymentCalculator extends MVCPortlet {
 				if (pow.propOption.getProposalOptionId() == Long.valueOf(selectedProposalOptionId)) {
 					pow.propOption.setIncludeInProposal(Boolean.valueOf(selectedValue));
 				}
-			}
-			
+				
+				if (Boolean.valueOf(selectedValue) == false) {
+					pow.propOption.setUseForCreditApp(false);
+				}
+			}	
 			resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(proposalOptionList));
-		}
-		
+		}		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
-
 }

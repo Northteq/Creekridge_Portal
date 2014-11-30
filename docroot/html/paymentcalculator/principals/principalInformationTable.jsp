@@ -12,7 +12,7 @@
 <%
 	CreditApp creditApp = (CreditApp) request.getAttribute("creditApp");
 %>
-<%=themeDisplay.getLayout().getFriendlyURL() %>
+
 <liferay-portlet:renderURL varImpl="iteratorURL">
        <portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
        <portlet:param name="creditAppId" value="<%=String.valueOf(creditApp.getCreditAppId()) %>" />
