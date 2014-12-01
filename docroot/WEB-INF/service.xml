@@ -182,7 +182,7 @@
 		<column name="sequenceNumber" type="long" />
 		<column name="documentTitle" type="String" />
 		<column name="documentFileName" type="String" />
-        <column name="documentFileLocation" type="String" />
+        <column name="documentFileContent" type="Blob" />
             
         <!-- Order -->
 		<order by="asc">
@@ -193,6 +193,11 @@
 
 		<finder name="CreditAppId" return-type="Collection">
 			<finder-column name="creditAppId" />
+		</finder>
+		<finder name="CreditDocumentNameAppId" return-type="CreditAppDocument">
+			<finder-column name="creditAppId" />
+			<finder-column name="documentFileName" />
+			
 		</finder>
 		<finder name="SequenceNumber" return-type="Collection">
 			<finder-column name="sequenceNumber" />
