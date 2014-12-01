@@ -9,8 +9,10 @@
 
 <portlet:renderURL portletMode="view" var="editAppURL">
 	<portlet:param name="viewMode" value="<%= String.valueOf(false)%>" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
 </portlet:renderURL>
 
+ <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 
 
 	<liferay-ui:icon

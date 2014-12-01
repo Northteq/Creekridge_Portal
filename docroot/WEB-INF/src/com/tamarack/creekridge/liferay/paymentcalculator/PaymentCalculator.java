@@ -199,10 +199,12 @@ public class PaymentCalculator extends MVCPortlet {
 			
 			_log.info("Credit App has been submitted" + creditApp);
 			SessionMessages.add(actionRequest, "appSubmitted");
+			actionRequest.setAttribute("creditApp", creditApp);
 			
 		} catch (Exception e) {
 			_log.error(e);
 		}
+		
 	}
 	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {

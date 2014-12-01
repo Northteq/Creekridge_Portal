@@ -73,6 +73,11 @@ function processAppButton(action){
   }else{
 	  formEl.attr('action',"<%=submitApplicationURL%>");
   }
+  
+  console.log (formEl, action);
+  
+  
+  $(formEl).submit();
  
 }
 </script>
