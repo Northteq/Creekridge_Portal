@@ -611,7 +611,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
 		creditAppBankReference.setModifiedDate(new Date());
 		creditAppBankReference.setCreateDate(new Date());
 	
-		creditAppBankReference.setBankReferencAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
+		creditAppBankReference.setBankReferenceAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
 		creditAppBankReference.setBankReferenceAccountNumber(ParamUtil.getString(actionRequest,"bankReferenceAccountNumber"));
 		creditAppBankReference.setBankReferenceContact(ParamUtil.getString(actionRequest,"bankReferenceAccountContact"));
 		creditAppBankReference.setBankReferenceName(ParamUtil.getString(actionRequest,"bankReferenceAccountName"));
@@ -626,7 +626,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
 		
 		List<CreditAppBankReference> bankReferenceAccountList= CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
 		 for (int i=0;i<bankReferenceAccountList.size();i++){
-			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferencAccountType());
+			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferenceAccountType());
 			 tempBankAccount.setBankReferenceName(bankReferenceAccountList.get(i).getBankReferenceName());
 			 tempBankAccount.setBankReferenceAccountNumber(bankReferenceAccountList.get(i).getBankReferenceAccountNumber());
 			 tempBankAccount.setBankReferenceContact(bankReferenceAccountList.get(i).getBankReferenceContact());
