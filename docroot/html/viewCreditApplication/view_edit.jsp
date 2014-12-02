@@ -220,7 +220,7 @@ for (int j=0;j<creditAppStatusList.size();j++){
 <div align="left">
 	<H4><font style="background-color:lightgrey">Principal Information</font></H4>
 </div>
-<aui:form name="principal" method="post" action="<%=updateCreditAppPrincipalUrl%>">
+<%-- <aui:form name="principal" method="post" action="<%=updateCreditAppPrincipalUrl%>">
 <aui:input type="hidden" value="" name="principalId" />
 <aui:input type="hidden" value="" name="principalActionType" />
 <div>
@@ -316,7 +316,7 @@ for (int j=0;j<creditAppStatusList.size();j++){
 <aui:button-row>
 	<span><aui:button type="submit" name="Submit" value="Submit"/></span>
 </aui:button-row>
-</aui:form>
+</aui:form> --%>
 </div>
 
 <div id="bankAccountReference"">
@@ -325,7 +325,7 @@ for (int j=0;j<creditAppStatusList.size();j++){
 <div align="left">
 	<H4><font style="background-color:lightgrey">Credit Application Bank Reference Information Information</font></H4>
 </div>
-<aui:form name="bankReference" method="post" action="<%=updateCreditAppBankReferenceUrl%>">
+<%-- <aui:form name="bankReference" method="post" action="<%=updateCreditAppBankReferenceUrl%>">
 <aui:input type="hidden" value="" name="bankReferenceId" />
 <aui:input type="hidden" value="" name="bankReferenceActionType" />
 <div>
@@ -412,7 +412,7 @@ for (int j=0;j<creditAppStatusList.size();j++){
 	</table>
 </div>
 
-</aui:form>
+</aui:form> --%>
 <hr>
 
 </div>
