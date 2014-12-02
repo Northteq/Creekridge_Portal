@@ -103,7 +103,7 @@ for (int j=0;j<creditAppStatusList.size();j++){
 		TempProposalOption proporsalOption = new TempProposalOption();
       for (int i=0;i<proposalOptionList.size();i++) {
       
-    	   proporsalOption=proposalOptionList.get(i);
+    	  // proporsalOption=proposalOptionList.get(i);
       %>
 
 		<tr>
