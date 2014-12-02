@@ -25,6 +25,7 @@ Temporary Items
 /.settings
 .project
 .classpath
+.tern-project
 docroot/css/.sass-cache/viewCreditApp_page.css
 
 docroot/css/.sass-cache/viewCreditApp_table.css
