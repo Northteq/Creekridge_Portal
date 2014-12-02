@@ -22,6 +22,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 .settings
+/.settings
 .project
 .classpath
 docroot/css/.sass-cache/viewCreditApp_page.css
