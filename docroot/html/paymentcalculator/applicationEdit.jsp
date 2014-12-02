@@ -160,7 +160,7 @@
 
 	<aui:button-row>
 		<a class="btn btn-info" id="<portlet:namespace/>enterReferenceButton" onclick="navigateToBankReference()"><i class="icon-meh"></i> Add New Bank Reference</a>
-		<a class="btn btn-success" id="navigateToBankReference" onclick="navigateToPrincipal()"><i class="icon-male"></i> Back to Principal</a>
+		<a class="btn" id="navigateToBankReference" onclick="navigateToPrincipal()"><i class="icon-male"></i> Back to Principal</a>
 	</aui:button-row>
 	<c:import
 		url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
