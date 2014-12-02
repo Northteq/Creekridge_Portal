@@ -3,7 +3,7 @@ Creekridge_Portal
 Contains the code for the Creekridge Capital portal.
 
 
-Instructions: 
+Instructions for Initial Import and creation of project in Eclipse: 
 ------------------
 1. Delete the folder with current creek ridge portlets if any in sdk/portlets
 2. Open command line (Windows key + R and type cmd)
@@ -13,7 +13,7 @@ Instructions:
 6. Run ANT clean and ANT compile targets.
 7. If you are having issues, go to service.xml and right click >  Liferay > Build Services (do NOT build WSSD!)
 
-Alternative to steps 2-4 using Eclipse:
+Alternative to steps 2-4 from above using Eclipse:
 ----------------------------------------
 Note: Steps 2-4 from above can also be done from Eclipse using the following steps:
 
@@ -28,15 +28,10 @@ Note: Steps 2-4 from above can also be done from Eclipse using the following ste
 10. The project will be created with all contents from github.
 11. Do steps 6 and 7 listed above.
 
-9 steps instead of 3 for those of us who feel safer with the Eclipse GUI :)
-
-
 +++++++++++++++++++++++++++++++++++++++++++
-
 PLEASE WATCH OUT FOR WHAT YOU ARE MERGING!
 
-
-Steps to follow when you are ready to push your code:
+Steps to follow when you are ready to push your code to ensure you synch with the remote repository
 ------------------------------------------------------
 1. Right click your project in Eclipse, Team > Synchronize Workspace
 2. The Team Synchronizing screen will appear showing the files in which there are differences between the remote repository and your local repository.
