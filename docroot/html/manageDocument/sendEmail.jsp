@@ -25,18 +25,28 @@ CreditApp creditApp=CreditAppLocalServiceUtil.getCreditApp(creditAppId);
 %>
 
 <!-- Email Options -->
+  <aui:row> 
+	<aui:col span="4">
+		<div class="appSummary">
+		<H4>Attachment</H4><br>
+			<%=creditAppDocument.getDocumentTitle()%>&nbsp; <%=!creditAppDocument.getDocumentFileName().equals(creditAppDocument.getDocumentTitle())?creditAppDocument.getDocumentFileName():"" %>
+		</div>
+
+	</aui:col>
+  </aui:row>
+<br>
+<aui:row> 
+<aui:col span="4">
 <div>
-<H4>Attachment</H4><br>
-<%=creditAppDocument.getDocumentTitle()%>&nbsp; <%=!creditAppDocument.getDocumentFileName().equals(creditAppDocument.getDocumentTitle())?creditAppDocument.getDocumentFileName():"" %>
-</div>
-<div><br>
-<aui:form action="<%=emailCreditAppDocumentUrl.toString() %>" name="fm" method="post" onSubmit="javascript:window.close();">
-<aui:input type="hidden"   name="creditAppDocumentId"  value="<%=creditAppDocumentId %>" />
+	
+	<aui:form action="<%=emailCreditAppDocumentUrl.toString() %>" name="fm" method="post" onSubmit="javascript:window.close();">
+		<aui:input type="hidden"   name="creditAppDocumentId"  value="<%=creditAppDocumentId %>" />
+		<aui:input type="text"  label= "Email Address:" name="toAddress" /> 
+		<aui:input type="text"  label= "Subject:" name="subject" />
+		<aui:input type="textarea" resizable="true" label= "Body:" name="body" multiple="true"  max="500" value="<%=\"Hello \"+ creditApp.getCustomerName() %>"/>
+		<aui:button type="submit"  value="Send Email"  /> 
 
-<aui:input type="text"  label= "Email Address:" name="toAddress" /> 
-<aui:input type="text"  label= "Subject:" name="subject" />
-<aui:input type="textarea" resizable="true" label= "Body:" name="body" multiple="true"  max="500" value="<%=\"Hello \"+ creditApp.getCustomerName() %>"/>
-<aui:button type="submit"  value="Send Email"  /> 
-
-</aui:form>
+	</aui:form>
 </div>
+	</aui:col>
+</aui:row>
