@@ -261,6 +261,13 @@ public class CreditAppDocumentLocalServiceWrapper
 		return _creditAppDocumentLocalService.updateCreditAppDocument(creditAppDocument);
 	}
 
+	@Override
+	public com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel getDocumentFileContentBlobModel(
+		java.io.Serializable primaryKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppDocumentLocalService.getDocumentFileContentBlobModel(primaryKey);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

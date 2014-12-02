@@ -208,7 +208,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
-		<resource-bundle>content/Language</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Credit Applications Table</title>
 			<short-title>Credit Applications Table</short-title>
@@ -242,7 +242,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
-		<resource-bundle>content/Language</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Manage Document</title>
 			<short-title>Manage Document</short-title>

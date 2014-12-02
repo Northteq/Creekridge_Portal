@@ -252,4 +252,17 @@ public interface CreditAppBankReferenceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.tamarack.creekridge.model.CreditAppBankReference> getCreditAppBankReferenceByCreditApp(
 		long creditAppId) throws java.lang.Exception;
+
+	/**
+	* @author olegforce
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	public com.tamarack.creekridge.model.CreditAppBankReference addCreditAppBankReference(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

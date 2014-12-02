@@ -86,7 +86,7 @@ public class CreditAppBankReferenceClp extends BaseModelImpl<CreditAppBankRefere
 		attributes.put("bankReferenceName", getBankReferenceName());
 		attributes.put("bankReferenceContact", getBankReferenceContact());
 		attributes.put("bankReferencePhone", getBankReferencePhone());
-		attributes.put("bankReferencAccountType", getBankReferencAccountType());
+		attributes.put("bankReferenceAccountType", getBankReferenceAccountType());
 		attributes.put("bankReferenceAccountNumber",
 			getBankReferenceAccountNumber());
 
@@ -162,11 +162,11 @@ public class CreditAppBankReferenceClp extends BaseModelImpl<CreditAppBankRefere
 			setBankReferencePhone(bankReferencePhone);
 		}
 
-		String bankReferencAccountType = (String)attributes.get(
-				"bankReferencAccountType");
+		String bankReferenceAccountType = (String)attributes.get(
+				"bankReferenceAccountType");
 
-		if (bankReferencAccountType != null) {
-			setBankReferencAccountType(bankReferencAccountType);
+		if (bankReferenceAccountType != null) {
+			setBankReferenceAccountType(bankReferenceAccountType);
 		}
 
 		String bankReferenceAccountNumber = (String)attributes.get(
@@ -448,23 +448,23 @@ public class CreditAppBankReferenceClp extends BaseModelImpl<CreditAppBankRefere
 	}
 
 	@Override
-	public String getBankReferencAccountType() {
-		return _bankReferencAccountType;
+	public String getBankReferenceAccountType() {
+		return _bankReferenceAccountType;
 	}
 
 	@Override
-	public void setBankReferencAccountType(String bankReferencAccountType) {
-		_bankReferencAccountType = bankReferencAccountType;
+	public void setBankReferenceAccountType(String bankReferenceAccountType) {
+		_bankReferenceAccountType = bankReferenceAccountType;
 
 		if (_creditAppBankReferenceRemoteModel != null) {
 			try {
 				Class<?> clazz = _creditAppBankReferenceRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setBankReferencAccountType",
+				Method method = clazz.getMethod("setBankReferenceAccountType",
 						String.class);
 
 				method.invoke(_creditAppBankReferenceRemoteModel,
-					bankReferencAccountType);
+					bankReferenceAccountType);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -579,7 +579,7 @@ public class CreditAppBankReferenceClp extends BaseModelImpl<CreditAppBankRefere
 		clone.setBankReferenceName(getBankReferenceName());
 		clone.setBankReferenceContact(getBankReferenceContact());
 		clone.setBankReferencePhone(getBankReferencePhone());
-		clone.setBankReferencAccountType(getBankReferencAccountType());
+		clone.setBankReferenceAccountType(getBankReferenceAccountType());
 		clone.setBankReferenceAccountNumber(getBankReferenceAccountNumber());
 
 		return clone;
@@ -659,8 +659,8 @@ public class CreditAppBankReferenceClp extends BaseModelImpl<CreditAppBankRefere
 		sb.append(getBankReferenceContact());
 		sb.append(", bankReferencePhone=");
 		sb.append(getBankReferencePhone());
-		sb.append(", bankReferencAccountType=");
-		sb.append(getBankReferencAccountType());
+		sb.append(", bankReferenceAccountType=");
+		sb.append(getBankReferenceAccountType());
 		sb.append(", bankReferenceAccountNumber=");
 		sb.append(getBankReferenceAccountNumber());
 		sb.append("}");
@@ -721,8 +721,8 @@ public class CreditAppBankReferenceClp extends BaseModelImpl<CreditAppBankRefere
 		sb.append(getBankReferencePhone());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>bankReferencAccountType</column-name><column-value><![CDATA[");
-		sb.append(getBankReferencAccountType());
+			"<column><column-name>bankReferenceAccountType</column-name><column-value><![CDATA[");
+		sb.append(getBankReferenceAccountType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>bankReferenceAccountNumber</column-name><column-value><![CDATA[");
@@ -746,7 +746,7 @@ public class CreditAppBankReferenceClp extends BaseModelImpl<CreditAppBankRefere
 	private String _bankReferenceName;
 	private String _bankReferenceContact;
 	private String _bankReferencePhone;
-	private String _bankReferencAccountType;
+	private String _bankReferenceAccountType;
 	private String _bankReferenceAccountNumber;
 	private BaseModel<?> _creditAppBankReferenceRemoteModel;
 }

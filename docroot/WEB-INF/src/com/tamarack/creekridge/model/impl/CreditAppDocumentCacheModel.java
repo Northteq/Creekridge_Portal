@@ -38,7 +38,7 @@ public class CreditAppDocumentCacheModel implements CacheModel<CreditAppDocument
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{CreditAppDocumentId=");
 		sb.append(CreditAppDocumentId);
@@ -60,9 +60,6 @@ public class CreditAppDocumentCacheModel implements CacheModel<CreditAppDocument
 		sb.append(documentTitle);
 		sb.append(", documentFileName=");
 		sb.append(documentFileName);
-		sb.append(", documentFileLocation=");
-		sb.append(documentFileLocation);
-		sb.append("}");
 
 		return sb.toString();
 	}
@@ -113,13 +110,6 @@ public class CreditAppDocumentCacheModel implements CacheModel<CreditAppDocument
 			creditAppDocumentImpl.setDocumentFileName(documentFileName);
 		}
 
-		if (documentFileLocation == null) {
-			creditAppDocumentImpl.setDocumentFileLocation(StringPool.BLANK);
-		}
-		else {
-			creditAppDocumentImpl.setDocumentFileLocation(documentFileLocation);
-		}
-
 		creditAppDocumentImpl.resetOriginalValues();
 
 		return creditAppDocumentImpl;
@@ -137,7 +127,6 @@ public class CreditAppDocumentCacheModel implements CacheModel<CreditAppDocument
 		sequenceNumber = objectInput.readLong();
 		documentTitle = objectInput.readUTF();
 		documentFileName = objectInput.readUTF();
-		documentFileLocation = objectInput.readUTF();
 	}
 
 	@Override
@@ -172,13 +161,6 @@ public class CreditAppDocumentCacheModel implements CacheModel<CreditAppDocument
 		else {
 			objectOutput.writeUTF(documentFileName);
 		}
-
-		if (documentFileLocation == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(documentFileLocation);
-		}
 	}
 
 	public long CreditAppDocumentId;
@@ -191,5 +173,4 @@ public class CreditAppDocumentCacheModel implements CacheModel<CreditAppDocument
 	public long sequenceNumber;
 	public String documentTitle;
 	public String documentFileName;
-	public String documentFileLocation;
 }

@@ -251,6 +251,12 @@ public class CreditAppDocumentLocalServiceUtil {
 		return getService().updateCreditAppDocument(creditAppDocument);
 	}
 
+	public static com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel getDocumentFileContentBlobModel(
+		java.io.Serializable primaryKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDocumentFileContentBlobModel(primaryKey);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

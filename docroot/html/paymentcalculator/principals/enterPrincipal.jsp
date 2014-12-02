@@ -24,9 +24,17 @@
 			<aui:input name="principalFirstName" required="true"></aui:input>
 			<aui:input name="principalMiddleName"></aui:input>
 			<aui:input name="principalLastName" required="true"></aui:input>
+			<aui:input name="principalSSN"></aui:input>
+			<aui:input name="principalHomePhoneNumber"></aui:input>
+			<aui:input name="principalAddress1"></aui:input>
+			<aui:input name="principalAddress2"></aui:input>
+			<aui:input name="principalCity"></aui:input>
+			<aui:input name="principalState"></aui:input>
+			<aui:input name="principalZip"></aui:input>
+			<aui:input name="principalEmail" type="email"></aui:input>
 		</aui:fieldset>
 		<aui:button-row>
-			<aui:button id="saveFormButton" value="Save"></aui:button>
+			<aui:button id="saveFormButton" value="Save" type="submit"></aui:button>
 			<aui:button id="closePopupButton" value="Cancel"></aui:button>
 		</aui:button-row>
 	</aui:form>
@@ -40,7 +48,7 @@
 	
 </script>
 
-<aui:script use="aui-base,aui-io-request">
+<%-- <aui:script use="aui-base,aui-io-request">
     A.one('#saveFormButton').on('click', function(event) {
        var A = AUI();
        var url = '<%=addCreditAppPrincipalURL.toString()%>';
@@ -57,7 +65,7 @@
                 }
             }        );
     });
-</aui:script>
+</aui:script> --%>
 <aui:script use="aui-base">
     A.one('#closePopupButton').on('click', function(event) {
         Liferay.Util.getOpener().closePopup('addPrincipalDialog');

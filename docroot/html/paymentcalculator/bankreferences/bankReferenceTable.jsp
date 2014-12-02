@@ -16,17 +16,14 @@
 <liferay-portlet:renderURL varImpl="iteratorURL">
        <portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
        <portlet:param name="creditAppId" value="<%=String.valueOf(creditApp.getCreditAppId()) %>" />
-       <portlet:param name="openSection" value="principalSection" />
+       <portlet:param name="openSection" value="bankReferenceSection" />
 </liferay-portlet:renderURL>
-
-<liferay-ui:success key="principalSaved" message="principal-saved-successfully"/>
-<liferay-ui:error key="errorSavingPrincipal" message="error-principal-not-saved" />
-
-<liferay-ui:search-container emptyResultsMessage="There are no principal records to display" delta="5"  iteratorURL="<%=iteratorURL %>">
+<liferay-ui:success key="bankReferenceSaved" message="reference-saved-successfully"/>
+<liferay-ui:search-container emptyResultsMessage="There are no bank references to display" delta="5"  iteratorURL="<%=iteratorURL %>">
     <liferay-ui:search-container-results>
     <% 
     
-    List <CreditAppPrincipal> tempResults = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId());
+    List <CreditAppBankReference> tempResults = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
     results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
     total = tempResults.size(); 
     
@@ -40,31 +37,40 @@
    </liferay-ui:search-container-results>
 
     <liferay-ui:search-container-row
-        className="com.tamarack.creekridge.model.CreditAppPrincipal"
-        keyProperty="principalId"
-        modelVar="principal" escapedModel="<%= false %>">
+        className="com.tamarack.creekridge.model.CreditAppBankReference"
+        keyProperty="bankReferenceId"
+        modelVar="reference" escapedModel="<%= false %>">
         
         <liferay-ui:search-container-column-text
             
-            property="principalId"
+            property="bankReferenceId"
+            
+            
+        />
+        
+        <%-- orderable="<%= true %>" --%>
+        
+       <liferay-ui:search-container-column-text
+            property="bankReferenceName"
+            name="bank-reference-name"
         />
         
         <liferay-ui:search-container-column-text
-            name="principal-first-name"
-            property="principalFirstName"
+            property="bankReferenceContact"
+             name="bank-reference-contact"
+        />
+         
+        <liferay-ui:search-container-column-text
+            property="bankReferencePhone"
+             name="bank-reference-phone"
         />
         
         <liferay-ui:search-container-column-text
-            name="principal-middle-name"
-            property="principalMiddleName"
+            property="bankReferenceAccountType"
+             name="bank-reference-account-type"
         />
         
-        <liferay-ui:search-container-column-text
-            name="principal-last-name"
-            property="principalLastName"
-        />
-        
-    
+    <%-- 
         <liferay-ui:search-container-column-date
             name="principal-create-date"
             property="createDate"
@@ -74,10 +80,10 @@
             name="principal-modified-date"
             property="modifiedDate"
         />
-        
+         --%>
         
          <liferay-ui:search-container-column-jsp
-        path="/html/paymentcalculator/principals/principalActions.jsp"
+        path="/html/paymentcalculator/bankreferences/referenceActions.jsp"
         align="right"
         name="Actions"
  		/>

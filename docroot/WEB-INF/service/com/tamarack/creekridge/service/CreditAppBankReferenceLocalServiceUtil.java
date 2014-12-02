@@ -280,6 +280,21 @@ public class CreditAppBankReferenceLocalServiceUtil {
 		return getService().getCreditAppBankReferenceByCreditApp(creditAppId);
 	}
 
+	/**
+	* @author olegforce
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	public static com.tamarack.creekridge.model.CreditAppBankReference addCreditAppBankReference(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addCreditAppBankReference(user, themeDisplay);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

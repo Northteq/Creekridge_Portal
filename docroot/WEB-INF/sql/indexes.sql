@@ -6,6 +6,7 @@ create index IX_EF07967B on eCreekRidge_CreditAppBankReference (creditAppId);
 create index IX_EEFE44F6 on eCreekRidge_CreditAppBankReference (sequenceNumber);
 
 create index IX_C2F626B5 on eCreekRidge_CreditAppDocument (creditAppId);
+create index IX_DE661C4B on eCreekRidge_CreditAppDocument (creditAppId, documentFileName);
 create index IX_ADE0127C on eCreekRidge_CreditAppDocument (sequenceNumber);
 
 create index IX_C32C535C on eCreekRidge_CreditAppPrincipal (creditAppId);

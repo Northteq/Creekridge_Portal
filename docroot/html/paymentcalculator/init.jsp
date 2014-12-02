@@ -21,7 +21,9 @@
 <!-- Model  -->
 <%@page import="com.tamarack.creekridge.model.CreditApp"%>
 <%@page import="com.tamarack.creekridge.model.CreditAppPrincipal"%>
+<%@page import="com.tamarack.creekridge.model.CreditAppBankReference"%>
 <%@page import="com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil"%>
+<%@page import="com.tamarack.creekridge.service.CreditAppBankReferenceLocalServiceUtil"%>
 <%@page import="com.liferay.portal.kernel.util.ListUtil"%>
 <%@page import="com.liferay.portal.kernel.dao.search.ResultRow"%>
 <%@page import=" javax.servlet.http.HttpServletRequest"%>

@@ -12,34 +12,34 @@
 <%
 	ResultRow row = (ResultRow) request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);  
 	
-	CreditAppPrincipal principal = (CreditAppPrincipal) row.getObject();
+	CreditAppBankReference reference = (CreditAppBankReference) row.getObject();
 	
 	
 	long groupId = themeDisplay.getLayout().getGroupId();
 	String name = CreditApp.class.getName();
-	String primKey = String.valueOf (principal.getPrincipalId());
+	String primKey = String.valueOf (reference.getBankReferenceId());
 	
 	//pass this back to the page after refresh
-	String appId = String.valueOf (principal.getCreditAppId());
+	String appId = String.valueOf (reference.getCreditAppId());
 
 %>
 <liferay-ui:icon-menu>
-	<portlet:actionURL name="editCreditAppPrincipal" var="editCreditAppPrincipalURL">
+	<portlet:actionURL name="editCreditAppBankReference" var="editCreditAppBankReferenceURL">
 			<portlet:param name="resourcePrimKey" value="<%=primKey%>" />
-			
+			<portlet:param name="creditAppId" value="<%=appId%>" />
 		</portlet:actionURL>
 		<liferay-ui:icon image="edit" message="Edit"
-			url="<%=editCreditAppPrincipalURL.toString()%>" />
+			url="<%=editCreditAppBankReferenceURL.toString()%>" />
 
 </liferay-ui:icon-menu>
 
 <liferay-ui:icon-menu>
-	<portlet:actionURL name="deleteCreditAppPrincipal" var="deleteCreditAppPrincipalURL">
+	<portlet:actionURL name="deleteCreditAppBankReference" var="deleteCreditAppBankReferenceURL">
 			<portlet:param name="resourcePrimKey" value="<%=primKey%>" />
-			<portlet:param name="appId" value="<%=appId%>" />
+			<portlet:param name="creditAppId" value="<%=appId%>" />
 		</portlet:actionURL>
 		<liferay-ui:icon image="delete" message="Delete"
-			url="<%=deleteCreditAppPrincipalURL.toString()%>" />
+			url="<%=deleteCreditAppBankReferenceURL.toString()%>" />
 
 </liferay-ui:icon-menu>
 

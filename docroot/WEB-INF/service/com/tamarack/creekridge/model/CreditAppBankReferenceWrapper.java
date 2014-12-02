@@ -62,7 +62,7 @@ public class CreditAppBankReferenceWrapper implements CreditAppBankReference,
 		attributes.put("bankReferenceName", getBankReferenceName());
 		attributes.put("bankReferenceContact", getBankReferenceContact());
 		attributes.put("bankReferencePhone", getBankReferencePhone());
-		attributes.put("bankReferencAccountType", getBankReferencAccountType());
+		attributes.put("bankReferenceAccountType", getBankReferenceAccountType());
 		attributes.put("bankReferenceAccountNumber",
 			getBankReferenceAccountNumber());
 
@@ -138,11 +138,11 @@ public class CreditAppBankReferenceWrapper implements CreditAppBankReference,
 			setBankReferencePhone(bankReferencePhone);
 		}
 
-		String bankReferencAccountType = (String)attributes.get(
-				"bankReferencAccountType");
+		String bankReferenceAccountType = (String)attributes.get(
+				"bankReferenceAccountType");
 
-		if (bankReferencAccountType != null) {
-			setBankReferencAccountType(bankReferencAccountType);
+		if (bankReferenceAccountType != null) {
+			setBankReferenceAccountType(bankReferenceAccountType);
 		}
 
 		String bankReferenceAccountNumber = (String)attributes.get(
@@ -416,24 +416,24 @@ public class CreditAppBankReferenceWrapper implements CreditAppBankReference,
 	}
 
 	/**
-	* Returns the bank referenc account type of this credit app bank reference.
+	* Returns the bank reference account type of this credit app bank reference.
 	*
-	* @return the bank referenc account type of this credit app bank reference
+	* @return the bank reference account type of this credit app bank reference
 	*/
 	@Override
-	public java.lang.String getBankReferencAccountType() {
-		return _creditAppBankReference.getBankReferencAccountType();
+	public java.lang.String getBankReferenceAccountType() {
+		return _creditAppBankReference.getBankReferenceAccountType();
 	}
 
 	/**
-	* Sets the bank referenc account type of this credit app bank reference.
+	* Sets the bank reference account type of this credit app bank reference.
 	*
-	* @param bankReferencAccountType the bank referenc account type of this credit app bank reference
+	* @param bankReferenceAccountType the bank reference account type of this credit app bank reference
 	*/
 	@Override
-	public void setBankReferencAccountType(
-		java.lang.String bankReferencAccountType) {
-		_creditAppBankReference.setBankReferencAccountType(bankReferencAccountType);
+	public void setBankReferenceAccountType(
+		java.lang.String bankReferenceAccountType) {
+		_creditAppBankReference.setBankReferenceAccountType(bankReferenceAccountType);
 	}
 
 	/**

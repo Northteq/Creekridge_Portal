@@ -10,10 +10,8 @@
 
 <%
 
-String calculatorSectionState = ParamUtil.getString(request, "calculatorSectionState", "open");
-String pricingOvervewSectionState = ParamUtil.getString(request, "pricingOvervewSectionState", "collapsed");
-
-
+String openSection = ParamUtil.getString(request, "openSection", "paymentCalculator");
+request.setAttribute("openSection", openSection);
 
 HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 long appId = ParamUtil.getLong(request, "creditAppId");
@@ -116,7 +114,7 @@ function processAppButton(action){
  	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 
 	<liferay-ui:panel-container accordion="true" extended="false">
-		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="<%=calculatorSectionState %>">
+		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="${openSection=='paymentCalculator'? 'open' : 'collapsed' }">
 				
 				<aui:col span="3" first="true">	
 				 	<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px" required="true" value="${creditApp.equipmentPrice}"></aui:input>
@@ -167,7 +165,7 @@ function processAppButton(action){
 		
 		<!-- PRICING OVERVIEW PANEL  -->
 	
-		<liferay-ui:panel title="Pricing Overview" id="pricingOvervewResults" state="<%=pricingOvervewSectionState%>">
+		<liferay-ui:panel title="Pricing Overview" id="pricingOvervewResults" state="${openSection=='pricingOverview'? 'open' : 'collapsed' }">
 	    	<div id="proposalOptionsSection" style="display:none">
 	    			
 	    		<div id="proposalOptionsTable"></div>

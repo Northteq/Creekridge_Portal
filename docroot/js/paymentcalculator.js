@@ -4,6 +4,10 @@ var navigateToCalculator = function () {
 	$("*[data-persist-id='paymentCalculator']").click();
 };
 
+var navigateToBankReference = function () {
+	$("*[data-persist-id='bankRefereceInfo']").click();
+};
+
 var createRateFactorRuleRequestObjectString = function () {
 	
 	var eqPrice = $('[id$=equipmentPrice]').val();

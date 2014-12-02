@@ -72,10 +72,10 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 			{ "bankReferenceName", Types.VARCHAR },
 			{ "bankReferenceContact", Types.VARCHAR },
 			{ "bankReferencePhone", Types.VARCHAR },
-			{ "bankReferencAccountType", Types.VARCHAR },
+			{ "bankReferenceAccountType", Types.VARCHAR },
 			{ "bankReferenceAccountNumber", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_CreditAppBankReference (bankReferenceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creditAppId LONG,sequenceNumber LONG,bankReferenceName VARCHAR(75) null,bankReferenceContact VARCHAR(75) null,bankReferencePhone VARCHAR(75) null,bankReferencAccountType VARCHAR(75) null,bankReferenceAccountNumber VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_CreditAppBankReference (bankReferenceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creditAppId LONG,sequenceNumber LONG,bankReferenceName VARCHAR(75) null,bankReferenceContact VARCHAR(75) null,bankReferencePhone VARCHAR(75) null,bankReferenceAccountType VARCHAR(75) null,bankReferenceAccountNumber VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table eCreekRidge_CreditAppBankReference";
 	public static final String ORDER_BY_JPQL = " ORDER BY creditAppBankReference.sequenceNumber ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_CreditAppBankReference.sequenceNumber ASC";
@@ -144,7 +144,7 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 		attributes.put("bankReferenceName", getBankReferenceName());
 		attributes.put("bankReferenceContact", getBankReferenceContact());
 		attributes.put("bankReferencePhone", getBankReferencePhone());
-		attributes.put("bankReferencAccountType", getBankReferencAccountType());
+		attributes.put("bankReferenceAccountType", getBankReferenceAccountType());
 		attributes.put("bankReferenceAccountNumber",
 			getBankReferenceAccountNumber());
 
@@ -220,11 +220,11 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 			setBankReferencePhone(bankReferencePhone);
 		}
 
-		String bankReferencAccountType = (String)attributes.get(
-				"bankReferencAccountType");
+		String bankReferenceAccountType = (String)attributes.get(
+				"bankReferenceAccountType");
 
-		if (bankReferencAccountType != null) {
-			setBankReferencAccountType(bankReferencAccountType);
+		if (bankReferenceAccountType != null) {
+			setBankReferenceAccountType(bankReferenceAccountType);
 		}
 
 		String bankReferenceAccountNumber = (String)attributes.get(
@@ -400,18 +400,18 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 	}
 
 	@Override
-	public String getBankReferencAccountType() {
-		if (_bankReferencAccountType == null) {
+	public String getBankReferenceAccountType() {
+		if (_bankReferenceAccountType == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _bankReferencAccountType;
+			return _bankReferenceAccountType;
 		}
 	}
 
 	@Override
-	public void setBankReferencAccountType(String bankReferencAccountType) {
-		_bankReferencAccountType = bankReferencAccountType;
+	public void setBankReferenceAccountType(String bankReferenceAccountType) {
+		_bankReferenceAccountType = bankReferenceAccountType;
 	}
 
 	@Override
@@ -471,7 +471,7 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 		creditAppBankReferenceImpl.setBankReferenceName(getBankReferenceName());
 		creditAppBankReferenceImpl.setBankReferenceContact(getBankReferenceContact());
 		creditAppBankReferenceImpl.setBankReferencePhone(getBankReferencePhone());
-		creditAppBankReferenceImpl.setBankReferencAccountType(getBankReferencAccountType());
+		creditAppBankReferenceImpl.setBankReferenceAccountType(getBankReferenceAccountType());
 		creditAppBankReferenceImpl.setBankReferenceAccountNumber(getBankReferenceAccountNumber());
 
 		creditAppBankReferenceImpl.resetOriginalValues();
@@ -607,13 +607,13 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 			creditAppBankReferenceCacheModel.bankReferencePhone = null;
 		}
 
-		creditAppBankReferenceCacheModel.bankReferencAccountType = getBankReferencAccountType();
+		creditAppBankReferenceCacheModel.bankReferenceAccountType = getBankReferenceAccountType();
 
-		String bankReferencAccountType = creditAppBankReferenceCacheModel.bankReferencAccountType;
+		String bankReferenceAccountType = creditAppBankReferenceCacheModel.bankReferenceAccountType;
 
-		if ((bankReferencAccountType != null) &&
-				(bankReferencAccountType.length() == 0)) {
-			creditAppBankReferenceCacheModel.bankReferencAccountType = null;
+		if ((bankReferenceAccountType != null) &&
+				(bankReferenceAccountType.length() == 0)) {
+			creditAppBankReferenceCacheModel.bankReferenceAccountType = null;
 		}
 
 		creditAppBankReferenceCacheModel.bankReferenceAccountNumber = getBankReferenceAccountNumber();
@@ -654,8 +654,8 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 		sb.append(getBankReferenceContact());
 		sb.append(", bankReferencePhone=");
 		sb.append(getBankReferencePhone());
-		sb.append(", bankReferencAccountType=");
-		sb.append(getBankReferencAccountType());
+		sb.append(", bankReferenceAccountType=");
+		sb.append(getBankReferenceAccountType());
 		sb.append(", bankReferenceAccountNumber=");
 		sb.append(getBankReferenceAccountNumber());
 		sb.append("}");
@@ -716,8 +716,8 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 		sb.append(getBankReferencePhone());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>bankReferencAccountType</column-name><column-value><![CDATA[");
-		sb.append(getBankReferencAccountType());
+			"<column><column-name>bankReferenceAccountType</column-name><column-value><![CDATA[");
+		sb.append(getBankReferenceAccountType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>bankReferenceAccountNumber</column-name><column-value><![CDATA[");
@@ -749,7 +749,7 @@ public class CreditAppBankReferenceModelImpl extends BaseModelImpl<CreditAppBank
 	private String _bankReferenceName;
 	private String _bankReferenceContact;
 	private String _bankReferencePhone;
-	private String _bankReferencAccountType;
+	private String _bankReferenceAccountType;
 	private String _bankReferenceAccountNumber;
 	private long _columnBitmask;
 	private CreditAppBankReference _escapedModel;

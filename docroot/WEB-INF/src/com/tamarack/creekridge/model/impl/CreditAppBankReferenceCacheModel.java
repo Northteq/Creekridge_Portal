@@ -62,8 +62,8 @@ public class CreditAppBankReferenceCacheModel implements CacheModel<CreditAppBan
 		sb.append(bankReferenceContact);
 		sb.append(", bankReferencePhone=");
 		sb.append(bankReferencePhone);
-		sb.append(", bankReferencAccountType=");
-		sb.append(bankReferencAccountType);
+		sb.append(", bankReferenceAccountType=");
+		sb.append(bankReferenceAccountType);
 		sb.append(", bankReferenceAccountNumber=");
 		sb.append(bankReferenceAccountNumber);
 		sb.append("}");
@@ -124,11 +124,11 @@ public class CreditAppBankReferenceCacheModel implements CacheModel<CreditAppBan
 			creditAppBankReferenceImpl.setBankReferencePhone(bankReferencePhone);
 		}
 
-		if (bankReferencAccountType == null) {
-			creditAppBankReferenceImpl.setBankReferencAccountType(StringPool.BLANK);
+		if (bankReferenceAccountType == null) {
+			creditAppBankReferenceImpl.setBankReferenceAccountType(StringPool.BLANK);
 		}
 		else {
-			creditAppBankReferenceImpl.setBankReferencAccountType(bankReferencAccountType);
+			creditAppBankReferenceImpl.setBankReferenceAccountType(bankReferenceAccountType);
 		}
 
 		if (bankReferenceAccountNumber == null) {
@@ -156,7 +156,7 @@ public class CreditAppBankReferenceCacheModel implements CacheModel<CreditAppBan
 		bankReferenceName = objectInput.readUTF();
 		bankReferenceContact = objectInput.readUTF();
 		bankReferencePhone = objectInput.readUTF();
-		bankReferencAccountType = objectInput.readUTF();
+		bankReferenceAccountType = objectInput.readUTF();
 		bankReferenceAccountNumber = objectInput.readUTF();
 	}
 
@@ -200,11 +200,11 @@ public class CreditAppBankReferenceCacheModel implements CacheModel<CreditAppBan
 			objectOutput.writeUTF(bankReferencePhone);
 		}
 
-		if (bankReferencAccountType == null) {
+		if (bankReferenceAccountType == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(bankReferencAccountType);
+			objectOutput.writeUTF(bankReferenceAccountType);
 		}
 
 		if (bankReferenceAccountNumber == null) {
@@ -226,6 +226,6 @@ public class CreditAppBankReferenceCacheModel implements CacheModel<CreditAppBan
 	public String bankReferenceName;
 	public String bankReferenceContact;
 	public String bankReferencePhone;
-	public String bankReferencAccountType;
+	public String bankReferenceAccountType;
 	public String bankReferenceAccountNumber;
 }

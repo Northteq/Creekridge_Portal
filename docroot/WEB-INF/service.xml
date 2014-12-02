@@ -145,7 +145,7 @@
 		<column name="bankReferenceName" type="String" />
 		<column name="bankReferenceContact" type="String" />
         <column name="bankReferencePhone" type="String" />
-        <column name="bankReferencAccountType" type="String" />
+        <column name="bankReferenceAccountType" type="String" />
         <column name="bankReferenceAccountNumber" type="String" />
         
         <!-- Order -->

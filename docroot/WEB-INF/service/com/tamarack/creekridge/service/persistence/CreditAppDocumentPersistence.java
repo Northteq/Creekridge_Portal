@@ -176,6 +176,71 @@ public interface CreditAppDocumentPersistence extends BasePersistence<CreditAppD
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the credit app document where creditAppId = &#63; and documentFileName = &#63; or throws a {@link com.tamarack.creekridge.NoSuchCreditAppDocumentException} if it could not be found.
+	*
+	* @param creditAppId the credit app ID
+	* @param documentFileName the document file name
+	* @return the matching credit app document
+	* @throws com.tamarack.creekridge.NoSuchCreditAppDocumentException if a matching credit app document could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.tamarack.creekridge.model.CreditAppDocument findByCreditDocumentNameAppId(
+		long creditAppId, java.lang.String documentFileName)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.tamarack.creekridge.NoSuchCreditAppDocumentException;
+
+	/**
+	* Returns the credit app document where creditAppId = &#63; and documentFileName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param creditAppId the credit app ID
+	* @param documentFileName the document file name
+	* @return the matching credit app document, or <code>null</code> if a matching credit app document could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.tamarack.creekridge.model.CreditAppDocument fetchByCreditDocumentNameAppId(
+		long creditAppId, java.lang.String documentFileName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the credit app document where creditAppId = &#63; and documentFileName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param creditAppId the credit app ID
+	* @param documentFileName the document file name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching credit app document, or <code>null</code> if a matching credit app document could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.tamarack.creekridge.model.CreditAppDocument fetchByCreditDocumentNameAppId(
+		long creditAppId, java.lang.String documentFileName,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the credit app document where creditAppId = &#63; and documentFileName = &#63; from the database.
+	*
+	* @param creditAppId the credit app ID
+	* @param documentFileName the document file name
+	* @return the credit app document that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.tamarack.creekridge.model.CreditAppDocument removeByCreditDocumentNameAppId(
+		long creditAppId, java.lang.String documentFileName)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.tamarack.creekridge.NoSuchCreditAppDocumentException;
+
+	/**
+	* Returns the number of credit app documents where creditAppId = &#63; and documentFileName = &#63;.
+	*
+	* @param creditAppId the credit app ID
+	* @param documentFileName the document file name
+	* @return the number of matching credit app documents
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCreditDocumentNameAppId(long creditAppId,
+		java.lang.String documentFileName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the credit app documents where sequenceNumber = &#63;.
 	*
 	* @param sequenceNumber the sequence number
