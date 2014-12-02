@@ -34,3 +34,18 @@ Note: Steps 2-4 from above can also be done from Eclipse using the following ste
 +++++++++++++++++++++++++++++++++++++++++++
 
 PLEASE WATCH OUT FOR WHAT YOU ARE MERGING!
+
+
+Steps to follow when you are ready to push your code:
+------------------------------------------------------
+1. Right click your project in Eclipse, Team > Synchronize Workspace
+2. The Team Synchronizing screen will appear showing the files in which there are differences between the remote repository and your local repository.
+3. Right click > "Overwrite" for local files that are unrelated to the files you are working on.
+4. For files you are working on that have conflicts, right click > "Merge" and carefully merge your code with the remote file.
+5. Right click on the project and click "Add to Index"
+6. Click on the "Pull" icon.
+7. The remote files should now be in your local repository.
+8. Commit code to your local repository for files you have modified.
+9. Push to github
+
+
