@@ -34,6 +34,3 @@ Note: Steps 2-4 from above can also be done from Eclipse using the following ste
 +++++++++++++++++++++++++++++++++++++++++++
 
 PLEASE WATCH OUT FOR WHAT YOU ARE MERGING!
-
-
-Just testing confilct.
