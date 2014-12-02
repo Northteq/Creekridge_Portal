@@ -140,20 +140,15 @@
 
 </liferay-ui:panel>
 
+<!-- http://fortawesome.github.io/Font-Awesome/3.2.1/icons/  -->
+
 <liferay-ui:panel title="principal-info-section" id="principalInfo"
 	state="${openSection=='principalSection'? 'open' : 'collapsed' }">
 
 	<aui:button-row>
-		<aui:button name="enterPrincipalButton" id="enterPrincipalButton"
-			value="Add New Principal">
-		</aui:button>
-
-		<a class="btn btn-success" id="navigateToBankReference" onclick="navigateToBankReference()">Bank Reference</a>
+		<a class="btn btn-info" id="<portlet:namespace/>enterPrincipalButton" onclick="navigateToBankReference()"><i class="icon-male"></i> Add New Principal</a>
+		<a class="btn btn-success" id="navigateToBankReference" onclick="navigateToBankReference()"><i class="icon-meh"></i> Bank Reference</a>
 	</aui:button-row>
-
-
-	<liferay-ui:icon image="tool" message="Add Principal" label="<%=true%>"
-		method="get" url="<%=enterPrincipalURL%>" useDialog="<%=true%>" />
 
 	<c:import
 		url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
@@ -164,79 +159,12 @@
 	state="${openSection=='bankReferenceSection'? 'open' : 'collapsed' }">
 
 	<aui:button-row>
-		<aui:button name="enterReferenceButton" id="enterReferenceButton"
-			value="Add New Bank Reference">
-		</aui:button>
+		<a class="btn btn-info" id="<portlet:namespace/>enterReferenceButton" onclick="navigateToBankReference()"><i class="icon-meh"></i> Add New Bank Reference</a>
+		<a class="btn btn-success" id="navigateToBankReference" onclick="navigateToPrincipal()"><i class="icon-male"></i> Back to Principal</a>
 	</aui:button-row>
-
-
 	<c:import
 		url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
-
-
 </liferay-ui:panel>
-
-<%-- <aui:script>
-	AUI().use(
-			'aui-base',
-
-			function(A) {
-				A.one('#<portlet:namespace />enterPrincipalButton').on('click',
-						function(event) {
-							var popUpWindow = Liferay.Util.Window.getWindow({
-								dialog : {
-									centered : true,
-									constrain2view : true,
-									//cssClass: 'yourCSSclassName',
-									modal : true,
-									resizable : false,
-									width : 600,
-
-								},
-								id : 'addPrincipalDialog',
-								title : 'Enter Principal',
-								uri : '<%=enterPrincipalURL%>',
-							}).render();
-							popUpWindow.show();
-						});
-			});
-</aui:script>
-	 --%>
-	
-
-
-
-
-
-
-<%-- <aui:script>
-	AUI().use(
-			'aui-base',
-			'aui-dialog-iframe',
-
-			function(A) {
-				A.one('#<portlet:namespace />enterReferenceButton').on('click',
-						function(event) {
-							var popUpWindow = Liferay.Util.Window.getWindow({
-								dialog : {
-									centered : true,
-									constrain2view : true,
-									//cssClass: 'yourCSSclassName',
-									modal : true,
-									resizable : false,
-									width : 600,
-
-								},
-								id : 'addBankReferenceDialog',
-								title : 'Enter Bank Reference',
-								uri : '<%=enterBankReferenceURL%>',
-							}).render();
-							popUpWindow.show();
-						});
-			});
-</aui:script>
- --%>
-	
 
 
 <%-- PRINCIPAL POPUP  --%> 

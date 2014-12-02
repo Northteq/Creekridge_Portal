@@ -6,6 +6,13 @@ var navigateToCalculator = function () {
 
 var navigateToBankReference = function () {
 	$("*[data-persist-id='bankRefereceInfo']").click();
+	$("*[data-persist-id='principalInfo']").click();
+};
+
+var navigateToPrincipal = function () {
+	$("*[data-persist-id='bankRefereceInfo']").click();
+	$("*[data-persist-id='principalInfo']").click();
+	
 };
 
 var createRateFactorRuleRequestObjectString = function () {
