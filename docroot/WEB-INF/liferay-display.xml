@@ -12,6 +12,10 @@
 		<portlet id="insertPaymentCalculatorLookValuesPortlet"></portlet>
 		<portlet id="viewCreditApplicationPortlet"></portlet>
 		<portlet id="payment-calculator"></portlet>
+<<<<<<< HEAD
+>>>>>>> master
+=======
+		<portlet id="credit-applications-table"></portlet>
 >>>>>>> master
 	</category>
 </display>

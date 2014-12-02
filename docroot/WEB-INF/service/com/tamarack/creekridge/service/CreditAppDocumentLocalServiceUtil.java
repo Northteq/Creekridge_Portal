@@ -26,7 +26,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppDocumentLocalService
  * @see com.tamarack.creekridge.service.base.CreditAppDocumentLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.CreditAppDocumentLocalServiceImpl
@@ -249,6 +249,12 @@ public class CreditAppDocumentLocalServiceUtil {
 		com.tamarack.creekridge.model.CreditAppDocument creditAppDocument)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateCreditAppDocument(creditAppDocument);
+	}
+
+	public static com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel getDocumentFileContentBlobModel(
+		java.io.Serializable primaryKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDocumentFileContentBlobModel(primaryKey);
 	}
 
 	/**

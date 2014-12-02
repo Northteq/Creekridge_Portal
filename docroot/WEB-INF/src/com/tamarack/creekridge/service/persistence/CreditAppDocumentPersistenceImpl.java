@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -56,7 +57,7 @@ import java.util.List;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppDocumentPersistence
  * @see CreditAppDocumentUtil
  * @generated
@@ -581,6 +582,290 @@ public class CreditAppDocumentPersistenceImpl extends BasePersistenceImpl<Credit
 	}
 
 	private static final String _FINDER_COLUMN_CREDITAPPID_CREDITAPPID_2 = "creditAppDocument.creditAppId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID = new FinderPath(CreditAppDocumentModelImpl.ENTITY_CACHE_ENABLED,
+			CreditAppDocumentModelImpl.FINDER_CACHE_ENABLED,
+			CreditAppDocumentImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByCreditDocumentNameAppId",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CreditAppDocumentModelImpl.CREDITAPPID_COLUMN_BITMASK |
+			CreditAppDocumentModelImpl.DOCUMENTFILENAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CREDITDOCUMENTNAMEAPPID = new FinderPath(CreditAppDocumentModelImpl.ENTITY_CACHE_ENABLED,
+			CreditAppDocumentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCreditDocumentNameAppId",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the credit app document where creditAppId = &#63; and documentFileName = &#63; or throws a {@link com.tamarack.creekridge.NoSuchCreditAppDocumentException} if it could not be found.
+	 *
+	 * @param creditAppId the credit app ID
+	 * @param documentFileName the document file name
+	 * @return the matching credit app document
+	 * @throws com.tamarack.creekridge.NoSuchCreditAppDocumentException if a matching credit app document could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CreditAppDocument findByCreditDocumentNameAppId(long creditAppId,
+		String documentFileName)
+		throws NoSuchCreditAppDocumentException, SystemException {
+		CreditAppDocument creditAppDocument = fetchByCreditDocumentNameAppId(creditAppId,
+				documentFileName);
+
+		if (creditAppDocument == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("creditAppId=");
+			msg.append(creditAppId);
+
+			msg.append(", documentFileName=");
+			msg.append(documentFileName);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchCreditAppDocumentException(msg.toString());
+		}
+
+		return creditAppDocument;
+	}
+
+	/**
+	 * Returns the credit app document where creditAppId = &#63; and documentFileName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param creditAppId the credit app ID
+	 * @param documentFileName the document file name
+	 * @return the matching credit app document, or <code>null</code> if a matching credit app document could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CreditAppDocument fetchByCreditDocumentNameAppId(long creditAppId,
+		String documentFileName) throws SystemException {
+		return fetchByCreditDocumentNameAppId(creditAppId, documentFileName,
+			true);
+	}
+
+	/**
+	 * Returns the credit app document where creditAppId = &#63; and documentFileName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param creditAppId the credit app ID
+	 * @param documentFileName the document file name
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching credit app document, or <code>null</code> if a matching credit app document could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CreditAppDocument fetchByCreditDocumentNameAppId(long creditAppId,
+		String documentFileName, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { creditAppId, documentFileName };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+					finderArgs, this);
+		}
+
+		if (result instanceof CreditAppDocument) {
+			CreditAppDocument creditAppDocument = (CreditAppDocument)result;
+
+			if ((creditAppId != creditAppDocument.getCreditAppId()) ||
+					!Validator.equals(documentFileName,
+						creditAppDocument.getDocumentFileName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_CREDITAPPDOCUMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_CREDITAPPID_2);
+
+			boolean bindDocumentFileName = false;
+
+			if (documentFileName == null) {
+				query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_1);
+			}
+			else if (documentFileName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_3);
+			}
+			else {
+				bindDocumentFileName = true;
+
+				query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(creditAppId);
+
+				if (bindDocumentFileName) {
+					qPos.add(documentFileName);
+				}
+
+				List<CreditAppDocument> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"CreditAppDocumentPersistenceImpl.fetchByCreditDocumentNameAppId(long, String, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					CreditAppDocument creditAppDocument = list.get(0);
+
+					result = creditAppDocument;
+
+					cacheResult(creditAppDocument);
+
+					if ((creditAppDocument.getCreditAppId() != creditAppId) ||
+							(creditAppDocument.getDocumentFileName() == null) ||
+							!creditAppDocument.getDocumentFileName()
+												  .equals(documentFileName)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+							finderArgs, creditAppDocument);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CreditAppDocument)result;
+		}
+	}
+
+	/**
+	 * Removes the credit app document where creditAppId = &#63; and documentFileName = &#63; from the database.
+	 *
+	 * @param creditAppId the credit app ID
+	 * @param documentFileName the document file name
+	 * @return the credit app document that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CreditAppDocument removeByCreditDocumentNameAppId(long creditAppId,
+		String documentFileName)
+		throws NoSuchCreditAppDocumentException, SystemException {
+		CreditAppDocument creditAppDocument = findByCreditDocumentNameAppId(creditAppId,
+				documentFileName);
+
+		return remove(creditAppDocument);
+	}
+
+	/**
+	 * Returns the number of credit app documents where creditAppId = &#63; and documentFileName = &#63;.
+	 *
+	 * @param creditAppId the credit app ID
+	 * @param documentFileName the document file name
+	 * @return the number of matching credit app documents
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByCreditDocumentNameAppId(long creditAppId,
+		String documentFileName) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CREDITDOCUMENTNAMEAPPID;
+
+		Object[] finderArgs = new Object[] { creditAppId, documentFileName };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CREDITAPPDOCUMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_CREDITAPPID_2);
+
+			boolean bindDocumentFileName = false;
+
+			if (documentFileName == null) {
+				query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_1);
+			}
+			else if (documentFileName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_3);
+			}
+			else {
+				bindDocumentFileName = true;
+
+				query.append(_FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(creditAppId);
+
+				if (bindDocumentFileName) {
+					qPos.add(documentFileName);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_CREDITAPPID_2 =
+		"creditAppDocument.creditAppId = ? AND ";
+	private static final String _FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_1 =
+		"creditAppDocument.documentFileName IS NULL";
+	private static final String _FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_2 =
+		"creditAppDocument.documentFileName = ?";
+	private static final String _FINDER_COLUMN_CREDITDOCUMENTNAMEAPPID_DOCUMENTFILENAME_3 =
+		"(creditAppDocument.documentFileName IS NULL OR creditAppDocument.documentFileName = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SEQUENCENUMBER =
 		new FinderPath(CreditAppDocumentModelImpl.ENTITY_CACHE_ENABLED,
 			CreditAppDocumentModelImpl.FINDER_CACHE_ENABLED,
@@ -1100,6 +1385,12 @@ public class CreditAppDocumentPersistenceImpl extends BasePersistenceImpl<Credit
 			CreditAppDocumentImpl.class, creditAppDocument.getPrimaryKey(),
 			creditAppDocument);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+			new Object[] {
+				creditAppDocument.getCreditAppId(),
+				creditAppDocument.getDocumentFileName()
+			}, creditAppDocument);
+
 		creditAppDocument.resetOriginalValues();
 	}
 
@@ -1157,6 +1448,8 @@ public class CreditAppDocumentPersistenceImpl extends BasePersistenceImpl<Credit
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(creditAppDocument);
 	}
 
 	@Override
@@ -1167,6 +1460,65 @@ public class CreditAppDocumentPersistenceImpl extends BasePersistenceImpl<Credit
 		for (CreditAppDocument creditAppDocument : creditAppDocuments) {
 			EntityCacheUtil.removeResult(CreditAppDocumentModelImpl.ENTITY_CACHE_ENABLED,
 				CreditAppDocumentImpl.class, creditAppDocument.getPrimaryKey());
+
+			clearUniqueFindersCache(creditAppDocument);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(CreditAppDocument creditAppDocument) {
+		if (creditAppDocument.isNew()) {
+			Object[] args = new Object[] {
+					creditAppDocument.getCreditAppId(),
+					creditAppDocument.getDocumentFileName()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CREDITDOCUMENTNAMEAPPID,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+				args, creditAppDocument);
+		}
+		else {
+			CreditAppDocumentModelImpl creditAppDocumentModelImpl = (CreditAppDocumentModelImpl)creditAppDocument;
+
+			if ((creditAppDocumentModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						creditAppDocument.getCreditAppId(),
+						creditAppDocument.getDocumentFileName()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CREDITDOCUMENTNAMEAPPID,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+					args, creditAppDocument);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(CreditAppDocument creditAppDocument) {
+		CreditAppDocumentModelImpl creditAppDocumentModelImpl = (CreditAppDocumentModelImpl)creditAppDocument;
+
+		Object[] args = new Object[] {
+				creditAppDocument.getCreditAppId(),
+				creditAppDocument.getDocumentFileName()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CREDITDOCUMENTNAMEAPPID,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+			args);
+
+		if ((creditAppDocumentModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					creditAppDocumentModelImpl.getOriginalCreditAppId(),
+					creditAppDocumentModelImpl.getOriginalDocumentFileName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CREDITDOCUMENTNAMEAPPID,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CREDITDOCUMENTNAMEAPPID,
+				args);
 		}
 	}
 
@@ -1295,8 +1647,12 @@ public class CreditAppDocumentPersistenceImpl extends BasePersistenceImpl<Credit
 				creditAppDocument.setNew(false);
 			}
 			else {
-				session.merge(creditAppDocument);
+				session.evict(creditAppDocument);
+				session.saveOrUpdate(creditAppDocument);
 			}
+
+			session.flush();
+			session.clear();
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -1357,6 +1713,11 @@ public class CreditAppDocumentPersistenceImpl extends BasePersistenceImpl<Credit
 			CreditAppDocumentImpl.class, creditAppDocument.getPrimaryKey(),
 			creditAppDocument);
 
+		clearUniqueFindersCache(creditAppDocument);
+		cacheUniqueFindersCache(creditAppDocument);
+
+		creditAppDocument.resetOriginalValues();
+
 		return creditAppDocument;
 	}
 
@@ -1381,7 +1742,7 @@ public class CreditAppDocumentPersistenceImpl extends BasePersistenceImpl<Credit
 		creditAppDocumentImpl.setSequenceNumber(creditAppDocument.getSequenceNumber());
 		creditAppDocumentImpl.setDocumentTitle(creditAppDocument.getDocumentTitle());
 		creditAppDocumentImpl.setDocumentFileName(creditAppDocument.getDocumentFileName());
-		creditAppDocumentImpl.setDocumentFileLocation(creditAppDocument.getDocumentFileLocation());
+		creditAppDocumentImpl.setDocumentFileContent(creditAppDocument.getDocumentFileContent());
 
 		return creditAppDocumentImpl;
 	}

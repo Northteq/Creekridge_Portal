@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing PurchaseOption in entity cache.
  *
- * @author pmacha
+ * @author tamarack
  * @see PurchaseOption
  * @generated
  */

@@ -25,7 +25,7 @@ import com.tamarack.creekridge.model.CreditAppPrincipal;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppPrincipalPersistenceImpl
  * @see CreditAppPrincipalUtil
  * @generated

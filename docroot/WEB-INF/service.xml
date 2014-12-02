@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
 <service-builder package-path="com.tamarack.creekridge">
-	<author>pmacha</author>
+	<author>tamarack</author>
 	<namespace>eCreekRidge</namespace>
 
 	<entity name="CreditApp" local-service="true" remote-service="false">
@@ -86,10 +86,16 @@
 			<finder-column name="creditAppStatusId" />
 		</finder>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 	</entity>
 	
 =======
+=======
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+>>>>>>> master
 
 	</entity>
 
@@ -164,7 +170,7 @@
 		<column name="bankReferenceName" type="String" />
 		<column name="bankReferenceContact" type="String" />
         <column name="bankReferencePhone" type="String" />
-        <column name="bankReferencAccountType" type="String" />
+        <column name="bankReferenceAccountType" type="String" />
         <column name="bankReferenceAccountNumber" type="String" />
         
         <!-- Order -->
@@ -201,7 +207,7 @@
 		<column name="sequenceNumber" type="long" />
 		<column name="documentTitle" type="String" />
 		<column name="documentFileName" type="String" />
-        <column name="documentFileLocation" type="String" />
+        <column name="documentFileContent" type="Blob" />
             
         <!-- Order -->
 		<order by="asc">
@@ -212,6 +218,11 @@
 
 		<finder name="CreditAppId" return-type="Collection">
 			<finder-column name="creditAppId" />
+		</finder>
+		<finder name="CreditDocumentNameAppId" return-type="CreditAppDocument">
+			<finder-column name="creditAppId" />
+			<finder-column name="documentFileName" />
+			
 		</finder>
 		<finder name="SequenceNumber" return-type="Collection">
 			<finder-column name="sequenceNumber" />

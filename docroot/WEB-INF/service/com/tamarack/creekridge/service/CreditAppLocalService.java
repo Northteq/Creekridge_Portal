@@ -29,7 +29,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppLocalServiceUtil
  * @see com.tamarack.creekridge.service.base.CreditAppLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.CreditAppLocalServiceImpl
@@ -249,6 +249,12 @@ public interface CreditAppLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
 	public com.tamarack.creekridge.model.CreditApp addCreditApp(
 <<<<<<< HEAD
 		com.liferay.portal.model.User user, long vendorId)
@@ -258,4 +264,14 @@ public interface CreditAppLocalService extends BaseLocalService,
 >>>>>>> master
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @param standard
+	* @return List<Student>
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

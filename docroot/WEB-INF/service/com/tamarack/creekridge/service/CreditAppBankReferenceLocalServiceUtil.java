@@ -26,7 +26,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppBankReferenceLocalService
  * @see com.tamarack.creekridge.service.base.CreditAppBankReferenceLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.CreditAppBankReferenceLocalServiceImpl
@@ -278,6 +278,21 @@ public class CreditAppBankReferenceLocalServiceUtil {
 	public static java.util.List<com.tamarack.creekridge.model.CreditAppBankReference> getCreditAppBankReferenceByCreditApp(
 		long creditAppId) throws java.lang.Exception {
 		return getService().getCreditAppBankReferenceByCreditApp(creditAppId);
+	}
+
+	/**
+	* @author olegforce
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	public static com.tamarack.creekridge.model.CreditAppBankReference addCreditAppBankReference(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addCreditAppBankReference(user, themeDisplay);
 	}
 
 	public static void clearService() {

@@ -19,6 +19,7 @@ package com.tamarack.creekridge.service.impl;
 
 >>>>>>> master
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,7 +70,13 @@ public class CreditAppLocalServiceImpl extends CreditAppLocalServiceBaseImpl {
 private static Log _log = LogFactory.getLog(CreditAppLocalService.class);
 	
 	
-	
+/** 
+ *  
+ * @param user 
+ * @param themeDisplay
+ * @return CreditApp 
+ * @throws SystemException, PortalException
+ */ 
 	public CreditApp addCreditApp (User user, ThemeDisplay themeDisplay) throws PortalException, SystemException {
 >>>>>>> master
 		
@@ -110,7 +117,21 @@ private static Log _log = LogFactory.getLog(CreditAppLocalService.class);
 		
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 =======
+>>>>>>> master
+=======
+	
+	
+	/** 
+	  *  
+	  * @param standard 
+	  * @return List<Student> 
+	  * @throws SystemException 
+	  */  
+	 public List<CreditApp> getCreditAppByGroupId (long groupId) throws SystemException{  
+		 return this.creditAppPersistence.findByGroupId(groupId);
+	 } 
 >>>>>>> master
 }

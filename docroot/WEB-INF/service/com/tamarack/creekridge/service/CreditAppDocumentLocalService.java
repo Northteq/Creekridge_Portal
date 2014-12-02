@@ -29,7 +29,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppDocumentLocalServiceUtil
  * @see com.tamarack.creekridge.service.base.CreditAppDocumentLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.CreditAppDocumentLocalServiceImpl
@@ -228,6 +228,11 @@ public interface CreditAppDocumentLocalService extends BaseLocalService,
 	*/
 	public com.tamarack.creekridge.model.CreditAppDocument updateCreditAppDocument(
 		com.tamarack.creekridge.model.CreditAppDocument creditAppDocument)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel getDocumentFileContentBlobModel(
+		java.io.Serializable primaryKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

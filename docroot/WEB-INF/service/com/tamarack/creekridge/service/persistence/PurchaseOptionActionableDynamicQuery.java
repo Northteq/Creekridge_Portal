@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.service.PurchaseOptionLocalServiceUtil;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public abstract class PurchaseOptionActionableDynamicQuery

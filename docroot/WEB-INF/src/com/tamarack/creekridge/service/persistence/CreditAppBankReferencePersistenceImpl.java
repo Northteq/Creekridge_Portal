@@ -56,7 +56,7 @@ import java.util.List;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppBankReferencePersistence
  * @see CreditAppBankReferenceUtil
  * @generated
@@ -1393,7 +1393,7 @@ public class CreditAppBankReferencePersistenceImpl extends BasePersistenceImpl<C
 		creditAppBankReferenceImpl.setBankReferenceName(creditAppBankReference.getBankReferenceName());
 		creditAppBankReferenceImpl.setBankReferenceContact(creditAppBankReference.getBankReferenceContact());
 		creditAppBankReferenceImpl.setBankReferencePhone(creditAppBankReference.getBankReferencePhone());
-		creditAppBankReferenceImpl.setBankReferencAccountType(creditAppBankReference.getBankReferencAccountType());
+		creditAppBankReferenceImpl.setBankReferenceAccountType(creditAppBankReference.getBankReferenceAccountType());
 		creditAppBankReferenceImpl.setBankReferenceAccountNumber(creditAppBankReference.getBankReferenceAccountNumber());
 
 		return creditAppBankReferenceImpl;

@@ -54,7 +54,7 @@ create table eCreekRidge_CreditAppBankReference (
 	bankReferenceName VARCHAR(75) null,
 	bankReferenceContact VARCHAR(75) null,
 	bankReferencePhone VARCHAR(75) null,
-	bankReferencAccountType VARCHAR(75) null,
+	bankReferenceAccountType VARCHAR(75) null,
 	bankReferenceAccountNumber VARCHAR(75) null
 );
 
@@ -69,7 +69,7 @@ create table eCreekRidge_CreditAppDocument (
 	sequenceNumber LONG,
 	documentTitle VARCHAR(75) null,
 	documentFileName VARCHAR(75) null,
-	documentFileLocation VARCHAR(75) null
+	documentFileContent BLOB
 );
 
 create table eCreekRidge_CreditAppPrincipal (

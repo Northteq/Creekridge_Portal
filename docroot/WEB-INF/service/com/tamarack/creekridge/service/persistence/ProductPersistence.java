@@ -25,7 +25,7 @@ import com.tamarack.creekridge.model.Product;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author pmacha
+ * @author tamarack
  * @see ProductPersistenceImpl
  * @see ProductUtil
  * @generated

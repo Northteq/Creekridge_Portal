@@ -19,7 +19,7 @@ import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public class CreditAppPrincipalLocalServiceClpInvoker {
@@ -117,6 +117,13 @@ public class CreditAppPrincipalLocalServiceClpInvoker {
 		_methodName82 = "getCreditAppPrincipalByCreditAppId";
 
 		_methodParameterTypes82 = new String[] { "long" };
+
+		_methodName83 = "addCreditAppPrincipal";
+
+		_methodParameterTypes83 = new String[] {
+				"com.liferay.portal.model.User",
+				"com.liferay.portal.theme.ThemeDisplay"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -225,6 +232,12 @@ public class CreditAppPrincipalLocalServiceClpInvoker {
 			return CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+			return CreditAppPrincipalLocalServiceUtil.addCreditAppPrincipal((com.liferay.portal.model.User)arguments[0],
+				(com.liferay.portal.theme.ThemeDisplay)arguments[1]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -266,4 +279,6 @@ public class CreditAppPrincipalLocalServiceClpInvoker {
 	private String[] _methodParameterTypes77;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
 }

@@ -17,7 +17,7 @@ package com.tamarack.creekridge.service;
 import com.liferay.portal.service.InvokableLocalService;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public class VendorMessageLocalServiceClp implements VendorMessageLocalService {

@@ -26,7 +26,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author pmacha
+ * @author tamarack
  * @see PurchaseOptionLocalService
  * @see com.tamarack.creekridge.service.base.PurchaseOptionLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.PurchaseOptionLocalServiceImpl

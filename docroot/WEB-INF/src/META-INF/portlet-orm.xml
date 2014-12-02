@@ -79,7 +79,7 @@
 			<basic name="bankReferenceName" />
 			<basic name="bankReferenceContact" />
 			<basic name="bankReferencePhone" />
-			<basic name="bankReferencAccountType" />
+			<basic name="bankReferenceAccountType" />
 			<basic name="bankReferenceAccountNumber" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -103,7 +103,7 @@
 			<basic name="sequenceNumber" />
 			<basic name="documentTitle" />
 			<basic name="documentFileName" />
-			<basic name="documentFileLocation" />
+			<basic name="documentFileContent" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

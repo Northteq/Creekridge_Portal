@@ -49,6 +49,7 @@ String root = currentUrl.substring(0, currentUrl.lastIndexOf("/"));
 
 	<div class="span2">
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<a class="btn btn-info btn-block" href="/web/vendor1/payment-calculator">Pricing Calculation</a>
 	</div>
 
@@ -64,18 +65,25 @@ String root = currentUrl.substring(0, currentUrl.lastIndexOf("/"));
 		<a class="btn btn-warning btn-block" href="/web/vendor1/contact-info">Contact Info</a>
 =======
 		<a class="btn btn-info btn-block" href="<%=root %>/payment-calculator">Pricing Calculation</a>
+=======
+		<a class="btn btn-info btn-block" href="<%=root %>/payment-calculator"><i class="icon-pencil"></i> Payment Calculator</a>
+>>>>>>> master
 	</div>
 
 	<div class="span2">
-		<a class="btn btn-success btn-block" href="<%=root %>/view-application" >View Application </a>
+		<a class="btn btn-success btn-block" href="<%=root %>/view-application"><i class="icon-pencil"></i> View Application </a>
 	</div>
 	
 	<div class="span2">
-		<a class="btn btn-danger btn-block" href="<%=root %>/document-material">Document &amp; Materials</a>
+		<a class="btn btn-inverse btn-block" href="<%=root %>/document-material"><i class="icon-book"></i> Document &amp; Materials</a>
 	</div>
 	
 	<div class="span2">
+<<<<<<< HEAD
 		<a class="btn btn-warning btn-block" href="<%=root %>/contact-info">Contact Info</a>
+>>>>>>> master
+=======
+		<a class="btn btn-warning btn-block" href="<%=root %>/contact-info"><i class="icon-user"></i> Contact Info</a>
 >>>>>>> master
 	</div>
 	

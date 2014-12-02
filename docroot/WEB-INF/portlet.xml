@@ -248,5 +248,76 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+<<<<<<< HEAD
+>>>>>>> master
+=======
+	<portlet>
+		<portlet-name>credit-applications-table</portlet-name>
+		<display-name>Credit Applications Table</display-name>
+		<portlet-class>
+			com.tamarack.creekridge.liferay.creditapplicationstable.CreditApplicationsTable
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/creditapplicationstable/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Credit Applications Table</title>
+			<short-title>Credit Applications Table</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>manageDocument</portlet-name>
+		<display-name>Manage Document</display-name>
+		<portlet-class>
+			com.tamarack.creekridge.managedocument.ManageDocumentPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/manageDocument/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Manage Document</title>
+			<short-title>Manage Document</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
 >>>>>>> master
 </portlet-app>

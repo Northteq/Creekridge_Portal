@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the Term service. Represents a row in the &quot;eCreekRidge_Term&quot; database table, with each column mapped to a property of this class.
  *
- * @author pmacha
+ * @author tamarack
  * @see TermModel
  * @see com.tamarack.creekridge.model.impl.TermImpl
  * @see com.tamarack.creekridge.model.impl.TermModelImpl

@@ -489,7 +489,7 @@ public  void updateCreditAppBankReference(ActionRequest actionRequest,	ActionRes
  		
  		//CreditAppStatus creditAppStatus=CreditAppStatusLocalServiceUtil.
  		javax.servlet.http.HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
- 		creditAppPrincipal.setBankReferencAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
+ 		creditAppPrincipal.setBankReferenceAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
  		creditAppPrincipal.setBankReferenceAccountNumber(ParamUtil.getString(actionRequest,"bankReferenceAccountNumber"));
  		creditAppPrincipal.setBankReferenceContact(ParamUtil.getString(actionRequest,"bankReferenceAccountContact"));
  		creditAppPrincipal.setBankReferenceName(ParamUtil.getString(actionRequest,"bankReferenceAccountName"));

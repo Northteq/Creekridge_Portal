@@ -8,6 +8,7 @@
 <%@ include file="init.jsp"%>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -514,4 +515,43 @@ if (request.getSession().getAttribute("creditAppId") != null && !"".equalsIgnore
 
 		</aui:fieldset>
 	</aui:col>
+>>>>>>> master
+=======
+<portlet:renderURL portletMode="view" var="editAppURL">
+	<portlet:param name="viewMode" value="<%= String.valueOf(false)%>" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
+</portlet:renderURL>
+
+ <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
+
+
+	<liferay-ui:icon
+		   image="tool"
+		   message="Edit Credit App"
+		   label="<%= true%>"
+		   method="get"
+		   url="<%= editAppURL%>"
+		   useDialog="<%= false%>"
+		   
+		  />
+
+<aui:panel label="Address Info">
+
+<address>
+  <strong><aui-field>${creditApp.customerName}</strong><br>
+  ${creditApp.customerAddress1}<br>
+  ${creditApp.customerAddress2}<br>
+  ${creditApp.customerCity}, ${creditApp.customerState} ${creditApp.customerZip}<br>
+  <abbr title="Phone">P:</abbr> ${creditApp.customerContactPhone}<br>
+  <abbr title="Fax">F:</abbr> ${creditApp.customerContactFax}<br>
+  <abbr title="Email">E:</abbr> ${creditApp.customerContactEmail}<br>
+</address>
+
+</aui:panel>
+
+ 
+<address>
+  <strong>Full Name</strong><br>
+  <a href="mailto:#">first.last@example.com</a>
+</address>
 >>>>>>> master

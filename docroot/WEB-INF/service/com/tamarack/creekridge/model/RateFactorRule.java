@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the RateFactorRule service. Represents a row in the &quot;eCreekRidge_RateFactorRule&quot; database table, with each column mapped to a property of this class.
  *
- * @author pmacha
+ * @author tamarack
  * @see RateFactorRuleModel
  * @see com.tamarack.creekridge.model.impl.RateFactorRuleImpl
  * @see com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl

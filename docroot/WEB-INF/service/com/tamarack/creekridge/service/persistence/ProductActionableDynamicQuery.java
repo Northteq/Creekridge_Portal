@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.Product;
 import com.tamarack.creekridge.service.ProductLocalServiceUtil;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public abstract class ProductActionableDynamicQuery

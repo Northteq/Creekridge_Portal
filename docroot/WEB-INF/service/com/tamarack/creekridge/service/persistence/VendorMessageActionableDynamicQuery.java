@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.VendorMessage;
 import com.tamarack.creekridge.service.VendorMessageLocalServiceUtil;
 
 /**
- * @author pmacha
+ * @author tamarack
  * @generated
  */
 public abstract class VendorMessageActionableDynamicQuery

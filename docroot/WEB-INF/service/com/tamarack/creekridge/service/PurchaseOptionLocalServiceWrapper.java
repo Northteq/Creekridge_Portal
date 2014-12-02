@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link PurchaseOptionLocalService}.
  *
- * @author pmacha
+ * @author tamarack
  * @see PurchaseOptionLocalService
  * @generated
  */

@@ -56,7 +56,7 @@
 		<field name="bankReferenceName" type="String" />
 		<field name="bankReferenceContact" type="String" />
 		<field name="bankReferencePhone" type="String" />
-		<field name="bankReferencAccountType" type="String" />
+		<field name="bankReferenceAccountType" type="String" />
 		<field name="bankReferenceAccountNumber" type="String" />
 	</model>
 	<model name="com.tamarack.creekridge.model.CreditAppDocument">
@@ -70,7 +70,7 @@
 		<field name="sequenceNumber" type="long" />
 		<field name="documentTitle" type="String" />
 		<field name="documentFileName" type="String" />
-		<field name="documentFileLocation" type="String" />
+		<field name="documentFileContent" type="Blob" />
 	</model>
 	<model name="com.tamarack.creekridge.model.CreditAppPrincipal">
 		<field name="principalId" type="long" />

@@ -14,9 +14,16 @@
 
 package com.tamarack.creekridge.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.tamarack.creekridge.model.CreditAppBankReference;
+import com.tamarack.creekridge.model.CreditAppPrincipal;
 import com.tamarack.creekridge.service.base.CreditAppBankReferenceLocalServiceBaseImpl;
 
 /**
@@ -46,5 +53,27 @@ public class CreditAppBankReferenceLocalServiceImpl
 		return creditAppBankReferencePersistence.findByCreditAppId(creditAppId);
 		
 	}
+	
+	/** 
+	  * @author olegforce
+	  * @param user 
+	  * @param themeDisplay
+	  * @return CreditApp 
+	  * @throws SystemException, PortalException
+	  */ 
+	 	public CreditAppBankReference addCreditAppBankReference (User user, ThemeDisplay themeDisplay) throws PortalException, SystemException {
+	 		
+	 		CreditAppBankReference newReference = creditAppBankReferencePersistence.create(CounterLocalServiceUtil.increment(CreditAppBankReference.class.getName()));
+	 		newReference.setCompanyId(user.getCompanyId());
+	 		newReference.setUserId(user.getUserId());
+	 		newReference.setUserName(user.getScreenName());
+	 		newReference.setModifiedDate(new Date());
+	 		newReference.setCreateDate(new Date());
+	 		//newPrincipal.setGroupId (themeDisplay.getLayout().getGroupId());
+	 		//newPrincipal.setVendorId (themeDisplay.getLayout().getGroupId());
+	 		
+	 		return creditAppBankReferencePersistence.update(newReference);
+	 		
+	 	}
 	
 }

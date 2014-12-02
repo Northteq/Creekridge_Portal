@@ -5,21 +5,32 @@
  */
 --%>
 
+<%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>
 <%@ include file="init.jsp"%>
 
 <%
 
-String calculatorSectionState = ParamUtil.getString(request, "calculatorSectionState", "open");
-String pricingOvervewSectionState = ParamUtil.getString(request, "pricingOvervewSectionState", "collapsed");
-String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfoSectionState", "collapsed");
+String openSection = ParamUtil.getString(request, "openSection", "paymentCalculator");
+request.setAttribute("openSection", openSection);
 
+HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+long appId = ParamUtil.getLong(request, "creditAppId");
+
+if (appId != 0) {
+	request.setAttribute("creditApp", CreditAppLocalServiceUtil.getCreditApp(appId));
+}
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+Boolean viewMode = ParamUtil.getBoolean(request, "viewMode");
+request.setAttribute("viewMode", viewMode);
+>>>>>>> master
 
 %>
 
-<<<<<<< HEAD
-=======
-
-
+<script src="<%= renderRequest.getContextPath()%>/js/paymentcalculator.js" type="text/javascript"></script>
 
 >>>>>>> master
 <portlet:resourceURL var="processProductsSelectionURL"
@@ -39,10 +50,11 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	id="updateIncludeInProposal" />
 
 <portlet:actionURL name="saveApplicationInfo" var="saveApplicationInfoURL">
-	<portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
-<portlet:actionURL name="createApplication" var="createApplicationInfoURL">
-<portlet:param name="mvcPath" value="view.jsp" />
+
+<portlet:actionURL name="submitApplication" var="submitApplicationURL">
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
 
 
@@ -50,7 +62,40 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 <liferay-ui:error key="runCalculatorRequired" message="error-run-calculator-required" />
 <liferay-ui:success key="appSaved" message="app-saved-successfully"/>
 <liferay-ui:success key="appUpdated" message="app-updated-successfully"/>
+<liferay-ui:success key="appSubmitted" message="app-submitted-successfully"/>
 
+
+
+<script type="text/javascript" charset="utf-8">
+function processAppButton(action){
+	
+	var formEl = $('[name="<portlet:namespace/>applicationForm"]');
+	console.log (formEl);
+	console.log (action);
+  if(action==0){
+	  formEl.attr('action',"<%=saveApplicationInfoURL%>");
+  }else{
+	  formEl.attr('action',"<%=submitApplicationURL%>");
+  }
+  
+  console.log (formEl, action);
+  
+  
+  $(formEl).submit();
+ 
+}
+</script>
+
+<portlet:renderURL portletMode="view" var="viewAppURL">
+	<portlet:param name="viewMode" value="<%= String.valueOf(true)%>" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
+</portlet:renderURL>
+
+
+
+<c:if test="${creditApp.creditAppStatusId != 3 && viewMode==false}">
+
+<<<<<<< HEAD
 <<<<<<< HEAD
 <aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" >
 	<aui:input type="hidden" value="${creditAppId}" name="creditAppId"/>
@@ -60,6 +105,21 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 =======
 <aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post">
 	<aui:input type="hidden" name="creditAppId" value="${creditApp.creditAppId}"/>
+=======
+	<c:if test="${creditApp.creditAppId != 0}">
+		<liferay-ui:icon
+		   image="tool"
+		   message="Preview Credit App"
+		   label="<%= true%>"
+		   method="get"
+		   url="<%= viewAppURL%>"
+		   useDialog="<%= false%>"
+		   
+		  />
+	</c:if>
+
+<aui:form action="<%=saveApplicationInfoURL.toString() %>" method="post" name="applicationForm">
+>>>>>>> master
 	<c:if test="${creditApp.creditAppId != 0}">
 		<h3>Application ${creditApp.creditAppId} </h3> 
  	</c:if>
@@ -73,10 +133,10 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 >>>>>>> master
 
 	<liferay-ui:panel-container accordion="true" extended="false">
-		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="<%=calculatorSectionState %>">
+		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator" state="${openSection=='paymentCalculator'? 'open' : 'collapsed' }">
 				
-				<aui:col span="3" first="true">
-					<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px"  label="Equipment Price" required="true" value="${creditApp.equipmentPrice}"></aui:input>
+				<aui:col span="3" first="true">	
+				 	<aui:input id="equipmentPrice" type="number" step="any" name="equipmentPrice" size="7" style="width:150px" required="true" value="${creditApp.equipmentPrice}"></aui:input>
 				</aui:col>
 	
 				<aui:col span="3" id="product">
@@ -116,33 +176,33 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 				</aui:col>
 				
 				<aui:button-row>
-					<button class="btn btn-danger" type="reset" onclick="resetAllSections();">Clear</button>
-					<button class="btn btn-success" type="submit" id="calculatePaymentsButton" onclick="return calculatePayments()"> Calculate Payments </button>
+					<button class="btn btn-danger" type="reset" onclick="resetAllSections();"><i class="icon-remove"></i> Clear</button>
+					<button class="btn btn-success" type="submit" id="calculatePaymentsButton" onclick="return calculatePayments()"><i class="icon-th"></i> Calculate Payments </button>
 				
 				</aui:button-row>
 		</liferay-ui:panel>
 		
 		<!-- PRICING OVERVIEW PANEL  -->
 	
-		<liferay-ui:panel title="Pricing Overview" id="pricingOvervewResults" state="<%=pricingOvervewSectionState%>">
+		<liferay-ui:panel title="Pricing Overview" id="pricingOvervewResults" state="${openSection=='pricingOverview'? 'open' : 'collapsed' }">
 	    	<div id="proposalOptionsSection" style="display:none">
 	    			
 	    		<div id="proposalOptionsTable"></div>
 	   		
 	    		<aui:button-row>
-	    			<button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button>
+	    			<!-- <button type="submit" class="btn btn-info" id="createApplicationButton"> Create Application </button> -->
 	    			<a class="btn btn-success" id="navigateToCalculator" onclick="navigateToCalculator()">Back to Calculator</a>
 	    		</aui:button-row>
 	    	</div>
 	 	</liferay-ui:panel>
 	 	
-	 		<!-- APPLICATION PANEL  -->
-	
-		<liferay-ui:panel title="Application" id="applicationInfo" state="<%=appicationInfoSectionState %>">
-	        <c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
-	 	</liferay-ui:panel>
+	 	<!-- APPLICATION PANEL  -->
+		<c:if test="${creditApp.creditAppId != null}">
+			<c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
+	 	</c:if>
 	 	
 	</liferay-ui:panel-container>
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 </aui:form>
@@ -154,10 +214,9 @@ String appicationInfoSectionState = ParamUtil.getString(request, "appicationInfo
 	
 	
 	
+=======
+>>>>>>> master
 </aui:form>
-
-
-
 
 <script type="text/javascript">
 
@@ -167,6 +226,7 @@ var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
 var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
 var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 
+<<<<<<< HEAD
 
 >>>>>>> master
 var navigateToCalculator = function () {
@@ -600,6 +660,24 @@ var buildProposalOptionsTable = function (remoteData) {
 	);	
 >>>>>>> master
 };
+=======
+$(document).ready(function () {
+	
+	var proposals;
+	var proposalsString = '${proposalList}';
+	try {
+		if (proposalsString != "") {
+			proposals = jQuery.parseJSON('${proposalList}');
+			buildProposalOptionsTable(proposals);
+		}
+		
+	} catch (e) {
+		console.log ('error getting proposals ', e);
+	}
+
+	$(".alert-error:contains('Your request failed to complete.')").hide();
+});
+>>>>>>> master
 
 </script>
 
@@ -608,3 +686,12 @@ var buildProposalOptionsTable = function (remoteData) {
 	text-align:center !important;
 }
 </style>
+
+</c:if>
+
+<!-- VIEW MODE -->
+
+
+<c:if test="${creditApp.creditAppStatusId == 3 || viewMode}">
+	<c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
+</c:if>

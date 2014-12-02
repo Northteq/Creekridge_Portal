@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author pmacha
+ * @author tamarack
  */
 public class ProductClp extends BaseModelImpl<Product> implements Product {
 	public ProductClp() {

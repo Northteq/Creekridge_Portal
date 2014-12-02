@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CreditAppBankReferenceLocalService}.
  *
- * @author pmacha
+ * @author tamarack
  * @see CreditAppBankReferenceLocalService
  * @generated
  */
@@ -294,6 +294,23 @@ public class CreditAppBankReferenceLocalServiceWrapper
 	public java.util.List<com.tamarack.creekridge.model.CreditAppBankReference> getCreditAppBankReferenceByCreditApp(
 		long creditAppId) throws java.lang.Exception {
 		return _creditAppBankReferenceLocalService.getCreditAppBankReferenceByCreditApp(creditAppId);
+	}
+
+	/**
+	* @author olegforce
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	@Override
+	public com.tamarack.creekridge.model.CreditAppBankReference addCreditAppBankReference(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppBankReferenceLocalService.addCreditAppBankReference(user,
+			themeDisplay);
 	}
 
 	/**

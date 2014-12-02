@@ -2,9 +2,12 @@ package com.tamarack.creekridge.liferay.paymentcalculator;
 
 import java.io.IOException;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 =======
 
+>>>>>>> master
+=======
 >>>>>>> master
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,9 +19,12 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import javax.portlet.PortletRequest;
 =======
 
+>>>>>>> master
+=======
 >>>>>>> master
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -41,8 +47,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
 =======
+>>>>>>> master
+=======
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 >>>>>>> master
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -55,18 +65,30 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.tamarack.creekridge.model.CreditApp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.tamarack.creekridge.model.CreditAppStatus;
 =======
+>>>>>>> master
+=======
+import com.tamarack.creekridge.model.CreditAppBankReference;
+import com.tamarack.creekridge.model.CreditAppPrincipal;
+import com.tamarack.creekridge.model.CreditAppStatus;
 >>>>>>> master
 import com.tamarack.creekridge.model.Product;
 import com.tamarack.creekridge.model.ProposalOption;
 import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.model.Term;
+import com.tamarack.creekridge.service.CreditAppBankReferenceLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
+<<<<<<< HEAD
 <<<<<<< HEAD
 import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 =======
+>>>>>>> master
+=======
+import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
+import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 >>>>>>> master
 import com.tamarack.creekridge.service.ProductLocalServiceUtil;
 import com.tamarack.creekridge.service.ProposalOptionLocalServiceUtil;
@@ -115,7 +137,10 @@ public class PaymentCalculator extends MVCPortlet {
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		
 		_log.info("render started");
-	
+		
+		
+		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+
 		//page variables available
 		List<Product> productOptions = new ArrayList<Product>();
 <<<<<<< HEAD
@@ -131,12 +156,11 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		vendorId = themeDisplay.getLayout().getGroupId();
 		currentUser = themeDisplay.getUser();
-		
-		
+	
 		try {
-
 			productOptions = ProductLocalServiceUtil.getProducts(-1, -1);
 			renderRequest.setAttribute("productOptions", productOptions);
+<<<<<<< HEAD
 			
 <<<<<<< HEAD
 			Long creditAppId = ParamUtil.getLong(renderRequest, "creditAppId");
@@ -154,34 +178,56 @@ public class PaymentCalculator extends MVCPortlet {
 				renderRequest.setAttribute("creditAppId", creditApp.getCreditAppId());
 =======
 			
+=======
+>>>>>>> master
 				
 			creditApp = (CreditApp) renderRequest.getAttribute("creditApp");
 			if (creditApp == null) { //try page parameter
-				HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+				
 				String appId = httpReq.getParameter("creditAppId");
 				
-				if (appId != null) {
+				if (appId == null) {//try namespace prefixed version
+					appId = httpReq.getParameter(renderResponse.getNamespace()+"creditAppId");
+				} 
+				
+				if (appId == null) {
+					appId = httpReq.getParameter("creditAppId");
+				}
+				
+				if (appId == null)
+					appId = ParamUtil.getString(renderRequest, "creditAppId");
+				
+				if (appId != null && appId != "") {
 					creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long (appId));
 				}
-			}
+				
+			} //else app was found
+			
+			
 			
 			_log.info("creditApp: " + creditApp);
 			
 			if (creditApp != null) {
-
 				renderRequest.setAttribute("creditApp", creditApp);
+<<<<<<< HEAD
 >>>>>>> master
 				
 				//populate proposal options if any
 				List <ProposalOptionWrapper> powList = new ArrayList<ProposalOptionWrapper>();
 				
+=======
+				proposalOptionList = new ArrayList<ProposalOptionWrapper>();
+>>>>>>> master
 				for (ProposalOption po: ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditApp.getCreditAppId())) {
-					powList.add (new ProposalOptionWrapper(po));
+					proposalOptionList.add (new ProposalOptionWrapper(po));
 				}
-				
-				renderRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(powList));
+	
+				//need to figure out if we want to switch back to the action vs ajax
+				renderRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(proposalOptionList));
+				renderRequest.setAttribute("proposalOptionList", proposalOptionList);
 			}
 			
+<<<<<<< HEAD
 <<<<<<< HEAD
 			 
 			_log.info("render creditApp : " + creditApp);
@@ -196,10 +242,15 @@ public class PaymentCalculator extends MVCPortlet {
 		
 =======
 >>>>>>> master
+=======
+		} catch (Exception e) {
+			_log.error(e);
+		}
+>>>>>>> master
 		super.render(renderRequest, renderResponse);
-		
 		_log.info("render ended");
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	
 	@Override
@@ -217,13 +268,83 @@ public class PaymentCalculator extends MVCPortlet {
 
 >>>>>>> master
 
+=======
+>>>>>>> master
 	
-	public void createApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
+	//	ADD CREDIT REFERENCE 
+	public void addCreditAppBankReference (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("addCreditAppBankReference started");
 		
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		
+		try {
+			
+			CreditAppBankReference reference = CreditAppBankReferenceLocalServiceUtil.addCreditAppBankReference(currentUser, themeDisplay);
+			reference = PaymentCalculatorUtil.populateBankReferenceFromRequest(actionRequest, reference);
+			reference.setCreditAppId(creditAppId);
+			CreditAppBankReferenceLocalServiceUtil.updateCreditAppBankReference(reference);
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+			actionResponse.setWindowState(LiferayWindowState.NORMAL);
+			
+		} catch (Exception e) {
+			_log.error(e); 
+		}
+		
+		actionResponse.setRenderParameter ("openSection", "bankReferenceSection");
+		SessionMessages.add(actionRequest, "bankReferenceSaved");
+		_log.info("addCreditAppBankReference ended");
 	}
 	
-	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
+	//	EDIT CREDIT REFERENCE 
+	public void editCreditAppBankReference (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("addCreditAppBankReference started");
 		
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		long referenceId = ParamUtil.getLong(actionRequest, "resourcePrimKey");
+		try {
+			CreditAppBankReference reference = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReference(referenceId);
+			reference = PaymentCalculatorUtil.populateBankReferenceFromRequest(actionRequest, reference);
+			reference.setModifiedDate(new Date());
+			CreditAppBankReferenceLocalServiceUtil.updateCreditAppBankReference(reference);
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+		} catch (Exception e) {
+			_log.error(e); 
+		}
+		actionResponse.setRenderParameter ("openSection", "bankReferenceSection");
+		_log.info("editCreditAppBankReference ended");
+	}
+	
+	//	DELETE CREDIT REFERENCE 
+	public void deleteCreditAppBankReference (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("deleteCreditAppBankReference started");
+		
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		long referenceId = ParamUtil.getLong(actionRequest, "resourcePrimKey");
+		
+		try {
+			
+			CreditAppBankReferenceLocalServiceUtil.deleteCreditAppBankReference(referenceId);
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+			
+		} catch (Exception e) {
+			_log.error(e); 
+		}
+		
+		actionResponse.setRenderParameter ("openSection", "bankReferenceSection");
+		_log.info("deleteCreditAppBankReference ended");
+	}
+	
+	//ADD PRINCIPAL
+	public void addCreditAppPrincipal (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("addCreditAppPrincipal started");
+		
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		_log.info("saveApplicationInfo actionrequest started: ");
@@ -231,16 +352,113 @@ public class PaymentCalculator extends MVCPortlet {
 =======
 		CreditApp creditApp = null;
 		_log.info("saveApplicationInfo actionrequest started: ");
+=======
+>>>>>>> master
 		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
 		
+		try {
+			CreditAppPrincipal principal = CreditAppPrincipalLocalServiceUtil.addCreditAppPrincipal(currentUser, themeDisplay);
+			principal = PaymentCalculatorUtil.populatePrincipalFromRequest(actionRequest, principal);
+			principal.setCreditAppId(creditAppId);
+			CreditAppPrincipalLocalServiceUtil.updateCreditAppPrincipal(principal);
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+			actionResponse.setWindowState(LiferayWindowState.NORMAL);
+		} catch (Exception e) {
+			_log.error(e); 
+		}
 		
-		_log.info(actionRequest.getMethod());
+		actionResponse.setRenderParameter ("openSection", "principalSection");
+		SessionMessages.add(actionRequest, "principalSaved");
+		_log.info("addCreditAppPrincipal ended");
+	}
+	
+	//EDIT PRINCIPAL
+	public void editCreditAppPrincipal (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("editCreditAppPrincipal started");
 		
+<<<<<<< HEAD
 		if (actionRequest.getMethod() == "GET")
 			return;
 >>>>>>> master
+=======
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		long principalId = ParamUtil.getLong(actionRequest, "resourcePrimKey");
+		try {
+			CreditAppPrincipal principal = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipal(principalId);
+			principal = PaymentCalculatorUtil.populatePrincipalFromRequest(actionRequest, principal);
+			principal.setModifiedDate(new Date());
+			CreditAppPrincipalLocalServiceUtil.updateCreditAppPrincipal(principal);
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+			
+		} catch (Exception e) {
+			_log.error(e); 
+		}
+>>>>>>> master
+		
+		actionResponse.setRenderParameter ("openSection", "principalSection");
+		_log.info("editCreditAppPrincipal ended");
+	}
+	
+	//DELETE PRINCIPAL
+	public void deleteCreditAppPrincipal (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("deleteCreditAppPrincipal started");
+		
+		long principalId = ParamUtil.getLong(actionRequest, "resourcePrimKey");
+		_log.info("resourcePrimKey" + principalId);
+		long creditAppId = ParamUtil.getLong(actionRequest, "appId");
+		_log.info("creditAppId" + creditAppId);
+		try {
+			
+			CreditAppPrincipalLocalServiceUtil.deleteCreditAppPrincipal(principalId);
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			actionRequest.setAttribute("creditApp", creditApp);
+			
+		} catch (Exception e) {
+			_log.error(e); 
+		}
+		
+		actionResponse.setRenderParameter ("openSection", "principalSection");
+		_log.info("deleteCreditAppPrincipal ended");
+	}
+
+	
+	public void submitApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
+		
+		saveApplicationInfo (actionRequest, actionResponse);
+		
+		CreditApp creditApp = null;
+		long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+		try {
+			
+			creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			CreditAppStatus creditAppStatus = CreditAppStatusLocalServiceUtil.getCreditAppStatusByStatus("Submitted");
+			creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
+			CreditAppLocalServiceUtil.updateCreditApp(creditApp);
+			
+			_log.info("Credit App has been submitted" + creditApp);
+			SessionMessages.add(actionRequest, "appSubmitted");
+			actionRequest.setAttribute("creditApp", creditApp);
+			
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		
+	}
+	
+	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		CreditApp creditApp = null;
+		_log.info("saveApplicationInfo actionrequest started: ");
 		
 		try {
+			
+			long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
+			
 			_log.info("creditAppId: " + creditAppId);
 			
 <<<<<<< HEAD
@@ -251,6 +469,11 @@ public class PaymentCalculator extends MVCPortlet {
 			if (creditAppId != 0)
 				creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
 			
+			if (actionRequest.getMethod() == "GET") {
+				actionRequest.setAttribute("creditApp", creditApp);
+				return;
+			}
+			
 			if (creditApp == null) {
 				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, themeDisplay);
 >>>>>>> master
@@ -258,7 +481,7 @@ public class PaymentCalculator extends MVCPortlet {
 				isAppCreated = true;
 				
 			} else {
-				creditApp = CreditAppLocalServiceUtil.getCreditApp(ParamUtil.getLong(actionRequest, "creditAppId"));
+				creditApp.setCreditAppStatusId(2);
 				_log.info("Application has been updated. " + creditApp);
 				
 			}
@@ -281,7 +504,7 @@ public class PaymentCalculator extends MVCPortlet {
 				actionResponse.setRenderParameter("calculatorSectionState", "open");
 				
 			} else {
-				_log.info("proposalOptionList is populated" + proposalOptionList.size());
+				_log.info("proposalOptionList is populated: " + proposalOptionList.size());
 				
 				
 				for (ProposalOptionWrapper pow: proposalOptionList) {
@@ -412,6 +635,7 @@ public class PaymentCalculator extends MVCPortlet {
 		
 =======
 
+<<<<<<< HEAD
 >>>>>>> master
 		if (actionResponse.getRenderParameterMap().get("calculatorSectionState") == null) {
 			actionResponse.setRenderParameter("calculatorSectionState", "collapsed");
@@ -424,6 +648,9 @@ public class PaymentCalculator extends MVCPortlet {
 		if (actionResponse.getRenderParameterMap().get("appicationInfoSectionState") == null) {
 			actionResponse.setRenderParameter("appicationInfoSectionState", "open");
 		}
+=======
+		actionResponse.setRenderParameter("openSection", "customerAndEquipmentInfo");
+>>>>>>> master
 		
 <<<<<<< HEAD
 =======
@@ -443,7 +670,6 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		JSONArray productIdList = selectedOptionsObject.getJSONArray("products");
 		_log.info("calculatePayments JSON productIdList : " + productIdList);
-		
 		
 		JSONArray purchaseOptionIdList = selectedOptionsObject.getJSONArray("purchaseOptions");
 		_log.info("calculatePayments JSON purchaseOptionIdList : " + purchaseOptionIdList);
@@ -500,6 +726,11 @@ public class PaymentCalculator extends MVCPortlet {
 			 
 		}
 		
+		if (proposalOptionList.size()==1){
+			proposalOptionList.get(0).propOption.setIncludeInProposal(true);
+			proposalOptionList.get(0).propOption.setUseForCreditApp(true);
+		}
+		
 		return proposalOptionList;
 		
 	}
@@ -534,8 +765,7 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		//orderby price
 		rateFactorCriteriaQuery.addOrder(OrderFactoryUtil.desc("minPrice"));
-		
-		
+
 		@SuppressWarnings("unchecked")
 		List<RateFactorRule> rateFactorRuleList = RateFactorRuleLocalServiceUtil
 				.dynamicQuery(rateFactorCriteriaQuery);
@@ -566,14 +796,12 @@ public class PaymentCalculator extends MVCPortlet {
 		Criterion productCriteria = null;
 		Criterion purchaseOptionCriteria = null;
 		
-		
 		//only rules that are active and belong to a site/vendorId
 		Criterion vendorIdCriteria = RestrictionsFactoryUtil.eq("vendorId",
 				vendorId);
 		Criterion activeFlagCriteria = RestrictionsFactoryUtil.eq("active",
 				true);
 		
-
 		// build query for product ids
 		if (productIdList.length()>0) {
 			for (int i = 0; i < productIdList.length(); i++) {
@@ -602,8 +830,6 @@ public class PaymentCalculator extends MVCPortlet {
 				}
 			}
 		}
-		
-		
 		if (productCriteria != null){
 			rateFactorCriteriaQuery.add(productCriteria);
 			
@@ -629,10 +855,8 @@ public class PaymentCalculator extends MVCPortlet {
 		public String prodOptionName;
 		public Double eqPrice;
 		public Double paymentAmount;
-		public Boolean useForCreditApp;
-		public Boolean includeInProposal;
+	
 		public Long proposalOptionId;
-		
 		
 		public ProposalOptionWrapper (ProposalOption propOption) {
 			this.propOption = propOption;
@@ -643,8 +867,7 @@ public class PaymentCalculator extends MVCPortlet {
 				this.prodOptionName = PurchaseOptionLocalServiceUtil.getPurchaseOption(propOption.getPurchaseOptionId()).getPurchaseOptionName();
 				this.eqPrice = propOption.getEquipmentPrice();
 				this.paymentAmount = propOption.getPaymentAmount();
-				this.useForCreditApp = propOption.getUseForCreditApp();
-				this.includeInProposal = propOption.getIncludeInProposal();
+				
 				
 			} catch (SystemException e) {
 				_log.error(e);
@@ -654,20 +877,13 @@ public class PaymentCalculator extends MVCPortlet {
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
 
 	public void serveResource(ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse) throws IOException,
 			PortletException {
-		
-		
-		
 		HttpServletRequest request = PortalUtil
 				.getHttpServletRequest(resourceRequest);
-
-		
 		List <RateFactorRule> rateFactorList = new ArrayList <RateFactorRule>();
 		List <PurchaseOption> purchaseOptionList = new ArrayList <PurchaseOption> ();
 		List <Term> termList = new ArrayList <Term> ();
@@ -688,12 +904,8 @@ public class PaymentCalculator extends MVCPortlet {
 		if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"processProductsSelection")) {
 			try {
-				
 				_log.info ("processProductsSelection rateFactorList size " + rateFactorList.size());
-				
-				
 				Set <Long> poSet = new HashSet <Long> ();
-				
 				for (RateFactorRule rateFactorValue : rateFactorList) {
 					_log.info(rateFactorValue);
 					if (!poSet.contains(rateFactorValue.getPurchaseOptionId())) {
@@ -702,13 +914,10 @@ public class PaymentCalculator extends MVCPortlet {
 						purchaseOptionList.add(po);
 					} 
 				}
-
 			} catch (Exception e) {
 				_log.error(e.getMessage());
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
-				
 			}
-			
 			resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(purchaseOptionList));
 		}
 		
@@ -717,10 +926,7 @@ public class PaymentCalculator extends MVCPortlet {
 			try {
 				
 				_log.info ("rateFactorList size " + rateFactorList.size());
-				
-				
 				Set <Long> termSet = new HashSet <Long> ();
-				
 				for (RateFactorRule rateFactorValue : rateFactorList) {
 					_log.info(rateFactorValue);
 					if (!termSet.contains(rateFactorValue.getTermId())) {
@@ -732,10 +938,8 @@ public class PaymentCalculator extends MVCPortlet {
 				
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(termList));
 			} catch (Exception e) {
-				
 				_log. error(e);
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
-				
 			}
 		} else if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"calculatePayments")) {
@@ -754,19 +958,17 @@ public class PaymentCalculator extends MVCPortlet {
 				for (ProposalOptionWrapper pow: proposalOptionList) {
 					if (pow.propOption.getProposalOptionId() == Long.valueOf(selectedProposalOptionId)) {
 						pow.propOption.setUseForCreditApp(true);
+						pow.propOption.setIncludeInProposal(true);
+					} else {
+						pow.propOption.setUseForCreditApp(false);
 					}
-				}
-				
+				}	
 				resourceResponse.getWriter().write("{\"proposalOptionId\": \"" + selectedProposalOptionId + "\"}");
 			} else {
 				resourceResponse.getWriter().write("{ \"error\": \"selectedProposalOptionId not found " + selectedProposalOptionId + "\"}");
 			}
-			
-			
-			
 		} else if (resourceRequest.getResourceID().equalsIgnoreCase(
 				"updateIncludeInProposal")) {
-			
 			String selectedProposalOptionId = PortalUtil.getOriginalServletRequest(request).getParameter("purchaseOptionId");
 			String selectedValue = PortalUtil.getOriginalServletRequest(request).getParameter("selectedValue");
 		
@@ -774,12 +976,13 @@ public class PaymentCalculator extends MVCPortlet {
 				if (pow.propOption.getProposalOptionId() == Long.valueOf(selectedProposalOptionId)) {
 					pow.propOption.setIncludeInProposal(Boolean.valueOf(selectedValue));
 				}
-			}
-			
+				
+				if (Boolean.valueOf(selectedValue) == false) {
+					pow.propOption.setUseForCreditApp(false);
+				}
+			}	
 			resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(proposalOptionList));
-		}
-		
+		}		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
-
 }
