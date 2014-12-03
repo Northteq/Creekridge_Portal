@@ -76,18 +76,8 @@ public class PaymentCalculator extends MVCPortlet {
 	private User currentUser;
 	private ThemeDisplay themeDisplay;
 	private List <ProposalOptionWrapper> proposalOptionList;
-
 	private boolean hasProposalIncluded = false;
-	private boolean isAppCreated=false;
 	
-	@Override 
-	public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
-		
-		_log.info("processAction started");
-		super.processAction(actionRequest, actionResponse);
-		
-		_log.info("processAction ended");
-	}
 	
 	@Override 
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
@@ -302,7 +292,6 @@ public class PaymentCalculator extends MVCPortlet {
 		_log.info("deleteCreditAppPrincipal ended");
 	}
 
-	
 	public void submitApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
 		
 		saveApplicationInfo (actionRequest, actionResponse);
@@ -348,12 +337,10 @@ public class PaymentCalculator extends MVCPortlet {
 			if (creditApp == null) {
 				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, themeDisplay);
 				_log.info("Application has been created. " + creditApp);
-				isAppCreated = true;
 				
 			} else {
 				creditApp.setCreditAppStatusId(2);
 				_log.info("Application has been updated. " + creditApp);
-				
 			}
 			
 			creditApp = PaymentCalculatorUtil.populateAppFromRequest(actionRequest, creditApp);
@@ -398,12 +385,7 @@ public class PaymentCalculator extends MVCPortlet {
 			//update app info
 			creditApp.setModifiedDate(new Date());
 			creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
-			
-			if (isAppCreated) {
-				SessionMessages.add(actionRequest, "appSaved");
-			} else {
-				SessionMessages.add(actionRequest, "appUpdated");
-			}
+			SessionMessages.add(actionRequest, "appSaved");
 		
 		} catch (Exception e) {
 			_log.error(e);

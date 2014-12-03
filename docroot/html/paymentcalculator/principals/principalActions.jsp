@@ -44,14 +44,5 @@
 
 </liferay-ui:icon-menu>
 
-<%-- 
-<liferay-ui:icon-menu>
-	<portlet:actionURL name="viewApplication" var="viewApplicationURL">
-			<portlet:param name="resourcePrimKey" value="<%=primKey%>" />
-		</portlet:actionURL>
-		<liferay-ui:icon image="view" message="View"
-			url="<%=viewApplicationURL.toString()%>" />
-
-</liferay-ui:icon-menu> --%>
 
 

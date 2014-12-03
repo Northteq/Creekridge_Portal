@@ -19,8 +19,26 @@
        <portlet:param name="openSection" value="principalSection" />
 </liferay-portlet:renderURL>
 
+<portlet:renderURL var="enterPrincipalURL"
+	windowState="<%=LiferayWindowState.POP_UP.toString()%>">
+	<portlet:param name="mvcPath"
+		value="/html/paymentcalculator/principals/enterPrincipal.jsp" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
+</portlet:renderURL>
+
 <liferay-ui:success key="principalSaved" message="principal-saved-successfully"/>
 <liferay-ui:error key="errorSavingPrincipal" message="error-principal-not-saved" />
+
+
+<aui:button-row>
+	<a class="btn btn-info"
+		id="<portlet:namespace/>enterPrincipalButton"><i class="icon-male"></i> Add New Principal</a>
+	<a class="btn btn-primary" id="navigateToBankReference"
+		onclick="navigateToBankReference()"><i class="icon-meh"></i> Continue to Bank Reference</a>
+	<a class="btn" id="navigateTocustomerAndEquipmentInfo"
+		onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-meh"></i>
+		Back to Customer and Equipment Info</a>
+</aui:button-row>
 
 <liferay-ui:search-container emptyResultsMessage="There are no principal records to display" delta="5"  iteratorURL="<%=iteratorURL %>">
     <liferay-ui:search-container-results>
@@ -76,32 +94,8 @@
         />
         
         
-         <liferay-ui:search-container-column-jsp
-        path="/html/paymentcalculator/principals/principalActions.jsp"
-        align="right"
-        name="Actions"
- 		/>
-  
-<%-- 
-        <liferay-ui:search-container-column-text
-            name="credit-app-status"
-            property="creditAppStatusId"
-        />
-
-        <liferay-ui:search-container-column-date
-            name="create-date"
-            property="createDate"
-        />
-
-        <liferay-ui:search-container-column-text
-            name="equipment-price"
-            property="equipmentPrice"
-        /> --%>
-        
-        <%-- <liferay-ui:search-container-column-jsp
-        path="/creditapplicationstable/appTableActions.jsp"
-        align="right"
- 		/> --%>
+         <liferay-ui:search-container-column-jsp path="/html/paymentcalculator/principals/principalActions.jsp"
+        align="right" name="Actions"/>
 
     </liferay-ui:search-container-row>
 
@@ -109,21 +103,37 @@
 </liferay-ui:search-container>
 
 
-<aui:script>
-    Liferay.provide(window, 'refreshPortlet', function() {
-        var curPortlet = '#p_p_id<portlet:namespace/>';
-        Liferay.Portlet.refresh(curPortlet);
-    },
-    ['aui-dialog','aui-dialog-iframe']
-    );
-</aui:script>
+<%-- PRINCIPAL POPUP  --%>
+<aui:script use="aui-base, aui-io-plugin, liferay-util-window">
+	
+	
+	
+	
+	
+	
+	A.one('#<portlet:namespace/>enterPrincipalButton').on('click',function(event) {
+		
+		var popUpWindow = Liferay.Util.Window.getWindow({
+			dialog : {
+				centered : true,
+				constrain2view : true,
+				modal : true,
+				resizable : false,
+				width : 475
+			},
+			id : 'addPrincipalDialog',
+		});
+		
+		
+		popUpWindow.plug(A.Plugin.IO, {
+			autoLoad : false
+		});
+		popUpWindow.titleNode.html("Enter Principal");
+		popUpWindow.io.set('uri','<%=enterPrincipalURL%>');
+		popUpWindow.render();
+		popUpWindow.show();
+		popUpWindow.io.start();
 
-<aui:script>
-    Liferay.provide(window, 'closePopup', function(dialogId) {
-        var A = AUI();
-        var dialog = Liferay.Util.Window.getById(dialogId);
-        dialog.destroy();
-    },
-    ['liferay-util-window']
-    );
+	});
+	
 </aui:script>

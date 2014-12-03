@@ -45,40 +45,19 @@
 		</aui:fieldset>
 		<aui:button-row>
 			<aui:button id="saveFormButton" value="Save" type="submit"></aui:button>
-			<aui:button id="closePopupButton" value="Cancel"></aui:button>
+			<aui:button id="closePopupButton" value="Cancel" onclick="closePopup('')"></aui:button>
 		</aui:button-row>
 	</aui:form>
 </aui:container>
 
 
-<script type="text/javascript">
-	
 
-	
-	
-</script>
-
-<%-- <aui:script use="aui-base,aui-io-request">
-    A.one('#saveFormButton').on('click', function(event) {
-       var A = AUI();
-       var url = '<%=addCreditAppPrincipalURL.toString()%>';
-       A.io.request(
-            url,
-            {
-                method: 'POST',
-                form: {id: '<portlet:namespace/>principalForm'},
-                on: {
-                    success: function() {
-                        Liferay.Util.getOpener().refreshPortlet();
-                        Liferay.Util.getOpener().closePopup('addPrincipalDialog');
-                    }
-                }
-            }        );
-    });
-</aui:script> --%>
-<aui:script use="aui-base">
-	console.log ('closing dialog');
-    A.one('#closePopupButton').on('click', function(event) {
-        Liferay.Util.getOpener().closePopup('addPrincipalDialog');
-    });
+<aui:script>
+    Liferay.provide(window, 'closePopup', function(dialogId) {
+        var A = AUI();
+        var dialog = Liferay.Util.Window.getById('addPrincipalDialog');
+        dialog.destroy();
+    },
+    ['liferay-util-window']
+    );
 </aui:script>

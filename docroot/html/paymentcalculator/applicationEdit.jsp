@@ -54,7 +54,6 @@
 <liferay-ui:error key="runCalculatorRequired"
 	message="error-run-calculator-required" />
 <liferay-ui:success key="appSaved" message="app-saved-successfully" />
-<liferay-ui:success key="appUpdated" message="app-updated-successfully" />
 <liferay-ui:success key="appSubmitted"
 	message="app-submitted-successfully" />
 
@@ -64,13 +63,6 @@
 	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:renderURL>
 
-
-<portlet:renderURL var="enterPrincipalURL"
-	windowState="<%=LiferayWindowState.POP_UP.toString()%>">
-	<portlet:param name="mvcPath"
-		value="/html/paymentcalculator/principals/enterPrincipal.jsp" />
-	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
-</portlet:renderURL>
 
 <portlet:renderURL var="enterBankReferenceURL"
 	windowState="<%=LiferayWindowState.POP_UP.toString()%>">
@@ -259,8 +251,9 @@
 						onchange="copyCustomerAddress($(this))"></aui:input>
 
 				</aui:fieldset>
-
-				<aui:fieldset>
+				
+				
+				<aui:fieldset id="equipmentAddress" style="${creditApp.equipmentLocAsCustomerFlag==true ? 'display:none' : ''}">
 					<aui:input inlineField="true" type="text"
 						value="${creditApp.equipmentAddress1}" name="equipmentAddress1" />
 					<aui:input inlineField="true" type="text"
@@ -297,57 +290,12 @@
 
 			<!-- http://fortawesome.github.io/Font-Awesome/3.2.1/icons/  -->
 			
-			<%-- PRINCIPAL POPUP  --%>
-			<aui:script>
-				AUI().use(
-					'aui-base',
-					'aui-io-plugin-deprecated',
-					'liferay-util-window',
-					function(A) {
-						A.one('#<portlet:namespace />enterPrincipalButton')
-								.on(
-						'click',
-						function(event) {
-							var popUpWindow = Liferay.Util.Window
-									.getWindow({
-										dialog : {
-											centered : true,
-											constrain2view : true,
-											//cssClass: 'yourCSSclassName',
-											modal : true,
-											resizable : false,
-											width : 475
-										},
-										id : 'addPrincipalDialog',
-									}).plug(A.Plugin.IO, {
-										autoLoad : false
-									}).render();
-							popUpWindow.show();
-							popUpWindow.titleNode
-									.html("Enter Principal");
-							popUpWindow.io.set('uri',
-									'<%=enterPrincipalURL%>');
-							popUpWindow.io.start();
-
-						});
-					});
-			</aui:script>
+			
 			
 			
 			<!-- PRINCIPAL INFO  -->
 			<liferay-ui:panel title="principal-info-section" id="principalInfo"
 				state="${openSection=='principalSection'? 'open' : 'collapsed' }">
-
-				<aui:button-row>
-					<a class="btn btn-info"
-						id="<portlet:namespace/>enterPrincipalButton"><i class="icon-male"></i>Add New Principal</a>
-					<a class="btn btn-primary" id="navigateToBankReference"
-						onclick="navigateToBankReference()"><i class="icon-meh"></i>
-						Continue to Bank Reference</a>
-					<a class="btn" id="navigateTocustomerAndEquipmentInfo"
-						onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-meh"></i>
-						Back to Customer and Equipment Info</a>
-				</aui:button-row>
 
 				<c:import
 					url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
@@ -464,7 +412,9 @@ function processAppButton(action){
 <script>
 	var copyCustomerAddress = function(sameAddressEl) {
 
-		if ($(sameAddressEl).is(':checked')) {
+		if ($(sameAddressEl).is(':checked') == false) {
+			
+			
 			$('#<portlet:namespace/>equipmentAddress1').val(
 					$('#<portlet:namespace/>customerAddress1').val());
 			$('#<portlet:namespace/>equipmentAddress2').val(
@@ -475,8 +425,11 @@ function processAppButton(action){
 					$('#<portlet:namespace/>customerState').val());
 			$('#<portlet:namespace/>equipmentZip').val(
 					$('#<portlet:namespace/>customerZip').val());
+			
+			$('#<portlet:namespace/>equipmentAddress').show();
+		} else {
+			$('#<portlet:namespace/>equipmentAddress').hide();
 		}
-
 	};
 </script>
 
