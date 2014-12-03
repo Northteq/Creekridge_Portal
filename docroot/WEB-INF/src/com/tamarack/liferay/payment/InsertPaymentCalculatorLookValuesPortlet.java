@@ -1,15 +1,12 @@
 package com.tamarack.liferay.payment;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.ProcessAction;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -24,15 +21,11 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
-import com.tamarack.creekridge.model.CreditApp;
-import com.tamarack.creekridge.model.CreditAppPrincipal;
 import com.tamarack.creekridge.model.CreditAppStatus;
 import com.tamarack.creekridge.model.Product;
 import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.model.Term;
-import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
-import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 import com.tamarack.creekridge.service.ProductLocalServiceUtil;
 import com.tamarack.creekridge.service.PurchaseOptionLocalServiceUtil;

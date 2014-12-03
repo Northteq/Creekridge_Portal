@@ -24,6 +24,7 @@ import com.tamarack.creekridge.model.CreditAppPrincipal;
 
 
 public class PaymentCalculatorUtil {
+	@SuppressWarnings("unused")
 	private static Log _log = LogFactory.getLog(PaymentCalculatorUtil.class);
 	
 	
