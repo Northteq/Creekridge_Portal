@@ -30,6 +30,7 @@ public class PaymentCalculatorUtil {
 	public static CreditApp populateAppFromRequest (ActionRequest actionRequest, CreditApp creditApp) {
 		
 		//map form fields to the application
+		_log.info("setting price" + ParamUtil.getDouble(actionRequest, "equipmentPrice"));
 		creditApp.setEquipmentPrice(ParamUtil.getDouble(actionRequest, "equipmentPrice"));
 		creditApp.setCustomerName(ParamUtil.getString(actionRequest,"customerName"));
 		creditApp.setCustomerDBAName(ParamUtil.getString(actionRequest,"customerDBAName"));

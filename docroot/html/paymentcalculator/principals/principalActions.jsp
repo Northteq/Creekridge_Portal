@@ -26,6 +26,7 @@
 <liferay-ui:icon-menu>
 	<portlet:actionURL name="editCreditAppPrincipal" var="editCreditAppPrincipalURL">
 			<portlet:param name="resourcePrimKey" value="<%=primKey%>" />
+			<portlet:param name="creditAppId" value="<%=appId%>" />
 			
 		</portlet:actionURL>
 		<liferay-ui:icon image="edit" message="Edit"

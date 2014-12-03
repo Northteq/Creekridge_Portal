@@ -15,7 +15,7 @@
  <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 
 
-	<liferay-ui:icon
+<%-- 	<liferay-ui:icon
 		   image="tool"
 		   message="Edit Credit App"
 		   label="<%= true%>"
@@ -23,7 +23,7 @@
 		   url="<%= editAppURL%>"
 		   useDialog="<%= false%>"
 		   
-		  />
+		  /> --%>
 
 <aui:panel label="Address Info">
 

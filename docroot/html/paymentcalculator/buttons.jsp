@@ -9,28 +9,29 @@
 <%@page import="com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil"%>
 <%@ include file="init.jsp"%>
 
+<portlet:renderURL var="manageDocumentsURL" windowState="<%=LiferayWindowState.NORMAL.toString()%>" >  
+			<portlet:param name="mvcPath" value="/html/manageDocument/view.jsp"/>
+			<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
+</portlet:renderURL>
 
-<%
-
-ThemeDisplay td  = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-String currentUrl = td.getURLHome();
-
-%>
+<portlet:renderURL var="viewApplicationsURL" windowState="<%=LiferayWindowState.NORMAL.toString()%>" >  
+			<portlet:param name="mvcPath" value="/html/viewCreditApplication/view.jsp"/>
+			<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
+</portlet:renderURL>
 
 <!-- EXISTING APPLICATION -->
 	<c:if test="${creditApp.creditAppId != null}">
 		<c:if test="${creditApp.creditAppStatusId != 3}">
 			<div class="span2">
-				<a class="btn btn-block" id="createApplicationButton" onClick="processAppButton(0)"><i class="icon-file"></i> Save </a>
+				<a class="btn btn-block" id="saveApplicationButton" onClick="processAppButton(0)"><i class="icon-file"></i> Save </a>
 			</div>
 			
 			<div class="span2">
-				<a class="btn btn-block" id="createApplicationButton" onClick="processAppButton(2)"><i class="icon-file"></i> Save and Exit </a>
+				<a class="btn btn-block" id="exitApplicationButton" href="<%=viewApplicationsURL %>" onClick="processAppButton(0)"><i class="icon-file"></i> Save and Exit </a>
 			</div>
 			
 			<div class="span2">
-				<a class="btn btn-block" id="manageDocsButton" onClick="processAppButton(3)" href="<%=currentUrl %>/manage-documents?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Manage Documents </a>
+				<a class="btn btn-block" id="manageDocsButton" href="<%=manageDocumentsURL %>"><i class="icon-file"></i> Manage Documents </a>
 			</div>
 		
 			<div class="span2">
@@ -43,13 +44,13 @@ String currentUrl = td.getURLHome();
 	
 	<!-- NEW APPLICATION  -->
 	
-	<c:if test="${creditApp.creditAppId == null}">
+	<%-- <c:if test="${creditApp.creditAppId == null}">
 	
 		<div class="span2">
 			<a class="btn btn-info btn-block" id="createApplicationButton" onClick="processAppButton(0)"><i class="icon-file"></i> Save </a>
 		</div>
 	
-	</c:if>
+	</c:if> --%>
 	
 	
 	
