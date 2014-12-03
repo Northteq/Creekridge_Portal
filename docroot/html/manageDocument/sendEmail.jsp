@@ -11,8 +11,6 @@
 
 <%@ include file="init.jsp"%>
 
-	
-
 <portlet:actionURL  var="emailCreditAppDocumentUrl">
 	<portlet:param name="<%= javax.portlet.ActionRequest.ACTION_NAME %>" value="emailCreditAppDocument" />
 </portlet:actionURL>

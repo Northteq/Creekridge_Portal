@@ -28,9 +28,6 @@
 	String primKey = String.valueOf(creditAppDoc.getCreditAppDocumentId());
 
 %>
-
-
-
 <liferay-ui:icon-menu>
 	
 		<liferay-ui:icon image="view" message="View"
@@ -56,7 +53,6 @@
 <liferay-ui:icon image="edit" message="Email" url="<%=\"javascript: var popupWindow=window.open('\"+ emailPopupWindowURL+\"&creditAppDocumentId=\"+primKey+\"', 'email', 'align=center,directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');void('');popupWindow.focus();\"%>"/>
 
 </liferay-ui:icon-menu>
-
 
 <liferay-ui:icon-menu>
 	

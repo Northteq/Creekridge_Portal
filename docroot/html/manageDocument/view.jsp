@@ -127,8 +127,6 @@ System.out.print("Credit App Id: " + creditAppId);
 			        align="right"
 			        name="Actions"
 			        />
-			        
-			        
 			
 			    </liferay-ui:search-container-row>
 			

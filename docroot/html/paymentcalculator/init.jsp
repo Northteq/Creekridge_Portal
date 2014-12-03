@@ -15,7 +15,7 @@
 <%@page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 
-<%@page import="com.tamarack.creekridge.model.CreditApp"%>
+<%@page import="com.tamarack.creekridge.model.*"%>
 <portlet:defineObjects/>
 <liferay-theme:defineObjects/>
 
