@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.sql.Blob;
 import java.util.Date;
 
+import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -21,17 +22,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.mail.MailMessage;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.liferay.util.portlet.PortletProps;
 import com.tamarack.creekridge.model.CreditAppDocument;
 import com.tamarack.creekridge.service.CreditAppDocumentLocalServiceUtil;
 
@@ -72,6 +77,7 @@ public void render(RenderRequest request, RenderResponse response)
 	   Long creditAppDocumentId= new Long(PortalUtil.getOriginalServletRequest(requestNew).getParameter("creditAppDocumentId")).longValue();
 	   requestNew.getSession().setAttribute("creditAppDocumentId",creditAppDocumentId); 
 	 }
+	
 	super.render(request, response);
 }
 @Override
@@ -86,10 +92,8 @@ public void serveResource(ResourceRequest resourceRequest,	ResourceResponse reso
      if("deleteAction".equalsIgnoreCase(actionType)) {
      	try {
      		   CreditAppDocumentLocalServiceUtil.deleteCreditAppDocument(fileAttachmentId);
-				OutputStream o = resourceResponse.getPortletOutputStream();
-              o.write("deleted".getBytes(), 0, "deleted".getBytes().length);
-              o.flush();
-              o.close();
+				
+              
 			} catch (PortalException e) {
 				_log.error("Error deleting file  with file id " + fileAttachmentId);
 				e.printStackTrace();
@@ -126,11 +130,11 @@ public void serveResource(ResourceRequest resourceRequest,	ResourceResponse reso
 	     	
 	  	  
 			   try {
-				   		CreditAppDocument creditAppDocument=CreditAppDocumentLocalServiceUtil.fetchCreditAppDocument(fileAttachmentId);
+				   		 CreditAppDocument creditAppDocument=CreditAppDocumentLocalServiceUtil.fetchCreditAppDocument(fileAttachmentId);
 				   		 fileName =  creditAppDocument.getDocumentFileName();
-				   		String contentDispositionValue = "attachment; filename=\"" + fileName + "\"";
-				   		resourceResponse.addProperty("Content-Disposition", contentDispositionValue);
-	               		OutputStream out = resourceResponse.getPortletOutputStream();
+				   		 String contentDispositionValue = "attachment; filename=\"" + fileName + "\"";
+				   		 resourceResponse.addProperty("Content-Disposition", contentDispositionValue);
+	               		 OutputStream out = resourceResponse.getPortletOutputStream();
 		             	
 			              Blob fileContent=creditAppDocument.getDocumentFileContent();
 			              byte[ ] content = fileContent.getBytes(1,(int)fileContent.length());
@@ -138,7 +142,7 @@ public void serveResource(ResourceRequest resourceRequest,	ResourceResponse reso
 			              out.write(content);
 			              out.flush();
 			              out.close();
-
+                         
 		          
 		  
 		      } catch (Exception e) {
@@ -159,24 +163,32 @@ public void manageDocument(ActionRequest actionRequest, ActionResponse response)
 	_log.info("creditAppDocumentId "+creditAppDocumentId);
 	//Here you have userId, documentType, creditAppDocumentId
 	//Generate CreditApp Document API
-	//Generate CreditApp Proposal API
-	
-  }
+	//Generate CreditApp Proposal APIpropGenerated
+	String realPath = getPortletContext().getRealPath("/");
+    _log.info("realPath " + realPath);
+    ManageDocumentUtil.generateDocument(creditAppDocumentId, userId, documentType, realPath);
 
+	if("proposal".equalsIgnoreCase(documentType)) {
+	    SessionMessages.add(actionRequest, "propGenerated");
+	  } else if("creditApp".equalsIgnoreCase(documentType)) { 
+	    SessionMessages.add(actionRequest, "docGenerated");
+  }
+}
 public void uploadToCreditAppDocument(ActionRequest actionRequest, ActionResponse response) throws IOException, PortalException, SystemException {
 	    UploadRequest uploadRequest=PortalUtil.getUploadPortletRequest(actionRequest);
 	    ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	    
 	    File uploadedFile = uploadRequest.getFile("uploadedFile");
 	    if(uploadedFile != null && uploadedFile.length() > 0) {
 	    String uploadfileName = uploadRequest.getFileName("uploadedFile");
 	    long creditId = ParamUtil.getLong(uploadRequest, "creditAppId");	
-		String documentTitle = ParamUtil.getString(actionRequest, "documentTitle");	
+		String documentTitle = ParamUtil.getString(uploadRequest, "documentTitle");	
 		InputStream fis =new FileInputStream(uploadedFile);
 		OutputBlob dataOutputBlob = new OutputBlob(fis, uploadedFile.length());
 	
 		CreditAppDocument creditAppDocument=CreditAppDocumentLocalServiceUtil.createCreditAppDocument(CounterLocalServiceUtil.increment(CreditAppDocument.class.getName()));
 		creditAppDocument.setDocumentFileName(uploadfileName);
-		creditAppDocument.setDocumentTitle(!"".equals(documentTitle) ? documentTitle:uploadfileName);
+		creditAppDocument.setDocumentTitle(!"".equalsIgnoreCase(documentTitle) ? documentTitle:uploadfileName);
 		creditAppDocument.setDocumentFileContent(dataOutputBlob);
 		creditAppDocument.setCompanyId(themeDisplay.getCompanyId());
 		creditAppDocument.setCreateDate(new Date());
@@ -184,38 +196,21 @@ public void uploadToCreditAppDocument(ActionRequest actionRequest, ActionRespons
 		creditAppDocument.setCreditAppId(creditId);
 		
 		CreditAppDocumentLocalServiceUtil.addCreditAppDocument(creditAppDocument);
+		SessionMessages.add(actionRequest, "docUploaded");
 	    }
  }
 
-public void displaySendEmailPage(ActionRequest actionRequest, ActionResponse response) throws IOException, PortalException, SystemException {
-	ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	User user= themeDisplay.getUser();
-	String fromAddress = ParamUtil.getString(actionRequest, "fromAddress");				
-	String toAddress = ParamUtil.getString(actionRequest, "toAddress");	
-	String subject = ParamUtil.getString(actionRequest, "subject");
-	String body = ParamUtil.getString(actionRequest, "subject");
-	String creditDocumentId= ParamUtil.getString(actionRequest, "creditAppDocumentId");
-	SubscriptionSender subscriptionSender = new SubscriptionSender();
-    subscriptionSender.setCompanyId(themeDisplay.getCompanyId() );             
-    subscriptionSender.setMailId("creditDocumentId", creditDocumentId);
-    subscriptionSender.setFrom(fromAddress, user.getFullName());
-    subscriptionSender.setFrom(fromAddress, user.getFullName());
-    subscriptionSender.setHtmlFormat(true);                           
-    subscriptionSender.setSubject(subject);
-    subscriptionSender.setBody(body);         
-    subscriptionSender.setReplyToAddress(fromAddress);
-    subscriptionSender.addRuntimeSubscribers(toAddress, user.getFullName());
-    subscriptionSender.flushNotificationsAsync();
-
-}
-public void emailCreditAppDocument(ActionRequest actionRequest, ActionResponse response) throws IOException, PortalException, SystemException{
-	ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	User user= themeDisplay.getUser();
+public void deleteDocument(ActionRequest actionRequest, ActionResponse response) throws IOException, PortalException, SystemException {
 	HttpServletRequest request = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(actionRequest));	
-	String fromAddress = ParamUtil.getString(actionRequest, "fromAddress");				
-	String toAddress = ParamUtil.getString(actionRequest, "toAddress");	
-	String subject = ParamUtil.getString(actionRequest, "subject");
-	String body = ParamUtil.getString(actionRequest, "subject");
+	String creditDocumentId=PortalUtil.getOriginalServletRequest(request).getParameter("creditAppDocumentId");
+	 _log.info("DocumentId "+creditDocumentId);
+    long fileAttachmentId=new Long(creditDocumentId).longValue();
+	CreditAppDocumentLocalServiceUtil.deleteCreditAppDocument(fileAttachmentId);
+	SessionMessages.add(actionRequest, "docDeleted");
+}
+
+public void printAttachment(ActionRequest actionRequest, ActionResponse response) throws IOException, PortalException, SystemException {
+	
 	Long creditDocumentId= ParamUtil.getLong(actionRequest, "creditAppDocumentId");
 	CreditAppDocument creditAppDocument=CreditAppDocumentLocalServiceUtil.getCreditAppDocument(creditDocumentId);
 	//Get File Content
@@ -224,7 +219,7 @@ public void emailCreditAppDocument(ActionRequest actionRequest, ActionResponse r
 	try {
 		
 		InputStream is = fileContent.getBinaryStream();  
-	    File attachment = new File(themeDisplay.getPathContext()+ "\\" + creditAppDocument.getDocumentFileName());
+	    File attachment = new File(PropsUtil.get("fileAttachmentPath") + creditAppDocument.getDocumentFileName());
 	    FileOutputStream fos = new FileOutputStream(attachment);  
 	    int b = 0;  
 	    while ((b = is.read()) != -1)  
@@ -232,20 +227,50 @@ public void emailCreditAppDocument(ActionRequest actionRequest, ActionResponse r
 	        fos.write(b);   
 	      } 
 	
+	     fos.close();
+	     fos.flush();
+	     
+
+	} catch (Exception e){
+		
+	}
+}
+public void emailCreditAppDocument(ActionRequest actionRequest, ActionResponse response) throws IOException, PortalException, SystemException{
+	ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	User user= themeDisplay.getUser();
+	HttpServletRequest request = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(actionRequest));	
+	System.out.println("fileAttachmentPath " + PortletProps.get("fileAttachmentPath"));
+	String fromAddress = user.getEmailAddress();				
+	String toAddress = ParamUtil.getString(actionRequest, "toAddress");	
+	String subject = ParamUtil.getString(actionRequest, "subject");
+	String body = ParamUtil.getString(actionRequest, "body");
+	Long creditDocumentId= ParamUtil.getLong(actionRequest, "creditAppDocumentId");
+	CreditAppDocument creditAppDocument=CreditAppDocumentLocalServiceUtil.getCreditAppDocument(creditDocumentId);
+	//Get File Content
+	Blob fileContent=creditAppDocument.getDocumentFileContent();
+    //Write to temporary File Output stream
+	try {
+		
+		InputStream is = fileContent.getBinaryStream();  
+	    File attachment = new File(PortletProps.get("fileAttachmentPath") + creditAppDocument.getDocumentFileName());
+	    FileOutputStream fos = new FileOutputStream(attachment);  
+	    int b = 0;  
+	    while ((b = is.read()) != -1)  
+	      {  
+	        fos.write(b);   
+	      } 
+	    
+
 	fos.close();
 	fos.flush();
-	System.out.println("Temp File Name: "+ attachment.getAbsolutePath());
-	SubscriptionSender subscriptionSender = new SubscriptionSender();
-    subscriptionSender.setCompanyId(themeDisplay.getCompanyId() );             
-    subscriptionSender.setMailId("creditDocumentId", creditDocumentId);
-    subscriptionSender.setFrom(fromAddress, user.getFullName());
-    subscriptionSender.setHtmlFormat(true);                           
-    subscriptionSender.setSubject(subject);
-    subscriptionSender.setBody(body);         
-    subscriptionSender.setReplyToAddress(fromAddress);
-    subscriptionSender.addRuntimeSubscribers(toAddress,"");
-    subscriptionSender.addFileAttachment(attachment);
-    subscriptionSender.flushNotificationsAsync();
+	MailMessage mailMessage = new MailMessage();
+    mailMessage.setBody(body);
+    mailMessage.setFrom(new InternetAddress(fromAddress));
+    mailMessage.setSubject(subject);
+    mailMessage.setTo(new InternetAddress(toAddress));
+    mailMessage.addFileAttachment(attachment);
+    MailServiceUtil.sendEmail(mailMessage);
+    SessionMessages.add(actionRequest, "emailSent");
     response.sendRedirect(themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()+"/manage-document?creditAppId="+request.getSession().getAttribute("creditAppId"));
 } catch (Exception e) {
 	// TODO Auto-generated catch block
@@ -254,4 +279,3 @@ public void emailCreditAppDocument(ActionRequest actionRequest, ActionResponse r
 
 }
 }
-
