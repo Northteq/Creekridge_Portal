@@ -217,7 +217,7 @@ for (String userName1: userList){
 <aui:input type="hidden" value="" name="actionType" />
 
 </aui:form>
-<liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="5">
+<liferay-ui:search-container emptyResultsMessage="There are no applications to display" delta="1000">
 
 
     <liferay-ui:search-container-row
