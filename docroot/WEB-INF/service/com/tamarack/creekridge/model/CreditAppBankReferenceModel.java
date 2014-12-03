@@ -248,19 +248,19 @@ public interface CreditAppBankReferenceModel extends AuditedModel,
 	public void setBankReferencePhone(String bankReferencePhone);
 
 	/**
-	 * Returns the bank referenc account type of this credit app bank reference.
+	 * Returns the bank reference account type of this credit app bank reference.
 	 *
-	 * @return the bank referenc account type of this credit app bank reference
+	 * @return the bank reference account type of this credit app bank reference
 	 */
 	@AutoEscape
-	public String getBankReferencAccountType();
+	public String getBankReferenceAccountType();
 
 	/**
-	 * Sets the bank referenc account type of this credit app bank reference.
+	 * Sets the bank reference account type of this credit app bank reference.
 	 *
-	 * @param bankReferencAccountType the bank referenc account type of this credit app bank reference
+	 * @param bankReferenceAccountType the bank reference account type of this credit app bank reference
 	 */
-	public void setBankReferencAccountType(String bankReferencAccountType);
+	public void setBankReferenceAccountType(String bankReferenceAccountType);
 
 	/**
 	 * Returns the bank reference account number of this credit app bank reference.

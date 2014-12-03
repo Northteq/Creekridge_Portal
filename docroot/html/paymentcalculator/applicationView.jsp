@@ -7,15 +7,38 @@
 
 <%@ include file="init.jsp"%>
 
+<portlet:renderURL portletMode="view" var="editAppURL">
+	<portlet:param name="viewMode" value="<%= String.valueOf(false)%>" />
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
+</portlet:renderURL>
+
+ <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 
 
+<%-- 	<liferay-ui:icon
+		   image="tool"
+		   message="Edit Credit App"
+		   label="<%= true%>"
+		   method="get"
+		   url="<%= editAppURL%>"
+		   useDialog="<%= false%>"
+		   
+		  /> --%>
+
+<aui:panel label="Address Info">
 
 <address>
-  <strong>Twitter, Inc.</strong><br>
-  795 Folsom Ave, Suite 600<br>
-  San Francisco, CA 94107<br>
-  <abbr title="Phone">P:</abbr> (123) 456-7890
+  <strong><aui-field>${creditApp.customerName}</strong><br>
+  ${creditApp.customerAddress1}<br>
+  ${creditApp.customerAddress2}<br>
+  ${creditApp.customerCity}, ${creditApp.customerState} ${creditApp.customerZip}<br>
+  <abbr title="Phone">P:</abbr> ${creditApp.customerContactPhone}<br>
+  <abbr title="Fax">F:</abbr> ${creditApp.customerContactFax}<br>
+  <abbr title="Email">E:</abbr> ${creditApp.customerContactEmail}<br>
 </address>
+
+</aui:panel>
+
  
 <address>
   <strong>Full Name</strong><br>

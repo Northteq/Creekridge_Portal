@@ -14,8 +14,14 @@
 
 package com.tamarack.creekridge.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.tamarack.creekridge.model.CreditAppPrincipal;
 import com.tamarack.creekridge.service.base.CreditAppPrincipalLocalServiceBaseImpl;
 
@@ -53,5 +59,27 @@ public class CreditAppPrincipalLocalServiceImpl
 	 public List<CreditAppPrincipal>  getCreditAppPrincipalByCreditAppId( long creditAppId)  throws Exception {
 		return creditAppPrincipalPersistence.findByCreditAppId(creditAppId); 
 	 }
+	 
+	 /** 
+	  * @author olegforce
+	  * @param user 
+	  * @param themeDisplay
+	  * @return CreditApp 
+	  * @throws SystemException, PortalException
+	  */ 
+	 	public CreditAppPrincipal addCreditAppPrincipal (User user, ThemeDisplay themeDisplay) throws PortalException, SystemException {
+	 		
+	 		CreditAppPrincipal newPrincipal = creditAppPrincipalPersistence.create(CounterLocalServiceUtil.increment(CreditAppPrincipal.class.getName()));
+	 		newPrincipal.setCompanyId(user.getCompanyId());
+	 		newPrincipal.setUserId(user.getUserId());
+	 		newPrincipal.setUserName(user.getScreenName());
+	 		newPrincipal.setModifiedDate(new Date());
+	 		newPrincipal.setCreateDate(new Date());
+	 		//newPrincipal.setGroupId (themeDisplay.getLayout().getGroupId());
+	 		//newPrincipal.setVendorId (themeDisplay.getLayout().getGroupId());
+	 		
+	 		return creditAppPrincipalPersistence.update(newPrincipal);
+	 		
+	 	}
 	
 }

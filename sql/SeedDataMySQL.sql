@@ -1,4 +1,4 @@
- SET @vendorID = 11607;
+SET @vendorID = 11607;
 -- SET @vendorID = 12201;
 DELETE FROM eCreekRidge_CreditApp;
 DELETE FROM eCreekRidge_CreditAppBankReference;

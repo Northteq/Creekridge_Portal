@@ -72,7 +72,7 @@
 		<property name="bankReferenceName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bankReferenceContact" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bankReferencePhone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="bankReferencAccountType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="bankReferenceAccountType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bankReferenceAccountNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.tamarack.creekridge.model.impl.CreditAppDocumentImpl" table="eCreekRidge_CreditAppDocument">
@@ -89,7 +89,15 @@
 		<property name="sequenceNumber" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="documentTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="documentFileName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="documentFileLocation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<one-to-one name="documentFileContentBlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel" cascade="save-update" outer-join="false" constrained="true" />
+	</class>
+	<class name="com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel" table="eCreekRidge_CreditAppDocument" lazy="true">
+		<id name="CreditAppDocumentId" column="CreditAppDocumentId">
+			<generator class="foreign">
+				<param name="property">com.tamarack.creekridge.model.impl.CreditAppDocumentImpl</param>
+			</generator>
+		</id>
+		<property column="documentFileContent" name="documentFileContentBlob" type="blob" />
 	</class>
 	<class name="com.tamarack.creekridge.model.impl.CreditAppPrincipalImpl" table="eCreekRidge_CreditAppPrincipal">
 		<cache usage="read-write" />

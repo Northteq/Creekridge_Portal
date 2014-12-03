@@ -106,17 +106,21 @@ public class CreditAppDocumentLocalServiceClpInvoker {
 				"com.tamarack.creekridge.model.CreditAppDocument"
 			};
 
-		_methodName76 = "getBeanIdentifier";
+		_methodName16 = "getDocumentFileContentBlobModel";
 
-		_methodParameterTypes76 = new String[] {  };
+		_methodParameterTypes16 = new String[] { "java.io.Serializable" };
 
-		_methodName77 = "setBeanIdentifier";
+		_methodName77 = "getBeanIdentifier";
 
-		_methodParameterTypes77 = new String[] { "java.lang.String" };
+		_methodParameterTypes77 = new String[] {  };
 
-		_methodName82 = "getCreditAppDocumentByCreditAppId";
+		_methodName78 = "setBeanIdentifier";
 
-		_methodParameterTypes82 = new String[] { "long" };
+		_methodParameterTypes78 = new String[] { "java.lang.String" };
+
+		_methodName83 = "getCreditAppDocumentByCreditAppId";
+
+		_methodParameterTypes83 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,20 +212,25 @@ public class CreditAppDocumentLocalServiceClpInvoker {
 			return CreditAppDocumentLocalServiceUtil.updateCreditAppDocument((com.tamarack.creekridge.model.CreditAppDocument)arguments[0]);
 		}
 
-		if (_methodName76.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
-			return CreditAppDocumentLocalServiceUtil.getBeanIdentifier();
+		if (_methodName16.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes16, parameterTypes)) {
+			return CreditAppDocumentLocalServiceUtil.getDocumentFileContentBlobModel((java.io.Serializable)arguments[0]);
 		}
 
 		if (_methodName77.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
+			return CreditAppDocumentLocalServiceUtil.getBeanIdentifier();
+		}
+
+		if (_methodName78.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
 			CreditAppDocumentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName82.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
 			return CreditAppDocumentLocalServiceUtil.getCreditAppDocumentByCreditAppId(((Long)arguments[0]).longValue());
 		}
 
@@ -260,10 +269,12 @@ public class CreditAppDocumentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName76;
-	private String[] _methodParameterTypes76;
+	private String _methodName16;
+	private String[] _methodParameterTypes16;
 	private String _methodName77;
 	private String[] _methodParameterTypes77;
-	private String _methodName82;
-	private String[] _methodParameterTypes82;
+	private String _methodName78;
+	private String[] _methodParameterTypes78;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
 }

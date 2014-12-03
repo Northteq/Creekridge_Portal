@@ -23,7 +23,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -489,7 +488,7 @@ public  void updateCreditAppBankReference(ActionRequest actionRequest,	ActionRes
  		
  		//CreditAppStatus creditAppStatus=CreditAppStatusLocalServiceUtil.
  		javax.servlet.http.HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
- 		creditAppPrincipal.setBankReferencAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
+ 		creditAppPrincipal.setBankReferenceAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
  		creditAppPrincipal.setBankReferenceAccountNumber(ParamUtil.getString(actionRequest,"bankReferenceAccountNumber"));
  		creditAppPrincipal.setBankReferenceContact(ParamUtil.getString(actionRequest,"bankReferenceAccountContact"));
  		creditAppPrincipal.setBankReferenceName(ParamUtil.getString(actionRequest,"bankReferenceAccountName"));

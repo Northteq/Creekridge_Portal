@@ -16,6 +16,8 @@ package com.tamarack.creekridge.model;
 
 import java.io.Serializable;
 
+import java.sql.Blob;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,7 @@ public class CreditAppDocumentSoap implements Serializable {
 		soapModel.setSequenceNumber(model.getSequenceNumber());
 		soapModel.setDocumentTitle(model.getDocumentTitle());
 		soapModel.setDocumentFileName(model.getDocumentFileName());
-		soapModel.setDocumentFileLocation(model.getDocumentFileLocation());
+		soapModel.setDocumentFileContent(model.getDocumentFileContent());
 
 		return soapModel;
 	}
@@ -176,12 +178,12 @@ public class CreditAppDocumentSoap implements Serializable {
 		_documentFileName = documentFileName;
 	}
 
-	public String getDocumentFileLocation() {
-		return _documentFileLocation;
+	public Blob getDocumentFileContent() {
+		return _documentFileContent;
 	}
 
-	public void setDocumentFileLocation(String documentFileLocation) {
-		_documentFileLocation = documentFileLocation;
+	public void setDocumentFileContent(Blob documentFileContent) {
+		_documentFileContent = documentFileContent;
 	}
 
 	private long _CreditAppDocumentId;
@@ -194,5 +196,5 @@ public class CreditAppDocumentSoap implements Serializable {
 	private long _sequenceNumber;
 	private String _documentTitle;
 	private String _documentFileName;
-	private String _documentFileLocation;
+	private Blob _documentFileContent;
 }

@@ -29,6 +29,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.sql.Blob;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +87,7 @@ public class CreditAppDocumentClp extends BaseModelImpl<CreditAppDocument>
 		attributes.put("sequenceNumber", getSequenceNumber());
 		attributes.put("documentTitle", getDocumentTitle());
 		attributes.put("documentFileName", getDocumentFileName());
-		attributes.put("documentFileLocation", getDocumentFileLocation());
+		attributes.put("documentFileContent", getDocumentFileContent());
 
 		return attributes;
 	}
@@ -152,11 +154,10 @@ public class CreditAppDocumentClp extends BaseModelImpl<CreditAppDocument>
 			setDocumentFileName(documentFileName);
 		}
 
-		String documentFileLocation = (String)attributes.get(
-				"documentFileLocation");
+		Blob documentFileContent = (Blob)attributes.get("documentFileContent");
 
-		if (documentFileLocation != null) {
-			setDocumentFileLocation(documentFileLocation);
+		if (documentFileContent != null) {
+			setDocumentFileContent(documentFileContent);
 		}
 	}
 
@@ -403,23 +404,22 @@ public class CreditAppDocumentClp extends BaseModelImpl<CreditAppDocument>
 	}
 
 	@Override
-	public String getDocumentFileLocation() {
-		return _documentFileLocation;
+	public Blob getDocumentFileContent() {
+		return _documentFileContent;
 	}
 
 	@Override
-	public void setDocumentFileLocation(String documentFileLocation) {
-		_documentFileLocation = documentFileLocation;
+	public void setDocumentFileContent(Blob documentFileContent) {
+		_documentFileContent = documentFileContent;
 
 		if (_creditAppDocumentRemoteModel != null) {
 			try {
 				Class<?> clazz = _creditAppDocumentRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setDocumentFileLocation",
-						String.class);
+				Method method = clazz.getMethod("setDocumentFileContent",
+						Blob.class);
 
-				method.invoke(_creditAppDocumentRemoteModel,
-					documentFileLocation);
+				method.invoke(_creditAppDocumentRemoteModel, documentFileContent);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -508,7 +508,7 @@ public class CreditAppDocumentClp extends BaseModelImpl<CreditAppDocument>
 		clone.setSequenceNumber(getSequenceNumber());
 		clone.setDocumentTitle(getDocumentTitle());
 		clone.setDocumentFileName(getDocumentFileName());
-		clone.setDocumentFileLocation(getDocumentFileLocation());
+		clone.setDocumentFileContent(getDocumentFileContent());
 
 		return clone;
 	}
@@ -585,8 +585,8 @@ public class CreditAppDocumentClp extends BaseModelImpl<CreditAppDocument>
 		sb.append(getDocumentTitle());
 		sb.append(", documentFileName=");
 		sb.append(getDocumentFileName());
-		sb.append(", documentFileLocation=");
-		sb.append(getDocumentFileLocation());
+		sb.append(", documentFileContent=");
+		sb.append(getDocumentFileContent());
 		sb.append("}");
 
 		return sb.toString();
@@ -641,8 +641,8 @@ public class CreditAppDocumentClp extends BaseModelImpl<CreditAppDocument>
 		sb.append(getDocumentFileName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>documentFileLocation</column-name><column-value><![CDATA[");
-		sb.append(getDocumentFileLocation());
+			"<column><column-name>documentFileContent</column-name><column-value><![CDATA[");
+		sb.append(getDocumentFileContent());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -661,6 +661,6 @@ public class CreditAppDocumentClp extends BaseModelImpl<CreditAppDocument>
 	private long _sequenceNumber;
 	private String _documentTitle;
 	private String _documentFileName;
-	private String _documentFileLocation;
+	private Blob _documentFileContent;
 	private BaseModel<?> _creditAppDocumentRemoteModel;
 }

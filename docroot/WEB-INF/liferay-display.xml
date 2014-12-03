@@ -9,5 +9,6 @@
 		<portlet id="viewCreditApplicationPortlet"></portlet>
 		<portlet id="payment-calculator"></portlet>
 		<portlet id="credit-applications-table"></portlet>
+		<portlet id="manageDocument"></portlet>
 	</category>
 </display>

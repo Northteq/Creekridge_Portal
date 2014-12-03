@@ -1393,7 +1393,7 @@ public class CreditAppBankReferencePersistenceImpl extends BasePersistenceImpl<C
 		creditAppBankReferenceImpl.setBankReferenceName(creditAppBankReference.getBankReferenceName());
 		creditAppBankReferenceImpl.setBankReferenceContact(creditAppBankReference.getBankReferenceContact());
 		creditAppBankReferenceImpl.setBankReferencePhone(creditAppBankReference.getBankReferencePhone());
-		creditAppBankReferenceImpl.setBankReferencAccountType(creditAppBankReference.getBankReferencAccountType());
+		creditAppBankReferenceImpl.setBankReferenceAccountType(creditAppBankReference.getBankReferenceAccountType());
 		creditAppBankReferenceImpl.setBankReferenceAccountNumber(creditAppBankReference.getBankReferenceAccountNumber());
 
 		return creditAppBankReferenceImpl;

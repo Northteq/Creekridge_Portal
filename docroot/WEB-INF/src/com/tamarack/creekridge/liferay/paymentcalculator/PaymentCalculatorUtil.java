@@ -17,12 +17,14 @@ import org.apache.commons.logging.LogFactory;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.tamarack.creekridge.model.CreditApp;
+import com.tamarack.creekridge.model.CreditAppBankReference;
 import com.tamarack.creekridge.model.CreditAppPrincipal;
 
 
 
 
 public class PaymentCalculatorUtil {
+	@SuppressWarnings("unused")
 	private static Log _log = LogFactory.getLog(PaymentCalculatorUtil.class);
 	
 	
@@ -60,12 +62,36 @@ public class PaymentCalculatorUtil {
 		creditApp.setCustomerContactPhone(ParamUtil.getString(actionRequest,"customerContactPhone"));
 		creditApp.setCustomerContactFax(ParamUtil.getString(actionRequest,"customerContactFax"));
 		creditApp.setCustomerContactEmail(ParamUtil.getString(actionRequest,"customerContactEmail"));
-		_log.info ("populateAppFromRequest: " + creditApp);
+		//_log.info ("populateAppFromRequest: " + creditApp);
 		return creditApp;
 	}
 	
-	public static CreditAppPrincipal populatePrincipalFromRequest (ActionRequest actionRequest, CreditApp creditApp) {
-		return null;
+	public static CreditAppPrincipal populatePrincipalFromRequest (ActionRequest actionRequest, CreditAppPrincipal principal) {
+		
+		principal.setPrincipalFirstName(ParamUtil.getString (actionRequest, "principalFirstName"));
+		principal.setPrincipalMiddleName(ParamUtil.getString (actionRequest, "principalMiddleName"));
+		principal.setPrincipalLastName(ParamUtil.getString (actionRequest, "principalLastName"));
+		principal.setPrincipalSSN(ParamUtil.getString (actionRequest, "principalSSN"));
+		principal.setPrincipalHomePhoneNumber(ParamUtil.getString (actionRequest, "principalHomePhoneNumber"));
+		principal.setPrincipalAddress1(ParamUtil.getString (actionRequest, "principalAddress1"));
+		principal.setPrincipalAddress2(ParamUtil.getString (actionRequest, "principalAddress2"));
+		principal.setPrincipalCity(ParamUtil.getString (actionRequest, "principalCity"));
+		principal.setPrincipalState(ParamUtil.getString (actionRequest, "principalState"));
+		principal.setPrincipalZip(ParamUtil.getString (actionRequest, "principalZip"));
+		principal.setPrincipalEmail(ParamUtil.getString (actionRequest, "principalEmail"));
+		
+		return principal;
 	}
+	
+	public static CreditAppBankReference populateBankReferenceFromRequest (ActionRequest actionRequest, CreditAppBankReference reference) {
+		
+		reference.setBankReferenceName(ParamUtil.getString(actionRequest,"bankReferenceName"));
+		reference.setBankReferenceContact(ParamUtil.getString(actionRequest,"bankReferenceContact"));
+		reference.setBankReferencePhone(ParamUtil.getString(actionRequest,"bankReferencePhone"));
+		reference.setBankReferenceAccountType(ParamUtil.getString(actionRequest,"bankReferenceAccountType"));
+		reference.setBankReferenceAccountNumber(ParamUtil.getString(actionRequest,"bankReferenceAccountNumber"));
+		
+		return reference;
+	}	
 	
 }

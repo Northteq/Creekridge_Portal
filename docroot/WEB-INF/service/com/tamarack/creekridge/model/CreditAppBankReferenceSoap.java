@@ -42,7 +42,7 @@ public class CreditAppBankReferenceSoap implements Serializable {
 		soapModel.setBankReferenceName(model.getBankReferenceName());
 		soapModel.setBankReferenceContact(model.getBankReferenceContact());
 		soapModel.setBankReferencePhone(model.getBankReferencePhone());
-		soapModel.setBankReferencAccountType(model.getBankReferencAccountType());
+		soapModel.setBankReferenceAccountType(model.getBankReferenceAccountType());
 		soapModel.setBankReferenceAccountNumber(model.getBankReferenceAccountNumber());
 
 		return soapModel;
@@ -187,12 +187,12 @@ public class CreditAppBankReferenceSoap implements Serializable {
 		_bankReferencePhone = bankReferencePhone;
 	}
 
-	public String getBankReferencAccountType() {
-		return _bankReferencAccountType;
+	public String getBankReferenceAccountType() {
+		return _bankReferenceAccountType;
 	}
 
-	public void setBankReferencAccountType(String bankReferencAccountType) {
-		_bankReferencAccountType = bankReferencAccountType;
+	public void setBankReferenceAccountType(String bankReferenceAccountType) {
+		_bankReferenceAccountType = bankReferenceAccountType;
 	}
 
 	public String getBankReferenceAccountNumber() {
@@ -214,6 +214,6 @@ public class CreditAppBankReferenceSoap implements Serializable {
 	private String _bankReferenceName;
 	private String _bankReferenceContact;
 	private String _bankReferencePhone;
-	private String _bankReferencAccountType;
+	private String _bankReferenceAccountType;
 	private String _bankReferenceAccountNumber;
 }

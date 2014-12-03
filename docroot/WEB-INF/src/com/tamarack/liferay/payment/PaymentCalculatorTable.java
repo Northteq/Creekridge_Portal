@@ -16,7 +16,6 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -34,16 +33,12 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.upload.UploadRequest;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -726,7 +721,7 @@ public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) t
 		   
 		  for (int i=0;i<bankReferenceAccountList.size();i++){
 			  tempBankAccount = new TempBankAccount();
-			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferencAccountType());
+			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferenceAccountType());
 			 tempBankAccount.setBankReferenceName(bankReferenceAccountList.get(i).getBankReferenceName());
 			 tempBankAccount.setBankReferenceAccountNumber(bankReferenceAccountList.get(i).getBankReferenceAccountNumber());
 			 tempBankAccount.setBankReferenceContact(bankReferenceAccountList.get(i).getBankReferenceContact());
@@ -844,7 +839,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
  			List<CreditAppBankReference> bankReferenceAccountList= CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
  			 for (int i=0;i<bankReferenceAccountList.size();i++){
  				 tempBankAccount = new TempBankAccount();
- 				 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferencAccountType());
+ 				 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferenceAccountType());
  				 tempBankAccount.setBankReferenceName(bankReferenceAccountList.get(i).getBankReferenceName());
  				 tempBankAccount.setBankReferenceAccountNumber(bankReferenceAccountList.get(i).getBankReferenceAccountNumber());
  				 tempBankAccount.setBankReferenceContact(bankReferenceAccountList.get(i).getBankReferenceContact());
@@ -859,7 +854,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
  		}
  		
  		if("view".equalsIgnoreCase(actionType)){
- 			request.setAttribute("bankReferenceAccountType",creditAppBankReference.getBankReferencAccountType());
+ 			request.setAttribute("bankReferenceAccountType",creditAppBankReference.getBankReferenceAccountType());
  			request.setAttribute("bankReferenceAccountNumber",creditAppBankReference.getBankReferenceAccountNumber());
  			request.setAttribute("bankReferenceAccountContact",creditAppBankReference.getBankReferenceContact());
  			request.setAttribute("bankReferenceAccountName",creditAppBankReference.getBankReferenceName());
@@ -875,7 +870,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
  		creditAppBankReference.setModifiedDate(new Date());
  		creditAppBankReference.setCreateDate(new Date());
  		
- 		creditAppBankReference.setBankReferencAccountType(uploadRequest.getParameter("bankReferenceAccountType"));
+ 		creditAppBankReference.setBankReferenceAccountType(uploadRequest.getParameter("bankReferenceAccountType"));
  		creditAppBankReference.setBankReferenceAccountNumber(ParamUtil.getString(actionRequest,"bankReferenceAccountNumber"));
  		creditAppBankReference.setBankReferenceContact(ParamUtil.getString(actionRequest,"bankReferenceAccountContact"));
  		creditAppBankReference.setBankReferenceName(ParamUtil.getString(actionRequest,"bankReferenceAccountName"));
@@ -891,7 +886,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
  		List<CreditAppBankReference> bankReferenceAccountList= CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
 		 for (int i=0;i<bankReferenceAccountList.size();i++){
 			 tempBankAccount = new TempBankAccount();
-			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferencAccountType());
+			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferenceAccountType());
 			 tempBankAccount.setBankReferenceName(bankReferenceAccountList.get(i).getBankReferenceName());
 			 tempBankAccount.setBankReferenceAccountNumber(bankReferenceAccountList.get(i).getBankReferenceAccountNumber());
 			 tempBankAccount.setBankReferenceContact(bankReferenceAccountList.get(i).getBankReferenceContact());
@@ -993,7 +988,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
 	 List<CreditAppBankReference> bankReferenceAccountList= CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
 	    for (int i=0;i<bankReferenceAccountList.size();i++){
 	    	tempBankAccount = new TempBankAccount();
-	    	tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferencAccountType());
+	    	tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferenceAccountType());
 	    	tempBankAccount.setBankReferenceName(bankReferenceAccountList.get(i).getBankReferenceName());
 	    	tempBankAccount.setBankReferenceAccountNumber(bankReferenceAccountList.get(i).getBankReferenceAccountNumber());
 	    	tempBankAccount.setBankReferenceContact(bankReferenceAccountList.get(i).getBankReferenceContact());
@@ -1014,7 +1009,7 @@ public List<TempBankAccount> deleteBankAccountReference (String bankAccountId,Re
 	List<CreditAppBankReference> bankReferenceAccountList= CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
     for (int i=0;i<bankReferenceAccountList.size();i++){
     	 tempBankAccount = new TempBankAccount();
-    	tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferencAccountType());
+    	tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferenceAccountType());
     	tempBankAccount.setBankReferenceName(bankReferenceAccountList.get(i).getBankReferenceName());
     	tempBankAccount.setBankReferenceAccountNumber(bankReferenceAccountList.get(i).getBankReferenceAccountNumber());
     	tempBankAccount.setBankReferenceContact(bankReferenceAccountList.get(i).getBankReferenceContact());

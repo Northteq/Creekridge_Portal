@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexable;
@@ -32,6 +33,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.tamarack.creekridge.model.CreditAppDocument;
+import com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel;
 import com.tamarack.creekridge.service.CreditAppDocumentLocalService;
 import com.tamarack.creekridge.service.persistence.CreditAppBankReferencePersistence;
 import com.tamarack.creekridge.service.persistence.CreditAppDocumentPersistence;
@@ -289,6 +291,25 @@ public abstract class CreditAppDocumentLocalServiceBaseImpl
 	public CreditAppDocument updateCreditAppDocument(
 		CreditAppDocument creditAppDocument) throws SystemException {
 		return creditAppDocumentPersistence.update(creditAppDocument);
+	}
+
+	@Override
+	public CreditAppDocumentDocumentFileContentBlobModel getDocumentFileContentBlobModel(
+		Serializable primaryKey) throws SystemException {
+		Session session = null;
+
+		try {
+			session = creditAppDocumentPersistence.openSession();
+
+			return (com.tamarack.creekridge.model.CreditAppDocumentDocumentFileContentBlobModel)session.get(CreditAppDocumentDocumentFileContentBlobModel.class,
+				primaryKey);
+		}
+		catch (Exception e) {
+			throw creditAppDocumentPersistence.processException(e);
+		}
+		finally {
+			creditAppDocumentPersistence.closeSession(session);
+		}
 	}
 
 	/**

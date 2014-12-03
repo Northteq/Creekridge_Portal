@@ -119,6 +119,13 @@ public class CreditAppPrincipalLocalServiceClp
 		_methodName19 = "getCreditAppPrincipalByCreditAppId";
 
 		_methodParameterTypes19 = new String[] { "long" };
+
+		_methodName20 = "addCreditAppPrincipal";
+
+		_methodParameterTypes20 = new String[] {
+				"com.liferay.portal.model.User",
+				"com.liferay.portal.theme.ThemeDisplay"
+			};
 	}
 
 	@Override
@@ -705,6 +712,46 @@ public class CreditAppPrincipalLocalServiceClp
 		return (java.util.List<com.tamarack.creekridge.model.CreditAppPrincipal>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public com.tamarack.creekridge.model.CreditAppPrincipal addCreditAppPrincipal(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] {
+						ClpSerializer.translateInput(user),
+						
+					ClpSerializer.translateInput(themeDisplay)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.tamarack.creekridge.model.CreditAppPrincipal)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -744,4 +791,6 @@ public class CreditAppPrincipalLocalServiceClp
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

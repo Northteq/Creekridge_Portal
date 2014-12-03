@@ -72,6 +72,7 @@ private static Log _log = LogFactory.getLog(CreditAppLocalService.class);
 		newApp.setCreateDate(new Date());
 		newApp.setGroupId (themeDisplay.getLayout().getGroupId());
 		newApp.setVendorId (themeDisplay.getLayout().getGroupId());
+		newApp.setEquipmentLocAsCustomerFlag(true);
 		CreditAppStatus creditAppStatus;
 		
 		try {

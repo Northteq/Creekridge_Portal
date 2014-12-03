@@ -17,6 +17,8 @@ package com.tamarack.creekridge.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.sql.Blob;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class CreditAppDocumentWrapper implements CreditAppDocument,
 		attributes.put("sequenceNumber", getSequenceNumber());
 		attributes.put("documentTitle", getDocumentTitle());
 		attributes.put("documentFileName", getDocumentFileName());
-		attributes.put("documentFileLocation", getDocumentFileLocation());
+		attributes.put("documentFileContent", getDocumentFileContent());
 
 		return attributes;
 	}
@@ -127,11 +129,10 @@ public class CreditAppDocumentWrapper implements CreditAppDocument,
 			setDocumentFileName(documentFileName);
 		}
 
-		String documentFileLocation = (String)attributes.get(
-				"documentFileLocation");
+		Blob documentFileContent = (Blob)attributes.get("documentFileContent");
 
-		if (documentFileLocation != null) {
-			setDocumentFileLocation(documentFileLocation);
+		if (documentFileContent != null) {
+			setDocumentFileContent(documentFileContent);
 		}
 	}
 
@@ -378,23 +379,23 @@ public class CreditAppDocumentWrapper implements CreditAppDocument,
 	}
 
 	/**
-	* Returns the document file location of this credit app document.
+	* Returns the document file content of this credit app document.
 	*
-	* @return the document file location of this credit app document
+	* @return the document file content of this credit app document
 	*/
 	@Override
-	public java.lang.String getDocumentFileLocation() {
-		return _creditAppDocument.getDocumentFileLocation();
+	public java.sql.Blob getDocumentFileContent() {
+		return _creditAppDocument.getDocumentFileContent();
 	}
 
 	/**
-	* Sets the document file location of this credit app document.
+	* Sets the document file content of this credit app document.
 	*
-	* @param documentFileLocation the document file location of this credit app document
+	* @param documentFileContent the document file content of this credit app document
 	*/
 	@Override
-	public void setDocumentFileLocation(java.lang.String documentFileLocation) {
-		_creditAppDocument.setDocumentFileLocation(documentFileLocation);
+	public void setDocumentFileContent(java.sql.Blob documentFileContent) {
+		_creditAppDocument.setDocumentFileContent(documentFileContent);
 	}
 
 	@Override

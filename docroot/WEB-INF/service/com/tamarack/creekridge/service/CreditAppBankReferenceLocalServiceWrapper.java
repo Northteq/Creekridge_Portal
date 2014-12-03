@@ -297,6 +297,23 @@ public class CreditAppBankReferenceLocalServiceWrapper
 	}
 
 	/**
+	* @author olegforce
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	@Override
+	public com.tamarack.creekridge.model.CreditAppBankReference addCreditAppBankReference(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppBankReferenceLocalService.addCreditAppBankReference(user,
+			themeDisplay);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public CreditAppBankReferenceLocalService getWrappedCreditAppBankReferenceLocalService() {
