@@ -4,20 +4,16 @@
  * @author tamarack
  */
 --%>
-
-<%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>
-<%@page import="com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil"%>
+ 
 <%@ include file="init.jsp"%>
-
-<portlet:renderURL var="manageDocumentsURL" windowState="<%=LiferayWindowState.NORMAL.toString()%>" >  
-			<portlet:param name="mvcPath" value="/html/manageDocument/view.jsp"/>
-			<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
-</portlet:renderURL>
 
 <portlet:renderURL var="viewApplicationsURL" windowState="<%=LiferayWindowState.NORMAL.toString()%>" >  
 			<portlet:param name="mvcPath" value="/html/viewCreditApplication/view.jsp"/>
 			<portlet:param name="creditAppId" value="${creditApp.creditAppId}"/>
 </portlet:renderURL>
+
+
+
 
 <!-- EXISTING APPLICATION -->
 	<c:if test="${creditApp.creditAppId != null}">
@@ -31,7 +27,7 @@
 			</div>
 			
 			<div class="span2">
-				<a class="btn btn-block" id="manageDocsButton" href="<%=manageDocumentsURL %>"><i class="icon-file"></i> Manage Documents </a>
+				<a class="btn btn-block" id="manageDocsButton" href="manage-documents?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Manage Documents </a>
 			</div>
 		
 			<div class="span2">
