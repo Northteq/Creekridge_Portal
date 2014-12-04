@@ -59,6 +59,7 @@ YUI().use(
 		  'aui-datatype',
 		  'datatable-sort',
 		  'panel',
+		  'dd-plugin',
 			  
 		function(A) {
 	
@@ -135,14 +136,15 @@ YUI().use(
     panel = new A.Panel({
         srcNode      : '#enterReferenceSection',
         headerContent: 'Add Bank Reference',
-        width        : 450,
+        //width        : 450,
         zIndex       : 5,
-        centered     : '#appTitle',
-        constrain	 : '#appTitle',
+        //centered     : '#appTitle',
+        //constrain	 : '#appTitle',
         modal        : true,
         visible      : false,
         render       : true,
-        plugins      : [A.Plugin.Drag]
+        plugins      : [A.Plugin.Drag],
+        xy:	[150,50]
     });
 
     panel.addButton({

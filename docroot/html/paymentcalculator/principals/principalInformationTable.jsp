@@ -38,16 +38,26 @@
 <aui:container>
 	<aui:form action="<%=addCreditAppPrincipalURL %>" method="post" name="principalForm">
 	
-		<aui:fieldset column="false">
-			<aui:input name="principalId" type="hidden"/>
+		<aui:fieldset column="false" label="Principal Name">
+			<aui:input inlineField="true" name="principalId" type="hidden"/>
 			<aui:input inlineField="true" name="principalFirstName"></aui:input>
 			<aui:input inlineField="true" name="principalMiddleName"></aui:input>
-			<aui:input name="principalLastName"></aui:input>
-			<aui:input name="principalSSN"></aui:input>
-			<aui:input name="principalHomePhoneNumber"></aui:input>
-			<aui:input name="principalAddress1"></aui:input>
-			<aui:input name="principalAddress2"></aui:input>
-			<aui:input name="principalCity"></aui:input>
+			<aui:input inlineField="true" name="principalLastName"></aui:input>
+			
+		</aui:fieldset>
+			
+		<aui:fieldset column="false" label="Additional Info">
+			
+			<aui:input inlineField="true" name="principalSSN"></aui:input>
+			<aui:input inlineField="true" name="principalHomePhoneNumber"></aui:input>
+			<aui:input inlineField="true" name="principalEmail" type="email"></aui:input>
+			
+		</aui:fieldset>
+			
+		<aui:fieldset column="false" label="Address">
+			<aui:input inlineField="true" name="principalAddress1"></aui:input>
+			<aui:input inlineField="true" name="principalAddress2"></aui:input>
+			<aui:input inlineField="true" name="principalCity"></aui:input>
 			<aui:select inlineField="true" name="principalState"
 				showEmptyOption="true">
 				<c:forEach items="${statesList}" var="state">
@@ -55,8 +65,8 @@
 						selected="${principal.principalState == state.id}" />
 				</c:forEach>
 			</aui:select>
-			<aui:input name="principalZip"></aui:input>
-			<aui:input name="principalEmail" type="email"></aui:input>
+			<aui:input inlineField="true" name="principalZip"></aui:input>
+			
 		</aui:fieldset>
 	</aui:form>
 </aui:container>
@@ -84,6 +94,7 @@ YUI().use(
 		  'aui-datatype',
 		  'datatable-sort',
 		  'panel',
+		  'dd-plugin',
 			  
 		function(A) {
 	
@@ -173,20 +184,22 @@ YUI().use(
 	
  // Create the DataTable.
 
- 
+ console.log (A.WidgetPositionAlign.TL);
 
     // Create the main modal form.
     panel = new A.Panel({
         srcNode      : '#enterPrincipalSection',
         headerContent: 'Add Principal',
-        width        : 450,
+        //width        : 450,
         zIndex       : 5,
-        centered     : '#appTitle',
-        constrain	 : '#appTitle',
+        //centered     : true,
+        //constrain	 : '#portlet_paymentcalculator_WAR_CreekRidgeCapitalportlet',
         modal        : true,
         visible      : false,
         render       : true,
-        plugins      : [A.Plugin.Drag]
+        plugins      : [A.Plugin.Drag],
+       	xy:	[50,100]
+       
     });
 
     panel.addButton({
