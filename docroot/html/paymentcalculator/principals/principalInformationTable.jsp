@@ -64,7 +64,16 @@
 
 
 
-<a class="btn" id="addRow">Add Principal</a>
+<aui:button-row>
+	<a class="btn  btn-info" id="addRow">Add Principal</a>
+	<a class="btn" id="addRow" onclick="navigateToBankReference()"><i class="icon-meh"></i>
+						Continue to Bank Reference</a>
+						
+	<a class="btn" id="addRow" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-meh"></i>
+						Back to Customer Info</a>
+
+	
+</aui:button-row>
 
 <p/>
 

@@ -44,9 +44,10 @@
 </div>
 
 
-
-<a class="btn" id="addRefRow">Add Bank Reference</a>
-
+<aui:button-row>
+<a class="btn btn-info" id="addRefRow">Add Bank Reference</a>
+<a class="btn" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-male"></i> Back to Principal</a>
+</aui:button-row>
 <p/>
 
 <div id="bankReferenceDataTable"></div>
