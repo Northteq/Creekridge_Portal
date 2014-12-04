@@ -295,6 +295,21 @@ public class ProposalOptionLocalServiceWrapper
 	}
 
 	/**
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	@Override
+	public com.tamarack.creekridge.model.ProposalOption addProposalOption(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _proposalOptionLocalService.addProposalOption(user, themeDisplay);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ProposalOptionLocalService getWrappedProposalOptionLocalService() {

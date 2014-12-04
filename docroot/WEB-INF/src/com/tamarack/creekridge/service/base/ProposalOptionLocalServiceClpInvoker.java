@@ -117,6 +117,13 @@ public class ProposalOptionLocalServiceClpInvoker {
 		_methodName82 = "getProposalOptionByCreditAppId";
 
 		_methodParameterTypes82 = new String[] { "long" };
+
+		_methodName83 = "addProposalOption";
+
+		_methodParameterTypes83 = new String[] {
+				"com.liferay.portal.model.User",
+				"com.liferay.portal.theme.ThemeDisplay"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -225,6 +232,12 @@ public class ProposalOptionLocalServiceClpInvoker {
 			return ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+			return ProposalOptionLocalServiceUtil.addProposalOption((com.liferay.portal.model.User)arguments[0],
+				(com.liferay.portal.theme.ThemeDisplay)arguments[1]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -266,4 +279,6 @@ public class ProposalOptionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes77;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
 }

@@ -280,6 +280,20 @@ public class ProposalOptionLocalServiceUtil {
 		return getService().getProposalOptionByCreditAppId(creditAppId);
 	}
 
+	/**
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	public static com.tamarack.creekridge.model.ProposalOption addProposalOption(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addProposalOption(user, themeDisplay);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

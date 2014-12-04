@@ -75,7 +75,7 @@
 <aui:form action="<%=saveApplicationInfoURL.toString()%>" method="post"
 	name="applicationForm">
 	<c:if test="${creditApp.creditAppId != 0}">
-		<h3>Application ${creditApp.creditAppId}</h3>
+		<h3 id="appTitle">Application ${creditApp.creditAppId}</h3>
 	</c:if>
 
 	<c:if test="${creditApp.creditAppId == 0}">
@@ -220,9 +220,10 @@
 					<fmt:formatDate value="${creditApp.customerBusinessStartDate}"
 						pattern="MM/dd/yyyy" var="busStartDate" />
 					<aui:input id="customerBusinessStartDate" inlineField="true"
-						name="customerBusinessStartDate" value="${busStartDate}"
-						type="date"></aui:input>
+						name="customerBusinessStartDate" value="${busStartDate}"></aui:input>
 
+					<%-- <liferay-ui:input-date dayParam="d1" monthParam="m1" yearParam="y1"  yearValue="2014" monthValue="09" dayValue="25"  autoFocus="true">Open Day</liferay-ui:input-date>
+ --%>
 					<aui:select inlineField="true"
 						name="customerBusinessIncorporatedState" showEmptyOption="true">
 						<c:forEach items="${statesList}" var="state">
@@ -306,79 +307,11 @@
 			<liferay-ui:panel title="bank-reference-info-section"
 				id="bankRefereceInfo"
 				state="${openSection=='bankReferenceSection'? 'open' : 'collapsed' }">
-
-				<aui:button-row>
-					<a class="btn btn-info"
-						id="<portlet:namespace/>enterReferenceButton"
-						onclick="navigateToBankReference()"><i class="icon-meh"></i>
-						Add New Bank Reference</a>
-					<a class="btn" id="navigateToBankReference"
-						onclick="navigateToPrincipal()"><i class="icon-male"></i> Back
-						to Principal</a>
-				</aui:button-row>
 				<c:import
 					url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
 			</liferay-ui:panel>
 
-			
-			<%-- CREDIT REFERENCE POPUP  --%>
-
-
-		<aui:script>
-			AUI().use(
-				'aui-base',
-				'aui-io-plugin-deprecated',
-				'liferay-util-window',
-				function(A) {
-					A.one('#<portlet:namespace />enterReferenceButton').on(
-							'click',
-							function(event) {
-								var popUpWindow = Liferay.Util.Window.getWindow({
-									dialog : {
-										centered : true,
-										constrain2view : true,
-										//cssClass: 'yourCSSclassName',
-										modal : true,
-										resizable : false,
-										width : 475
-									},
-									id : 'addBankReferenceDialog',
-								}).plug(A.Plugin.IO, {
-									autoLoad : false
-								}).render();
-								
-								popUpWindow.show();
-								popUpWindow.titleNode.html("Enter Bank Reference");
-								popUpWindow.io.set('uri',
-										'<%=enterBankReferenceURL%>');
-								popUpWindow.io.start();
-	
-							});
-						});
-			</aui:script>
-
-			<aui:script>
-				AUI().use('aui-datepicker', function(A) {
-					new A.DatePicker({
-						trigger : '#<portlet:namespace/>customerBusinessStartDate',
-						calendar : {
-							selectionMode : 'multiple',
-							showPrevMonth : true,
-							showNextMonth : true,
-							yearRange : [ 1970, 2009 ],
-						},
-						year : true,
-						popover : {
-							zIndex : 1
-						},
-						on : {
-							selectionChange : function(event) {
-								console.log(event.newSelection)
-							}
-						}
-					});
-				});
-			</aui:script>
+		
 		</c:if>
 
 	</liferay-ui:panel-container>
@@ -389,6 +322,28 @@
 	type="text/javascript"></script> --%>
 
 <script type="text/javascript" charset="utf-8">
+
+AUI().use('aui-datepicker', function(A) {
+	new A.DatePicker({
+		trigger : '#<portlet:namespace/>customerBusinessStartDate',
+		calendar : {
+			selectionMode : 'multiple',
+			showPrevMonth : true,
+			showNextMonth : true,
+			yearRange : [ 1970, 2009 ],
+		},
+		year : true,
+		popover : {
+			zIndex : 1
+		},
+		on : {
+			selectionChange : function(event) {
+				console.log(event.newSelection)
+			}
+		}
+	});
+});
+
 function processAppButton(action){
 	
 	var formEl = $('[name="<portlet:namespace/>applicationForm"]');

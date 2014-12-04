@@ -252,4 +252,16 @@ public interface ProposalOptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.tamarack.creekridge.model.ProposalOption> getProposalOptionByCreditAppId(
 		long creditAppId) throws java.lang.Exception;
+
+	/**
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	public com.tamarack.creekridge.model.ProposalOption addProposalOption(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

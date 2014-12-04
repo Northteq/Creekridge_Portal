@@ -11,22 +11,27 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ResourceRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.tamarack.creekridge.model.CreditApp;
 import com.tamarack.creekridge.model.CreditAppBankReference;
 import com.tamarack.creekridge.model.CreditAppPrincipal;
+import com.tamarack.creekridge.service.CreditAppPrincipalLocalService;
+import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
 
 
 
 
 public class PaymentCalculatorUtil {
-	@SuppressWarnings("unused")
-	private static Log _log = LogFactory.getLog(PaymentCalculatorUtil.class);
 	
+	private static Log _log = LogFactory.getLog(PaymentCalculatorUtil.class);
 	
 	public static CreditApp populateAppFromRequest (ActionRequest actionRequest, CreditApp creditApp) {
 		
@@ -66,32 +71,39 @@ public class PaymentCalculatorUtil {
 		return creditApp;
 	}
 	
-	public static CreditAppPrincipal populatePrincipalFromRequest (ActionRequest actionRequest, CreditAppPrincipal principal) {
-		
-		principal.setPrincipalFirstName(ParamUtil.getString (actionRequest, "principalFirstName"));
-		principal.setPrincipalMiddleName(ParamUtil.getString (actionRequest, "principalMiddleName"));
-		principal.setPrincipalLastName(ParamUtil.getString (actionRequest, "principalLastName"));
-		principal.setPrincipalSSN(ParamUtil.getString (actionRequest, "principalSSN"));
-		principal.setPrincipalHomePhoneNumber(ParamUtil.getString (actionRequest, "principalHomePhoneNumber"));
-		principal.setPrincipalAddress1(ParamUtil.getString (actionRequest, "principalAddress1"));
-		principal.setPrincipalAddress2(ParamUtil.getString (actionRequest, "principalAddress2"));
-		principal.setPrincipalCity(ParamUtil.getString (actionRequest, "principalCity"));
-		principal.setPrincipalState(ParamUtil.getString (actionRequest, "principalState"));
-		principal.setPrincipalZip(ParamUtil.getString (actionRequest, "principalZip"));
-		principal.setPrincipalEmail(ParamUtil.getString (actionRequest, "principalEmail"));
-		
-		return principal;
-	}
 	
-	public static CreditAppBankReference populateBankReferenceFromRequest (ActionRequest actionRequest, CreditAppBankReference reference) {
-		
-		reference.setBankReferenceName(ParamUtil.getString(actionRequest,"bankReferenceName"));
-		reference.setBankReferenceContact(ParamUtil.getString(actionRequest,"bankReferenceContact"));
-		reference.setBankReferencePhone(ParamUtil.getString(actionRequest,"bankReferencePhone"));
-		reference.setBankReferenceAccountType(ParamUtil.getString(actionRequest,"bankReferenceAccountType"));
-		reference.setBankReferenceAccountNumber(ParamUtil.getString(actionRequest,"bankReferenceAccountNumber"));
+	
+	public static CreditAppBankReference populateBankReferenceFromJsonString (String referenceJson, CreditAppBankReference reference) throws JSONException {
+		JSONObject referenceJObj = JSONFactoryUtil.createJSONObject(referenceJson);
+		reference.setCreditAppId(Long.valueOf(referenceJObj.getString("creditAppId")));
+		reference.setBankReferenceName(referenceJObj.getString("bankReferenceName"));
+		reference.setBankReferenceContact(referenceJObj.getString("bankReferenceContact"));
+		reference.setBankReferencePhone(referenceJObj.getString("bankReferencePhone"));
+		reference.setBankReferenceAccountType(referenceJObj.getString("bankReferenceAccountType"));
+		reference.setBankReferenceAccountNumber(referenceJObj.getString("bankReferenceAccountNumber"));
 		
 		return reference;
 	}	
+	
+	public static CreditAppPrincipal populatePrincipalFromJsonString (String principalJson, CreditAppPrincipal principal) throws JSONException {
+	
+			JSONObject principalJObj = JSONFactoryUtil.createJSONObject(principalJson);
+			
+			principal.setCreditAppId(Long.valueOf(principalJObj.getString("creditAppId")));
+			principal.setPrincipalFirstName(principalJObj.getString("principalFirstName"));
+			principal.setPrincipalMiddleName(principalJObj.getString("principalMiddleName"));
+			principal.setPrincipalLastName(principalJObj.getString("principalLastName"));
+			principal.setPrincipalSSN(principalJObj.getString("principalSSN"));
+			principal.setPrincipalHomePhoneNumber(principalJObj.getString("principalHomePhoneNumber"));
+			principal.setPrincipalAddress1(principalJObj.getString("principalAddress1"));
+			principal.setPrincipalAddress2(principalJObj.getString("principalAddress2"));
+			principal.setPrincipalCity(principalJObj.getString("principalCity"));
+			principal.setPrincipalState(principalJObj.getString("principalState"));
+			principal.setPrincipalZip(principalJObj.getString("principalZip"));
+			principal.setPrincipalEmail(principalJObj.getString("principalEmail"));
+			
+		return principal;
+		
+	}
 	
 }

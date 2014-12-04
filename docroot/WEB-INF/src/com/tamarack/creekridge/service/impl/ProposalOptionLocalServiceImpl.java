@@ -14,9 +14,19 @@
 
 package com.tamarack.creekridge.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.tamarack.creekridge.model.ProposalOption;
+import com.tamarack.creekridge.service.ProposalOptionLocalService;
 import com.tamarack.creekridge.service.base.ProposalOptionLocalServiceBaseImpl;
 
 /**
@@ -43,4 +53,34 @@ public class ProposalOptionLocalServiceImpl
    public List<ProposalOption> getProposalOptionByCreditAppId(long creditAppId) throws Exception{
 	   return proposalOptionPersistence.findByCreditAppId(creditAppId);
    }
+   
+   
+   @SuppressWarnings("unused")
+   private static Log _log = LogFactory.getLog(ProposalOptionLocalService.class);
+	
+	
+   /** 
+    *  
+    * @param user 
+    * @param themeDisplay
+    * @return CreditApp 
+    * @throws SystemException, PortalException
+    */ 
+   	public ProposalOption addProposalOption (User user, ThemeDisplay themeDisplay) throws PortalException, SystemException {
+   		
+   		ProposalOption newOp = proposalOptionPersistence.create(CounterLocalServiceUtil.increment(ProposalOption.class.getName()));
+   		
+   		newOp.setCompanyId(user.getCompanyId());
+   		newOp.setUserId(user.getUserId());
+   		newOp.setUserName(user.getScreenName());
+   		newOp.setModifiedDate(new Date());
+   		newOp.setCreateDate(new Date());
+   		
+   			
+   		//resourceLocalService.addResources(newApp.getCompanyId(), newApp.getGroupId(), newApp.getUserId(), CreditApp.class.getName(), 
+   		//			newApp.getCreditAppId(), false, false, false);
+   		
+   		return proposalOptionPersistence.update(newOp);
+   		
+   	}
 }
