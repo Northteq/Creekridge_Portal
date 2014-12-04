@@ -76,18 +76,23 @@
 
 <aui:button-row>
 	<a class="btn  btn-info" id="addRow">Add Principal</a>
-	<a class="btn" id="addRow" onclick="navigateToBankReference()"><i class="icon-meh"></i>
-						Continue to Bank Reference</a>
-						
-	<a class="btn" id="addRow" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-meh"></i>
-						Back to Customer Info</a>
-
-	
 </aui:button-row>
 
 <p/>
 
 <div id="principalDataTable"></div>
+
+
+
+
+<aui:button-row>
+	<a class="btn" id="addRow" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
+						Back to Customer Info</a>
+	<a class="btn" id="addRow" onclick="navigateToBankReference()"><i class="icon-forward"></i>
+						Continue to Bank Reference</a>
+</aui:button-row>
+
+
 <script type="text/javascript">
 YUI().use(
 		  'aui-datatable',

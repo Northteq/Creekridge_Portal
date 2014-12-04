@@ -154,10 +154,10 @@
 
 				<aui:button-row>
 					<a class="btn" id="navigateToCalculator"
-						onclick="navigateToCalculator()">Back to Calculator</a>
+						onclick="navigateToCalculator()"><i class="icon-backward"></i> Back to Calculator</a>
 					<a class="btn btn-primary" id="createApplicationButton"
-						onClick="processAppButton(0)"><i class="icon-file"></i>
-						Continue </a>
+						onClick="processAppButton(0)"><i class="icon-forward"></i>
+						Continue to Customer Info </a>
 				</aui:button-row>
 			</div>
 		</liferay-ui:panel>
@@ -279,20 +279,19 @@
 				
 				<aui:button-row>
 					
-					<a class="btn btn-primary" id="navigateToBankReference"
-						onclick="navigateToPrincipal()"><i class="icon-meh"></i>
-						Continue to Principal</a>
+					
 					<a class="btn" id="navigateToPricingOverview"
-						onclick="navigateToPricingOverview()"><i class="icon-meh"></i>
+						onclick="navigateToPricingOverview()"><i class="icon-backward"></i>
 						Back to Pricing Overview</a>
+						
+					<a class="btn btn-primary" id="navigateToBankReference"
+						onclick="navigateToPrincipal()"><i class="icon-forward"></i>
+						Continue to Principal</a>
 				</aui:button-row>
 				
 			</liferay-ui:panel>
 
 			<!-- http://fortawesome.github.io/Font-Awesome/3.2.1/icons/  -->
-			
-			
-			
 			
 			<!-- PRINCIPAL INFO  -->
 			<liferay-ui:panel title="principal-info-section" id="principalInfo"
@@ -315,6 +314,9 @@
 		</c:if>
 
 	</liferay-ui:panel-container>
+	
+	<c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
+	
 </aui:form>
 
 <%-- <script
