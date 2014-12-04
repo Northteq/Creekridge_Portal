@@ -75,7 +75,7 @@
 <aui:form action="<%=saveApplicationInfoURL.toString()%>" method="post"
 	name="applicationForm">
 	<c:if test="${creditApp.creditAppId != 0}">
-		<h3 id="appTitle">Application ${creditApp.creditAppId}</h3>
+		<h3 id="appTitle">Application #${creditApp.creditAppId} ${creditApp.customerName}</h3>
 	</c:if>
 
 	<c:if test="${creditApp.creditAppId == 0}">
