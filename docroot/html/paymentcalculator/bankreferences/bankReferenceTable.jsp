@@ -45,7 +45,7 @@
 
 <c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 <aui:button-row>
-<a class="btn btn-info" id="addRefRow">Add Bank Reference</a>
+<a class="btn btn-info btn-small" id="addRefRow">Add Bank Reference</a>
 </aui:button-row>
 </c:if>
 
@@ -55,7 +55,7 @@
 
 <c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 <aui:button-row>
-<a class="btn" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-backward"></i> Back to Principal</a>
+<a class="btn btn-small" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-backward"></i> Back to Principal</a>
 </aui:button-row>
 </c:if>
 <script type="text/javascript">

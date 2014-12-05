@@ -76,11 +76,11 @@
 			</aui:col>
 
 			<aui:button-row>
-				<button class="btn btn-danger" type="reset"
+				<button class="btn btn-danger btn-small" type="reset"
 					onclick="resetAllSections();">
 					<i class="icon-remove"></i> Clear
 				</button>
-				<button class="btn btn-success" type="submit"
+				<button class="btn btn-success btn-small" type="submit"
 					id="calculatePaymentsButton" onclick="return calculatePayments()">
 					<i class="icon-th"></i> Calculate Payments
 				</button>
@@ -97,9 +97,9 @@
 				<div id="proposalOptionsTable"></div>
 
 				<aui:button-row>
-					<a class="btn" id="navigateToCalculator"
+					<a class="btn btn-small" id="navigateToCalculator"
 						onclick="navigateToCalculator()"><i class="icon-backward"></i> Back to Calculator</a>
-					<a class="btn btn-primary" id="createApplicationButton"
+					<a class="btn btn-primary btn-small" id="createApplicationButton"
 						onClick="processAppButton(0)"><i class="icon-forward"></i>
 						Continue to Customer Info </a>
 				</aui:button-row>
@@ -224,11 +224,11 @@
 				<aui:button-row>
 					
 					
-					<a class="btn" id="navigateToPricingOverview"
+					<a class="btn btn-small" id="navigateToPricingOverview"
 						onclick="navigateToPricingOverview()"><i class="icon-backward"></i>
 						Back to Pricing Overview</a>
 						
-					<a class="btn btn-primary" id="navigateToBankReference"
+					<a class="btn btn-primary btn-small" id="navigateToBankReference"
 						onclick="navigateToPrincipal()"><i class="icon-forward"></i>
 						Continue to Principal</a>
 				</aui:button-row>
@@ -241,8 +241,7 @@
 			<liferay-ui:panel title="principal-info-section" id="principalInfo"
 				state="${openSection=='principalSection'? 'open' : 'collapsed' }">
 
-				<c:import
-					url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
+				<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
 			</liferay-ui:panel>
 			
 			

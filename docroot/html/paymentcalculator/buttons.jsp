@@ -26,40 +26,40 @@
 	<c:if test="${creditApp.creditAppId != null}">
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">
-				<a class="btn btn-block btn-viewApp" id="viewAppButton" href="<%=viewAppURL %>"><i class="icon-file"></i> View </a>
+				<a class="btn btn-block btn-small btn-viewApp" id="viewAppButton" href="<%=viewAppURL %>"><i class="icon-file"></i> View </a>
 			</div>
 		</c:if>	
 		
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==true}">
 			<div class="span2">
-				<a class="btn btn-block btn-editApp" id="editAppButton" href="payment-calculator?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Edit </a>
+				<a class="btn btn-block btn-small btn-editApp" id="editAppButton" href="payment-calculator?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Edit </a>
 			</div>
 		</c:if>	
 		
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">
-				<a class="btn btn-block  btn-save" id="saveApplicationButton" onClick="processAppButton(0)"><i class="icon-save"></i> Save </a>
+				<a class="btn btn-block btn-small  btn-save" id="saveApplicationButton" onClick="processAppButton(0)"><i class="icon-save"></i> Save </a>
 			</div>
 		</c:if>	
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">
-				<a class="btn btn-block btn-saveexit" id="exitApplicationButton" href="view-applications" onClick="processAppButton(0)"><i class="icon-signout"></i> Save and Exit </a>
+				<a class="btn btn-block btn-small btn-saveexit" id="exitApplicationButton" href="view-applications" onClick="processAppButton(0)"><i class="icon-signout"></i> Save and Exit </a>
 			</div>
 		</c:if>
 		
 		<c:if test="${creditApp.creditAppStatusId == 3  || viewOnly==true}">
 			<div class="span2">
-				<a class="btn btn-block btn-saveexit" id="exitApplicationButton" href="view-applications"><i class="icon-signout"></i> View Applications </a>
+				<a class="btn btn-block btn-small btn-saveexit" id="exitApplicationButton" href="view-applications"><i class="icon-signout"></i> View Applications </a>
 			</div>
 		</c:if>
 		
 			<div class="span2">
-				<a class="btn btn-block btn-managedocs" id="manageDocsButton" href="manage-documents?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Manage Documents </a>
+				<a class="btn btn-block btn-small btn-managedocs" id="manageDocsButton" href="manage-documents?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Manage Documents </a>
 			</div>
 		
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">
-				<a class="btn btn-success btn-block btn-submit" id="submitApplicationButton"><i class="icon-ok-sign"></i> Submit </a>
+				<a class="btn btn-success btn-small btn-block btn-submit" id="submitApplicationButton"><i class="icon-ok-sign"></i> Submit </a>
 			</div>
 		</c:if>	
 		
