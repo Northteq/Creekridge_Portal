@@ -17,9 +17,12 @@
 
 <%@page import="com.liferay.portal.service.GroupLocalServiceUtil"%>
 
+<portlet:renderURL var="seedDataURL">
 
+	<portlet:param name="mvcPath" value="/html/homepageNavigate/seedData.jsp" />
+</portlet:renderURL>
 
-
+<a href="<%=seedDataURL %>" style="display:none">Seed Data</a>
 
 <div class="container">
 	<h3>
