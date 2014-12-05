@@ -61,7 +61,9 @@ public class PaymentCalculatorUtil {
 		creditApp.setEquipmentCity(ParamUtil.getString(actionRequest,"equipmentCity"));
 		creditApp.setEquipmentZip(ParamUtil.getString(actionRequest,"equipmentZip"));
 		creditApp.setEquipmentDesc(ParamUtil.getString(actionRequest,"equipmentDesc"));
-		creditApp.setEquipmentLocAsCustomerFlag(ParamUtil.getBoolean(actionRequest,"equipmentLocAsCustomerFlag"));
+		
+		if(actionRequest.getParameter("equipmentLocAsCustomerFlag") != null)
+			creditApp.setEquipmentLocAsCustomerFlag(ParamUtil.getBoolean(actionRequest,"equipmentLocAsCustomerFlag"));
 		
 		creditApp.setCustomerContact(ParamUtil.getString(actionRequest,"customerContact"));
 		creditApp.setCustomerContactPhone(ParamUtil.getString(actionRequest,"customerContactPhone"));
