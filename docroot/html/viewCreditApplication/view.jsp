@@ -163,7 +163,7 @@ for (String userName1: userList){
        $.datepicker.setDefaults($.datepicker.regional['']);
 	   $('#creditAppView').DataTable()
 	   .columnFilter({aoColumns:[
-									{ type:"select", sSelector: "#creditApplicationStatus", values:["Saved","Draft","Cancelled","Submitted"], selected: 'Saved' },
+									{ type:"select", sSelector: "#creditApplicationStatus", values:["Saved","Submitted","Cancelled"], selected: 'Saved' },
 									<%  if(!isVendorSaleRep)  {  %>								    
 									{ type:"select", sSelector: "#salesRep", values:[<%=salesRepNames%>] },
 									<% } %>
@@ -209,9 +209,7 @@ for (String userName1: userList){
 
 
 
-<div align="center" width="100%"  id="calculatorResults">
-	<H4>View Credit Application</H4>
-</div>
+<h4 class="screenTitle">View Credit Applications</h4>
 <aui:form name="creditApp" action="<%=updateCreditAppUrl %>" method="post">
 <aui:input type="hidden" value="" name="creditAppId" />
 <aui:input type="hidden" value="" name="actionType" />
@@ -251,155 +249,116 @@ for (String userName1: userList){
     <liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<div id="creditAppFilter">
-<table  class="display" ID="main" >
-<tr valign="top"><td>
-<table style="width: 50px; background-color: lightgrey; border: 1px solid black ; margin: 5px;  padding: 5px;" class="display" ID="Table1">
-			<thead>
-			<th>
-			<b>Filters</b>
-			</th>
-			</thead>
-			<tbody style="width: 200px">
-				<tr id="filter_global">
-					<td align="center" style="width: 20px" ><b>Status:</b></td>
-				</tr>
-				<tr>
-					<td align="center" style="width: 20px"  id="creditApplicationStatus"></td>
-				</tr>
-	<%  if(!isVendorSaleRep)  {  %>
-
-				<tr id="filter_col3">
-					<td align="center" style="width: 20px" ><b>Sales Rep:</b></td>
-				</tr>
-				<tr>
-					<td align="center" style="width: 20px" id="salesRep"></td>
-				</tr>				
-	<% } %>
-				<tr id="filter_col4">
-					<td align="center" style="width: 20px" ><b>Customer Name:</b></td>
-				 </tr>
-				<tr>
-					<td align="center" style="width: 20px"  id="customerName"></td>
-				</tr>
-				<tr id="filter_col2">
-					<td align="center" style="width: 20px" ><b>Saved Date:</b></td>
-				</tr>
-				<tr>
-					<td align="center" style="width: 20px" id="lastSavedDate"></td>
-				</tr>
-
-				<tr id="filter_col5">
-					<td align="center" style="width: 20px" >App Id:</td>
-				</tr>
-				<tr>
-					<td align="center" style="width: 20px"  id="appId"></td>
-				</tr>
-
-			</tbody>
-		</table>
-</td>
-<td>		
- <table   id="creditAppView" class="display" >
- <thead>
-    <tr>
-			<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up">Status</i></th>
-	<%  if(!isVendorSaleRep)  {  %>
-      
-			<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up">Sales Rep</i></th>
-			   
-	<%  }  %>
-			<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up">Customer Name</i></th>
-			<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up">Last Saved Date</i></th>
-			<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up">App Id</i></th>
-			<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up">Equipment Price</i></th>
-			<th>Action</th>
-		
-    </tr>
-</thead>
-<tfoot>
-
-    <tr>
-			<th></th>
-			<th></th>
-			<th></th>
-			<th></th>
-			<th></th>
-			<th></th>
-	<%  if(!isVendorSaleRep)  {  %>      
-			<th></th>
-	<%  }  %>
-
-    </tr>
-</tfoot>
-
-<tbody>
-
-
-
-	<%  
-	  String url = PortalUtil.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL();
-	  System.out.println("url:" + url); 	
-      for (int i=0;i<creditAppList.size();i++) {
-  		String statusText = statusMap.get(creditAppList.get(i).getCreditAppStatusId());
-       if( !"Cancelled1".equalsIgnoreCase(statusText) && !"Cancelled1".equalsIgnoreCase(statusText))
-    	if((isVendorSaleRep && creditAppList.get(i).getUserId() == themeDisplay.getUserId()) || (isCreekRidgeSalesManager  && (creditAppList.get(i).getGroupId() == groupId)) || isOmniAdmin )  {
-    		DateFormat fmt = new SimpleDateFormat("MM/dd/YYYY");
-    		String modDate = fmt.format(creditAppList.get(i).getModifiedDate());  		
-      %>
-
-		<tr>
-			<td> <%=statusMap.get(creditAppList.get(i).getCreditAppStatusId())%>
-			</td>	      
-
-
-
-	<%  if(!isVendorSaleRep)  {  %>
-			<td ><%=usersMap.get(creditAppList.get(i).getUserName())%>
-			</td>      
-	<%  }  %>			
-			<td><%=creditAppList.get(i).getCustomerName()%>
-			</td>
-			<td><%=modDate%>
-
-			</td>
-			<td> <%=creditAppList.get(i).getCreditAppId()%>
-			</td>
-			<td> $<%=nf.format(creditAppList.get(i).getEquipmentPrice())%>
-			</td>	
-
-			<td>
-			<%if( "Draft".equalsIgnoreCase(statusText)){ %>
-			 <a   name="View" value="View"  href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"></i>View</a>|
-		     <a name="edit" value="Edit" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-pencil"></i>Edit</a>|
-		     <a  name="manage" value="Manage Docs" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file"></i>Docs</a>|
-		     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash"></i>Delete</a>
-	          <%} %>	
-	          		
-			<%if( "Saved".equalsIgnoreCase(statusText)){ %>
-			 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search">View</i></a> |
-		     <a  name="edit" value="Edit" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-pencil">Edit</i></a> |
-		     <a  name="manage" value="Manage Docs" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file">Docs</i></a> |
-		     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash">Delete</i></a> 
-	          <%} %>
-			<%if( "Submitted".equalsIgnoreCase(statusText)){ %>
-			 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search">View</i></a> |
-		     <a  name="m<alue="Manage Docs" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file">Docs</i></a> 
-	          <%} %>	          
-			<%if( "Cancelled".equalsIgnoreCase(statusText)){ %>
-			 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"></i>View</a> |
-		     <a  name="reenable" value="Re-enable" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-refresh"></i>Re-Enable</a> 
-		     <%} %>		     
-			</td>
-		</tr>
-	<%} 
-	}%>
-	</tbody>
-	</table>
-</td>
-</tr>
-</table>
+<div class="container-fluid">
+	<aui:row>
+		<aui:col span="3">
+			<div class="filterSection">
+				<h4>Filters:</h4>
+				<dl>
+				  <dt>Status:</dt><dd id="creditApplicationStatus"></dd>
+				  <%  if(!isVendorSaleRep)  {  %>
+				  	<dt>Sales Rep:</dt><dd id="salesRep"></dd>
+				  <% } %>
+				  <dt>Customer Name:</dt><dd id="customerName"></dd>
+				  <dt>Last Saved:</dt><dd id="lastSavedDate"></dd>
+				  <dt>App #:</dt><dd id="appId"></dd>
+				</dl>
+			</div>
+		</aui:col>
+		<aui:col span="9">
+			<div class="container-fluid" id="viewApplications">
+				<table   id="creditAppView" class="table table-striped table-hover" >
+				 	<thead>
+				    	<tr>
+							<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up"> Status</i></th>
+							<%  if(!isVendorSaleRep)  {  %>
+								<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up"> Sales Rep</i></th>		   
+							<%  }  %>
+							<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up"> Customer Name</i></th>
+							<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up"> Last Saved Date</i></th>
+							<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up"> App Id</i></th>
+							<th><i onclick="toggleImage(this)" class="icon-circle-arrow-up"> Equipment Price</i></th>
+							<th>Action</th>	
+				    	</tr>
+					</thead>
+					<tfoot>
+					
+					    <tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+						<%  if(!isVendorSaleRep)  {  %>      
+								<th></th>
+						<%  }  %>
+					
+					    </tr>
+					</tfoot>
+				
+					<tbody>
+					
+						<%  
+						  String url = PortalUtil.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL();
+						  System.out.println("url:" + url); 	
+					      for (int i=0;i<creditAppList.size();i++) {
+					  		String statusText = statusMap.get(creditAppList.get(i).getCreditAppStatusId());
+					       if( !"Cancelled1".equalsIgnoreCase(statusText) && !"Cancelled1".equalsIgnoreCase(statusText))
+					    	if((isVendorSaleRep && creditAppList.get(i).getUserId() == themeDisplay.getUserId()) || (isCreekRidgeSalesManager  && (creditAppList.get(i).getGroupId() == groupId)) || isOmniAdmin )  {
+					    		DateFormat fmt = new SimpleDateFormat("MM/dd/YYYY");
+					    		String modDate = fmt.format(creditAppList.get(i).getModifiedDate());  		
+					      %>
+					
+							<tr>
+								<td> <%=statusMap.get(creditAppList.get(i).getCreditAppStatusId())%>
+								</td>	      
+					
+					
+					
+						<%  if(!isVendorSaleRep)  {  %>
+								<td ><%=usersMap.get(creditAppList.get(i).getUserName())%>
+								</td>      
+						<%  }  %>			
+								<td><%=creditAppList.get(i).getCustomerName()%>
+								</td>
+								<td><%=modDate%>
+					
+								</td>
+								<td> <%=creditAppList.get(i).getCreditAppId()%>
+								</td>
+								<td> $<%=nf.format(creditAppList.get(i).getEquipmentPrice())%>
+								</td>	
+					
+								<td>
+								<%if( "Draft".equalsIgnoreCase(statusText)){ %>
+								 <a   name="View" value="View"  href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"></i> View</a>|
+							     <a name="edit" value="Edit" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-pencil"></i> Edit</a>|
+							     <a  name="manage" value="Manage Docs" href="<%="javascript:window.location.href='" + url + "/manage-documents?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file"></i> Docs</a>|
+							     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash"></i> Delete</a>
+						          <%} %>	
+						          		
+								<%if( "Saved".equalsIgnoreCase(statusText)){ %>
+								 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"> View</i></a> |
+							     <a  name="edit" value="Edit" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-pencil"> Edit</i></a> |
+							     <a  name="manage" value="Manage Docs" href="<%="javascript:window.location.href='" + url + "/manage-documents?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file"> Docs</i></a> |
+							     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash"> Delete</i></a> 
+						          <%} %>
+								<%if( "Submitted".equalsIgnoreCase(statusText)){ %>
+								 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"> View</i></a> |
+							     <a  name="manage" value="Manage Docs" href="<%="javascript:window.location.href='" + url + "/manage-documents?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file"> Docs</i></a> 
+						          <%} %>	          
+								<%if( "Cancelled".equalsIgnoreCase(statusText)){ %>
+								 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"></i> View</a> |
+							     <a  name="reenable" value="Re-enable" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-refresh"></i> Re-Enable</a> 
+							     <%} %>		     
+								</td>
+							</tr>
+						<%} 
+						}%>
+					</tbody>
+				</table>
+			</div>
+		</aui:col>
+	</aui:row>	
 </div>
-<div class="spacer"></div>
-
-</html>

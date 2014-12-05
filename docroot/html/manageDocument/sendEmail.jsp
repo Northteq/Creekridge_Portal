@@ -24,18 +24,18 @@ CreditAppDocument creditAppDocument=CreditAppDocumentLocalServiceUtil.getCreditA
 CreditApp creditApp=CreditAppLocalServiceUtil.getCreditApp(creditAppId);
 %>
 
-<!-- Email Options -->
-<div align="center">
-<b>Attachment</b><br>
-<%=creditAppDocument.getDocumentTitle()%>&nbsp; <%=!creditAppDocument.getDocumentFileName().equals(creditAppDocument.getDocumentTitle())?creditAppDocument.getDocumentFileName():"" %>
-</div>
-<div align="center">
-<aui:form action="<%=emailCreditAppDocumentUrl.toString() %>" name="fm" method="post">
+<div class="container">
+<h3>Email Attachment:</h3>
+<aui:form action="<%=emailCreditAppDocumentUrl.toString() %>" name="fm" method="post" inlineLabels="true">
 <aui:input type="hidden"   name="creditAppDocumentId"  value="<%=creditAppDocumentId %>" />
 
-<aui:input type="text"  label= "Email Address:" name="toAddress" /> 
+<aui:input type="text"  label= "To Email Address:" name="toAddress" value="<%=creditApp.getCustomerContactEmail()%>" /> 
 <aui:input type="text"  label= "Subject:" name="subject" />
-<aui:input type="text"  label= "Body:" name="body" value="<%=\"Hello \"+ creditApp.getCustomerName() %>"/>
+<aui:input type="textarea"  label= "Body:" name="body" value="<%=\"Hello \"+ creditApp.getCustomerName() %>" rows="10"/>
+<p>
+	<i class="icon-paper-clip"></i>&nbsp;
+	<%=creditAppDocument.getDocumentTitle()%>&nbsp; <%=!creditAppDocument.getDocumentFileName().equals(creditAppDocument.getDocumentTitle())?creditAppDocument.getDocumentFileName():"" %>
+</p>
 <aui:button type="submit"  value="Send Email"  /> 
 
 </aui:form>

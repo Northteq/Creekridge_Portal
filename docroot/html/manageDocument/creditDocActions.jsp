@@ -29,20 +29,13 @@
 			url="<%=ajaxResourceUrl+\"&actionType=downloadAction&creditDocumentId=\"+creditAppDoc.getCreditAppDocumentId()%>" />
 
 </liferay-ui:icon-menu>
-
+&nbsp;
 <liferay-ui:icon-menu>
 	
-		<liferay-ui:icon image="print" message="Print"
-			url="<%=ajaxResourceUrl+\"&actionType=edit&creditDocumentId=\"+creditAppDoc.getCreditAppDocumentId()%>" />
+		<liferay-ui:icon  image="message" message="Email" cssClass="emailPopupWindow" url="<%=emailPopupWindowURL+\"&creditAppDocumentId=\"+creditAppDoc.getCreditAppDocumentId()%>" target="_blank" id="<%=new Long(creditAppDoc.getCreditAppDocumentId()).toString() %>"/>
 
 </liferay-ui:icon-menu>
-
-<liferay-ui:icon-menu>
-	
-		<liferay-ui:icon  image="edit" message="Email" cssClass="emailPopupWindow" url="<%=emailPopupWindowURL+\"&creditAppDocumentId=\"+creditAppDoc.getCreditAppDocumentId()%>" target="_blank" id="<%=new Long(creditAppDoc.getCreditAppDocumentId()).toString() %>"/>
-
-</liferay-ui:icon-menu>
-
+&nbsp;
 
 <liferay-ui:icon-menu>
 	
