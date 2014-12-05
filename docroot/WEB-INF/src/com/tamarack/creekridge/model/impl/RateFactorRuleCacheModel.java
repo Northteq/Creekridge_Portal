@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.tamarack.creekridge.model.impl;
@@ -38,7 +38,7 @@ public class RateFactorRuleCacheModel implements CacheModel<RateFactorRule>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{rateFactorRuleId=");
 		sb.append(rateFactorRuleId);
@@ -46,6 +46,8 @@ public class RateFactorRuleCacheModel implements CacheModel<RateFactorRule>,
 		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", userName=");
 		sb.append(userName);
 		sb.append(", createDate=");
@@ -82,6 +84,7 @@ public class RateFactorRuleCacheModel implements CacheModel<RateFactorRule>,
 		rateFactorRuleImpl.setRateFactorRuleId(rateFactorRuleId);
 		rateFactorRuleImpl.setCompanyId(companyId);
 		rateFactorRuleImpl.setUserId(userId);
+		rateFactorRuleImpl.setGroupId(groupId);
 
 		if (userName == null) {
 			rateFactorRuleImpl.setUserName(StringPool.BLANK);
@@ -137,6 +140,7 @@ public class RateFactorRuleCacheModel implements CacheModel<RateFactorRule>,
 		rateFactorRuleId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
+		groupId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
@@ -157,6 +161,7 @@ public class RateFactorRuleCacheModel implements CacheModel<RateFactorRule>,
 		objectOutput.writeLong(rateFactorRuleId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
+		objectOutput.writeLong(groupId);
 
 		if (userName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -181,6 +186,7 @@ public class RateFactorRuleCacheModel implements CacheModel<RateFactorRule>,
 	public long rateFactorRuleId;
 	public long companyId;
 	public long userId;
+	public long groupId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;

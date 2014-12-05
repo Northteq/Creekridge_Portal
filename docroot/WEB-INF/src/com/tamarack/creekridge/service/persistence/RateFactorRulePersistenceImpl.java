@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.tamarack.creekridge.service.persistence;
@@ -86,72 +86,68 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_V = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
 			RateFactorRuleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByA_V",
+			"findByGroupId",
 			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_V = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
+		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
 			RateFactorRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_V",
-			new String[] { Long.class.getName(), Boolean.class.getName() },
-			RateFactorRuleModelImpl.VENDORID_COLUMN_BITMASK |
-			RateFactorRuleModelImpl.ACTIVE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_A_V = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			new String[] { Long.class.getName() },
+			RateFactorRuleModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_V",
-			new String[] { Long.class.getName(), Boolean.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the rate factor rules where vendorId = &#63; and active = &#63;.
+	 * Returns all the rate factor rules where groupId = &#63;.
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @return the matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByA_V(long vendorId, boolean active)
+	public List<RateFactorRule> findByGroupId(long groupId)
 		throws SystemException {
-		return findByA_V(vendorId, active, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the rate factor rules where vendorId = &#63; and active = &#63;.
+	 * Returns a range of all the rate factor rules where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @param start the lower bound of the range of rate factor rules
 	 * @param end the upper bound of the range of rate factor rules (not inclusive)
 	 * @return the range of matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByA_V(long vendorId, boolean active,
-		int start, int end) throws SystemException {
-		return findByA_V(vendorId, active, start, end, null);
+	public List<RateFactorRule> findByGroupId(long groupId, int start, int end)
+		throws SystemException {
+		return findByGroupId(groupId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the rate factor rules where vendorId = &#63; and active = &#63;.
+	 * Returns an ordered range of all the rate factor rules where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @param start the lower bound of the range of rate factor rules
 	 * @param end the upper bound of the range of rate factor rules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -159,9 +155,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByA_V(long vendorId, boolean active,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+	public List<RateFactorRule> findByGroupId(long groupId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -169,16 +164,12 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_V;
-			finderArgs = new Object[] { vendorId, active };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
+			finderArgs = new Object[] { groupId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_A_V;
-			finderArgs = new Object[] {
-					vendorId, active,
-					
-					start, end, orderByComparator
-				};
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
+			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
 		List<RateFactorRule> list = (List<RateFactorRule>)FinderCacheUtil.getResult(finderPath,
@@ -186,8 +177,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		if ((list != null) && !list.isEmpty()) {
 			for (RateFactorRule rateFactorRule : list) {
-				if ((vendorId != rateFactorRule.getVendorId()) ||
-						(active != rateFactorRule.getActive())) {
+				if ((groupId != rateFactorRule.getGroupId())) {
 					list = null;
 
 					break;
@@ -199,18 +189,16 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
+				query = new StringBundler(3 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(4);
+				query = new StringBundler(3);
 			}
 
 			query.append(_SQL_SELECT_RATEFACTORRULE_WHERE);
 
-			query.append(_FINDER_COLUMN_A_V_VENDORID_2);
-
-			query.append(_FINDER_COLUMN_A_V_ACTIVE_2);
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -232,9 +220,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(vendorId);
-
-				qPos.add(active);
+				qPos.add(groupId);
 
 				if (!pagination) {
 					list = (List<RateFactorRule>)QueryUtil.list(q,
@@ -267,35 +253,31 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where vendorId = &#63; and active = &#63;.
+	 * Returns the first rate factor rule in the ordered set where groupId = &#63;.
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule findByA_V_First(long vendorId, boolean active,
+	public RateFactorRule findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
-		RateFactorRule rateFactorRule = fetchByA_V_First(vendorId, active,
+		RateFactorRule rateFactorRule = fetchByGroupId_First(groupId,
 				orderByComparator);
 
 		if (rateFactorRule != null) {
 			return rateFactorRule;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler msg = new StringBundler(4);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("vendorId=");
-		msg.append(vendorId);
-
-		msg.append(", active=");
-		msg.append(active);
+		msg.append("groupId=");
+		msg.append(groupId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -303,18 +285,17 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where vendorId = &#63; and active = &#63;.
+	 * Returns the first rate factor rule in the ordered set where groupId = &#63;.
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rate factor rule, or <code>null</code> if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule fetchByA_V_First(long vendorId, boolean active,
+	public RateFactorRule fetchByGroupId_First(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<RateFactorRule> list = findByA_V(vendorId, active, 0, 1,
+		List<RateFactorRule> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -325,35 +306,31 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where vendorId = &#63; and active = &#63;.
+	 * Returns the last rate factor rule in the ordered set where groupId = &#63;.
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule findByA_V_Last(long vendorId, boolean active,
+	public RateFactorRule findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
-		RateFactorRule rateFactorRule = fetchByA_V_Last(vendorId, active,
+		RateFactorRule rateFactorRule = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
 		if (rateFactorRule != null) {
 			return rateFactorRule;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler msg = new StringBundler(4);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("vendorId=");
-		msg.append(vendorId);
-
-		msg.append(", active=");
-		msg.append(active);
+		msg.append("groupId=");
+		msg.append(groupId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -361,25 +338,24 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where vendorId = &#63; and active = &#63;.
+	 * Returns the last rate factor rule in the ordered set where groupId = &#63;.
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rate factor rule, or <code>null</code> if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule fetchByA_V_Last(long vendorId, boolean active,
+	public RateFactorRule fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByA_V(vendorId, active);
+		int count = countByGroupId(groupId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<RateFactorRule> list = findByA_V(vendorId, active, count - 1,
-				count, orderByComparator);
+		List<RateFactorRule> list = findByGroupId(groupId, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -389,19 +365,18 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where vendorId = &#63; and active = &#63;.
+	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where groupId = &#63;.
 	 *
 	 * @param rateFactorRuleId the primary key of the current rate factor rule
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a rate factor rule with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule[] findByA_V_PrevAndNext(long rateFactorRuleId,
-		long vendorId, boolean active, OrderByComparator orderByComparator)
+	public RateFactorRule[] findByGroupId_PrevAndNext(long rateFactorRuleId,
+		long groupId, OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
 		RateFactorRule rateFactorRule = findByPrimaryKey(rateFactorRuleId);
 
@@ -412,13 +387,13 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 			RateFactorRule[] array = new RateFactorRuleImpl[3];
 
-			array[0] = getByA_V_PrevAndNext(session, rateFactorRule, vendorId,
-					active, orderByComparator, true);
+			array[0] = getByGroupId_PrevAndNext(session, rateFactorRule,
+					groupId, orderByComparator, true);
 
 			array[1] = rateFactorRule;
 
-			array[2] = getByA_V_PrevAndNext(session, rateFactorRule, vendorId,
-					active, orderByComparator, false);
+			array[2] = getByGroupId_PrevAndNext(session, rateFactorRule,
+					groupId, orderByComparator, false);
 
 			return array;
 		}
@@ -430,8 +405,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		}
 	}
 
-	protected RateFactorRule getByA_V_PrevAndNext(Session session,
-		RateFactorRule rateFactorRule, long vendorId, boolean active,
+	protected RateFactorRule getByGroupId_PrevAndNext(Session session,
+		RateFactorRule rateFactorRule, long groupId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -445,9 +420,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		query.append(_SQL_SELECT_RATEFACTORRULE_WHERE);
 
-		query.append(_FINDER_COLUMN_A_V_VENDORID_2);
-
-		query.append(_FINDER_COLUMN_A_V_ACTIVE_2);
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -517,9 +490,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(vendorId);
-
-		qPos.add(active);
+		qPos.add(groupId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(rateFactorRule);
@@ -540,47 +511,41 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Removes all the rate factor rules where vendorId = &#63; and active = &#63; from the database.
+	 * Removes all the rate factor rules where groupId = &#63; from the database.
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByA_V(long vendorId, boolean active)
-		throws SystemException {
-		for (RateFactorRule rateFactorRule : findByA_V(vendorId, active,
+	public void removeByGroupId(long groupId) throws SystemException {
+		for (RateFactorRule rateFactorRule : findByGroupId(groupId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(rateFactorRule);
 		}
 	}
 
 	/**
-	 * Returns the number of rate factor rules where vendorId = &#63; and active = &#63;.
+	 * Returns the number of rate factor rules where groupId = &#63;.
 	 *
-	 * @param vendorId the vendor ID
-	 * @param active the active
+	 * @param groupId the group ID
 	 * @return the number of matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByA_V(long vendorId, boolean active)
-		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_V;
+	public int countByGroupId(long groupId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
 
-		Object[] finderArgs = new Object[] { vendorId, active };
+		Object[] finderArgs = new Object[] { groupId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(2);
 
 			query.append(_SQL_COUNT_RATEFACTORRULE_WHERE);
 
-			query.append(_FINDER_COLUMN_A_V_VENDORID_2);
-
-			query.append(_FINDER_COLUMN_A_V_ACTIVE_2);
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 			String sql = query.toString();
 
@@ -593,9 +558,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(vendorId);
-
-				qPos.add(active);
+				qPos.add(groupId);
 
 				count = (Long)q.uniqueResult();
 
@@ -614,8 +577,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_A_V_VENDORID_2 = "rateFactorRule.vendorId = ? AND ";
-	private static final String _FINDER_COLUMN_A_V_ACTIVE_2 = "rateFactorRule.active = ?";
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "rateFactorRule.groupId = ? AND rateFactorRule.active=1";
 	public static final FinderPath FINDER_PATH_FETCH_BY_A_V_P = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
 			RateFactorRuleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByA_V_P",
@@ -2745,23 +2707,19 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		else {
 			if ((rateFactorRuleModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_V.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						rateFactorRuleModelImpl.getOriginalVendorId(),
-						rateFactorRuleModelImpl.getOriginalActive()
+						rateFactorRuleModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_V, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_V,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
-				args = new Object[] {
-						rateFactorRuleModelImpl.getVendorId(),
-						rateFactorRuleModelImpl.getActive()
-					};
+				args = new Object[] { rateFactorRuleModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_V, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_V,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -2827,6 +2785,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		rateFactorRuleImpl.setRateFactorRuleId(rateFactorRule.getRateFactorRuleId());
 		rateFactorRuleImpl.setCompanyId(rateFactorRule.getCompanyId());
 		rateFactorRuleImpl.setUserId(rateFactorRule.getUserId());
+		rateFactorRuleImpl.setGroupId(rateFactorRule.getGroupId());
 		rateFactorRuleImpl.setUserName(rateFactorRule.getUserName());
 		rateFactorRuleImpl.setCreateDate(rateFactorRule.getCreateDate());
 		rateFactorRuleImpl.setModifiedDate(rateFactorRule.getModifiedDate());

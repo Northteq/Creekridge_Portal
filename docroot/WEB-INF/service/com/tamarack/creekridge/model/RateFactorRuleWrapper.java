@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.tamarack.creekridge.model;
@@ -53,6 +53,7 @@ public class RateFactorRuleWrapper implements RateFactorRule,
 		attributes.put("rateFactorRuleId", getRateFactorRuleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -87,6 +88,12 @@ public class RateFactorRuleWrapper implements RateFactorRule,
 
 		if (userId != null) {
 			setUserId(userId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		String userName = (String)attributes.get("userName");
@@ -262,6 +269,26 @@ public class RateFactorRuleWrapper implements RateFactorRule,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_rateFactorRule.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the group ID of this rate factor rule.
+	*
+	* @return the group ID of this rate factor rule
+	*/
+	@Override
+	public long getGroupId() {
+		return _rateFactorRule.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this rate factor rule.
+	*
+	* @param groupId the group ID of this rate factor rule
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_rateFactorRule.setGroupId(groupId);
 	}
 
 	/**
