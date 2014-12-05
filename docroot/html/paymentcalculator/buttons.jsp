@@ -32,7 +32,7 @@
 		
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==true}">
 			<div class="span2">
-				<a class="btn btn-block btn-editApp" id="editAppButton" href="<%=editAppURL %>"><i class="icon-file"></i> Edit </a>
+				<a class="btn btn-block btn-editApp" id="editAppButton" href="payment-calculator?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Edit </a>
 			</div>
 		</c:if>	
 		

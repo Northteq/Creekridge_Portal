@@ -57,7 +57,7 @@
 	</div>
 </aui:fieldset>
 
-<aui:fieldset column="true" label="Business Information">
+<aui:fieldset column="true" label="Business Info">
 	<dl class="dl-horizontal">
 		<dt>Business Type</dt>
 		<dd>${creditApp.customerBusinessType}</dd>
@@ -73,6 +73,15 @@
 		<dt>Business Description</dt>
 		<dd>${creditApp.customerBusinessDesc}</dd>
 	</dl>
+</aui:fieldset>
+
+
+<aui:fieldset column="true" label="Principal Info">
+	<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
+</aui:fieldset>
+
+<aui:fieldset column="true" label="Bank Reference Info">
+	<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
 </aui:fieldset>
 
 <style>

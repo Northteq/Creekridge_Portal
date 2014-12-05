@@ -43,19 +43,21 @@
 </aui:container>
 </div>
 
-
+<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 <aui:button-row>
 <a class="btn btn-info" id="addRefRow">Add Bank Reference</a>
 </aui:button-row>
+</c:if>
+
 <p/>
 
 <div id="bankReferenceDataTable"></div>
 
-
+<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 <aui:button-row>
 <a class="btn" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-backward"></i> Back to Principal</a>
 </aui:button-row>
-
+</c:if>
 <script type="text/javascript">
 
 YUI().use(
@@ -82,13 +84,15 @@ YUI().use(
 		bankReferencePhoneEl = $('#<portlet:namespace/>bankReferencePhone'),
 		bankReferenceAccountTypeEl = $('#<portlet:namespace/>bankReferenceAccountType'),
 		bankReferenceAccountNumberEl = $('#<portlet:namespace/>bankReferenceAccountNumber'),
-	    
-	    addRowBtn  = A.one('#addRefRow'),
+	   
 		
 	    buttonFormatter = function (o) {
 		  	//console.log(o);
+		  	var viewOnly = ${viewOnly};
 			var buttons = '<a class="btn" onclick="editRefAtIndex('+o.rowIndex+')">Edit</a> <a class="btn btn-danger" onclick="removeRefAtIndex('+o.rowIndex+')">Delete</a>';
-		  	return buttons;
+		  	
+			if (!viewOnly)
+			return buttons;
 		},
 	    
 	    cols = [
@@ -170,12 +174,16 @@ YUI().use(
     });
 
     // When the addRowBtn is pressed, show the modal form.
-    addRowBtn.on('click', function (e) {
-    	$('#enterReferenceSection').find('input').val('');
-		$('#enterReferenceSection').find('select').val('');
-		
-        panel.show();
-    });
+    if ( A.one('#addRefRow') != null) {
+    	 A.one('#addRefRow').on('click', function (e) {
+    	    	$('#enterReferenceSection').find('input').val('');
+    			$('#enterReferenceSection').find('select').val('');
+    			
+    	        panel.show();
+    	    });
+    }
+    
+    
 
 
      var saveReference = function () {
