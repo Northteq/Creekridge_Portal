@@ -14,6 +14,9 @@
 	request.setAttribute("creditAppId", ParamUtil.getString(request, "creditAppId"));
 	State[] statesList=StateUtil.STATES;
 	renderRequest.setAttribute("statesList", statesList);
+			
+	String [] accountTypesList =  {"Checking", "Savings", "Line Of Credit", "Term Loan", "Lease"};
+	renderRequest.setAttribute("accountTypesList", accountTypesList);
 	
 	List <CreditAppBankReference> bankRefs = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
 	
@@ -38,7 +41,13 @@
 			<aui:input inlineField="true" name="bankReferenceName"></aui:input>
 			<aui:input inlineField="true" name="bankReferenceContact"></aui:input>
 			<aui:input inlineField="true" name="bankReferencePhone"></aui:input>
-			<aui:input inlineField="true" name="bankReferenceAccountType"></aui:input>
+			<aui:select inlineField="true"
+				name="bankReferenceAccountType" showEmptyOption="true">
+				<c:forEach items="${accountTypesList}" var="accType">
+					<aui:option value="${accType}" label="${accType}"/>
+				</c:forEach>
+			</aui:select>
+			
 			<aui:input inlineField="true" name="bankReferenceAccountNumber"></aui:input>
 		</aui:fieldset>
 	</aui:form>
