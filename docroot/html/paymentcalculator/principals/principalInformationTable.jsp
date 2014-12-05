@@ -189,22 +189,18 @@ YUI().use(
 	
  // Create the DataTable.
 
- console.log (A.WidgetPositionAlign.TL);
-
     // Create the main modal form.
     panel = new A.Panel({
         srcNode      : '#enterPrincipalSection',
         headerContent: 'Add Principal',
         //width        : 450,
         zIndex       : 5,
-        //centered     : true,
+        centered     : true,
         //constrain	 : '#portlet_paymentcalculator_WAR_CreekRidgeCapitalportlet',
         modal        : true,
         visible      : false,
-        render       : true,
+        render       : document.body,
         plugins      : [A.Plugin.Drag],
-       	xy:	[50,100]
-       
     });
 
     panel.addButton({

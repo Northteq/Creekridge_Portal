@@ -35,9 +35,9 @@
 			<aui:input name="bankReferenceId" type="hidden"/>
 			<aui:input inlineField="true" name="bankReferenceName"></aui:input>
 			<aui:input inlineField="true" name="bankReferenceContact"></aui:input>
-			<aui:input name="bankReferencePhone"></aui:input>
-			<aui:input name="bankReferenceAccountType"></aui:input>
-			<aui:input name="bankReferenceAccountNumber"></aui:input>
+			<aui:input inlineField="true" name="bankReferencePhone"></aui:input>
+			<aui:input inlineField="true" name="bankReferenceAccountType"></aui:input>
+			<aui:input inlineField="true" name="bankReferenceAccountNumber"></aui:input>
 		</aui:fieldset>
 	</aui:form>
 </aui:container>
@@ -142,13 +142,13 @@ YUI().use(
         headerContent: 'Add Bank Reference',
         //width        : 450,
         zIndex       : 5,
-        //centered     : '#appTitle',
+        centered     : true,
         //constrain	 : '#appTitle',
         modal        : true,
         visible      : false,
-        render       : true,
+        render       : document.body,
         plugins      : [A.Plugin.Drag],
-        xy:	[150,50]
+       
     });
 
     panel.addButton({

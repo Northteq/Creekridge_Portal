@@ -9,22 +9,41 @@
 <%@ include file="init.jsp"%>
 
 <%
-	Boolean viewMode = ParamUtil.getBoolean(request, "viewOnly");
-	request.setAttribute("viewOnly", viewMode);	
+	Boolean viewOnly = ParamUtil.getBoolean(request, "viewOnly");
+	request.setAttribute("viewOnly", viewOnly);	
+	
+	String openSection = ParamUtil.getString(request, "openSection", "paymentCalculator");
+	request.setAttribute("openSection", openSection);
+	
+	HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+	long appId = ParamUtil.getLong(request, "creditAppId");
+	
+	if (appId != 0) {
+		request.setAttribute("creditApp", CreditAppLocalServiceUtil.getCreditApp(appId)); 
+	}
+
+	State[] statesList=StateUtil.STATES;
+	renderRequest.setAttribute("statesList", statesList);
+	
+	String [] corpTypeList =  {"Corporation", "Sole Prop", "LLC", "LLP", "Partnership", "S Corporation", "Government Entity"};
+	renderRequest.setAttribute("corpTypeList", corpTypeList);
 %>
 
 <script src="<%= renderRequest.getContextPath()%>/js/jquery211.min.js" type="text/javascript"></script>
 
 <link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
-
+<c:import url="/html/paymentcalculator/paymentCalculatorJS.jsp"></c:import>
 
 <c:if test="${creditApp.creditAppStatusId != 3 && viewOnly==false}">
 	<c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
+	<c:import url="/html/paymentcalculator/termsAndAgreement.jsp"></c:import>
 </c:if>
 
 <!-- VIEW MODE -->
+<liferay-ui:success key="appSubmitted"
+	message="app-submitted-successfully" />
 
-
-<c:if test="${creditApp.creditAppStatusId == 3 || viewMode}">
+<c:if test="${creditApp.creditAppStatusId == 3 || viewOnly}">
 	<c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
+	
 </c:if>
