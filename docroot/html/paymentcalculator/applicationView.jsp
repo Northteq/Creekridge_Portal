@@ -11,7 +11,9 @@
 	<portlet:param name="viewOnly" value="<%=String.valueOf(false)%>" />
 	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:renderURL>
-
+<c:if test="${creditApp.creditAppId != 0}">
+	<h3 id="screenTitle">Application #${creditApp.creditAppId} ${creditApp.customerName}</h3>
+</c:if>
 <c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 
 <aui:fieldset column="true" label="Customer Information">
