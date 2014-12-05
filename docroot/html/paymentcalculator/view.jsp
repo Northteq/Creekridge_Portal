@@ -9,13 +9,24 @@
 <%@ include file="init.jsp"%>
 
 <%
-	Boolean viewOnly = ParamUtil.getBoolean(request, "viewOnly");
+	HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+
+	String viewOnlyString = httpReq.getParameter("viewOnly");
+			ParamUtil.getString(request, "viewOnly");
+	Boolean viewOnly; 
+	if (viewOnlyString != null) {
+		
+	} else {
+		viewOnlyString = httpReq.getParameter("viewOnly");
+	} 
+	
+	viewOnly = Boolean.valueOf (viewOnlyString);
 	request.setAttribute("viewOnly", viewOnly);	
 	
 	String openSection = ParamUtil.getString(request, "openSection", "paymentCalculator");
 	request.setAttribute("openSection", openSection);
 	
-	HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
+	
 	long appId = ParamUtil.getLong(request, "creditAppId");
 	
 	if (appId != 0) {

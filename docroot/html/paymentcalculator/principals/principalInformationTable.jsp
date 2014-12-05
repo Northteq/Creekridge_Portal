@@ -33,9 +33,9 @@
 <portlet:resourceURL var="deletePrincipalRecordURL"
 	id="deletePrincipalRecord" />
 
-<div id="enterPrincipalSection">
+<div id="enterPrincipalSection" class="container span5">
 
-<aui:container>
+
 	<aui:form action="<%=addCreditAppPrincipalURL %>" method="post" name="principalForm">
 	
 		<aui:fieldset column="false" label="Principal Name">
@@ -69,7 +69,6 @@
 			
 		</aui:fieldset>
 	</aui:form>
-</aui:container>
 </div>
 
 <c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
