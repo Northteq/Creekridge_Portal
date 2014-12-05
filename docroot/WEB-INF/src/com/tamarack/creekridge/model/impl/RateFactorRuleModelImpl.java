@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.tamarack.creekridge.model.impl;
@@ -64,7 +64,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 			{ "rateFactorRuleId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
@@ -78,7 +77,7 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 			{ "active_", Types.BOOLEAN },
 			{ "expirationDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_RateFactorRule (rateFactorRuleId LONG not null primary key,companyId LONG,userId LONG,groupId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productId LONG,termId LONG,purchaseOptionId LONG,vendorId LONG,minPrice DOUBLE,rateFactor DOUBLE,effectiveDate DATE null,active_ BOOLEAN,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_RateFactorRule (rateFactorRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productId LONG,termId LONG,purchaseOptionId LONG,vendorId LONG,minPrice DOUBLE,rateFactor DOUBLE,effectiveDate DATE null,active_ BOOLEAN,expirationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eCreekRidge_RateFactorRule";
 	public static final String ORDER_BY_JPQL = " ORDER BY rateFactorRule.rateFactorRuleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_RateFactorRule.rateFactorRuleId ASC";
@@ -95,12 +94,11 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 				"value.object.column.bitmask.enabled.com.tamarack.creekridge.model.RateFactorRule"),
 			true);
 	public static long ACTIVE_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long PRODUCTID_COLUMN_BITMASK = 4L;
-	public static long PURCHASEOPTIONID_COLUMN_BITMASK = 8L;
-	public static long RATEFACTORRULEID_COLUMN_BITMASK = 16L;
-	public static long TERMID_COLUMN_BITMASK = 32L;
-	public static long VENDORID_COLUMN_BITMASK = 64L;
+	public static long PRODUCTID_COLUMN_BITMASK = 2L;
+	public static long PURCHASEOPTIONID_COLUMN_BITMASK = 4L;
+	public static long RATEFACTORRULEID_COLUMN_BITMASK = 8L;
+	public static long TERMID_COLUMN_BITMASK = 16L;
+	public static long VENDORID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.tamarack.creekridge.model.RateFactorRule"));
 
@@ -144,7 +142,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 		attributes.put("rateFactorRuleId", getRateFactorRuleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -179,12 +176,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 
 		if (userId != null) {
 			setUserId(userId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		String userName = (String)attributes.get("userName");
@@ -310,28 +301,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 	@Override
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
-		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
 	}
 
 	@Override
@@ -558,7 +527,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 		rateFactorRuleImpl.setRateFactorRuleId(getRateFactorRuleId());
 		rateFactorRuleImpl.setCompanyId(getCompanyId());
 		rateFactorRuleImpl.setUserId(getUserId());
-		rateFactorRuleImpl.setGroupId(getGroupId());
 		rateFactorRuleImpl.setUserName(getUserName());
 		rateFactorRuleImpl.setCreateDate(getCreateDate());
 		rateFactorRuleImpl.setModifiedDate(getModifiedDate());
@@ -627,10 +595,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 
 		rateFactorRuleModelImpl._setOriginalRateFactorRuleId = false;
 
-		rateFactorRuleModelImpl._originalGroupId = rateFactorRuleModelImpl._groupId;
-
-		rateFactorRuleModelImpl._setOriginalGroupId = false;
-
 		rateFactorRuleModelImpl._originalProductId = rateFactorRuleModelImpl._productId;
 
 		rateFactorRuleModelImpl._setOriginalProductId = false;
@@ -663,8 +627,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 		rateFactorRuleCacheModel.companyId = getCompanyId();
 
 		rateFactorRuleCacheModel.userId = getUserId();
-
-		rateFactorRuleCacheModel.groupId = getGroupId();
 
 		rateFactorRuleCacheModel.userName = getUserName();
 
@@ -729,7 +691,7 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{rateFactorRuleId=");
 		sb.append(getRateFactorRuleId());
@@ -737,8 +699,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
 		sb.append(", userName=");
 		sb.append(getUserName());
 		sb.append(", createDate=");
@@ -770,7 +730,7 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.tamarack.creekridge.model.RateFactorRule");
@@ -787,10 +747,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
@@ -856,9 +812,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
-	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

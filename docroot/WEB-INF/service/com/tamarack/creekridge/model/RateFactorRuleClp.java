@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.tamarack.creekridge.model;
@@ -78,7 +78,6 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 		attributes.put("rateFactorRuleId", getRateFactorRuleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -113,12 +112,6 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 
 		if (userId != null) {
 			setUserId(userId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		String userName = (String)attributes.get("userName");
@@ -272,29 +265,6 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 	@Override
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-
-		if (_rateFactorRuleRemoteModel != null) {
-			try {
-				Class<?> clazz = _rateFactorRuleRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setGroupId", long.class);
-
-				method.invoke(_rateFactorRuleRemoteModel, groupId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
 	}
 
 	@Override
@@ -653,7 +623,6 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 		clone.setRateFactorRuleId(getRateFactorRuleId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
-		clone.setGroupId(getGroupId());
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
@@ -714,7 +683,7 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{rateFactorRuleId=");
 		sb.append(getRateFactorRuleId());
@@ -722,8 +691,6 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
 		sb.append(", userName=");
 		sb.append(getUserName());
 		sb.append(", createDate=");
@@ -755,7 +722,7 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.tamarack.creekridge.model.RateFactorRule");
@@ -772,10 +739,6 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
@@ -835,7 +798,6 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
-	private long _groupId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

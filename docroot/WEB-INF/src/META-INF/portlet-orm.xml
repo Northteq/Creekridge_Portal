@@ -229,7 +229,6 @@
 			<id name="rateFactorRuleId" />
 			<basic name="companyId" />
 			<basic name="userId" />
-			<basic name="groupId" />
 			<basic name="userName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>

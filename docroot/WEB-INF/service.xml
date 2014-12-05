@@ -368,7 +368,6 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="groupId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
@@ -385,8 +384,9 @@
 		<column name="active" type="boolean" />
 		<column name="expirationDate" type="Date" />
 		
-		<finder name="GroupId" return-type="Collection" where="active=1">
-			<finder-column name="groupId"/>
+		<finder name="A_V" return-type="Collection">
+			<finder-column name="vendorId" />
+			<finder-column name="active" />
 		</finder>
 		<finder name="A_V_P" return-type="RateFactorRule" unique="false">
 			<finder-column name="active" />

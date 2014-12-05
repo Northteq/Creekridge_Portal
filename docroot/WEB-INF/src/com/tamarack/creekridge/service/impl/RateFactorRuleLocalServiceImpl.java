@@ -40,9 +40,9 @@ public class RateFactorRuleLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil} to access the rate factor rule local service.
 	 */
-	public List<RateFactorRule> getActiveRateFactorRuleByGroupId(long groupId) throws Exception
+	public List<RateFactorRule> getRateFactorRuleByVendorIdActiveStatus(long vendorId, boolean active) throws Exception
 	{
-		return rateFactorRulePersistence.findByGroupId(groupId);
+		return rateFactorRulePersistence.findByA_V(vendorId, active);
 		
 	}
 	

@@ -27,7 +27,6 @@ create index IX_8E4796B6 on eCreekRidge_RateFactorRule (active_, vendorId, produ
 create index IX_6A940E7B on eCreekRidge_RateFactorRule (active_, vendorId, productId, purchaseOptionId);
 create unique index IX_B9CDF552 on eCreekRidge_RateFactorRule (active_, vendorId, productId, termId, purchaseOptioId);
 create index IX_81EEB016 on eCreekRidge_RateFactorRule (active_, vendorId, productId, termId, purchaseOptionId);
-create index IX_D51F158E on eCreekRidge_RateFactorRule (groupId);
 create index IX_A1D46776 on eCreekRidge_RateFactorRule (rateFactorRuleId);
 create index IX_ACEDFE53 on eCreekRidge_RateFactorRule (vendorId);
 create index IX_A6DEDE16 on eCreekRidge_RateFactorRule (vendorId, active_);

@@ -1,24 +1,24 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.tamarack.creekridge.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,8 +40,8 @@ import java.util.Date;
  * @see com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl
  * @generated
  */
-public interface RateFactorRuleModel extends BaseModel<RateFactorRule>,
-	GroupedModel {
+public interface RateFactorRuleModel extends AuditedModel,
+	BaseModel<RateFactorRule> {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -124,22 +124,6 @@ public interface RateFactorRuleModel extends BaseModel<RateFactorRule>,
 	 */
 	@Override
 	public void setUserUuid(String userUuid);
-
-	/**
-	 * Returns the group ID of this rate factor rule.
-	 *
-	 * @return the group ID of this rate factor rule
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this rate factor rule.
-	 *
-	 * @param groupId the group ID of this rate factor rule
-	 */
-	@Override
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the user name of this rate factor rule.

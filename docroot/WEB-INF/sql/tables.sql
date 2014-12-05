@@ -145,7 +145,6 @@ create table eCreekRidge_RateFactorRule (
 	rateFactorRuleId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
-	groupId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,

@@ -29,11 +29,9 @@
 <portlet:resourceURL var="deleteReferenceRecordURL"
 	id="deleteReferenceRecord" />
 
-<div id="enterReferenceSection"class="container">
+<div id="enterReferenceSection">
 
-	<div style="padding:25px;">
-
-
+<aui:container>
 	<aui:form method="post" name="principalForm">
 	
 		<aui:fieldset column="false">
@@ -51,7 +49,7 @@
 			<aui:input inlineField="true" name="bankReferenceAccountNumber"></aui:input>
 		</aui:fieldset>
 	</aui:form>
-</div>
+</aui:container>
 </div>
 
 <c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">

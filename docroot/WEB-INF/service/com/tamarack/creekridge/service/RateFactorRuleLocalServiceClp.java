@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.tamarack.creekridge.service;
@@ -115,9 +115,9 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getActiveRateFactorRuleByGroupId";
+		_methodName19 = "getRateFactorRuleByVendorIdActiveStatus";
 
-		_methodParameterTypes19 = new String[] { "long" };
+		_methodParameterTypes19 = new String[] { "long", "boolean" };
 
 		_methodName20 = "getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId";
 
@@ -683,13 +683,13 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 	}
 
 	@Override
-	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getActiveRateFactorRuleByGroupId(
-		long groupId) throws java.lang.Exception {
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorIdActiveStatus(
+		long vendorId, boolean active) throws java.lang.Exception {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { groupId });
+					_methodParameterTypes19, new Object[] { vendorId, active });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
