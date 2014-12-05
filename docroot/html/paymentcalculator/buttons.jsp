@@ -26,13 +26,13 @@
 	<c:if test="${creditApp.creditAppId != null}">
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">
-				<a class="btn btn-block btn-small btn-viewApp" id="viewAppButton" href="<%=viewAppURL %>"><i class="icon-file"></i> View </a>
+				<a class="btn btn-block btn-small btn-viewApp" id="viewAppButton" href="payment-calculator?creditAppId=${creditApp.creditAppId}&viewOnly=true"><i class="icon-file"></i> View </a>
 			</div>
 		</c:if>	
 		
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==true}">
 			<div class="span2">
-				<a class="btn btn-block btn-small btn-editApp" id="editAppButton" href="payment-calculator?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Edit </a>
+				<a class="btn btn-block btn-small btn-editApp" id="editAppButton" href="payment-calculator?creditAppId=${creditApp.creditAppId}&viewOnly=false"><i class="icon-file"></i> Edit </a>
 			</div>
 		</c:if>	
 		

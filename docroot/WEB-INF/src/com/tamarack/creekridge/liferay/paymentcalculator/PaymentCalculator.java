@@ -187,7 +187,7 @@ public class PaymentCalculator extends MVCPortlet {
 			if (creditApp == null) {
 				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, themeDisplay);
 				_log.info("Application has been created. " + creditApp);
-				
+				creditApp.setCreditAppStatusId(2);
 			} else {
 				creditApp.setCreditAppStatusId(2);
 				_log.info("Application has been updated. " + creditApp);
