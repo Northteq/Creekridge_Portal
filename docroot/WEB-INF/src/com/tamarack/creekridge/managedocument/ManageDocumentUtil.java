@@ -16,7 +16,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,10 +32,8 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DocumentConversionUtil;
-import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.tamarack.creekridge.model.CreditApp;
@@ -392,17 +389,10 @@ public class ManageDocumentUtil {
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
 			tokenMap.put("VendorName", group.getName());
-			
-			List<Address> addresses = new ArrayList<Address>();
-			addresses.add(AddressLocalServiceUtil.getAddressByUuidAndCompanyId(group.getUuid(), group.getCompanyId()));//.getAddresses(group.getCompanyId(), group.getClassName(), group.getClassPK());
-
-			for (Address address : addresses) {
-				tokenMap.put("VendorAddress", address.getStreet1() + " " + address.getStreet2());
-				tokenMap.put("VendorCity", address.getCity());
-				tokenMap.put("VendorState", address.getRegion().getRegionCode());
-				tokenMap.put("VendorZip", address.getZip());
-				break;
-			}
+			tokenMap.put("VendorAddress", group.getExpandoBridge().getAttribute("Vendor Address") + " " + group.getExpandoBridge().getAttribute("Vendor Address 2"));
+			tokenMap.put("VendorCity", group.getExpandoBridge().getAttribute("Vendor City"));
+			tokenMap.put("VendorState", group.getExpandoBridge().getAttribute("Vendor State"));
+			tokenMap.put("VendorZip", group.getExpandoBridge().getAttribute("Vendor Zip"));
 		}
 		catch (Exception e) {
 			_log.error(e);
