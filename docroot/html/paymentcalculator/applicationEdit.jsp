@@ -80,10 +80,10 @@
 					onclick="resetAllSections();">
 					<i class="icon-remove"></i> Clear
 				</button>
-				<button class="btn btn-success btn-small" type="submit"
-					id="calculatePaymentsButton" onclick="return calculatePayments()">
+				<a class="btn btn-success btn-small"
+					id="calculatePaymentsButton" onclick="calculatePayments()">
 					<i class="icon-th"></i> Calculate Payments
-				</button>
+				</a>
 
 			</aui:button-row>
 		</liferay-ui:panel>
@@ -114,7 +114,7 @@
 				state="${openSection=='customerAndEquipmentInfo'? 'open' : 'collapsed' }">
 
 				<aui:fieldset column="false" label="Customer">
-					<aui:input inlineField="true" name="customerName"
+					<aui:input inlineField="true" required="true" name="customerName"
 						value="${creditApp.customerName}"></aui:input>
 					<aui:input inlineField="true" name="customerDBAName"
 						label="DBA Name" value="${creditApp.customerDBAName}"></aui:input>

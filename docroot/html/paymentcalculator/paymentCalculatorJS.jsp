@@ -97,11 +97,20 @@ var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
 var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
 var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 
-	$(document).ready(function() {
+Liferay.Portlet.ready(function(portletId, node) {
+	
+	   /*
+    This function gets loaded after each and every portlet on the page.
+
+    portletId: the current portlet's id
+    node: the Alloy Node object of the current portlet
+    */
 
 		var proposals;
 		var proposalsString = '${proposalList}';
 		//console.log('proposalsString', proposalsString);
+		
+		
 		try {
 			if (proposalsString != "") {
 				proposals = jQuery.parseJSON('${proposalList}');
@@ -331,32 +340,41 @@ var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 		});
 
 	};
+	
+	var calculatePayments = function () {
+		var appFormId = '<portlet:namespace/>applicationForm';
+		var validator = Liferay.Form.get(appFormId).formValidator;
+		
+		console.log(validator.validate());
+		console.log(validator.hasErrors());
+		
+		if (!validator.hasErrors()) {
+			var dataJsonString = createRateFactorRuleRequestObjectString();
 
-	var calculatePayments = function() {
-
-		var dataJsonString = createRateFactorRuleRequestObjectString();
-
-		$.ajax({
-			type : "POST",
-			url : calculatePaymentsURL,
-			cache : false,
-			dataType : "Json",
-			data : {
-				selectedOptions : dataJsonString
-			},
-			success : function(data) {
-				console.log('calculatePayments success: ', data);
-				buildProposalOptionsTable(data);
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				console.log(textStatus);
-				console.log(XMLHttpRequest);
-				console.log(errorThrown);
-			}
-		});
-
-		return false;
+			$.ajax({
+				type : "POST",
+				url : calculatePaymentsURL,
+				cache : false,
+				dataType : "Json",
+				data : {
+					selectedOptions : dataJsonString
+				},
+				success : function(data) {
+					console.log('calculatePayments success: ', data);
+					buildProposalOptionsTable(data);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(textStatus);
+					console.log(XMLHttpRequest);
+					console.log(errorThrown);
+				}
+			});
+		} else {
+			console.log ('Errors: ', validator.errors);
+		}
+		
 	};
+	
 
 	var buildProposalOptionsTable = function(remoteData) {
 
