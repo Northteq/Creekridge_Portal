@@ -3,7 +3,6 @@ package com.tamarack.creekridge.liferay.paymentcalculator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -79,8 +77,7 @@ public class PaymentCalculator extends MVCPortlet {
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		
 		_log.info("render started");
-		
-		
+
 		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 
 		//page variables available
@@ -171,9 +168,7 @@ public class PaymentCalculator extends MVCPortlet {
 		_log.info("saveApplicationInfo actionrequest started: ");
 		
 		try {
-			
 			long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
-			
 			_log.info("creditAppId: " + creditAppId);
 			
 			if (creditAppId != 0)
@@ -187,32 +182,25 @@ public class PaymentCalculator extends MVCPortlet {
 			if (creditApp == null) {
 				creditApp = CreditAppLocalServiceUtil.addCreditApp (currentUser, themeDisplay);
 				_log.info("Application has been created. " + creditApp);
-				creditApp.setCreditAppStatusId(2);
+				creditApp.setCreditAppStatusId(1);
 			} else {
-				creditApp.setCreditAppStatusId(2);
 				_log.info("Application has been updated. " + creditApp);
 			}
 			
 			creditApp = PaymentCalculatorUtil.populateAppFromRequest(actionRequest, creditApp);
 			
 			//process proposalOptions
-			if (proposalOptionList == null || proposalOptionList.isEmpty()) {
-				_log.info("proposalOptionList is empty");
-				SessionErrors.add(actionRequest, "runCalculatorRequired");
-				actionResponse.setRenderParameter("openSection", "pricingOverview");
-				
-			} else {
+			 if (proposalOptionList != null && !proposalOptionList.isEmpty()) {
 				_log.info("proposalOptionList is populated: " + proposalOptionList.size());
-				
 				
 				for (ProposalOptionWrapper pow: proposalOptionList) {
 					_log.info("pow.propOption: " + pow.propOption);
 					
+					pow.propOption.setCreditAppId(creditApp.getCreditAppId());
+					pow.propOption = ProposalOptionLocalServiceUtil.updateProposalOption(pow.propOption);
+					
 					if (pow.propOption.getIncludeInProposal()) {
-						pow.propOption.setCreditAppId(creditApp.getCreditAppId());
-						pow.propOption = ProposalOptionLocalServiceUtil.updateProposalOption(pow.propOption);
 						hasProposalIncluded = true;
-
 					}
 					
 					if (pow.propOption.getUseForCreditApp()) {
@@ -224,26 +212,39 @@ public class PaymentCalculator extends MVCPortlet {
 					}
 				}
 				
-				if (!hasProposalIncluded) {
-					SessionErrors.add(actionRequest, "error-one-proposal-required");	
-				}
-				
-				actionResponse.setRenderParameter("openSection", "customerAndEquipmentInfo");
+				//need to figure out if we want to switch back to the action vs ajax
+				actionRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(proposalOptionList));
+				actionRequest.setAttribute("proposalOptionList", proposalOptionList);
 			}
 			
+			//validations 
+			if (!hasProposalIncluded) {
+				SessionErrors.add(actionRequest, "errorProposalRequired");	
+				creditApp.setCreditAppStatusId(1);
+				actionResponse.setRenderParameter("openSection", "pricingOverview");
+				
+			} else if (proposalOptionList == null || proposalOptionList.isEmpty()) {
+				_log.info("proposalOptionList is empty");
+				SessionErrors.add(actionRequest, "runCalculatorRequired");
+				creditApp.setCreditAppStatusId(1);
+				actionResponse.setRenderParameter("openSection", "pricingOverview");
+			} else {
+				SessionMessages.add(actionRequest, "appSaved");
+				creditApp.setCreditAppStatusId(2);
+				actionResponse.setRenderParameter("openSection", "customerAndEquipmentInfo");
+			}
 			
 			//update app info
 			creditApp.setModifiedDate(new Date());
 			creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
-			SessionMessages.add(actionRequest, "appSaved");
-		
+			
 		} catch (Exception e) {
 			_log.error(e);
 		}
 	
-		actionRequest.setAttribute("creditApp", creditApp);
-		actionResponse.setRenderParameter("creditAppId", String.valueOf(creditApp.getCreditAppId()));
 		
+		//actionRequest.setAttribute("creditApp", creditApp);
+		actionResponse.setRenderParameter("creditAppId", String.valueOf(creditApp.getCreditAppId()));
 	}
 	
 	public List<ProposalOptionWrapper> calculatePayments(String selectedOptions) throws Exception {

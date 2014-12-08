@@ -101,6 +101,7 @@ var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 
 		var proposals;
 		var proposalsString = '${proposalList}';
+		//console.log('proposalsString', proposalsString);
 		try {
 			if (proposalsString != "") {
 				proposals = jQuery.parseJSON('${proposalList}');

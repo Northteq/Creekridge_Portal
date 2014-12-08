@@ -53,7 +53,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
-		<resource-bundle>content/Language</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Payment Calculator Table</title>
 			<short-title>Payment Calculator Table</short-title>
@@ -93,7 +93,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
-		<resource-bundle>content/Language</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>View Credit Application</title>
 			<short-title>View Credit Application</short-title>
@@ -131,7 +131,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
-		<resource-bundle>/content/Language.porperties</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Payment Calculator Look Values</title>
 			<short-title>Payment Calculator Look Values</short-title>

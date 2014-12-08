@@ -107,7 +107,7 @@
 		</liferay-ui:panel>
 
 		<!-- APPLICATION PANEL  -->
-		<c:if test="${creditApp.creditAppId != null}">
+		<c:if test="${creditApp.creditAppStatusId == 2}">
 
 			<liferay-ui:panel cssClass="payCalc" title="Customer and Equipment Info"
 				id="customerAndEquipmentInfo"
