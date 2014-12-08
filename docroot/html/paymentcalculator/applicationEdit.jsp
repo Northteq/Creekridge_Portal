@@ -30,7 +30,7 @@
 	<c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 
 	<liferay-ui:panel-container accordion="true" extended="false">
-		<liferay-ui:panel title="Payment Calculator" id="paymentCalculator"
+		<liferay-ui:panel cssClass="payCalc" title="Payment Calculator" id="paymentCalculator"
 			state="${openSection=='paymentCalculator'? 'open' : 'collapsed' }">
 
 			<aui:col span="3" first="true">
@@ -90,7 +90,7 @@
 
 		<!-- PRICING OVERVIEW PANEL  -->
 
-		<liferay-ui:panel title="Pricing Overview" id="pricingOvervewResults"
+		<liferay-ui:panel cssClass="payCalc" title="Pricing Overview" id="pricingOvervewResults"
 			state="${openSection=='pricingOverview'? 'open' : 'collapsed' }">
 			<div id="proposalOptionsSection" style="display: none">
 
@@ -109,7 +109,7 @@
 		<!-- APPLICATION PANEL  -->
 		<c:if test="${creditApp.creditAppId != null}">
 
-			<liferay-ui:panel title="Customer and Equipment Info"
+			<liferay-ui:panel cssClass="payCalc" title="Customer and Equipment Info"
 				id="customerAndEquipmentInfo"
 				state="${openSection=='customerAndEquipmentInfo'? 'open' : 'collapsed' }">
 
@@ -238,7 +238,7 @@
 			<!-- http://fortawesome.github.io/Font-Awesome/3.2.1/icons/  -->
 			
 			<!-- PRINCIPAL INFO  -->
-			<liferay-ui:panel title="principal-info-section" id="principalInfo"
+			<liferay-ui:panel cssClass="payCalc" title="principal-info-section" id="principalInfo"
 				state="${openSection=='principalSection'? 'open' : 'collapsed' }">
 
 				<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
@@ -246,7 +246,7 @@
 			
 			
 			<!-- BANK REFERENCE  -->
-			<liferay-ui:panel title="bank-reference-info-section"
+			<liferay-ui:panel cssClass="payCalc" title="bank-reference-info-section"
 				id="bankRefereceInfo"
 				state="${openSection=='bankReferenceSection'? 'open' : 'collapsed' }">
 				<c:import
