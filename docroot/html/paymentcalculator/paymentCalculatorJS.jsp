@@ -97,7 +97,7 @@ var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
 var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
 var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 
-Liferay.Portlet.ready(function(portletId, node) {
+$(document).ready(function() {
 	
 	   /*
     This function gets loaded after each and every portlet on the page.
@@ -179,7 +179,8 @@ Liferay.Portlet.ready(function(portletId, node) {
 			equipmentPrice : eqPrice,
 			products : prodList,
 			purchaseOptions : poList,
-			termOptions : termList
+			termOptions : termList,
+			creditAppId: '${creditApp.creditAppId}'
 		};
 
 		$.each(productBoxes, function(i, el) {

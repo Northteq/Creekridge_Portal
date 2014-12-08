@@ -116,8 +116,6 @@ public class PaymentCalculator extends MVCPortlet {
 				
 			} //else app was found
 			
-			
-			
 			_log.info("creditApp: " + creditApp);
 			
 			if (creditApp != null) {
@@ -165,6 +163,7 @@ public class PaymentCalculator extends MVCPortlet {
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		CreditApp creditApp = null;
+		hasProposalIncluded = false;
 		_log.info("saveApplicationInfo actionrequest started: ");
 		
 		try {
@@ -249,13 +248,23 @@ public class PaymentCalculator extends MVCPortlet {
 	
 	public List<ProposalOptionWrapper> calculatePayments(String selectedOptions) throws Exception {
 		
+		
+		
 		List <RateFactorRule> rateFactorRuleList = new ArrayList <RateFactorRule> ();
 
 		JSONObject selectedOptionsObject = JSONFactoryUtil.createJSONObject(selectedOptions);
 		JSONArray productIdList = selectedOptionsObject.getJSONArray("products");		
 		JSONArray purchaseOptionIdList = selectedOptionsObject.getJSONArray("purchaseOptions");
 		JSONArray termIdList = selectedOptionsObject.getJSONArray("termOptions");
+		long creditAppId = selectedOptionsObject.getLong("creditAppId");
+		@SuppressWarnings("unchecked")
+		List <ProposalOption> existingPOList = (List<ProposalOption>) ProposalOptionLocalServiceUtil.fetchProposalOption(creditAppId);
 		
+		if (existingPOList != null) {
+			for (ProposalOption po : existingPOList) {
+				ProposalOptionLocalServiceUtil.deleteProposalOption(po);
+			}
+		}
 		
 		Double equipmentPrice = selectedOptionsObject.getDouble("equipmentPrice");
 
