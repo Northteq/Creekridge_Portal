@@ -36,6 +36,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.tamarack.creekridge.model.CreditApp;
 import com.tamarack.creekridge.model.CreditAppBankReference;
 import com.tamarack.creekridge.model.CreditAppDocument;
@@ -245,51 +246,11 @@ public class ManageDocumentUtil {
 	
 	private static void updateTokenMapCreditApp(HashMap<String, Object> tokenMap, CreditApp creditApp) {
 		tokenMap.putAll(creditApp.getModelAttributes());
-		tokenMap.put("customerName", creditApp.getCustomerName());
-		tokenMap.put("DBA", creditApp.getCustomerDBAName());
-		tokenMap.put("CustomerAddressLine1", creditApp.getCustomerAddress1());
-		tokenMap.put("customerAddressLine2", creditApp.getCustomerAddress2());
-		tokenMap.put("customerCity", creditApp.getCustomerCity());
-		tokenMap.put("customerState", creditApp.getCustomerState());
-		tokenMap.put("customerZip", creditApp.getCustomerZip());
-		tokenMap.put("businessFederalTaxID", creditApp.getCustomerBusinessFederalTaxID());
-		tokenMap.put("businessDesc", creditApp.getCustomerBusinessDesc());
-		tokenMap.put("customerContact", creditApp.getCustomerContact());
-		tokenMap.put("contactPhone", creditApp.getCustomerContactPhone());
-		tokenMap.put("contactFax", creditApp.getCustomerContactFax());
-		tokenMap.put("contactEmail", creditApp.getCustomerContactEmail());
-		tokenMap.put("businessIncorporatedState", creditApp.getCustomerBusinessIncorporatedState());
-		tokenMap.put("businessType", creditApp.getCustomerBusinessType());
-		tokenMap.put("equipmentDescription", creditApp.getEquipmentDesc());
-		tokenMap.put("equipmentAddressLine1", creditApp.getEquipmentAddress1());
-		tokenMap.put("equipmentAddressLine2", creditApp.getEquipmentAddress2());
-
+		updateTokenMapVendor(tokenMap, creditApp);
+		updateTokenMapUser(tokenMap, creditApp);
+		
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		tokenMap.put("businessStartDate", dateFormat.format(creditApp.getCustomerBusinessStartDate()));
-
-		tokenMap.put("groupName", "");
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(creditApp.getGroupId());
-			tokenMap.put("groupName", group.getName());
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-		
-		tokenMap.put("userFirstName", "");
-		tokenMap.put("userLastName", "");
-		tokenMap.put("userFirstName and userLastName", "");
-		tokenMap.put("user's email address in Liferay", "");
-		try {
-			User user = UserLocalServiceUtil.getUser(creditApp.getUserId());
-			tokenMap.put("userFirstName", user.getFirstName());
-			tokenMap.put("userLastName", user.getLastName());
-			tokenMap.put("userFirstName and userLastName", user.getFirstName() + " " + user.getLastName());
-			tokenMap.put("user's email address in Liferay", user.getEmailAddress());
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
 		
 		tokenMap.put("purchaseOption", "");
 		try {
@@ -320,8 +281,45 @@ public class ManageDocumentUtil {
 		
 		DecimalFormat decimalFormat = new DecimalFormat("###,##0.00");
 		tokenMap.put("equipmentPrice", decimalFormat.format(creditApp.getEquipmentPrice()));
-		tokenMap.put("paymentAmount in decimal format", decimalFormat.format(creditApp.getPaymentAmount()));
+		tokenMap.put("paymentAmount", decimalFormat.format(creditApp.getPaymentAmount()));
+	}
+	
+	private static void updateTokenMapVendor(HashMap<String, Object> tokenMap, CreditApp creditApp) {
+		tokenMap.put("VendorName", "");
+		tokenMap.put("VendorAddress", "");
+		tokenMap.put("VendorCity", "");
+		tokenMap.put("VendorState", "");
+		tokenMap.put("VendorZip", "");
+		tokenMap.put("VendorPhone", "");
 		
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
+			tokenMap.put("VendorName", group.getName());
+			ExpandoBridge bridge = group.getExpandoBridge();
+			tokenMap.put("VendorAddress", bridge.getAttribute("Vendor Address") + " " + bridge.getAttribute("Vendor Address 2"));
+			tokenMap.put("VendorCity", bridge.getAttribute("Vendor City"));
+			tokenMap.put("VendorState", bridge.getAttribute("Vendor State"));
+			tokenMap.put("VendorZip", bridge.getAttribute("Vendor Zip"));
+			tokenMap.put("VendorPhone", bridge.getAttribute("Vendor Phone"));
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+	}
+	
+	private static void updateTokenMapUser(HashMap<String, Object> tokenMap, CreditApp creditApp) {
+		tokenMap.put("userFirstName", "");
+		tokenMap.put("userLastName", "");
+		tokenMap.put("userEmail", "");
+		try {
+			User user = UserLocalServiceUtil.getUser(creditApp.getUserId());
+			tokenMap.put("userFirstName", user.getFirstName());
+			tokenMap.put("userLastName", user.getLastName());
+			tokenMap.put("userEmail", user.getEmailAddress());
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
 	}
 	
 	private static void updateTokenMapPrincipal(HashMap<String, Object> tokenMap, CreditAppPrincipal principal) {
@@ -355,48 +353,12 @@ public class ManageDocumentUtil {
 	
 	private static void updateTokenMapProposalLetter(HashMap<String, Object> tokenMap, CreditApp creditApp) {
 		tokenMap.putAll(creditApp.getModelAttributes());
-		tokenMap.put("CustomerLegalName", creditApp.getCustomerName());
-		tokenMap.put("CustomerAddressLine1", creditApp.getCustomerAddress1());
-		tokenMap.put("CustomerAddressLine2", creditApp.getCustomerAddress2());
-		tokenMap.put("City", creditApp.getCustomerCity());
-		tokenMap.put("State", creditApp.getCustomerState());
-		tokenMap.put("Zip", creditApp.getCustomerZip());
-		tokenMap.put("EquipmentDescription", creditApp.getEquipmentDesc());
 
 		DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy");
 		tokenMap.put("Date", dateFormat.format(new Date()));
 
-		tokenMap.put("userID firstName", "");
-		tokenMap.put("userID lastName", "");
-		tokenMap.put("user FirstName", "");
-		tokenMap.put("user LastName", "");
-		try {
-			User user = UserLocalServiceUtil.getUser(creditApp.getUserId());
-			tokenMap.put("userID firstName", user.getFirstName());
-			tokenMap.put("userID lastName", user.getLastName());
-			tokenMap.put("user FirstName", user.getFirstName());
-			tokenMap.put("user LastName", user.getLastName());
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-
-		tokenMap.put("VendorName", "");
-		tokenMap.put("VendorAddress", "");
-		tokenMap.put("VendorCity", "");
-		tokenMap.put("VendorState", "");
-		tokenMap.put("VendorZip", "");
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
-			tokenMap.put("VendorName", group.getName());
-			tokenMap.put("VendorAddress", group.getExpandoBridge().getAttribute("Vendor Address") + " " + group.getExpandoBridge().getAttribute("Vendor Address 2"));
-			tokenMap.put("VendorCity", group.getExpandoBridge().getAttribute("Vendor City"));
-			tokenMap.put("VendorState", group.getExpandoBridge().getAttribute("Vendor State"));
-			tokenMap.put("VendorZip", group.getExpandoBridge().getAttribute("Vendor Zip"));
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
+		updateTokenMapVendor(tokenMap, creditApp);
+		updateTokenMapUser(tokenMap, creditApp);
 		
 		DecimalFormat decimalFormat = new DecimalFormat("###,##0.00");
 		tokenMap.put("EquipmentPrice", decimalFormat.format(creditApp.getEquipmentPrice()));
@@ -404,14 +366,14 @@ public class ManageDocumentUtil {
 	
 	private static void updateTokenMapProposalOption(HashMap<String, Object> tokenMap, ProposalOption option, Product product, PurchaseOption purchaseOption, Term term, String counter) {
 		if (option == null) {
-			tokenMap.put("loop iteration starting at 1", "");
+			tokenMap.put("Proposal Option Number", "");
 			tokenMap.put("ProductName", "");
 			tokenMap.put("PurchaseOptionName", "");
 			tokenMap.put("TermName", "");
 			tokenMap.put("Payment Amount", "");
 		}
 		else {
-			tokenMap.put("loop iteration starting at 1", counter);
+			tokenMap.put("Proposal Option Number", counter);
 			tokenMap.put("ProductName", product.getProductName());
 			tokenMap.put("PurchaseOptionName", purchaseOption.getPurchaseOptionName());
 			tokenMap.put("TermName", term.getTermName());
