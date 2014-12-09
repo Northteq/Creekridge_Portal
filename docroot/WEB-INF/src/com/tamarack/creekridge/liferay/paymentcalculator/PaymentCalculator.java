@@ -210,10 +210,6 @@ public class PaymentCalculator extends MVCPortlet {
 						creditApp.setEquipmentPrice(pow.eqPrice);
 					}
 				}
-				
-				//need to figure out if we want to switch back to the action vs ajax
-				actionRequest.setAttribute("proposalList", JSONFactoryUtil.looseSerialize(proposalOptionList));
-				actionRequest.setAttribute("proposalOptionList", proposalOptionList);
 			}
 			
 			//validations 
@@ -248,8 +244,6 @@ public class PaymentCalculator extends MVCPortlet {
 	
 	public List<ProposalOptionWrapper> calculatePayments(String selectedOptions) throws Exception {
 		
-		
-		
 		List <RateFactorRule> rateFactorRuleList = new ArrayList <RateFactorRule> ();
 
 		JSONObject selectedOptionsObject = JSONFactoryUtil.createJSONObject(selectedOptions);
@@ -257,14 +251,22 @@ public class PaymentCalculator extends MVCPortlet {
 		JSONArray purchaseOptionIdList = selectedOptionsObject.getJSONArray("purchaseOptions");
 		JSONArray termIdList = selectedOptionsObject.getJSONArray("termOptions");
 		long creditAppId = selectedOptionsObject.getLong("creditAppId");
-		@SuppressWarnings("unchecked")
-		List <ProposalOption> existingPOList = (List<ProposalOption>) ProposalOptionLocalServiceUtil.fetchProposalOption(creditAppId);
+		_log.info("recalculating po for creditAppId: " + creditAppId);
 		
+		List <ProposalOption> existingPOList = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditAppId);
+		_log.info("existingPOList po for creditAppId: " + existingPOList.size());
 		if (existingPOList != null) {
 			for (ProposalOption po : existingPOList) {
-				ProposalOptionLocalServiceUtil.deleteProposalOption(po);
+				_log.info("Deleting po : " + ProposalOptionLocalServiceUtil.deleteProposalOption(po));
 			}
 		}
+		
+		CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+		creditApp.setRateFactorRuleId(0);
+		creditApp.setTermId(0);
+		creditApp.setProductId(0);
+		creditApp.setPurchaseOptionId(0);
+		creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 		
 		Double equipmentPrice = selectedOptionsObject.getDouble("equipmentPrice");
 

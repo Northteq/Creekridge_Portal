@@ -98,23 +98,66 @@ var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
 var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 
 $(document).ready(function() {
-	
-	   /*
-    This function gets loaded after each and every portlet on the page.
-
-    portletId: the current portlet's id
-    node: the Alloy Node object of the current portlet
-    */
-
 		var proposals;
 		var proposalsString = '${proposalList}';
-		//console.log('proposalsString', proposalsString);
-		
-		
+
 		try {
+			
 			if (proposalsString != "") {
 				proposals = jQuery.parseJSON('${proposalList}');
 				buildProposalOptionsTable(proposals);
+				
+				var poOptions = '';
+				var poNameMap = {};
+				var termNameMap = {};
+				var termOptions = '';
+				console.log(proposals);
+				for (var i = 0; i < proposals.length; i++){
+					var po = proposals[i];
+					$.each ($('#productList').find('input'), function (index, el){
+						if ($(el).val() == po.propOption.productId) {
+							$(el).prop('checked', true);
+						}
+							
+					});
+					
+					var poNameId = po.propOption.purchaseOptionId;
+					
+					if (poNameMap[poNameId] == undefined) {
+						poNameMap[poNameId] = po.prodOptionName;
+						
+						poOptions += '<label class="checkbox">'
+						poOptions += '<input type="checkbox" name="'
+								+ po.prodOptionName + '" value="'
+								+ po.propOption.purchaseOptionId
+								+ '"  onchange="getTermsOptions()" checked="checked">'
+								+ po.prodOptionName + '</input>';
+						poOptions += '</label>';
+					}
+					
+					var termNameId = po.propOption.termId;
+					if (termNameMap[termNameId] == undefined) {
+						termNameMap[termNameId] = po.termName;
+						termOptions += '<label class="checkbox">'
+						termOptions += '<input type="checkbox" checked="checked" name="'+ po.termName + '" value="'+ po.propOption.termId+'">'
+								+ po.termName + '</input>';
+						termOptions += '</label>';
+					}
+					
+				} //end for po
+				
+				
+				
+				
+				$('#purchaseOptionsList').append(poOptions);
+				$('#purchaseOptionSection').show();
+				
+				$('#termsList').append(termOptions);
+				$('#termSection').show();
+				
+				//need to disable claculate button
+				$('#calculatePaymentsButton').attr("disabled", "disabled");
+				
 			}
 
 		} catch (e) {
@@ -195,6 +238,7 @@ $(document).ready(function() {
 		$('#termsList').empty();
 		$('#termSection').hide();
 		$('#purchaseOptionSection').hide();
+		$('#calculatePaymentsButton').removeAttr("disabled");
 	};
 
 	var getPurchaseOptions = function() {
