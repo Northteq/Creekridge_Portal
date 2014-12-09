@@ -253,20 +253,22 @@ public class PaymentCalculator extends MVCPortlet {
 		long creditAppId = selectedOptionsObject.getLong("creditAppId");
 		_log.info("recalculating po for creditAppId: " + creditAppId);
 		
-		List <ProposalOption> existingPOList = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditAppId);
-		_log.info("existingPOList po for creditAppId: " + existingPOList.size());
-		if (existingPOList != null) {
-			for (ProposalOption po : existingPOList) {
-				_log.info("Deleting po : " + ProposalOptionLocalServiceUtil.deleteProposalOption(po));
+		if (creditAppId != 0) {
+			List <ProposalOption> existingPOList = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditAppId);
+			_log.info("existingPOList po for creditAppId: " + existingPOList.size());
+			if (existingPOList != null) {
+				for (ProposalOption po : existingPOList) {
+					_log.info("Deleting po : " + ProposalOptionLocalServiceUtil.deleteProposalOption(po));
+				}
 			}
+			
+			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+			creditApp.setRateFactorRuleId(0);
+			creditApp.setTermId(0);
+			creditApp.setProductId(0);
+			creditApp.setPurchaseOptionId(0);
+			creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 		}
-		
-		CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
-		creditApp.setRateFactorRuleId(0);
-		creditApp.setTermId(0);
-		creditApp.setProductId(0);
-		creditApp.setPurchaseOptionId(0);
-		creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 		
 		Double equipmentPrice = selectedOptionsObject.getDouble("equipmentPrice");
 
