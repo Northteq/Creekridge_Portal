@@ -20,9 +20,9 @@
 	<dl class="dl-horizontal">
 		<dt>Credit App#</dt>
 		<dd>${creditApp.creditAppId}</dd>
-		<dt>Customer Name</dt>
+		<dt>Name</dt>
 		<dd>${creditApp.customerName}</dd>
-		<dt>Customer DBA Name</dt>
+		<dt>DBA Name</dt>
 		<dd>${creditApp.customerDBAName}</dd>
 		
 		<dt>Phone</dt>
@@ -61,10 +61,10 @@
 
 <aui:fieldset column="true" label="Business Info">
 	<dl class="dl-horizontal">
-		<dt>Business Type</dt>
+		<dt>Type</dt>
 		<dd>${creditApp.customerBusinessType}</dd>
 		
-		<dt>Business Start Date</dt>
+		<dt>Start Date</dt>
 		<dd><fmt:formatDate value="${creditApp.customerBusinessStartDate}"
 						pattern="MM/dd/yyyy" var="busStartDate" />${busStartDate}</dd>
 		<dt>Incorporated State</dt>
@@ -72,7 +72,7 @@
 		<dt>Ferederal Tax Id</dt>
 		<dd>${creditApp.customerBusinessFederalTaxID}</dd>
 		
-		<dt>Business Description</dt>
+		<dt>Description</dt>
 		<dd>${creditApp.customerBusinessDesc}</dd>
 	</dl>
 </aui:fieldset>
