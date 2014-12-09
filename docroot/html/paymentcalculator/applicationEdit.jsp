@@ -18,7 +18,7 @@
 
 <aui:form method="post"
 	name="applicationForm">
-	<c:if test="${creditApp.creditAppId != 0}">
+	<c:if test="${creditApp.creditAppId != 0 && creditApp != null}">
 		<h3 id="screenTitle">Application #${creditApp.creditAppId} ${creditApp.customerName}</h3>
 	</c:if>
 
