@@ -63,7 +63,14 @@ YUI().use(
 		
 		if (A.one('#submitApplicationButton') != null) {
 			 A.one('#submitApplicationButton').on('click', function (e) {
-				  termsPanel.show();
+				 
+					validateForm();
+					
+					if (!validator.hasErrors()) {
+						 termsPanel.show();
+					}
+				 
+				 
 			  });
 		}
 		  
@@ -81,5 +88,6 @@ YUI().use(
 		}
 	} 
 );
+
 
 </script>

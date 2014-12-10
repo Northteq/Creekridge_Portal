@@ -160,6 +160,22 @@ public class PaymentCalculator extends MVCPortlet {
 		
 	}
 	
+	public void saveAndExitApplication (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("saveAndExitApplication actionrequest started: ");
+		try {
+			saveApplicationInfo (actionRequest, actionResponse);
+			//actionResponse.sendRedirect("/html/viewCreditApplication/view.jsp");
+			
+		} catch (Exception e) {
+			SessionErrors.add(actionRequest, "genericError");
+			_log.error(e);
+		}	
+		
+		_log.info("saveAndExitApplication actionrequest ended: ");
+	}
+	
+	
+	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		CreditApp creditApp = null;
@@ -238,7 +254,7 @@ public class PaymentCalculator extends MVCPortlet {
 		}
 	
 		
-		//actionRequest.setAttribute("creditApp", creditApp);
+		actionRequest.setAttribute("creditApp", creditApp);
 		actionResponse.setRenderParameter("creditAppId", String.valueOf(creditApp.getCreditAppId()));
 	}
 	

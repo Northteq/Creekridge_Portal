@@ -29,11 +29,24 @@
 	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
 
+<portlet:actionURL name="saveAndExitApplication"
+	var="saveAndExitApplicationURL">
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
+</portlet:actionURL>
+
 <portlet:actionURL name="submitApplication" var="submitApplicationURL">
 	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
 
 <script type="text/javascript">
+
+var processProductsSelectionURL = "<%=processProductsSelectionURL%>";
+var processPurchaseOptionsSelectionURL = "<%=processPurchaseOptionsSelectionURL%>";
+var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
+var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
+var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
+var appFormId = '<portlet:namespace/>applicationForm';
+
 
 
 AUI().use('aui-datepicker', function(A) {
@@ -59,21 +72,28 @@ AUI().use('aui-datepicker', function(A) {
 
 function processAppButton(action){
 	
-	var formEl = $('[name="<portlet:namespace/>applicationForm"]');
-
-  if(action==0){
-	  formEl.attr('action',"<%=saveApplicationInfoURL%>");
-  }else{
-	  formEl.attr('action',"<%=submitApplicationURL%>");
-  }
-  $(formEl).submit();
+	var formEl = $('#'+appFormId);
+	
+	validateForm();
+	if (!validator.hasErrors()) {
+		if(action==0){
+			formEl.attr('action',"<%=saveApplicationInfoURL%>");
+	  	} else if (action==1){
+	  		console.log ('save and exit');
+	  		formEl.attr('action',"<%=saveAndExitApplicationURL%>");
+	  		window.location.replace('view-applications');
+		}else{
+		  	formEl.attr('action',"<%=submitApplicationURL%>");
+	  	}
+	  	
+	 	console.log($(formEl).submit());
+	} 
 }
 
 var copyCustomerAddress = function(sameAddressEl) {
 
 	if ($(sameAddressEl).is(':checked') == false) {
-		
-		
+	
 		$('#<portlet:namespace/>equipmentAddress1').val(
 				$('#<portlet:namespace/>customerAddress1').val());
 		$('#<portlet:namespace/>equipmentAddress2').val(
@@ -91,15 +111,11 @@ var copyCustomerAddress = function(sameAddressEl) {
 	}
 };
 
-var processProductsSelectionURL = "<%=processProductsSelectionURL%>";
-var processPurchaseOptionsSelectionURL = "<%=processPurchaseOptionsSelectionURL%>";
-var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
-var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
-var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
-
 $(document).ready(function() {
 		var proposals;
 		var proposalsString = '${proposalList}';
+		
+		$('.label-required').text('*');
 
 		try {
 			
@@ -145,10 +161,7 @@ $(document).ready(function() {
 					}
 					
 				} //end for po
-				
-				
-				
-				
+
 				$('#purchaseOptionsList').append(poOptions);
 				$('#purchaseOptionSection').show();
 				
@@ -157,9 +170,7 @@ $(document).ready(function() {
 				
 				//need to disable claculate button
 				$('#calculatePaymentsButton').attr("disabled", "disabled");
-				
 			}
-
 		} catch (e) {
 			console.log('error getting proposals ', e);
 		}
@@ -177,17 +188,14 @@ $(document).ready(function() {
 
 	var navigateToPrincipal = function() {
 		$("*[data-persist-id='principalInfo']").click();
-
 	};
 
 	var navigateTocustomerAndEquipmentInfo = function() {
 		$("*[data-persist-id='customerAndEquipmentInfo']").click();
-
 	};
 
 	var navigateToPricingOverview = function() {
 		$("*[data-persist-id='pricingOvervewResults']").click();
-
 	};
 
 	var createRateFactorRuleRequestObjectString = function() {
@@ -268,11 +276,9 @@ $(document).ready(function() {
 					resetAllSections();
 
 					$.each(data, function(i, el) {
-						poOptions += '<label class="checkbox">'
-						poOptions += '<input type="checkbox" name="'
-								+ el.purchaseOptionName + '" value="'
-								+ el.purchaseOptionId
-								+ '"  onchange="getTermsOptions()">'
+						poOptions += '<label class="checkbox">';
+						poOptions += '<input type="checkbox" name="' + el.purchaseOptionName + '" value="' 
+								+ el.purchaseOptionId + '"  onchange="getTermsOptions()">'
 								+ el.purchaseOptionName + '</input>';
 						poOptions += '</label>';
 					});
@@ -299,40 +305,36 @@ $(document).ready(function() {
 		console.log('selectedProducts', dataJsonString);
 
 		$.ajax({
-					type : "POST",
-					url : processPurchaseOptionsSelectionURL,
-					cache : false,
-					dataType : "Json",
-					data : {
-						selectedOptions : dataJsonString
-					},
-					success : function(data) {
-						console.log('getTermsOptions success: ', data);
+			type : "POST",
+			url : processPurchaseOptionsSelectionURL,
+			cache : false,
+			dataType : "Json",
+			data : {
+				selectedOptions : dataJsonString
+			},
+			success : function(data) {
+				console.log('getTermsOptions success: ', data);
 
-						var termOptions = '';
-						$('#termsList').empty();
+				var termOptions = '';
+				$('#termsList').empty();
 
-						$.each(
-							data,
-							function(i, el) {
-								termOptions += '<label class="checkbox">'
-								
-								
-								
-								termOptions += '<input type="checkbox" name="'+ el.termName + '" value="'+ el.termId+'">'
-										+ el.termName + '</input>';
-								termOptions += '</label>';
-							});
+				$.each(
+					data,
+					function(i, el) {
+						termOptions += '<label class="checkbox">';
+						termOptions += '<input type="checkbox" name="'+ el.termName + '" value="'+ el.termId+'">' + el.termName + '</input>';
+						termOptions += '</label>';
+					});
 
-						$('#termsList').append(termOptions);
-						$('#termSection').show();
-					},
-					error : function(XMLHttpRequest, textStatus, errorThrown) {
-						console.log(textStatus);
-						console.log(XMLHttpRequest);
-						console.log(errorThrown);
-					}
-				});
+				$('#termsList').append(termOptions);
+				$('#termSection').show();
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(textStatus);
+				console.log(XMLHttpRequest);
+				console.log(errorThrown);
+			}
+		});
 
 	};
 
@@ -387,7 +389,7 @@ $(document).ready(function() {
 	};
 	
 	var calculatePayments = function () {
-		var appFormId = '<portlet:namespace/>applicationForm';
+
 		var validator = Liferay.Form.get(appFormId).formValidator;
 		
 		console.log(validator.validate());
@@ -447,92 +449,122 @@ $(document).ready(function() {
 								});
 				}
 
-					var propFormatter = function(o) {
+				var propFormatter = function(o) {
 
-						//need to add input elements for some fields
-						if (o.column.name == 'useForCreditApp') {
-							
-							var disabledBox = '${viewOnly==true ? "disabled=\"disabled\"" : ""}';
-							var radioBox = '<input type="radio" name="useForCreditApp"';
-							radioBox += disabledBox;
-							radioBox += 'value="'
-									+ o.data.propOption.proposalOptionId
-									+ '"';
+					//need to add input elements for some fields
+					if (o.column.name == 'useForCreditApp') {
+						
+						var disabledBox = '${viewOnly==true ? "disabled=\"disabled\"" : ""}';
+						var radioBox = '<input type="radio" name="useForCreditApp"';
+						radioBox += disabledBox;
+						radioBox += 'value="'
+								+ o.data.propOption.proposalOptionId
+								+ '"';
 
-							if (o.data.propOption.useForCreditApp) {
-								radioBox += 'checked ';
-							}
-
-							radioBox += ' onchange="updateUseForApplication($(this))"/>';
-
-							return radioBox;
-
-						} else if (o.column.name == 'includeInProposal') {
-							var disabledBox = '${viewOnly==true ? "disabled=\"disabled\"" : ""}';
-							var inputBox = '<input type="checkbox" name="includeInProposal"';
-							inputBox += disabledBox;
-							inputBox += ' value="'
-									+ o.data.propOption.proposalOptionId
-									+ '"';
-
-							if (o.data.propOption.includeInProposal) {
-								inputBox += 'checked ';
-							}
-
-							inputBox += ' onchange="updateUseInProposalSelection($(this))"/>';
-
-							return inputBox;
-						} else {
-							return o.data.propOption[o.column.name];
+						if (o.data.propOption.useForCreditApp) {
+							radioBox += 'checked ';
 						}
+
+						radioBox += ' onchange="updateUseForApplication($(this))"/>';
+
+						return radioBox;
+
+					} else if (o.column.name == 'includeInProposal') {
+						var disabledBox = '${viewOnly==true ? "disabled=\"disabled\"" : ""}';
+						var inputBox = '<input type="checkbox" name="includeInProposal"';
+						inputBox += disabledBox;
+						inputBox += ' value="'
+								+ o.data.propOption.proposalOptionId
+								+ '"';
+
+						if (o.data.propOption.includeInProposal) {
+							inputBox += 'checked ';
+						}
+
+						inputBox += ' onchange="updateUseInProposalSelection($(this))"/>';
+
+						return inputBox;
+					} else {
+						return o.data.propOption[o.column.name];
 					}
+				}
 
-							var nestedCols = [ {
-								label : 'Option #',
-								key : 'proposalOptionId',
-								sortable : true,
-								className : 'purchaseOptionsColumn'
-							}, {
-								key : 'productName',
-								label : 'Product',
-								className : 'purchaseOptionsColumn'
-							}, {
-								key : 'prodOptionName',
-								label : 'Purchase Option',
-								className : 'purchaseOptionsColumn'
-							}, {
-								key : 'termName',
-								label : 'Term',
-								className : 'purchaseOptionsColumn'
-							}, {
-								key : 'paymentAmount',
-								label : 'Payment Amount',
-								sortable : true,
-								formatter : currencyFormatter,
-								className : 'purchaseOptionsColumn'
-							}, {
-								key : 'propOption',
-								label : 'Include in Proposal',
-								formatter : propFormatter,
-								allowHTML : true,
-								name : 'includeInProposal',
-								className : 'purchaseOptionsColumn'
-							}, {
-								key : 'useForCreditApp',
-								label : 'Use for Credit Application',
-								formatter : propFormatter,
-								allowHTML : true,
-								name : 'useForCreditApp',
-								className : 'purchaseOptionsColumn'
-							} ];
+				var nestedCols = [ {
+					label : 'Option #',
+					key : 'proposalOptionId',
+					sortable : true,
+					className : 'purchaseOptionsColumn'
+				}, {
+					key : 'productName',
+					label : 'Product',
+					className : 'purchaseOptionsColumn'
+				}, {
+					key : 'prodOptionName',
+					label : 'Purchase Option',
+					className : 'purchaseOptionsColumn'
+				}, {
+					key : 'termName',
+					label : 'Term',
+					className : 'purchaseOptionsColumn'
+				}, {
+					key : 'paymentAmount',
+					label : 'Payment Amount',
+					sortable : true,
+					formatter : currencyFormatter,
+					className : 'purchaseOptionsColumn'
+				}, {
+					key : 'propOption',
+					label : 'Include in Proposal',
+					formatter : propFormatter,
+					allowHTML : true,
+					name : 'includeInProposal',
+					className : 'purchaseOptionsColumn'
+				}, {
+					key : 'useForCreditApp',
+					label : 'Use for Credit Application',
+					formatter : propFormatter,
+					allowHTML : true,
+					name : 'useForCreditApp',
+					className : 'purchaseOptionsColumn'
+				} ];
 
-							var dataTable = new Y.DataTable({
-								columns : nestedCols,
-								data : remoteData
-							}).render('#proposalOptionsTable');
-							$('#proposalOptionsSection').show();
-							$('*[data-persist-id="pricingOvervewResults"]')
-									.click();
-						});
+				var dataTable = new Y.DataTable({
+					columns : nestedCols,
+					data : remoteData
+				}).render('#proposalOptionsTable');
+				$('#proposalOptionsSection').show();
+				$('*[data-persist-id="pricingOvervewResults"]')
+						.click();
+			});
+	};
+	
+	var outputErrors = function (errors) {
+		var htmlError = '<ul>';
+		
+		for (i in errors) {
+			var elId = errors[i];
+			var fieldLabel = $('#'+elId).parent().find('label').text().replace('*', '');
+			var fieldError = $('#'+elId).parent().find('.form-validator-stack').text();
+			
+			htmlError +=  '<li><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only"></span>';
+		 	htmlError += fieldLabel + ': ' + fieldError;
+		 	htmlError += '</li>';
+		}
+		
+		htmlError += '<ul/>';
+		
+		$('#validationErrors').append(htmlError);
+	};
+	
+	var validateForm = function () {
+		var validator = Liferay.Form.get(appFormId).formValidator;
+		$('#validationErrors').empty();
+		validator.validate();
+		if (validator.hasErrors()) {
+			outputErrors (Object.keys(validator.errors));
+			$('#validationErrors').show();
+		} else {
+			$('#validationErrors').hide();
+		}
 	};
 </script>

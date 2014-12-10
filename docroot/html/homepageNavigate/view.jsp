@@ -22,6 +22,11 @@
 	<portlet:param name="mvcPath" value="/html/homepageNavigate/seedData.jsp" />
 </portlet:renderURL>
 
+<portlet:renderURL var="viewApplicationsURL">
+
+	<portlet:param name="mvcPath" value="/html/viewCreditApplication/view.jsp" />
+</portlet:renderURL>
+
 <a href="<%=seedDataURL %>" style="display:none">Seed Data</a>
 
 <div class="container">
@@ -34,7 +39,7 @@
 	</div>
 
 	<div class="span2">
-		<a class="btn btn-success btn-block" href="view-application"><i class="icon-pencil"></i> View Application </a>
+		<a class="btn btn-success btn-block" href="view-applications"><i class="icon-th-list"></i> View Applications </a>
 	</div>
 	
 	

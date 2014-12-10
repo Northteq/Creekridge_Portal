@@ -43,7 +43,7 @@
 		</c:if>	
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">
-				<a class="btn btn-block btn-small btn-saveexit" id="exitApplicationButton" href="view-applications" onClick="processAppButton(0)"><i class="icon-signout"></i> Save and Exit </a>
+				<a class="btn btn-block btn-small btn-saveexit" id="exitApplicationButton" onClick="processAppButton(1)"><i class="icon-signout"></i> Save and Exit </a>
 			</div>
 		</c:if>
 		

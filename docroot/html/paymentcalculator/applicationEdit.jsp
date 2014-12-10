@@ -8,16 +8,18 @@
 <%@ include file="init.jsp"%>
 
 
-<liferay-ui:error key="errorProposalRequired"
-	message="error-one-proposal-required" />
-<liferay-ui:error key="runCalculatorRequired"
-	message="error-run-calculator-required" />
+<liferay-ui:error key="errorProposalRequired" message="error-one-proposal-required" />
+<liferay-ui:error key="runCalculatorRequired" message="error-run-calculator-required" />
+<liferay-ui:error key="genericError" message="generic-error"/>
 <liferay-ui:success key="appSaved" message="app-saved-successfully" />
 
+<div class="alert alert-danger" role="alert" id="validationErrors" style="display:none">
+
+</div>
+
+<aui:form method="post" name="applicationForm">
 
 
-<aui:form method="post"
-	name="applicationForm">
 	<c:if test="${creditApp.creditAppId != 0 && creditApp != null}">
 		<h3 id="screenTitle">Application #${creditApp.creditAppId} ${creditApp.customerName}</h3>
 	</c:if>
@@ -33,10 +35,14 @@
 		<liferay-ui:panel cssClass="payCalc" title="Payment Calculator" id="paymentCalculator"
 			state="${openSection=='paymentCalculator'? 'open' : 'collapsed' }">
 
-			<aui:col span="3" first="true">
-				<aui:input id="equipmentPrice" type="number" step="any"
-					name="equipmentPrice" size="7" style="width:150px" required="true"
-					value="${creditApp.equipmentPrice}"></aui:input>
+			<aui:col span="3" first="true"> 
+				<aui:input id="equipmentPrice" step="any"
+					name="equipmentPrice" size="7" style="width:150px"
+					value="${creditApp.equipmentPrice}">
+					 <aui:validator name="min">0.01</aui:validator>
+					 <aui:validator name="required" errorMessage="*"/>
+					 <aui:validator name="number"/>
+					</aui:input>
 			</aui:col>
 
 			<aui:col span="3" id="product">
@@ -115,39 +121,60 @@
 
 				<aui:fieldset column="false" label="Customer">
 					<aui:input inlineField="true" name="customerName"
-						value="${creditApp.customerName}"></aui:input>
+						value="${creditApp.customerName}">
+						<aui:validator name="required" />
+					</aui:input>
 					<aui:input inlineField="true" name="customerDBAName"
 						label="DBA Name" value="${creditApp.customerDBAName}"></aui:input>
 				</aui:fieldset>
 
 				<aui:fieldset column="false" label="Customer Contact">
 					<aui:input inlineField="true" name="customerContact"
-						value="${creditApp.customerContact}"></aui:input>
+						value="${creditApp.customerContact}">
+						<aui:validator name="alpha" />
+						<aui:validator name="required" />
+					</aui:input>
 					<aui:input inlineField="true" name="customerContactEmail"
-						type="email" value="${creditApp.customerContactEmail}"></aui:input>
+						 value="${creditApp.customerContactEmail}">
+						<aui:validator name="email" />
+					</aui:input>
 					<aui:input inlineField="true" name="customerContactPhone"
-						type="tel" value="${creditApp.customerContactPhone}"></aui:input>
+						value="${creditApp.customerContactPhone}">
+						<aui:validator name="digits"></aui:validator>	
+					</aui:input>
 					<aui:input inlineField="true" name="customerContactFax"
-						value="${creditApp.customerContactFax}"></aui:input>
+						value="${creditApp.customerContactFax}">
+						<aui:validator name="digits"></aui:validator>
+					</aui:input>
 				</aui:fieldset>
 
 				<aui:fieldset column="false" label="Customer Address">
 					<aui:input inlineField="true" name="customerAddress1"
-						value="${creditApp.customerAddress1}"></aui:input>
+						value="${creditApp.customerAddress1}">
+						<aui:validator name="required" />
+					</aui:input>
+					
 					<aui:input inlineField="true" name="customerAddress2"
-						value="${creditApp.customerAddress2}"></aui:input>
+						value="${creditApp.customerAddress2}">
+					
+					</aui:input>
+					
 					<aui:input inlineField="true" name="customerCity"
-						value="${creditApp.customerCity}"></aui:input>
+						value="${creditApp.customerCity}">
+						<aui:validator name="required" />
+					</aui:input>
 
 					<aui:select inlineField="true" name="customerState"
-						showEmptyOption="true">
+						showEmptyOption="true" required="true">
 						<c:forEach items="${statesList}" var="state">
 							<aui:option value="${state.id}" label="${state.name}"
 								selected="${creditApp.customerState == state.id}" />
 						</c:forEach>
+						
 					</aui:select>
 					<aui:input inlineField="true" name="customerZip"
-						value="${creditApp.customerZip}"></aui:input>
+						value="${creditApp.customerZip}">
+						</aui:input>
 
 				</aui:fieldset>
 
@@ -164,7 +191,9 @@
 					<fmt:formatDate value="${creditApp.customerBusinessStartDate}"
 						pattern="MM/dd/yyyy" var="busStartDate" />
 					<aui:input id="customerBusinessStartDate" inlineField="true"
-						name="customerBusinessStartDate" value="${busStartDate}"></aui:input>
+						name="customerBusinessStartDate" value="${busStartDate}">
+						<aui:validator name="date"/>
+					</aui:input>
 
 					<%-- <liferay-ui:input-date dayParam="d1" monthParam="m1" yearParam="y1"  yearValue="2014" monthValue="09" dayValue="25"  autoFocus="true">Open Day</liferay-ui:input-date>
  --%>
@@ -218,7 +247,9 @@
 
 				<aui:fieldset>
 					<aui:input type="textarea" rows="3" name="equipmentDesc"
-						value="${creditApp.equipmentDesc}"></aui:input>
+						value="${creditApp.equipmentDesc}">
+						<aui:validator name="required" />	
+					</aui:input>
 				</aui:fieldset>
 				
 				<aui:button-row>
