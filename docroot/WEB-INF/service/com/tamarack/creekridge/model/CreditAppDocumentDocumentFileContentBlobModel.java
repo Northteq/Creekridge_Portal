@@ -19,7 +19,7 @@ import java.sql.Blob;
 /**
  * The Blob model class for lazy loading the documentFileContent column in CreditAppDocument.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see CreditAppDocument
  * @generated
  */

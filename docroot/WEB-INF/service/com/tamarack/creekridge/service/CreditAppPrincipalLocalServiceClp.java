@@ -17,7 +17,7 @@ package com.tamarack.creekridge.service;
 import com.liferay.portal.service.InvokableLocalService;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public class CreditAppPrincipalLocalServiceClp

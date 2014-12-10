@@ -23,8 +23,11 @@ create index IX_FD49EBAE on eCreekRidge_ProposalOption (proposalOptionId);
 create index IX_FD38944C on eCreekRidge_PurchaseOption (purchaseOptionId);
 create unique index IX_99E231FC on eCreekRidge_PurchaseOption (purchaseOptionName);
 
+create index IX_F0FF4E64 on eCreekRidge_RateFactorRule (active_, vendorId);
 create index IX_8E4796B6 on eCreekRidge_RateFactorRule (active_, vendorId, productId);
 create index IX_6A940E7B on eCreekRidge_RateFactorRule (active_, vendorId, productId, purchaseOptionId);
+create index IX_84B4DBD6 on eCreekRidge_RateFactorRule (active_, vendorId, productId, purchaseOptionId, termId);
+create index IX_794BB7A1 on eCreekRidge_RateFactorRule (active_, vendorId, productId, purchaseOptionId, termId, minPrice);
 create unique index IX_B9CDF552 on eCreekRidge_RateFactorRule (active_, vendorId, productId, termId, purchaseOptioId);
 create index IX_81EEB016 on eCreekRidge_RateFactorRule (active_, vendorId, productId, termId, purchaseOptionId);
 create index IX_A1D46776 on eCreekRidge_RateFactorRule (rateFactorRuleId);

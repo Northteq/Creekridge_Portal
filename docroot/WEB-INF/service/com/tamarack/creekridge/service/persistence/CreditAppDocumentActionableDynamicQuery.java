@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.CreditAppDocument;
 import com.tamarack.creekridge.service.CreditAppDocumentLocalServiceUtil;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public abstract class CreditAppDocumentActionableDynamicQuery

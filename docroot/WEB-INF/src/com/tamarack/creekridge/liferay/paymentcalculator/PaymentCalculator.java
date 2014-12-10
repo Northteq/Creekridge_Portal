@@ -3,8 +3,10 @@ package com.tamarack.creekridge.liferay.paymentcalculator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -48,6 +50,7 @@ import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 import com.tamarack.creekridge.service.ProductLocalServiceUtil;
 import com.tamarack.creekridge.service.ProposalOptionLocalServiceUtil;
 import com.tamarack.creekridge.service.PurchaseOptionLocalServiceUtil;
+import com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil;
 import com.tamarack.creekridge.service.TermLocalServiceUtil;
 
 /**
@@ -91,7 +94,20 @@ public class PaymentCalculator extends MVCPortlet {
 		currentUser = themeDisplay.getUser();
 	
 		try {
-			productOptions = ProductLocalServiceUtil.getProducts(-1, -1);
+			List <RateFactorRule> rfrList = RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendor(vendorId, true);
+			
+			if (rfrList != null) {
+				
+				Map <Long, Product> rfrSet = new HashMap <Long, Product> ();
+				
+				for (RateFactorRule rfr: rfrList) {
+					if (!rfrSet.containsKey(rfr.getProductId()))
+						rfrSet.put(rfr.getProductId(), ProductLocalServiceUtil.getProduct(rfr.getProductId()));
+				}
+				
+				productOptions.addAll(rfrSet.values());
+			}
+			
 			renderRequest.setAttribute("productOptions", productOptions);
 				
 			creditApp = (CreditApp) renderRequest.getAttribute("creditApp");
@@ -286,7 +302,7 @@ public class PaymentCalculator extends MVCPortlet {
 			creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 		}
 		
-		Double equipmentPrice = selectedOptionsObject.getDouble("equipmentPrice");
+		Long equipmentPrice = selectedOptionsObject.getLong("equipmentPrice");
 
 		//build query for terms
 		if (termIdList.length()>0) {

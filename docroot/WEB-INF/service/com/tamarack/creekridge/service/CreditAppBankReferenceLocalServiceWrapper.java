@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CreditAppBankReferenceLocalService}.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see CreditAppBankReferenceLocalService
  * @generated
  */

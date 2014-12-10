@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
 <service-builder package-path="com.tamarack.creekridge">
-	<author>tamarack</author>
+	<author>Tamarack Consulting</author>
 	<namespace>eCreekRidge</namespace>
 
 	<entity name="CreditApp" local-service="true" remote-service="false">
@@ -384,35 +384,29 @@
 		<column name="active" type="boolean" />
 		<column name="expirationDate" type="Date" />
 		
-		<finder name="A_V" return-type="Collection">
-			<finder-column name="vendorId" />
+		<finder name="Vendor" return-type="Collection">
 			<finder-column name="active" />
+			<finder-column name="vendorId" />
 		</finder>
-		<finder name="A_V_P" return-type="RateFactorRule" unique="false">
+		<finder name="VendorProduct" return-type="Collection" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
 		
 		</finder>
-		<finder name="A_V_P_P" return-type="RateFactorRule" unique="false">
+		<finder return-type="Collection" unique="false" name="VendorProductPurchaseOption" db-index="true">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
 			<finder-column name="purchaseOptionId" />
 		</finder>
-		<finder name="A_V_P_T_P" return-type="RateFactorRule" unique="false">
+		<finder name="VendorProductOptionTermPrice" return-type="Collection" unique="false">
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
+			<finder-column name="purchaseOptionId" />
 			<finder-column name="termId" />
-			<finder-column name="purchaseOptionId" />
-		</finder>
-				
-		<finder name="VendorId" return-type="Collection">
-			<finder-column name="vendorId" />
-		</finder>
-		<finder name="rateFactorRuleId" return-type="Collection">
-			<finder-column name="rateFactorRuleId" />
+            <finder-column name="minPrice" comparator="&lt;="></finder-column>
 		</finder>
 		
 </entity>

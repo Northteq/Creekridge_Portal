@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.Term;
 import com.tamarack.creekridge.service.TermLocalServiceUtil;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public abstract class TermActionableDynamicQuery

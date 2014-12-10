@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  */
 public class CreditAppClp extends BaseModelImpl<CreditApp> implements CreditApp {
 	public CreditAppClp() {

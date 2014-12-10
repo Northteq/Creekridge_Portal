@@ -25,7 +25,7 @@ import com.tamarack.creekridge.model.Term;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see TermPersistenceImpl
  * @see TermUtil
  * @generated

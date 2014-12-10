@@ -45,9 +45,39 @@ var processPurchaseOptionsSelectionURL = "<%=processPurchaseOptionsSelectionURL%
 var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
 var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
 var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
+
 var appFormId = '<portlet:namespace/>applicationForm';
+var validator;
 
+var outputErrors = function (errors) {
+	var htmlError = '<ul>';
+	
+	for (i in errors) {
+		var elId = errors[i];
+		var fieldLabel = $('#'+elId).parent().find('label').text().replace('*', '');
+		var fieldError = $('#'+elId).parent().find('.form-validator-stack').text();
+		
+		htmlError +=  '<li><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only"></span>';
+	 	htmlError += fieldLabel + ': ' + fieldError;
+	 	htmlError += '</li>';
+	}
+	
+	htmlError += '<ul/>';
+	
+	$('#validationErrors').append(htmlError);
+};
 
+var validateForm = function () {
+	validator = Liferay.Form.get(appFormId).formValidator;
+	$('#validationErrors').empty();
+	validator.validate();
+	if (validator.hasErrors()) {
+		outputErrors (Object.keys(validator.errors));
+		$('#validationErrors').show();
+	} else {
+		$('#validationErrors').hide();
+	}
+};
 
 AUI().use('aui-datepicker', function(A) {
 	new A.DatePicker({
@@ -250,7 +280,8 @@ $(document).ready(function() {
 	};
 
 	var getPurchaseOptions = function() {
-
+		$('#purchaseOptionsList').empty();
+		$('#termsList').empty();
 		var productBoxes = $('#productList input:checked');
 		var prodList = []
 		$.each(productBoxes, function(i, el) {
@@ -536,35 +567,5 @@ $(document).ready(function() {
 				$('*[data-persist-id="pricingOvervewResults"]')
 						.click();
 			});
-	};
-	
-	var outputErrors = function (errors) {
-		var htmlError = '<ul>';
-		
-		for (i in errors) {
-			var elId = errors[i];
-			var fieldLabel = $('#'+elId).parent().find('label').text().replace('*', '');
-			var fieldError = $('#'+elId).parent().find('.form-validator-stack').text();
-			
-			htmlError +=  '<li><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only"></span>';
-		 	htmlError += fieldLabel + ': ' + fieldError;
-		 	htmlError += '</li>';
-		}
-		
-		htmlError += '<ul/>';
-		
-		$('#validationErrors').append(htmlError);
-	};
-	
-	var validateForm = function () {
-		var validator = Liferay.Form.get(appFormId).formValidator;
-		$('#validationErrors').empty();
-		validator.validate();
-		if (validator.hasErrors()) {
-			outputErrors (Object.keys(validator.errors));
-			$('#validationErrors').show();
-		} else {
-			$('#validationErrors').hide();
-		}
 	};
 </script>

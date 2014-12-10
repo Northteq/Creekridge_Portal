@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public abstract class RateFactorRuleActionableDynamicQuery

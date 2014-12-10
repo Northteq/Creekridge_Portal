@@ -63,7 +63,7 @@ public class ViewApplication extends MVCPortlet {
    public ViewApplication() {
        super();
    }
-   private static Log _log = LogFactory.getLog(PaymentCalculatorTable.class);
+   private static Log _log = LogFactory.getLog(ViewApplication.class);
 
 public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse actionResponse) throws Exception {
 	
@@ -89,7 +89,7 @@ public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse
 				long ratefactorId=ParamUtil.getLong(actionRequest,"ratefactorId");
 				double equipmentPrice=ParamUtil.getDouble(actionRequest,"equipmentPrice");
 				
-				RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
+				RateFactorRule rateFactorRule= null;//(RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
 				request.getSession().setAttribute("rateFactorRuleId",new Long(rateFactorRule.getRateFactorRuleId()).toString());	
 				request.getSession().setAttribute("equipmentPrice",equipmentPrice);	
 				
@@ -193,7 +193,7 @@ public  void createCreditOrProposal(ActionRequest actionRequest,	ActionResponse 
 		boolean optionSelected=false;
 		double equipmentPrice=ParamUtil.getDouble(actionRequest,"equipmentPrice");
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
-		RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
+		RateFactorRule rateFactorRule= null;//(RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
 		request.getSession().setAttribute("rateFactorRuleId",new Long(rateFactorRule.getRateFactorRuleId()).toString());	
 		request.getSession().setAttribute("equipmentPrice",equipmentPrice);	
 		
@@ -304,7 +304,7 @@ public void setPaymentCalculatorResults (ActionRequest actionRequest,	ActionResp
 					System.out.println("Matched Term Id: "+termnameListResult.get(k));
 					tempProporsal.setTermId(new Long(termnameListResult.get(k)).longValue());
 		     try{
-			     RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(themeDisplay.getScopeGroupId(), true, tempProporsal.getProductId(), tempProporsal.getTermId(), tempProporsal.getPurchaseOptionId());
+			     RateFactorRule rateFactorRule= null;//(RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(themeDisplay.getScopeGroupId(), true, tempProporsal.getProductId(), tempProporsal.getTermId(), tempProporsal.getPurchaseOptionId());
 			      if( rateFactorRule.getRateFactor() == 0.0) {
 				     request.getSession().setAttribute("zeroRateFactor",PropsUtil.get("zeroRateFactor"));
 			       }

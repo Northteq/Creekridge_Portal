@@ -29,7 +29,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see RateFactorRuleLocalServiceUtil
  * @see com.tamarack.creekridge.service.base.RateFactorRuleLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.RateFactorRuleLocalServiceImpl
@@ -250,17 +250,23 @@ public interface RateFactorRuleLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorIdActiveStatus(
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendor(
 		long vendorId, boolean active) throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId) throws java.lang.Exception;
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOption(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByMatchingEquipmentPrice(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId, double equipmentPrice)
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProduct(
+		java.lang.Boolean active, long vendorId, long productId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, long termId, long minPrice)
 		throws java.lang.Exception;
 }

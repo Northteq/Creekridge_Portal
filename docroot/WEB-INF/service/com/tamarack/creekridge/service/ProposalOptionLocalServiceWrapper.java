@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ProposalOptionLocalService}.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see ProposalOptionLocalService
  * @generated
  */

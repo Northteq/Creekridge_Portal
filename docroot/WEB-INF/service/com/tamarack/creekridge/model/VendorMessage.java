@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the VendorMessage service. Represents a row in the &quot;eCreekRidge_VendorMessage&quot; database table, with each column mapped to a property of this class.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see VendorMessageModel
  * @see com.tamarack.creekridge.model.impl.VendorMessageImpl
  * @see com.tamarack.creekridge.model.impl.VendorMessageModelImpl
