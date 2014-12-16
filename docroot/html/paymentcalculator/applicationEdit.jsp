@@ -131,7 +131,7 @@
 				<aui:fieldset column="false" label="Customer Contact">
 					<aui:input inlineField="true" name="customerContact"
 						value="${creditApp.customerContact}">
-						<aui:validator name="alpha" />
+						
 						<aui:validator name="required" />
 					</aui:input>
 					<aui:input inlineField="true" name="customerContactEmail"

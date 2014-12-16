@@ -30,10 +30,13 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.liferay.util.mail.MailEngine;
 import com.tamarack.creekridge.model.CreditApp;
 import com.tamarack.creekridge.model.CreditAppBankReference;
 import com.tamarack.creekridge.model.CreditAppPrincipal;
@@ -43,6 +46,7 @@ import com.tamarack.creekridge.model.ProposalOption;
 import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.model.Term;
+import com.tamarack.creekridge.model.Vendor;
 import com.tamarack.creekridge.service.CreditAppBankReferenceLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
@@ -52,6 +56,8 @@ import com.tamarack.creekridge.service.ProposalOptionLocalServiceUtil;
 import com.tamarack.creekridge.service.PurchaseOptionLocalServiceUtil;
 import com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil;
 import com.tamarack.creekridge.service.TermLocalServiceUtil;
+import com.tamarack.creekridge.service.VendorLocalService;
+import com.tamarack.creekridge.service.VendorLocalServiceUtil;
 
 /**
  * Portlet implementation class PaymentCalculatorTable
@@ -166,9 +172,23 @@ public class PaymentCalculator extends MVCPortlet {
 			creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
 			CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 			
+			
+			//http://portaldevelopment.wordpress.com/2008/06/16/sending-email-in-liferay-portal/
 			_log.info("Credit App has been submitted" + creditApp);
 			SessionMessages.add(actionRequest, "appSubmitted");
 			actionRequest.setAttribute("creditApp", creditApp);
+			
+			String from = currentUser.getEmailAddress();
+			Group siteGroup = GroupLocalServiceUtil.getGroup(vendorId);
+			String vendorName = siteGroup.getName();
+			String to = (String) siteGroup.getExpandoBridge().getAttribute("Rep Email");
+			 
+			String subject= vendorName + " submitted an application for Customer: " + creditApp.getCustomerName();
+			String body="An application (Application #:" + creditApp.getCreditAppId() + ") was submitted by " + vendorName +  " \n \n Please login to the vendor portal to view details at the link below: "; 
+			body += themeDisplay.getPortalURL()+themeDisplay.getPathFriendlyURLPrivateGroup()+ "/" + themeDisplay.getLayout().getGroup().getName().toLowerCase();
+			 
+			MailEngine.send(from, to, subject, body);
+			
 			
 		} catch (Exception e) {
 			_log.error(e);

@@ -38,6 +38,7 @@
 	
 	String [] corpTypeList =  {"Corporation", "Sole Prop", "LLC", "LLP", "Partnership", "S Corporation", "Government Entity"};
 	renderRequest.setAttribute("corpTypeList", corpTypeList);
+	
 %>
 
 <script src="<%= renderRequest.getContextPath()%>/js/jquery211.min.js" type="text/javascript"></script>

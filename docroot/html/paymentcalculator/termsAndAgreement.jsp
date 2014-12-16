@@ -7,7 +7,6 @@
 
 <%@ include file="init.jsp"%>
 
-
 <div id="termsAndAgreementSection" class="span8">
 
 	<p style="padding:25px;">
@@ -21,10 +20,8 @@
 	If credit is extended, Applicant agrees that submitting an electronic, 
 	photocopy or facsimile copy of a signed authorization shall be deemed to be binding, 
 	valid, genuine and authentic as an original-signature document for all purposes.
-
 	</p>
-	
-	
+
 	<aui:button-row cssClass="offset-3">
 		<a class="btn btn-primary" id="agreeBtn">I agree</a>
 		<a class="btn" id="dontAgreeBtn">Return to Credit Application</a>
@@ -61,17 +58,14 @@ YUI().use(
 	        plugins      : [A.Plugin.Drag],
 	    });
 		
-		if (A.one('#submitApplicationButton') != null) {
-			 A.one('#submitApplicationButton').on('click', function (e) {
-				 
-					validateForm();
-					
-					if (!validator.hasErrors()) {
-						 termsPanel.show();
-					}
-				 
-				 
-			  });
+		if (A.one('.btn-submit') != null) {
+			 $('.btn-submit').on('click', function (e) {
+				validateForm();
+				
+				if (!validator.hasErrors()) {
+					 termsPanel.show();
+				}
+		  });
 		}
 		  
 		if (A.one('#dontAgreeBtn') != null) {
@@ -82,7 +76,7 @@ YUI().use(
 		if (A.one('#agreeBtn') != null) {
 		  
 		  A.one('#agreeBtn').on('click', function (e) {
-			  processAppButton(1);
+			  processAppButton(3);
 			  termsPanel.hide();
 		  });
 		}
