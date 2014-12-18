@@ -7,9 +7,7 @@
 
 <%@ include file="init.jsp"%>
 
-<%
-	CreditApp creditApp = (CreditApp) renderRequest.getAttribute("creditApp");
-%>
+
 <liferay-ui:error key="errorProposalRequired" message="error-one-proposal-required" />
 <liferay-ui:error key="runCalculatorRequired" message="error-run-calculator-required" />
 <liferay-ui:error key="genericError" message="generic-error"/>
@@ -32,10 +30,10 @@
 		<liferay-ui:panel cssClass="payCalc" title="Payment Calculator" id="paymentCalculator"
 			state="${openSection=='paymentCalculator'? 'open' : 'collapsed' }">
 			<aui:col span="3" first="true"> 
-			
+				<fmt:formatNumber value="${creditApp.equipmentPrice}" var="eqPrice" type="CURRENCY"/>
 				<aui:input id="equipmentPrice" step="any"
 					name="equipmentPrice" size="7" style="width:150px"
-					value="<%=NumberFormat.getCurrencyInstance(Locale.US).format(creditApp.getEquipmentPrice()) %>">
+					value="${eqPrice}">
 					<%-- <aui:validator name="min">0.01</aui:validator> --%>
 					 <aui:validator name="required" errorMessage="*"/>
 					 <%-- <aui:validator name="number"/> --%>
