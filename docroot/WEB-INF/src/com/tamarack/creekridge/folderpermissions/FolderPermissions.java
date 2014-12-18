@@ -28,6 +28,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
  * Portlet implementation class FolderPermissions
+ * http://itsliferay.blogspot.in/2012/11/add-resource-permission-in-lr-61.html
  */
 public class FolderPermissions extends MVCPortlet {
 	private static Log _log = LogFactory.getLog(FolderPermissions.class);
