@@ -11,4 +11,7 @@
 		<portlet id="credit-applications-table"></portlet>
 		<portlet id="manageDocument"></portlet>
 	</category>
+	<category name="category.sample">
+		<portlet id="folder-permissions"></portlet>
+	</category>
 </display>
