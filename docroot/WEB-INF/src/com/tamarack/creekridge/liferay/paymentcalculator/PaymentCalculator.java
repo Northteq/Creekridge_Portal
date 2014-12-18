@@ -201,6 +201,7 @@ public class PaymentCalculator extends MVCPortlet {
 		try {
 			saveApplicationInfo (actionRequest, actionResponse);
 			//actionResponse.sendRedirect("/html/viewCreditApplication/view.jsp");
+			actionResponse.setRenderParameter("jspPage", "/html/viewCreditApplication/view.jsp");
 			
 		} catch (Exception e) {
 			SessionErrors.add(actionRequest, "genericError");
@@ -307,7 +308,7 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		if (creditAppId != 0) {
 			List <ProposalOption> existingPOList = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditAppId);
-			_log.info("existingPOList po for creditAppId: " + existingPOList.size());
+			_log.info(" po for creditAppId existingPOList size =" + existingPOList.size());
 			if (existingPOList != null) {
 				for (ProposalOption po : existingPOList) {
 					_log.info("Deleting po : " + ProposalOptionLocalServiceUtil.deleteProposalOption(po));
@@ -322,7 +323,8 @@ public class PaymentCalculator extends MVCPortlet {
 			creditApp = CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 		}
 		
-		Long equipmentPrice = selectedOptionsObject.getLong("equipmentPrice");
+		_log.info("Price from calculator :  " + selectedOptionsObject.getString("equipmentPrice"));
+		Long equipmentPrice = PaymentCalculatorUtil.getLongFromCurrency(selectedOptionsObject.getString("equipmentPrice"));
 
 		//build query for terms
 		if (termIdList.length()>0) {

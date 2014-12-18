@@ -7,19 +7,17 @@
 
 <%@ include file="init.jsp"%>
 
-
+<%
+	CreditApp creditApp = (CreditApp) renderRequest.getAttribute("creditApp");
+%>
 <liferay-ui:error key="errorProposalRequired" message="error-one-proposal-required" />
 <liferay-ui:error key="runCalculatorRequired" message="error-run-calculator-required" />
 <liferay-ui:error key="genericError" message="generic-error"/>
 <liferay-ui:success key="appSaved" message="app-saved-successfully" />
 
-<div class="alert alert-danger" role="alert" id="validationErrors" style="display:none">
-
-</div>
+<div class="alert alert-danger" role="alert" id="validationErrors" style="display:none"></div>
 
 <aui:form method="post" name="applicationForm">
-
-
 	<c:if test="${creditApp.creditAppId != 0 && creditApp != null}">
 		<h3 id="screenTitle">Application #${creditApp.creditAppId} ${creditApp.customerName}</h3>
 	</c:if>
@@ -27,22 +25,21 @@
 	<c:if test="${creditApp.creditAppId == 0}">
 		<h3>New Application</h3>
 	</c:if>
-
-
+	
 	<c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
 
 	<liferay-ui:panel-container accordion="true" extended="false">
 		<liferay-ui:panel cssClass="payCalc" title="Payment Calculator" id="paymentCalculator"
 			state="${openSection=='paymentCalculator'? 'open' : 'collapsed' }">
-
 			<aui:col span="3" first="true"> 
+			
 				<aui:input id="equipmentPrice" step="any"
 					name="equipmentPrice" size="7" style="width:150px"
-					value="${creditApp.equipmentPrice}">
-					 <aui:validator name="min">0.01</aui:validator>
+					value="<%=NumberFormat.getCurrencyInstance(Locale.US).format(creditApp.getEquipmentPrice()) %>">
+					<%-- <aui:validator name="min">0.01</aui:validator> --%>
 					 <aui:validator name="required" errorMessage="*"/>
-					 <aui:validator name="number"/>
-					</aui:input>
+					 <%-- <aui:validator name="number"/> --%>
+					</aui:input> 
 			</aui:col>
 
 			<aui:col span="3" id="product">
@@ -179,8 +176,6 @@
 				</aui:fieldset>
 
 				<aui:fieldset column="false" span="12" label="Business Information">
-
-
 					<aui:select inlineField="true" name="customerBusinessType"
 						showEmptyOption="true">
 						<c:forEach items="${corpTypeList}" var="corpType">
@@ -208,7 +203,6 @@
 					<aui:input inlineField="true" type="text"
 						value="${creditApp.customerBusinessFederalTaxID}"
 						name="customerBusinessFederalTaxID" />
-
 				</aui:fieldset>
 
 				<aui:fieldset>
@@ -225,7 +219,6 @@
 						onchange="copyCustomerAddress($(this))"></aui:input>
 
 				</aui:fieldset>
-				
 				
 				<aui:fieldset id="equipmentAddress" style="${creditApp.equipmentLocAsCustomerFlag==true ? 'display:none' : ''}">
 					<aui:input inlineField="true" type="text"
@@ -253,8 +246,6 @@
 				</aui:fieldset>
 				
 				<aui:button-row>
-					
-					
 					<a class="btn btn-small" id="navigateToPricingOverview"
 						onclick="navigateToPricingOverview()"><i class="icon-backward"></i>
 						Back to Pricing Overview</a>
@@ -275,7 +266,6 @@
 				<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
 			</liferay-ui:panel>
 			
-			
 			<!-- BANK REFERENCE  -->
 			<liferay-ui:panel cssClass="payCalc" title="bank-reference-info-section"
 				id="bankRefereceInfo"
@@ -283,17 +273,12 @@
 				<c:import
 					url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
 			</liferay-ui:panel>
-
-		
 		</c:if>
 
 	</liferay-ui:panel-container>
 	
 	<c:import url="/html/paymentcalculator/buttons.jsp"></c:import>
-	
 </aui:form>
-
-
 
 <style>
 .purchaseOptionsColumn {

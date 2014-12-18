@@ -13,6 +13,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@page import="java.util.*"%>
 <%@page import="com.liferay.util.*"%>
+<%@page import="java.text.NumberFormat" %>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@page import="com.liferay.portal.util.PortalUtil" %>
 <%@page import="com.liferay.portal.theme.ThemeDisplay" %>

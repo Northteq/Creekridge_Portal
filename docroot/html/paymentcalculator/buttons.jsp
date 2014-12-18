@@ -11,16 +11,13 @@
 	<portlet:param name="viewOnly" value="<%=String.valueOf(true)%>" />
 	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 	<portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
-	
 </portlet:renderURL>
 
 <portlet:renderURL portletMode="view" var="editAppURL">
 	<portlet:param name="viewOnly" value="<%=String.valueOf(false)%>" />
 	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 	<portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
-	
 </portlet:renderURL>
-
 
 <!-- EXISTING APPLICATION -->
 	<c:if test="${creditApp.creditAppId != null}">
@@ -63,21 +60,7 @@
 			</div>
 		</c:if>	
 		
-			
-		
 	</c:if>
-
-	<!-- NEW APPLICATION  -->
-	
-	<%-- <c:if test="${creditApp.creditAppId == null}">
-	
-		<div class="span2">
-			<a class="btn btn-info btn-block" id="createApplicationButton" onClick="processAppButton(0)"><i class="icon-file"></i> Save </a>
-		</div>
-	
-	</c:if> --%>
-	
-	
 	
 	<div style="clear:both"> </div>
 	<p/>

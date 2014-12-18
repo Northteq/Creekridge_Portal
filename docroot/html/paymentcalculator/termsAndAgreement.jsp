@@ -7,7 +7,7 @@
 
 <%@ include file="init.jsp"%>
 
-<div id="termsAndAgreementSection" class="span8">
+<div id="termsAndAgreementSection" class="span8" style="display:none;">
 
 	<p style="padding:25px;">
 	By Clicking "I Accept" below, the applicant(s) certifies that all information contained in this application, 
@@ -63,6 +63,7 @@ YUI().use(
 				validateForm();
 				
 				if (!validator.hasErrors()) {
+					$('#termsAndAgreementSection').show();
 					 termsPanel.show();
 				}
 		  });

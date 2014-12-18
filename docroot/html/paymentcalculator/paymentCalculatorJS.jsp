@@ -272,6 +272,9 @@ $(document).ready(function() {
 	};
 
 	var resetAllSections = function() {
+		
+		console.log($('#<portlet:namespace/>equipmentPrice').val());
+		//$('#<portlet:namespace/>equipmentPrice').val(0);
 		$('#purchaseOptionsList').empty();
 		$('#termsList').empty();
 		$('#termSection').hide();
@@ -421,10 +424,7 @@ $(document).ready(function() {
 	
 	var calculatePayments = function () {
 
-		var validator = Liferay.Form.get(appFormId).formValidator;
-		
-		console.log(validator.validate());
-		console.log(validator.hasErrors());
+		validateForm();
 		
 		if (!validator.hasErrors()) {
 			var dataJsonString = createRateFactorRuleRequestObjectString();

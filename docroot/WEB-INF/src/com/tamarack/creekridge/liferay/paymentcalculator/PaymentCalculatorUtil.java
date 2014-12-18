@@ -33,10 +33,20 @@ public class PaymentCalculatorUtil {
 	
 	private static Log _log = LogFactory.getLog(PaymentCalculatorUtil.class);
 	
+	public static Double getDoubleFromCurrency (String currencyString) {
+		String newPrice = currencyString.replaceAll("[^\\d.]+", "");
+		return Double.parseDouble(newPrice);
+	}
+	
+	public static long getLongFromCurrency (String currencyString) {
+		return getDoubleFromCurrency (currencyString).longValue();
+	}
+	
 	public static CreditApp populateAppFromRequest (ActionRequest actionRequest, CreditApp creditApp) {
 		
 		//map form fields to the application
-		creditApp.setEquipmentPrice(ParamUtil.getDouble(actionRequest, "equipmentPrice"));
+		
+		creditApp.setEquipmentPrice(getDoubleFromCurrency(ParamUtil.getString(actionRequest, "equipmentPrice")));
 		creditApp.setCustomerName(ParamUtil.getString(actionRequest,"customerName"));
 		creditApp.setCustomerDBAName(ParamUtil.getString(actionRequest,"customerDBAName"));
 		creditApp.setCustomerBusinessDesc(ParamUtil.getString(actionRequest,"customerBusinessDesc"));
