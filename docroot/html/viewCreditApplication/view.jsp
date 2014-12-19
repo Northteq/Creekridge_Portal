@@ -305,7 +305,7 @@ for (String userName1: userList){
 					      for (int i=0;i<creditAppList.size();i++) {
 					  		String statusText = statusMap.get(creditAppList.get(i).getCreditAppStatusId());
 					       if( !"Cancelled1".equalsIgnoreCase(statusText) && !"Cancelled1".equalsIgnoreCase(statusText))
-					    	if((isVendorSaleRep && creditAppList.get(i).getUserId() == themeDisplay.getUserId()) || (isCreekRidgeSalesManager  && (creditAppList.get(i).getGroupId() == groupId)) || isOmniAdmin )  {
+					    	if((isVendorSaleRep && creditAppList.get(i).getUserId() == themeDisplay.getUserId()) || (isCreekRidgeSalesManager  && (creditAppList.get(i).getVendorId() == groupId)) || isOmniAdmin )  {
 					    		DateFormat fmt = new SimpleDateFormat("MM/dd/YYYY");
 					    		String modDate = fmt.format(creditAppList.get(i).getModifiedDate());  		
 					      %>
