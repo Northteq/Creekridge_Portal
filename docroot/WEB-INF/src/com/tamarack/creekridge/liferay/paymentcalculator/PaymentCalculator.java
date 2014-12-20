@@ -46,7 +46,6 @@ import com.tamarack.creekridge.model.ProposalOption;
 import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.model.Term;
-import com.tamarack.creekridge.model.Vendor;
 import com.tamarack.creekridge.service.CreditAppBankReferenceLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
@@ -56,8 +55,6 @@ import com.tamarack.creekridge.service.ProposalOptionLocalServiceUtil;
 import com.tamarack.creekridge.service.PurchaseOptionLocalServiceUtil;
 import com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil;
 import com.tamarack.creekridge.service.TermLocalServiceUtil;
-import com.tamarack.creekridge.service.VendorLocalService;
-import com.tamarack.creekridge.service.VendorLocalServiceUtil;
 
 /**
  * Portlet implementation class PaymentCalculatorTable

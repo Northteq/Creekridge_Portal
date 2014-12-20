@@ -159,6 +159,10 @@
 			<name>view-template</name>
 			<value>/html/manageDocument/view.jsp</value>
 		</init-param>
+		<init-param>
+			<name>add-process-action-success-action</name>
+			<value>false</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -198,6 +202,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Folder Permissions</title>
 			<short-title>Folder Permissions</short-title>
