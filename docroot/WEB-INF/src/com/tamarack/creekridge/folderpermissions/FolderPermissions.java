@@ -2,39 +2,26 @@ package com.tamarack.creekridge.folderpermissions;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.net.ftp.FtpDirEntry.Permission;
-
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 
@@ -68,7 +55,7 @@ public class FolderPermissions extends MVCPortlet {
 			Role ownerRole = RoleLocalServiceUtil.fetchRole(themeDisplay.getCompanyId(), "Owner");
 			
 			DLFolder folder = DLFolderLocalServiceUtil.getFolder(folderId);
-			User u = UserLocalServiceUtil.getUser(userId);
+			
 			folder.setUserId(userId);
 			
 			DLFolderLocalServiceUtil.updateDLFolder(folder);
