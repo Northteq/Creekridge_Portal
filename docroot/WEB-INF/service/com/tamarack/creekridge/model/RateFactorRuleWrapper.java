@@ -578,8 +578,7 @@ public class RateFactorRuleWrapper implements RateFactorRule,
 	}
 
 	@Override
-	public int compareTo(
-		com.tamarack.creekridge.model.RateFactorRule rateFactorRule) {
+	public int compareTo(RateFactorRule rateFactorRule) {
 		return _rateFactorRule.compareTo(rateFactorRule);
 	}
 
@@ -589,17 +588,17 @@ public class RateFactorRuleWrapper implements RateFactorRule,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.RateFactorRule> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<RateFactorRule> toCacheModel() {
 		return _rateFactorRule.toCacheModel();
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.RateFactorRule toEscapedModel() {
+	public RateFactorRule toEscapedModel() {
 		return new RateFactorRuleWrapper(_rateFactorRule.toEscapedModel());
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.RateFactorRule toUnescapedModel() {
+	public RateFactorRule toUnescapedModel() {
 		return new RateFactorRuleWrapper(_rateFactorRule.toUnescapedModel());
 	}
 

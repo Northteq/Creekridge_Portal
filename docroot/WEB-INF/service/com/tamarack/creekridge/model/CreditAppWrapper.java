@@ -1214,7 +1214,7 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 	}
 
 	@Override
-	public int compareTo(com.tamarack.creekridge.model.CreditApp creditApp) {
+	public int compareTo(CreditApp creditApp) {
 		return _creditApp.compareTo(creditApp);
 	}
 
@@ -1224,17 +1224,17 @@ public class CreditAppWrapper implements CreditApp, ModelWrapper<CreditApp> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.CreditApp> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<CreditApp> toCacheModel() {
 		return _creditApp.toCacheModel();
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.CreditApp toEscapedModel() {
+	public CreditApp toEscapedModel() {
 		return new CreditAppWrapper(_creditApp.toEscapedModel());
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.CreditApp toUnescapedModel() {
+	public CreditApp toUnescapedModel() {
 		return new CreditAppWrapper(_creditApp.toUnescapedModel());
 	}
 

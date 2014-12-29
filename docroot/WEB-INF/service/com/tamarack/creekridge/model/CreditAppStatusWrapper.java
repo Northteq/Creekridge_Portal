@@ -353,8 +353,7 @@ public class CreditAppStatusWrapper implements CreditAppStatus,
 	}
 
 	@Override
-	public int compareTo(
-		com.tamarack.creekridge.model.CreditAppStatus creditAppStatus) {
+	public int compareTo(CreditAppStatus creditAppStatus) {
 		return _creditAppStatus.compareTo(creditAppStatus);
 	}
 
@@ -364,17 +363,17 @@ public class CreditAppStatusWrapper implements CreditAppStatus,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.CreditAppStatus> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<CreditAppStatus> toCacheModel() {
 		return _creditAppStatus.toCacheModel();
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.CreditAppStatus toEscapedModel() {
+	public CreditAppStatus toEscapedModel() {
 		return new CreditAppStatusWrapper(_creditAppStatus.toEscapedModel());
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.CreditAppStatus toUnescapedModel() {
+	public CreditAppStatus toUnescapedModel() {
 		return new CreditAppStatusWrapper(_creditAppStatus.toUnescapedModel());
 	}
 
