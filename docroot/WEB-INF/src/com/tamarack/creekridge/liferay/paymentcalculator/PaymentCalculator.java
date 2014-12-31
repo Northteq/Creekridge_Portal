@@ -169,6 +169,7 @@ public class PaymentCalculator extends MVCPortlet {
 			creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
 			CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 			
+			PaymentCalculatorUtil.generateCreditAppXML(creditApp, getPortletContext().getRealPath("/"));
 			
 			//http://portaldevelopment.wordpress.com/2008/06/16/sending-email-in-liferay-portal/
 			_log.info("Credit App has been submitted" + creditApp);
