@@ -26,7 +26,7 @@ CreditApp creditApp=CreditAppLocalServiceUtil.getCreditApp(creditAppId);
 
 <div class="container">
 <h3>Email Attachment:</h3>
-<aui:form action="<%=emailCreditAppDocumentUrl.toString() %>" name="fm" method="post" inlineLabels="true">
+<aui:form action="<%=emailCreditAppDocumentUrl.toString() %>" name="fm" method="post" inlineLabels="true" onSubmit="javascript:window.close();">
 <aui:input type="hidden"   name="creditAppDocumentId"  value="<%=creditAppDocumentId %>" />
 
 <aui:input type="text"  label= "To Email Address:" name="toAddress" value="<%=creditApp.getCustomerContactEmail()%>" /> 

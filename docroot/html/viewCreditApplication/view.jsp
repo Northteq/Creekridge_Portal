@@ -336,14 +336,14 @@ for (String userName1: userList){
 								 <a   name="View" value="View"  href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"></i> View</a>|
 							     <a name="edit" value="Edit" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-pencil"></i> Edit</a>|
 							     <a  name="manage" value="Manage Docs" href="<%="javascript:window.location.href='" + url + "/manage-documents?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file"></i> Docs</a>|
-							     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash"></i> Delete</a>
+							     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash"></i> Cancel</a>
 						          <%} %>	
 						          		
 								<%if( "Saved".equalsIgnoreCase(statusText)){ %>
 								 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"> View</i></a> |
 							     <a  name="edit" value="Edit" href="<%="javascript:window.location.href='" + url + "/payment-calculator?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-pencil"> Edit</i></a> |
 							     <a  name="manage" value="Manage Docs" href="<%="javascript:window.location.href='" + url + "/manage-documents?creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-file"> Docs</i></a> |
-							     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash"> Delete</i></a> 
+							     <a  name="cancel"  value="Cancel" href="javascript:assignActionType('cancel','<%=creditAppList.get(i).getCreditAppId() %>')" ><i class="icon-trash"> Cancel</i></a> 
 						          <%} %>
 								<%if( "Submitted".equalsIgnoreCase(statusText)){ %>
 								 <a  name="view" value="View" href="<%="javascript:window.location.href='" + url + "/payment-calculator?viewOnly=true&creditAppId="+creditAppList.get(i).getCreditAppId() +"'" %>" ><i class="icon-search"> View</i></a> |
