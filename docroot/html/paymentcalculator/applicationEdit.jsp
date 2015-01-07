@@ -216,7 +216,6 @@
 						value="${creditApp.equipmentLocAsCustomerFlag}"
 						onchange="copyCustomerAddress($(this))"></aui:input>
 
-				
 					<div id="equipmentAddressSection" style="${creditApp.equipmentLocAsCustomerFlag==true ? 'display:none' : ''}">
 						<aui:input inlineField="true" type="text"
 						value="${creditApp.equipmentAddress1}" name="equipmentAddress1" />
@@ -235,15 +234,12 @@
 							value="${creditApp.equipmentZip}" name="equipmentZip" />
 					</div>
 					
-						
 						<aui:input type="textarea" rows="3" name="equipmentDesc"
 						value="${creditApp.equipmentDesc}">
 						<aui:validator name="required" />	
 					</aui:input>
 				</aui:fieldset>
 
-				
-				
 				<aui:button-row>
 					<a class="btn btn-small" id="navigateToPricingOverview"
 						onclick="navigateToPricingOverview()"><i class="icon-backward"></i>
