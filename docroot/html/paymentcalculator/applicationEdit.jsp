@@ -216,32 +216,33 @@
 						value="${creditApp.equipmentLocAsCustomerFlag}"
 						onchange="copyCustomerAddress($(this))"></aui:input>
 
-				</aui:fieldset>
 				
-				<aui:fieldset id="equipmentAddress" style="${creditApp.equipmentLocAsCustomerFlag==true ? 'display:none' : ''}">
-					<aui:input inlineField="true" type="text"
+					<div id="equipmentAddressSection" style="${creditApp.equipmentLocAsCustomerFlag==true ? 'display:none' : ''}">
+						<aui:input inlineField="true" type="text"
 						value="${creditApp.equipmentAddress1}" name="equipmentAddress1" />
-					<aui:input inlineField="true" type="text"
-						value="${creditApp.equipmentAddress2}" name="equipmentAddress2" />
-					<aui:input inlineField="true" type="text"
-						value="${creditApp.equipmentCity}" name="equipmentCity" />
-					<aui:select inlineField="true" name="equipmentState"
-						showEmptyOption="true">
-						<c:forEach items="${statesList}" var="state">
-							<aui:option value="${state.id}" label="${state.name}"
-								selected="${creditApp.equipmentState == state.id}" />
-						</c:forEach>
-					</aui:select>
-					<aui:input inlineField="true" type="text"
-						value="${creditApp.equipmentZip}" name="equipmentZip" />
-				</aui:fieldset>
-
-				<aui:fieldset>
-					<aui:input type="textarea" rows="3" name="equipmentDesc"
+						<aui:input inlineField="true" type="text"
+							value="${creditApp.equipmentAddress2}" name="equipmentAddress2" />
+						<aui:input inlineField="true" type="text"
+							value="${creditApp.equipmentCity}" name="equipmentCity" />
+						<aui:select inlineField="true" name="equipmentState"
+							showEmptyOption="true">
+							<c:forEach items="${statesList}" var="state">
+								<aui:option value="${state.id}" label="${state.name}"
+									selected="${creditApp.equipmentState == state.id}" />
+							</c:forEach>
+						</aui:select>
+						<aui:input inlineField="true" type="text"
+							value="${creditApp.equipmentZip}" name="equipmentZip" />
+					</div>
+					
+						
+						<aui:input type="textarea" rows="3" name="equipmentDesc"
 						value="${creditApp.equipmentDesc}">
 						<aui:validator name="required" />	
 					</aui:input>
 				</aui:fieldset>
+
+				
 				
 				<aui:button-row>
 					<a class="btn btn-small" id="navigateToPricingOverview"

@@ -56,9 +56,10 @@ var outputErrors = function (errors) {
 		var elId = errors[i];
 		var fieldLabel = $('#'+elId).parent().find('label').text().replace('*', '');
 		var fieldError = $('#'+elId).parent().find('.form-validator-stack').text();
-		
+		var fieldErrorSectionLabel = $('#'+elId).closest('fieldset').find('legend').find('span').text();
+		console.log($('#'+elId));
 		htmlError +=  '<li><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only"></span>';
-	 	htmlError += fieldLabel + ': ' + fieldError;
+	 	htmlError += fieldErrorSectionLabel + ' ' + fieldLabel + ': ' + fieldError;
 	 	htmlError += '</li>';
 	}
 	
@@ -135,9 +136,9 @@ var copyCustomerAddress = function(sameAddressEl) {
 		$('#<portlet:namespace/>equipmentZip').val(
 				$('#<portlet:namespace/>customerZip').val());
 		
-		$('#<portlet:namespace/>equipmentAddress').show();
+		$('#equipmentAddressSection').show();
 	} else {
-		$('#<portlet:namespace/>equipmentAddress').hide();
+		$('#equipmentAddressSection').hide();
 	}
 };
 
