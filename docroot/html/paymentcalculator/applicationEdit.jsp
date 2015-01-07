@@ -33,7 +33,7 @@
 				<fmt:formatNumber value="${creditApp.equipmentPrice}" var="eqPrice" type="CURRENCY"/>
 				<aui:input id="equipmentPrice" step="any"
 					name="equipmentPrice" size="7" style="width:150px"
-					value="${eqPrice}">
+					value="${eqPrice}" onchange="resetAllSections()">
 					<%-- <aui:validator name="min">0.01</aui:validator> --%>
 					 <aui:validator name="required" errorMessage="*"/>
 					 <%-- <aui:validator name="number"/> --%>
@@ -204,7 +204,7 @@
 				</aui:fieldset>
 
 				<aui:fieldset>
-					<aui:input type="textarea" rows="3" name="customerBusinessDesc"></aui:input>
+					<aui:input type="textarea" rows="3" name="customerBusinessDesc" value="${creditApp.customerBusinessDesc}"></aui:input>
 				</aui:fieldset>
 
 				<aui:fieldset label="Equipment Info">

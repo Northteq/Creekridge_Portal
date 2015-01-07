@@ -76,7 +76,6 @@ public class PaymentCalculatorUtil {
 		creditApp.setCustomerBusinessStartDate(busStartDate);
 		creditApp.setCustomerBusinessType(ParamUtil.getString(actionRequest,"customerBusinessType"));
 		creditApp.setCustomerBusinessIncorporatedState(ParamUtil.getString(actionRequest,"customerBusinessIncorporatedState"));
-		creditApp.setCustomerBusinessType(ParamUtil.getString(actionRequest,"customerBusinessType"));
 		creditApp.setCustomerAddress1(ParamUtil.getString(actionRequest,"customerAddress1"));
 		creditApp.setCustomerAddress2(ParamUtil.getString(actionRequest,"customerAddress1"));
 		
