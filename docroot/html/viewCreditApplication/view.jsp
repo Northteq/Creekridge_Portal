@@ -204,6 +204,11 @@ for (String userName1: userList){
 
 
 <h4 class="screenTitle">View Credit Applications</h4>
+
+<div class="span2">
+	<a class="btn btn-info btn-block" href="payment-calculator"><i class="icon-pencil"></i> New Application</a>
+</div>
+<br/>
 <aui:form name="creditApp" action="<%=updateCreditAppUrl %>" method="post">
 <aui:input type="hidden" value="" name="creditAppId" />
 <aui:input type="hidden" value="" name="actionType" />
