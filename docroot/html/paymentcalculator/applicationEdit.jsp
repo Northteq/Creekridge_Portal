@@ -14,6 +14,7 @@
 <liferay-ui:success key="appSaved" message="app-saved-successfully" />
 
 <script src="<%=request.getContextPath() %>/js/jquery.maskedinput.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/js/numeral.min.js"></script>
 
 <div class="alert alert-danger" role="alert" id="validationErrors" style="display:none"></div>
 
@@ -35,7 +36,7 @@
 				<fmt:formatNumber value="${creditApp.equipmentPrice}" var="eqPrice" type="CURRENCY"/>
 				<aui:input id="equipmentPrice" step="any"
 					name="equipmentPrice" size="7" style="width:150px"
-					value="${eqPrice}" onchange="checkSelectedOptions();">
+					value="${eqPrice}" onchange="checkSelectedOptions(); $(this).val(numeral($(this).val()).format('$0,0.00'))">
 					<%-- <aui:validator name="min">0.01</aui:validator> --%>
 					 <aui:validator name="required" errorMessage="*"/>
 					 <%-- <aui:validator name="number"/> --%>
