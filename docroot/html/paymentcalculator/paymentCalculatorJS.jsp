@@ -160,7 +160,7 @@ $(document).ready(function() {
 		
 		//mask date
 		//$(".date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
-
+		
 		try {
 			
 			if (proposalsString != "") {
@@ -214,12 +214,14 @@ $(document).ready(function() {
 				
 				//need to disable claculate button
 				$('#calculatePaymentsButton').attr("disabled", "disabled");
+				
 			}
 		} catch (e) {
 			console.log('error getting proposals ', e);
 		}
 
 		$(".alert-error:contains('Your request failed to complete.')").hide();
+		checkSelectedOptions();
 	});
 
 	var navigateToCalculator = function() {
@@ -297,6 +299,7 @@ $(document).ready(function() {
 	};
 
 	var getPurchaseOptions = function() {
+		
 		$('#purchaseOptionsList').empty();
 		$('#termsList').empty();
 		var productBoxes = $('#productList input:checked');
@@ -343,7 +346,8 @@ $(document).ready(function() {
 		} else {
 			resetAllSections();
 		}
-
+	
+		checkSelectedOptions();
 	};
 
 	var getTermsOptions = function() {
@@ -582,4 +586,17 @@ $(document).ready(function() {
 						.click();
 			});
 	};
+	
+	var checkSelectedOptions = function () {
+		if ($("#productList input:checked").length > 0 && $("#purchaseOptionsList input:checked").length > 0 && $("#termsList input:checked").length > 0) {
+			$('#calculatePaymentsButton').removeAttr('disabled');
+			return true;
+		} else {
+			$('#calculatePaymentsButton').attr('disabled','disabled');
+			return false;
+		}
+		
+	};
+	
+	
 </script>

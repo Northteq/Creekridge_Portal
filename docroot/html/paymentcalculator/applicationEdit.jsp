@@ -35,7 +35,7 @@
 				<fmt:formatNumber value="${creditApp.equipmentPrice}" var="eqPrice" type="CURRENCY"/>
 				<aui:input id="equipmentPrice" step="any"
 					name="equipmentPrice" size="7" style="width:150px"
-					value="${eqPrice}" onchange="$('#calculatePaymentsButton').removeAttr('disabled');">
+					value="${eqPrice}" onchange="checkSelectedOptions();">
 					<%-- <aui:validator name="min">0.01</aui:validator> --%>
 					 <aui:validator name="required" errorMessage="*"/>
 					 <%-- <aui:validator name="number"/> --%>
@@ -73,7 +73,6 @@
 					<h4>Terms</h4>
 					<aui:fieldset column="true">
 						<div id="termsList"></div>
-
 					</aui:fieldset>
 				</div>
 			</aui:col>
@@ -327,10 +326,11 @@
 </aui:form>
 
 
-<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
-<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
+<c:if test="${creditApp.creditAppStatusId == 2}">
+	<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
+	<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
 
-
+</c:if>
 
 <style>
 .purchaseOptionsColumn {
