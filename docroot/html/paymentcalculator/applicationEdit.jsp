@@ -43,7 +43,7 @@
 			</aui:col>
 
 			<aui:col span="3" id="product">
-				<h4>Pricing Products</h4>
+				<h4>Pricing Products*</h4>
 				<aui:fieldset column="true">
 
 					<div id="productList">
@@ -59,7 +59,7 @@
 			<aui:col span="3" id="purchaseOption">
 				<div id="purchaseOptionSection" style="display: none">
 
-					<h4>Purchase Options</h4>
+					<h4>Purchase Options*</h4>
 					<aui:fieldset column="true">
 						<div id="purchaseOptionsList"></div>
 
@@ -70,7 +70,7 @@
 			<aui:col span="2" last="true" id="term">
 				<div id="termSection" style="display: none">
 
-					<h4>Terms</h4>
+					<h4>Terms*</h4>
 					<aui:fieldset column="true">
 						<div id="termsList"></div>
 					</aui:fieldset>

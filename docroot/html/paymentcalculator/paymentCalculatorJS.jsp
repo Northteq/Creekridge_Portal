@@ -295,7 +295,7 @@ $(document).ready(function() {
 		$('#termsList').empty();
 		$('#termSection').hide();
 		$('#purchaseOptionSection').hide();
-		$('#calculatePaymentsButton').removeAttr("disabled");
+		checkSelectedOptions();
 	};
 
 	var getPurchaseOptions = function() {
@@ -336,6 +336,7 @@ $(document).ready(function() {
 
 					$('#purchaseOptionsList').append(poOptions);
 					$('#purchaseOptionSection').show();
+					
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					console.log(textStatus);
@@ -346,12 +347,10 @@ $(document).ready(function() {
 		} else {
 			resetAllSections();
 		}
-	
-		checkSelectedOptions();
 	};
 
 	var getTermsOptions = function() {
-
+		
 		var dataJsonString = createRateFactorRuleRequestObjectString();
 
 		console.log('selectedProducts', dataJsonString);
@@ -369,12 +368,12 @@ $(document).ready(function() {
 
 				var termOptions = '';
 				$('#termsList').empty();
-
+				checkSelectedOptions();
 				$.each(
 					data,
 					function(i, el) {
 						termOptions += '<label class="checkbox">';
-						termOptions += '<input type="checkbox" name="'+ el.termName + '" value="'+ el.termId+'">' + el.termName + '</input>';
+						termOptions += '<input type="checkbox" onchange="checkSelectedOptions();" name="'+ el.termName + '" value="'+ el.termId+'">' + el.termName + '</input>';
 						termOptions += '</label>';
 					});
 
@@ -387,7 +386,6 @@ $(document).ready(function() {
 				console.log(errorThrown);
 			}
 		});
-
 	};
 
 	var updateUseForApplication = function($this) {
@@ -468,9 +466,7 @@ $(document).ready(function() {
 		} else {
 			console.log ('Errors: ', validator.errors);
 		}
-		
 	};
-	
 
 	var buildProposalOptionsTable = function(remoteData) {
 
