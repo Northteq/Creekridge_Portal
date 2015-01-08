@@ -147,6 +147,12 @@ $(document).ready(function() {
 		var proposalsString = '${proposalList}';
 		
 		$('.label-required').text('*');
+		
+		//mask phones
+		$(".phone").mask("(999) 999-9999");
+		
+		//mask date
+		//$(".date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
 
 		try {
 			

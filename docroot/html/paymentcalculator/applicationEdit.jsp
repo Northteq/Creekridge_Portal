@@ -13,6 +13,8 @@
 <liferay-ui:error key="genericError" message="generic-error"/>
 <liferay-ui:success key="appSaved" message="app-saved-successfully" />
 
+<script src="<%=request.getContextPath() %>/js/jquery.maskedinput.js" type="text/javascript"></script>
+
 <div class="alert alert-danger" role="alert" id="validationErrors" style="display:none"></div>
 
 <aui:form method="post" name="applicationForm">
@@ -133,11 +135,11 @@
 						 value="${creditApp.customerContactEmail}">
 						<aui:validator name="email" />
 					</aui:input>
-					<aui:input inlineField="true" name="customerContactPhone"
+					<aui:input inlineField="true" name="customerContactPhone" cssClass="phone"
 						value="${creditApp.customerContactPhone}">
 						<aui:validator name="digits"></aui:validator>	
 					</aui:input>
-					<aui:input inlineField="true" name="customerContactFax"
+					<aui:input inlineField="true" name="customerContactFax" cssClass="phone"
 						value="${creditApp.customerContactFax}">
 						<aui:validator name="digits"></aui:validator>
 					</aui:input>
@@ -183,7 +185,7 @@
 					</aui:select>
 					<fmt:formatDate value="${creditApp.customerBusinessStartDate}"
 						pattern="MM/dd/yyyy" var="busStartDate" />
-					<aui:input id="customerBusinessStartDate" inlineField="true"
+					<aui:input id="customerBusinessStartDate" inlineField="true" cssClass="date"
 						name="customerBusinessStartDate" value="${busStartDate}">
 						<aui:validator name="date"/>
 					</aui:input>
