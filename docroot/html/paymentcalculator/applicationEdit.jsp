@@ -137,7 +137,8 @@
 					</aui:input>
 					<aui:input inlineField="true" name="customerContactPhone" cssClass="phone"
 						value="${creditApp.customerContactPhone}">
-						<aui:validator name="digits"></aui:validator>	
+							
+						<aui:validator name="required" />
 					</aui:input>
 					<aui:input inlineField="true" name="customerContactFax" cssClass="phone"
 						value="${creditApp.customerContactFax}">
@@ -171,6 +172,7 @@
 					</aui:select>
 					<aui:input inlineField="true" name="customerZip"
 						value="${creditApp.customerZip}">
+						<aui:validator name="required" />
 						</aui:input>
 
 				</aui:fieldset>
