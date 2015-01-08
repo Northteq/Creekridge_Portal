@@ -141,7 +141,7 @@
 					</aui:input>
 					<aui:input inlineField="true" name="customerContactFax" cssClass="phone"
 						value="${creditApp.customerContactFax}">
-						<aui:validator name="digits"></aui:validator>
+						
 					</aui:input>
 				</aui:fieldset>
 
