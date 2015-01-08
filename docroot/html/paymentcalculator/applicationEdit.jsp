@@ -35,7 +35,7 @@
 				<fmt:formatNumber value="${creditApp.equipmentPrice}" var="eqPrice" type="CURRENCY"/>
 				<aui:input id="equipmentPrice" step="any"
 					name="equipmentPrice" size="7" style="width:150px"
-					value="${eqPrice}" onchange="resetAllSections()">
+					value="${eqPrice}" onchange="$('#calculatePaymentsButton').removeAttr('disabled');">
 					<%-- <aui:validator name="min">0.01</aui:validator> --%>
 					 <aui:validator name="required" errorMessage="*"/>
 					 <%-- <aui:validator name="number"/> --%>
