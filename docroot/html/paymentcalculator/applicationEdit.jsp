@@ -133,6 +133,7 @@
 					<aui:input inlineField="true" name="customerContactEmail"
 						 value="${creditApp.customerContactEmail}">
 						<aui:validator name="email" />
+						<aui:validator name="required" />
 					</aui:input>
 					<aui:input inlineField="true" name="customerContactPhone" cssClass="phone"
 						value="${creditApp.customerContactPhone}">
