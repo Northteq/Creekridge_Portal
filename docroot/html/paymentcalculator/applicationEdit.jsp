@@ -208,12 +208,20 @@
 				</aui:fieldset>
 
 				<aui:fieldset label="Equipment Info">
+					
 					<fmt:formatNumber value="${creditApp.equipmentPrice}"
 						type="CURRENCY" var="eqPrice" />
-					<label>Equipment Price</label>${eqPrice} <br />
-					<br />
+					
+					<aui:input inlineField="true" name="equipmentDesc" 
+						value="${creditApp.equipmentDesc}">
+						<aui:validator name="required" />	
+					</aui:input>
+				
+					<aui:input inlineField="true" name="eqPrice" label="Equipment Price"
+						value="${eqPrice}" disabled="true"/>
+					
 					<aui:input type="checkbox" name="equipmentLocAsCustomerFlag"
-						value="${creditApp.equipmentLocAsCustomerFlag}"
+						value="${creditApp.equipmentLocAsCustomerFlag}" inline="true"
 						onchange="copyCustomerAddress($(this))"></aui:input>
 
 					<div id="equipmentAddressSection" style="${creditApp.equipmentLocAsCustomerFlag==true ? 'display:none' : ''}">
@@ -234,10 +242,7 @@
 							value="${creditApp.equipmentZip}" name="equipmentZip" />
 					</div>
 					
-						<aui:input type="textarea" rows="3" name="equipmentDesc"
-						value="${creditApp.equipmentDesc}">
-						<aui:validator name="required" />	
-					</aui:input>
+					
 				</aui:fieldset>
 
 				<aui:button-row>
