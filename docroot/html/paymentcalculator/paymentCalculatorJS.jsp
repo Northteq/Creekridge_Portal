@@ -49,7 +49,7 @@ var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 var appFormId = '<portlet:namespace/>applicationForm';
 var validator;
 
-var outputErrors = function (errors) {
+var outputErrors = function (errors, errorSection) {
 	var htmlError = '<ul>';
 	
 	for (i in errors) {
@@ -65,7 +65,7 @@ var outputErrors = function (errors) {
 	
 	htmlError += '<ul/>';
 	
-	$('#validationErrors').append(htmlError);
+	errorSection.append(htmlError);
 };
 
 var validateForm = function () {
@@ -73,7 +73,7 @@ var validateForm = function () {
 	$('#validationErrors').empty();
 	validator.validate();
 	if (validator.hasErrors()) {
-		outputErrors (Object.keys(validator.errors));
+		outputErrors (Object.keys(validator.errors), $('#validationErrors'));
 		$('#validationErrors').show();
 	} else {
 		$('#validationErrors').hide();

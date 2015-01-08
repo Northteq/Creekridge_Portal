@@ -34,68 +34,49 @@
 	id="deletePrincipalRecord" />
 
 <div id="enterPrincipalSection" class="container">
-
+	
+	<div class="alert alert-danger" role="alert" id="prValidationErrors" style="display:none"></div>
+	
 	<div style="padding:25px;">
 
 
-	<aui:form action="<%=addCreditAppPrincipalURL %>" method="post" name="principalForm">
+	<aui:form method="post" name="principalForm">
 	
 		<aui:fieldset column="false" label="Principal Name">
 			<aui:input inlineField="true" name="principalId" type="hidden"/>
-			<aui:input inlineField="true" name="principalFirstName"></aui:input>
+			<aui:input inlineField="true" name="principalFirstName" required="true"></aui:input>
 			<aui:input inlineField="true" name="principalMiddleName"></aui:input>
-			<aui:input inlineField="true" name="principalLastName"></aui:input>
+			<aui:input inlineField="true" name="principalLastName"  required="true"></aui:input>
 			
 		</aui:fieldset>
 			
 		<aui:fieldset column="false" label="Additional Info">
 			
 			<aui:input inlineField="true" name="principalSSN"></aui:input>
-			<aui:input inlineField="true" name="principalHomePhoneNumber"></aui:input>
+			<aui:input inlineField="true" name="principalHomePhoneNumber"  required="true" cssClass="phone"></aui:input>
 			<aui:input inlineField="true" name="principalEmail" type="email"></aui:input>
 			
 		</aui:fieldset>
 			
 		<aui:fieldset column="false" label="Address">
-			<aui:input inlineField="true" name="principalAddress1"></aui:input>
+			<aui:input inlineField="true" name="principalAddress1"  required="true"></aui:input>
 			<aui:input inlineField="true" name="principalAddress2"></aui:input>
-			<aui:input inlineField="true" name="principalCity"></aui:input>
-			<aui:select inlineField="true" name="principalState"
+			<aui:input inlineField="true" name="principalCity"  required="true"></aui:input>
+			<aui:select inlineField="true" name="principalState"  required="true"
 				showEmptyOption="true">
 				<c:forEach items="${statesList}" var="state">
 					<aui:option value="${state.id}" label="${state.name}"
 						selected="${principal.principalState == state.id}" />
 				</c:forEach>
 			</aui:select>
-			<aui:input inlineField="true" name="principalZip"></aui:input>
+			<aui:input inlineField="true" name="principalZip"  required="true"></aui:input>
 			
 		</aui:fieldset>
+		
 	</aui:form>
 	</div>
 </div>
 
-<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-
-<aui:button-row>
-	<a class="btn  btn-info btn-small" id="addRow">Add Principal</a>
-</aui:button-row>
-
-</c:if>
-
-<p/>
-
-<div id="principalDataTable"></div>
-
-
-<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-
-<aui:button-row>
-	<a class="btn btn-small" id="addRow" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
-						Back to Customer Info</a>
-	<a class="btn btn-small" id="addRow" onclick="navigateToBankReference()"><i class="icon-forward"></i>
-						Continue to Bank Reference</a>
-</aui:button-row>
-</c:if>
 
 <script type="text/javascript">
 YUI().use(
@@ -217,8 +198,12 @@ YUI().use(
         value  : 'Save',
         section: A.WidgetStdMod.FOOTER,
         action : function (e) {
-            e.preventDefault();
-            savePrincipal();
+            //e.preventDefault();
+            validatePrForm();
+            
+            if (!prValidator.hasErrors())
+            	savePrincipal();
+            
         }
     });
 
@@ -303,8 +288,6 @@ YUI().use(
         panel.hide();
     }
 	
-   
-    
  	Liferay.provide(window, 'editRowAtIndex', function(index) {
  		var dataFromIndex = tableData[index];
  		
@@ -350,5 +333,23 @@ YUI().use(
     });
     
    }); 
+   
+var prFormId = '<portlet:namespace/>principalForm';
+var prValidator;
+	var validatePrForm = function () {
+		prValidator = Liferay.Form.get(prFormId).formValidator;
+		$('#prValidationErrors').empty();
+		prValidator.validate();
+		if (prValidator.hasErrors()) {
+			outputErrors (Object.keys(prValidator.errors), $('#prValidationErrors'));
+			$('#prValidationErrors').show();
+		} else {
+			$('#prValidationErrors').hide();
+		}
+	};
+   
+   
+   
+   
 </script>
 

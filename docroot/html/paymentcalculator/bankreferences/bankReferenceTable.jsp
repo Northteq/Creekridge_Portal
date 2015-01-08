@@ -33,7 +33,7 @@
 
 	<div style="padding:25px;">
 
-	<aui:form method="post" name="principalForm">
+	<aui:form method="post" name="bankRefForm">
 	
 		<aui:fieldset column="false">
 			<aui:input name="bankReferenceId" type="hidden"/>
@@ -53,21 +53,7 @@
 </div>
 </div>
 
-<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-<aui:button-row>
-<a class="btn btn-info btn-small" id="addRefRow">Add Bank Reference</a>
-</aui:button-row>
-</c:if>
 
-<p/>
-
-<div id="bankReferenceDataTable"></div>
-
-<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-<aui:button-row>
-<a class="btn btn-small" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-backward"></i> Back to Principal</a>
-</aui:button-row>
-</c:if>
 <script type="text/javascript">
 
 YUI().use(
@@ -154,10 +140,8 @@ YUI().use(
     panel = new A.Panel({
         srcNode      : '#enterReferenceSection',
         headerContent: 'Add Bank Reference',
-        //width        : 450,
         zIndex       : 5,
         centered     : true,
-        //constrain	 : '#appTitle',
         modal        : true,
         visible      : false,
         render       : document.body,
@@ -169,7 +153,7 @@ YUI().use(
         value  : 'Save',
         section: A.WidgetStdMod.FOOTER,
         action : function (e) {
-        	e.preventDefault();
+        	//e.preventDefault();
             saveReference();
         }
     });
@@ -178,7 +162,7 @@ YUI().use(
         value  : 'Cancel',
         section: A.WidgetStdMod.FOOTER,
         action : function (e) {
-            e.preventDefault();
+            //e.preventDefault();
             panel.hide();
         }
     });
