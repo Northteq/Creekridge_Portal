@@ -38,6 +38,10 @@
 	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
 
+<portlet:actionURL name="manageDocs" var="manageDocsURL">
+
+</portlet:actionURL>
+
 <script type="text/javascript">
 
 var processProductsSelectionURL = "<%=processProductsSelectionURL%>";
@@ -113,8 +117,11 @@ function processAppButton(action){
 	  		console.log ('save and exit');
 	  		formEl.attr('action',"<%=saveAndExitApplicationURL%>");
 	  		window.location.replace('view-applications');
-		}else{
-		  	formEl.attr('action',"<%=submitApplicationURL%>");
+		} else if (action == 3) {
+			console.log ('manage docs');
+			formEl.attr('action',"<%=manageDocsURL%>");
+		} else{
+			formEl.attr('action',"<%=submitApplicationURL%>");
 	  	}
 	  	
 	 	console.log($(formEl).submit());

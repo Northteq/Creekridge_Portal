@@ -209,6 +209,20 @@ public class PaymentCalculator extends MVCPortlet {
 		_log.info("saveAndExitApplication actionrequest ended: ");
 	}
 	
+	public void manageDocs (ActionRequest actionRequest, ActionResponse actionResponse) {
+		_log.info("managedocs actionrequest started: ");
+		try {
+			saveApplicationInfo (actionRequest, actionResponse);
+			actionResponse.setRenderParameter("jspPage", "/html/manageDocument/view.jsp?creditAppId=" + ParamUtil.getLong(actionRequest, "creditAppId"));
+			
+		} catch (Exception e) {
+			SessionErrors.add(actionRequest, "genericError");
+			_log.error(e);
+		}	
+		
+		_log.info("saveAndExitApplication actionrequest ended: ");
+	}
+	
 	
 	
 	public void saveApplicationInfo (ActionRequest actionRequest, ActionResponse actionResponse) {
