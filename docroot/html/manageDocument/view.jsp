@@ -32,10 +32,29 @@
 
 
 <%
-long creditAppId= new Long(request.getSession().getAttribute("creditAppId").toString());
-CreditApp creditApp11=CreditAppLocalServiceUtil.getCreditApp(creditAppId);
-System.out.print("Credit App Id: " + creditAppId);
+
+long creditAppId = 0;
+CreditApp creditApp11 = CreditAppLocalServiceUtil.createCreditApp(999);
+
+try {
+	String tempAppIdString = request.getSession().getAttribute("creditAppId").toString();
+	
+	if (tempAppIdString.isEmpty())  {
+		creditAppId = ParamUtil.getLong (request, "creditAppId");
+	} else {
+		creditAppId = new Long (tempAppIdString);
+	}
+		
+	
+	creditApp11 = CreditAppLocalServiceUtil.getCreditApp(creditAppId);
+	System.out.println ("manage docs jsp ---- > Credit App Id: " + creditAppId);
+
+} catch (Exception e) {
+	System.out.println (e);
+}
+
 %>
+
 
 <aui:form action="<%=uploadToCreditAppDocumentUrl.toString() %>" name="fm" enctype="multipart/form-data" method="post">
 <aui:input type="hidden"   name="creditAppId"  value="<%=creditAppId %>" />
@@ -138,64 +157,33 @@ System.out.print("Credit App Id: " + creditAppId);
 			<portlet:param name="mvcPath" value="/html/manageDocument/sendEmail.jsp? %>"/>
 </portlet:renderURL>	 	
 			
-		<aui:script>
-			AUI().use('aui-base',
-				'aui-dialog-iframe',
-				 
-				function(A) {
-				A.one('.emailPopupWindow111').on('click', function(event){ 
-				 alert('data '+ A.one('.emailPopupWindow').get('data'));
-					var popUpWindow=Liferay.Util.Window.getWindow({
-											dialog: {
-												centered: true,
-												constrain2view: true,
-												modal: true,
-												resizable: false,
-												width: 600,
-												
-											}
-										}
-									).plug(
-										A.Plugin.DialogIframe, {
-											autoLoad: false,
-											uri: '<%=emailPopupWindowURL%>'+ '&creditAppDocumentId='+ A.one('.emailPopupWindow').get('id')
-										}).render();
-				  
-					popUpWindow.show();
-					popUpWindow.titleNode.html("Send Email");
-					popUpWindow.io.start();
-				
-				});
-			});
-		</aui:script>
+<aui:script>
+	AUI().use('aui-base',
+		'aui-dialog-iframe',
+		 
+		function(A) {
+		A.one('.emailPopupWindow111').on('click', function(event){ 
+		 alert('data '+ A.one('.emailPopupWindow').get('data'));
+			var popUpWindow=Liferay.Util.Window.getWindow({
+									dialog: {
+										centered: true,
+										constrain2view: true,
+										modal: true,
+										resizable: false,
+										width: 600,
+										
+									}
+								}
+							).plug(
+								A.Plugin.DialogIframe, {
+									autoLoad: false,
+									uri: '<%=emailPopupWindowURL%>'+ '&creditAppDocumentId='+ A.one('.emailPopupWindow').get('id')
+								}).render();
+		  
+			popUpWindow.show();
+			popUpWindow.titleNode.html("Send Email");
+			popUpWindow.io.start();
 		
-		<script>
-			
-				 
-				function test() {
-			
-				 
-					var popUpWindow=Liferay.Util.Window.getWindow({
-											dialog: {
-												centered: true,
-												constrain2view: true,
-												modal: true,
-												resizable: false,
-												width: 600,
-												
-											}
-										}
-									).plug(
-										A.Plugin.DialogIframe, {
-											autoLoad: false,
-											uri: '<%=emailPopupWindowURL%>'+ '&creditAppDocumentId='+ A.one('.emailPopupWindow').get('id')
-										}).render();
-				  
-					popUpWindow.show();
-					popUpWindow.titleNode.html("Send Email");
-					popUpWindow.io.start();
-				
-				
-			}
-		</script>
-		
+		});
+	});
+</aui:script>

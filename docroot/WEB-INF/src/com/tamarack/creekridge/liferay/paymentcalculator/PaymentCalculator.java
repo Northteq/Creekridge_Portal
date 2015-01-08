@@ -150,7 +150,9 @@ public class PaymentCalculator extends MVCPortlet {
 			}
 			
 		} catch (Exception e) {
+			_log.error("error in render");
 			_log.error(e);
+			e.printStackTrace();
 		}
 		super.render(renderRequest, renderResponse);
 		_log.info("render ended");
@@ -213,6 +215,7 @@ public class PaymentCalculator extends MVCPortlet {
 		_log.info("managedocs actionrequest started: ");
 		try {
 			saveApplicationInfo (actionRequest, actionResponse);
+			_log.info("managedocs creditapp: " + ParamUtil.getLong(actionRequest, "creditAppId"));
 			actionResponse.setRenderParameter("jspPage", "/html/manageDocument/view.jsp?creditAppId=" + ParamUtil.getLong(actionRequest, "creditAppId"));
 			
 		} catch (Exception e) {
@@ -220,7 +223,7 @@ public class PaymentCalculator extends MVCPortlet {
 			_log.error(e);
 		}	
 		
-		_log.info("saveAndExitApplication actionrequest ended: ");
+		_log.info("manageDocs actionrequest ended: ");
 	}
 	
 	
@@ -233,7 +236,7 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		try {
 			long creditAppId = ParamUtil.getLong(actionRequest, "creditAppId");
-			_log.info("creditAppId: " + creditAppId);
+			_log.info("saveApplicationInfo creditAppId: " + creditAppId);
 			
 			if (creditAppId != 0)
 				creditApp = CreditAppLocalServiceUtil.getCreditApp(creditAppId);

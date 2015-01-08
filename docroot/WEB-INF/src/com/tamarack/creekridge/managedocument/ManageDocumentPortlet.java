@@ -59,6 +59,7 @@ public void doView(RenderRequest renderRequest,	RenderResponse renderResponse) t
 	HttpServletRequest request = PortalUtil.getHttpServletRequest(renderRequest);
 	
 	String passedCreditAppId=PortalUtil.getOriginalServletRequest(request).getParameter("creditAppId");
+	_log.info("Manage Documents doView passedCreditAppId = " + passedCreditAppId);
 	if(passedCreditAppId != null && !"".equalsIgnoreCase(passedCreditAppId)){
 		//Set creditAppId in memory so can be used in view manage document jsp.
 		Long viewCreditAppId = new Long(passedCreditAppId).longValue();
@@ -85,7 +86,8 @@ public void serveResource(ResourceRequest resourceRequest,	ResourceResponse reso
 	 HttpServletRequest request = PortalUtil.getHttpServletRequest(resourceRequest);
 	   String actionType=PortalUtil.getOriginalServletRequest(request).getParameter("actionType");
 	   String creditDocumentId=PortalUtil.getOriginalServletRequest(request).getParameter("creditDocumentId");
-	  _log.info("DocumentId "+creditDocumentId);
+	  
+	   _log.info("DocumentId "+creditDocumentId);
        long fileAttachmentId=new Long(creditDocumentId).longValue();
        String fileName="";
 	     

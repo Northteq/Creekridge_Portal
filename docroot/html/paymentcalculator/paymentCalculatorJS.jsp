@@ -39,7 +39,7 @@
 </portlet:actionURL>
 
 <portlet:actionURL name="manageDocs" var="manageDocsURL">
-
+	<portlet:param name="creditAppId" value="${creditApp.creditAppId}" />
 </portlet:actionURL>
 
 <script type="text/javascript">
