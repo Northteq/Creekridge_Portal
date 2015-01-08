@@ -258,6 +258,7 @@ public class PaymentCalculator extends MVCPortlet {
 						creditApp.setTermId(pow.propOption.getTermId());
 						creditApp.setProductId(pow.propOption.getProductId());
 						creditApp.setPurchaseOptionId(pow.propOption.getPurchaseOptionId());
+						creditApp.setRateFactorRuleId(pow.propOption.getRateFactorRuleId());
 						creditApp.setEquipmentPrice(pow.eqPrice);
 					}
 				}
