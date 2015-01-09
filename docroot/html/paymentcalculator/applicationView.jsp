@@ -79,10 +79,12 @@
 
 
 <aui:fieldset column="true" label="Principal Info">
+	<div id="principalDataTable"></div>
 	<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
 </aui:fieldset>
 
 <aui:fieldset column="true" label="Bank Reference Info">
+	<div id="bankReferenceDataTable"></div>
 	<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
 </aui:fieldset>
 
