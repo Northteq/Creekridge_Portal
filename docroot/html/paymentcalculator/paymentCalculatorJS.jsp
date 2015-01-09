@@ -156,7 +156,12 @@ $(document).ready(function() {
 		$('.label-required').text('*');
 		
 		//mask phones
-		$(".phone").mask("(999) 999-9999");
+		try{
+			$(".phone").mask("(999) 999-9999");
+		} catch (ex) {
+			console.log (ex);
+		}
+		
 		
 		//mask date
 		//$(".date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
