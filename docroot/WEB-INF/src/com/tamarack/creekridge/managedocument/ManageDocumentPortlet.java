@@ -273,7 +273,7 @@ public void emailCreditAppDocument(ActionRequest actionRequest, ActionResponse r
     mailMessage.addFileAttachment(attachment);
     MailServiceUtil.sendEmail(mailMessage);
     SessionMessages.add(actionRequest, "emailSent");
-    response.sendRedirect(themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()+"/manage-document?creditAppId="+request.getSession().getAttribute("creditAppId"));
+    response.sendRedirect(themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()+"/manage-documents?creditAppId="+request.getSession().getAttribute("creditAppId"));
 } catch (Exception e) {
 	// TODO Auto-generated catch block
 	e.printStackTrace();
