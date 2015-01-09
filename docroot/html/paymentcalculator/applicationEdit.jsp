@@ -315,8 +315,6 @@
 					<a class="btn btn-small" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-backward"></i> Back to Principal</a>
 					</aui:button-row>
 					</c:if>
-				
-				
 			</liferay-ui:panel>
 			
 			
@@ -328,7 +326,7 @@
 </aui:form>
 
 
-<c:if test="${creditApp.creditAppStatusId == 2}">
+<c:if test="${creditApp.creditAppStatusId == 2 && viewOnly==false}">
 	<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
 	<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
 
