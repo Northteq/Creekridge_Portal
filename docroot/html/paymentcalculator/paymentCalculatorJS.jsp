@@ -61,7 +61,7 @@ var outputErrors = function (errors, errorSection) {
 		var fieldLabel = $('#'+elId).parent().find('label').text().replace('*', '');
 		var fieldError = $('#'+elId).parent().find('.form-validator-stack').text();
 		var fieldErrorSectionLabel = $('#'+elId).closest('fieldset').find('legend').find('span').text();
-		console.log($('#'+elId));
+		//console.log($('#'+elId));
 		htmlError +=  '<li><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only"></span>';
 	 	htmlError += fieldErrorSectionLabel + ' ' + fieldLabel + ': ' + fieldError;
 	 	htmlError += '</li>';

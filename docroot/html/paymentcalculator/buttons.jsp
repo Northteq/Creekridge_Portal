@@ -50,9 +50,17 @@
 			</div>
 		</c:if>
 		
+		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">
 				<a class="btn btn-block btn-small btn-managedocs" id="manageDocsButton" onClick="processAppButton(3)"><i class="icon-file"></i> Manage Documents </a>
 			</div>
+		</c:if>
+		
+		<c:if test="${viewOnly==true}">
+			<div class="span2">
+				<a class="btn btn-block btn-small btn-managedocs" id="manageDocsButton" href="manage-documents?creditAppId=${creditApp.creditAppId}"><i class="icon-file"></i> Manage Documents </a>
+			</div>
+		</c:if>
 		
 		<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 			<div class="span2">

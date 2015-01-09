@@ -77,7 +77,7 @@ YUI().use(
 		if (A.one('#agreeBtn') != null) {
 		  
 		  A.one('#agreeBtn').on('click', function (e) {
-			  processAppButton(3);
+			  processAppButton(99);
 			  termsPanel.hide();
 		  });
 		}
