@@ -120,7 +120,8 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 	public static long CREDITAPPID_COLUMN_BITMASK = 1L;
 	public static long CREDITAPPSTATUSID_COLUMN_BITMASK = 2L;
 	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long MODIFIEDDATE_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.tamarack.creekridge.model.CreditApp"));
 
@@ -485,6 +486,14 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -496,6 +505,10 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 	@Override
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@Override
@@ -1118,6 +1131,10 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 
 		creditAppModelImpl._setOriginalCreditAppId = false;
 
+		creditAppModelImpl._originalUserId = creditAppModelImpl._userId;
+
+		creditAppModelImpl._setOriginalUserId = false;
+
 		creditAppModelImpl._originalGroupId = creditAppModelImpl._groupId;
 
 		creditAppModelImpl._setOriginalGroupId = false;
@@ -1632,6 +1649,8 @@ public class CreditAppModelImpl extends BaseModelImpl<CreditApp>
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

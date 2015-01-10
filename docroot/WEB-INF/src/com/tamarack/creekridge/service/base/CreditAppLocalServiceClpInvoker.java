@@ -124,6 +124,10 @@ public class CreditAppLocalServiceClpInvoker {
 		_methodName83 = "getCreditAppByGroupId";
 
 		_methodParameterTypes83 = new String[] { "long" };
+
+		_methodName84 = "getCreditAppByGroupIdByUserId";
+
+		_methodParameterTypes84 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -238,6 +242,12 @@ public class CreditAppLocalServiceClpInvoker {
 			return CreditAppLocalServiceUtil.getCreditAppByGroupId(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName84.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
+			return CreditAppLocalServiceUtil.getCreditAppByGroupIdByUserId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -281,4 +291,6 @@ public class CreditAppLocalServiceClpInvoker {
 	private String[] _methodParameterTypes82;
 	private String _methodName83;
 	private String[] _methodParameterTypes83;
+	private String _methodName84;
+	private String[] _methodParameterTypes84;
 }

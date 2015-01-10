@@ -291,13 +291,24 @@ public class CreditAppLocalServiceUtil {
 
 	/**
 	* @param standard
-	* @return List<Student>
+	* @return List<CreditApp>
 	* @throws SystemException
 	*/
 	public static java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupId(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCreditAppByGroupId(groupId);
+	}
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	public static java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupIdByUserId(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCreditAppByGroupIdByUserId(groupId, userId);
 	}
 
 	public static void clearService() {

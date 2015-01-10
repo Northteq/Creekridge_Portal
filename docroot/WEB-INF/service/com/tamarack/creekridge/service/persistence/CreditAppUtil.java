@@ -588,6 +588,183 @@ public class CreditAppUtil {
 	}
 
 	/**
+	* Returns all the credit apps where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching credit apps
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.tamarack.creekridge.model.CreditApp> findByGroupIdUserId(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupIdUserId(groupId, userId);
+	}
+
+	/**
+	* Returns a range of all the credit apps where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.CreditAppModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of credit apps
+	* @param end the upper bound of the range of credit apps (not inclusive)
+	* @return the range of matching credit apps
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.tamarack.creekridge.model.CreditApp> findByGroupIdUserId(
+		long groupId, long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupIdUserId(groupId, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the credit apps where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.CreditAppModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of credit apps
+	* @param end the upper bound of the range of credit apps (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching credit apps
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.tamarack.creekridge.model.CreditApp> findByGroupIdUserId(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupIdUserId(groupId, userId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first credit app in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching credit app
+	* @throws com.tamarack.creekridge.NoSuchCreditAppException if a matching credit app could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.tamarack.creekridge.model.CreditApp findByGroupIdUserId_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.tamarack.creekridge.NoSuchCreditAppException {
+		return getPersistence()
+				   .findByGroupIdUserId_First(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first credit app in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching credit app, or <code>null</code> if a matching credit app could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.tamarack.creekridge.model.CreditApp fetchByGroupIdUserId_First(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupIdUserId_First(groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last credit app in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching credit app
+	* @throws com.tamarack.creekridge.NoSuchCreditAppException if a matching credit app could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.tamarack.creekridge.model.CreditApp findByGroupIdUserId_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.tamarack.creekridge.NoSuchCreditAppException {
+		return getPersistence()
+				   .findByGroupIdUserId_Last(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last credit app in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching credit app, or <code>null</code> if a matching credit app could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.tamarack.creekridge.model.CreditApp fetchByGroupIdUserId_Last(
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByGroupIdUserId_Last(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the credit apps before and after the current credit app in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param creditAppId the primary key of the current credit app
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next credit app
+	* @throws com.tamarack.creekridge.NoSuchCreditAppException if a credit app with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.tamarack.creekridge.model.CreditApp[] findByGroupIdUserId_PrevAndNext(
+		long creditAppId, long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.tamarack.creekridge.NoSuchCreditAppException {
+		return getPersistence()
+				   .findByGroupIdUserId_PrevAndNext(creditAppId, groupId,
+			userId, orderByComparator);
+	}
+
+	/**
+	* Removes all the credit apps where groupId = &#63; and userId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupIdUserId(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupIdUserId(groupId, userId);
+	}
+
+	/**
+	* Returns the number of credit apps where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching credit apps
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupIdUserId(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupIdUserId(groupId, userId);
+	}
+
+	/**
 	* Caches the credit app in the entity cache if it is enabled.
 	*
 	* @param creditApp the credit app

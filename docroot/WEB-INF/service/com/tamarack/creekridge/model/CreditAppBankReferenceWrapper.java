@@ -521,7 +521,8 @@ public class CreditAppBankReferenceWrapper implements CreditAppBankReference,
 	}
 
 	@Override
-	public int compareTo(CreditAppBankReference creditAppBankReference) {
+	public int compareTo(
+		com.tamarack.creekridge.model.CreditAppBankReference creditAppBankReference) {
 		return _creditAppBankReference.compareTo(creditAppBankReference);
 	}
 
@@ -531,17 +532,17 @@ public class CreditAppBankReferenceWrapper implements CreditAppBankReference,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<CreditAppBankReference> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.CreditAppBankReference> toCacheModel() {
 		return _creditAppBankReference.toCacheModel();
 	}
 
 	@Override
-	public CreditAppBankReference toEscapedModel() {
+	public com.tamarack.creekridge.model.CreditAppBankReference toEscapedModel() {
 		return new CreditAppBankReferenceWrapper(_creditAppBankReference.toEscapedModel());
 	}
 
 	@Override
-	public CreditAppBankReference toUnescapedModel() {
+	public com.tamarack.creekridge.model.CreditAppBankReference toUnescapedModel() {
 		return new CreditAppBankReferenceWrapper(_creditAppBankReference.toUnescapedModel());
 	}
 

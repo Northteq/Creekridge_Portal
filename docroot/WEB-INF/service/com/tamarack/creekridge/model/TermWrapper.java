@@ -405,7 +405,7 @@ public class TermWrapper implements Term, ModelWrapper<Term> {
 	}
 
 	@Override
-	public int compareTo(Term term) {
+	public int compareTo(com.tamarack.creekridge.model.Term term) {
 		return _term.compareTo(term);
 	}
 
@@ -415,17 +415,17 @@ public class TermWrapper implements Term, ModelWrapper<Term> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Term> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.Term> toCacheModel() {
 		return _term.toCacheModel();
 	}
 
 	@Override
-	public Term toEscapedModel() {
+	public com.tamarack.creekridge.model.Term toEscapedModel() {
 		return new TermWrapper(_term.toEscapedModel());
 	}
 
 	@Override
-	public Term toUnescapedModel() {
+	public com.tamarack.creekridge.model.Term toUnescapedModel() {
 		return new TermWrapper(_term.toUnescapedModel());
 	}
 

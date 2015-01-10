@@ -378,7 +378,7 @@ public class ProductWrapper implements Product, ModelWrapper<Product> {
 	}
 
 	@Override
-	public int compareTo(Product product) {
+	public int compareTo(com.tamarack.creekridge.model.Product product) {
 		return _product.compareTo(product);
 	}
 
@@ -388,17 +388,17 @@ public class ProductWrapper implements Product, ModelWrapper<Product> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Product> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.tamarack.creekridge.model.Product> toCacheModel() {
 		return _product.toCacheModel();
 	}
 
 	@Override
-	public Product toEscapedModel() {
+	public com.tamarack.creekridge.model.Product toEscapedModel() {
 		return new ProductWrapper(_product.toEscapedModel());
 	}
 
 	@Override
-	public Product toUnescapedModel() {
+	public com.tamarack.creekridge.model.Product toUnescapedModel() {
 		return new ProductWrapper(_product.toUnescapedModel());
 	}
 

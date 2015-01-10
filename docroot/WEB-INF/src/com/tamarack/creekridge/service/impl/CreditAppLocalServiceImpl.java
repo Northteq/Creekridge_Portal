@@ -98,10 +98,20 @@ private static Log _log = LogFactory.getLog(CreditAppLocalService.class);
 	/** 
 	  *  
 	  * @param standard 
-	  * @return List<Student> 
+	  * @return List<CreditApp> 
 	  * @throws SystemException 
 	  */  
 	 public List<CreditApp> getCreditAppByGroupId (long groupId) throws SystemException{  
 		 return this.creditAppPersistence.findByGroupId(groupId);
+	 } 
+	 
+	 /** 
+	  *  
+	  * @param standard 
+	  * @return List<CreditApp> 
+	  * @throws SystemException 
+	  */  
+	 public List<CreditApp> getCreditAppByGroupIdByUserId (long groupId, long userId) throws SystemException{  
+		 return this.creditAppPersistence.findByGroupIdUserId(groupId, userId);
 	 } 
 }
