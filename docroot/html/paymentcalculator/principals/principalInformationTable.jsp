@@ -26,7 +26,7 @@
 	<portlet:param name="creditAppId" value="${creditAppId}" />
 </portlet:actionURL>
 
-
+<script src="<%=request.getContextPath() %>/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <portlet:resourceURL var="createPrincipalRecordURL"
 	id="createPrincipalRecord" />
 	
@@ -52,7 +52,7 @@
 			
 		<aui:fieldset column="false" label="Additional Info">
 			
-			<aui:input inlineField="true" name="principalSSN"></aui:input>
+			<aui:input inlineField="true" name="principalSSN" cssClass="ssnField"></aui:input>
 			<aui:input inlineField="true" name="principalHomePhoneNumber"  required="true" cssClass="phone"></aui:input>
 			<aui:input inlineField="true" name="principalEmail" type="email"></aui:input>
 			

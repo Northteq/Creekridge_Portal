@@ -158,6 +158,8 @@ $(document).ready(function() {
 		//mask phones
 		try{
 			$(".phone").mask("(999) 999-9999");
+			$(".ssnField").mask("999-99-9999");
+			
 		} catch (ex) {
 			console.log (ex);
 		}

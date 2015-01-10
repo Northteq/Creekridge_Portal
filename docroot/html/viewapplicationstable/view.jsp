@@ -69,30 +69,31 @@
 	
 	<!-- apps table  -->
 	
-	
-	<table id="appTable" class="table  table-striped">
-			<thead>
-		            <tr>
-		                <th>Status</th>
-		                <th>Sales Rep</th>
-		                <th>Customer Name</th>
-		                <th>Created Date</th>
-		                <th>Modified Date</th>
-		                <th style="background:#fff">Actions</th>
-		                
-		            </tr>
-		        </thead>
-		 		<tfoot>
-				    <tr>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-					</tr>
-				</tfoot>
-		</table>
+	<div class="table-responsive">
+		<table id="appTable" class="table  table-striped table-bordered">
+				<thead>
+			            <tr>
+			                <th>Status</th>
+			                <th>Sales Rep</th>
+			                <th>Customer Name</th>
+			                <th>Created Date</th>
+			                <th>Modified Date</th>
+			                <th style="background:#fff">Actions</th>
+			                
+			            </tr>
+			        </thead>
+			 		<tfoot>
+					    <tr>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</tfoot>
+			</table>
+		</div>
 	
 </div>
 
