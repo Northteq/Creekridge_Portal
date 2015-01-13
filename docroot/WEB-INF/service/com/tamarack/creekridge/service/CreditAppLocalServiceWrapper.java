@@ -327,6 +327,31 @@ public class CreditAppLocalServiceWrapper implements CreditAppLocalService,
 	}
 
 	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.getCreditAppByNotDraftByGroupId(groupId);
+	}
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupIdUserId(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.getCreditAppByNotDraftByGroupIdUserId(groupId,
+			userId);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public CreditAppLocalService getWrappedCreditAppLocalService() {

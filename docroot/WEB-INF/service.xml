@@ -76,6 +76,13 @@
             <finder-column name="groupId"></finder-column>
             <finder-column name="userId"></finder-column>
         </finder>
+        <finder name="NotDraftGroupId" return-type="Collection" where="creditAppStatusId != 1">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="NotDraftGroupIdUserId" return-type="Collection" where="creditAppStatusId != 1">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="userId"></finder-column>
+        </finder>
 
 	</entity>
 

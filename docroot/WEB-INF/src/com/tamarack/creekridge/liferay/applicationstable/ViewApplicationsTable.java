@@ -133,9 +133,9 @@ public class ViewApplicationsTable extends MVCPortlet {
 				_log.info ("getCreditApplicationsJson called");
 				List <CreditApp> creditAppList;
 				if (!isVendorSaleRep) {
-					creditAppList = CreditAppLocalServiceUtil.getCreditAppByGroupId(groupId);
+					creditAppList = CreditAppLocalServiceUtil.getCreditAppByNotDraftByGroupId(groupId);  
 				} else {
-					creditAppList = CreditAppLocalServiceUtil.getCreditAppByGroupIdByUserId(groupId, themeDisplay.getUser().getUserId());
+					creditAppList = CreditAppLocalServiceUtil.getCreditAppByNotDraftByGroupIdUserId (groupId, themeDisplay.getUser().getUserId());
 				}  
 				 
 				List <CreditAppWrapper> creditApps = new ArrayList<CreditAppWrapper>();

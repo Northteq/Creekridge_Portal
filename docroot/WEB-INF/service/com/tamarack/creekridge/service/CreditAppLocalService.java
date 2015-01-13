@@ -280,4 +280,24 @@ public interface CreditAppLocalService extends BaseLocalService,
 	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupIdByUserId(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupIdUserId(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -171,7 +171,7 @@ $(document).ready(function() {
                  
 				{ type:"select", 
 					sSelector: "#creditApplicationStatusFilter", 
-					values:["Draft","Saved","Submitted","Cancelled"], 
+					values:[{value:"", label:"All"},"Saved","Submitted","Cancelled"], 
 					selected: 'Saved',
 					
 				},{ type:"select", 
@@ -189,9 +189,7 @@ $(document).ready(function() {
 				null,
 				 */
              ]
-       });
-   
-    
+       });	
 } );
 
 var processApp = function (appId, status) {
