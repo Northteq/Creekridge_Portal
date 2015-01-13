@@ -77,6 +77,21 @@
 	</dl>
 </aui:fieldset>
 
+<aui:fieldset column="true" label="Equipment Information">
+	<dl class="dl-horizontal">
+		<dt>Description</dt>
+		<dd>${creditApp.equipmentDesc}</dd>
+		<dt>Equipment Price</dt>
+		
+		<fmt:formatNumber value="${creditApp.equipmentPrice}"
+						type="CURRENCY" var="eqPrice" />
+						
+						
+		<dd>${eqPrice}</dd>
+		
+	</dl>
+</aui:fieldset>
+
 
 <aui:fieldset column="true" label="Principal Info">
 	<div id="principalDataTable"></div>
