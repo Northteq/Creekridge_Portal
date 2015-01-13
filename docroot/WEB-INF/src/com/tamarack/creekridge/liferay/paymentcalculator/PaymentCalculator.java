@@ -201,7 +201,7 @@ public class PaymentCalculator extends MVCPortlet {
 		try {
 			saveApplicationInfo (actionRequest, actionResponse);
 			//actionResponse.sendRedirect("/html/viewCreditApplication/view.jsp");
-			actionResponse.setRenderParameter("jspPage", "/html/viewCreditApplication/view.jsp");
+			actionResponse.setRenderParameter("jspPage", "/html/viewapplicationstable/view.jsp");
 			
 		} catch (Exception e) {
 			SessionErrors.add(actionRequest, "genericError");
