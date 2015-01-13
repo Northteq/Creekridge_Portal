@@ -82,7 +82,7 @@
 			                
 			            </tr>
 			        </thead>
-			 		<tfoot>
+			 		<tfoot style="display:none">
 					    <tr>
 							<th></th>
 							<th></th>

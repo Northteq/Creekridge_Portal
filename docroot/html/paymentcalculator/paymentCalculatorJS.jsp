@@ -108,23 +108,48 @@ AUI().use('aui-datepicker', function(A) {
 function processAppButton(action){
 	
 	var formEl = $('#'+appFormId);
+	var postUrl = '';
+	var redirectUrl = '';
 	
 	validateForm();
 	if (!validator.hasErrors()) {
+		
+		
+		
 		if(action==0){
 			formEl.attr('action',"<%=saveApplicationInfoURL%>");
+			$(formEl).submit();
 	  	} else if (action==1){
+	  		
 	  		console.log ('save and exit');
-	  		formEl.attr('action',"<%=saveAndExitApplicationURL%>");
-	  		window.location.replace('view-applications');
+	  		
+	  		$.ajax({
+	  	           type: "POST",
+	  	           url: '<%=saveAndExitApplicationURL%>',
+	  	           data: $(formEl).serialize(), // serializes the form's elements.
+	  	           success: function(data){
+	  	        	 console.log ('save and exit post success');
+	  	        	 window.location.href = 'view-applications';
+	  	           }
+  	         });
+	  		
+	  		
 		} else if (action == 3) {
 			console.log ('manage docs');
-			formEl.attr('action',"<%=manageDocsURL%>");
+			$.ajax({
+	  	           type: "POST",
+	  	           url: '<%=manageDocsURL%>',
+	  	           data: $(formEl).serialize(), // serializes the form's elements.
+	  	           success: function(data){
+	  	        	 console.log ('manage docs post success');
+	  	        	 window.location.href = 'manage-documents?creditAppId=${creditApp.creditAppId}';
+	  	           }
+	         });
 		} else{
 			formEl.attr('action',"<%=submitApplicationURL%>");
+			$(formEl).submit();
 	  	}
-	  	
-	 	console.log($(formEl).submit());
+
 	} 
 }
 
