@@ -92,16 +92,19 @@
 	</dl>
 </aui:fieldset>
 
+<c:if test="${showPrincipals}">
+	<aui:fieldset column="true" label="Principal Info">
+		<div id="principalDataTable"></div>
+		<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
+	</aui:fieldset>
+</c:if>
 
-<aui:fieldset column="true" label="Principal Info">
-	<div id="principalDataTable"></div>
-	<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
-</aui:fieldset>
-
-<aui:fieldset column="true" label="Bank Reference Info">
-	<div id="bankReferenceDataTable"></div>
-	<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
-</aui:fieldset>
+<c:if test="${showBankRefs}">
+	<aui:fieldset column="true" label="Bank Reference Info">
+		<div id="bankReferenceDataTable"></div>
+		<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
+	</aui:fieldset>
+</c:if>
 
 <style>
 .dl-horizontal dt {

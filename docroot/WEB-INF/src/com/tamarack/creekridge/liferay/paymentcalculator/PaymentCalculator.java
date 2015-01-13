@@ -17,7 +17,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -78,6 +77,8 @@ public class PaymentCalculator extends MVCPortlet {
 	private List <ProposalOptionWrapper> proposalOptionList;
 	private boolean hasProposalIncluded = false;
 	private PaymentCalculatorQueryUtil queryUtil;
+	private boolean showPrincipals = true;//show per user story
+	private boolean showBankRefs = true; //show per user story
 	
 	
 	@Override 
@@ -96,6 +97,28 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		vendorId = themeDisplay.getLayout().getGroupId();
 		currentUser = themeDisplay.getUser();
+		
+		Group siteGroup;
+		
+		try {
+			siteGroup = GroupLocalServiceUtil.getGroup(vendorId);
+			_log.info("sitegroup:  " + siteGroup);
+			
+			
+			if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null) {
+				showBankRefs = (boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
+			}
+			
+			if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null) {
+				showPrincipals = (boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
+			}
+			
+		} catch (Exception ex) {
+			_log.error ("error getting sitegroup - " + ex);
+		}
+		
+		renderRequest.setAttribute("showBankRefs", showBankRefs);
+		renderRequest.setAttribute("showPrincipals", showPrincipals);
 	
 		try {
 			List <RateFactorRule> rfrList = RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendor(vendorId, true);

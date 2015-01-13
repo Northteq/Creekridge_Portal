@@ -267,56 +267,69 @@
 			
 			
 			<!-- PRINCIPAL INFO  -->
-			<liferay-ui:panel cssClass="payCalc" title="principal-info-section" id="principalInfo"
-				state="${openSection=='principalSection'? 'open' : 'collapsed' }">
-				
-				
-				<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-				
-				<aui:button-row>
-					<a class="btn  btn-info btn-small" id="addRow">Add Principal</a>
-				</aui:button-row>
-				
-				</c:if>
-				
-				<p/>
-				
-				<div id="principalDataTable"></div>
-				
-				
-				<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-				
-				<aui:button-row>
-					<a class="btn btn-small" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
-										Back to Customer Info</a>
-					<a class="btn btn-small btn-primary"  onclick="navigateToBankReference()"><i class="icon-forward"></i>
-										Continue to Bank Reference</a>
-				</aui:button-row>
-				</c:if>
-			</liferay-ui:panel>
 			
-			<!-- BANK REFERENCE  -->
-			<liferay-ui:panel cssClass="payCalc" title="bank-reference-info-section"
-				id="bankRefereceInfo"
-				state="${openSection=='bankReferenceSection'? 'open' : 'collapsed' }">
-				
-				<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-				<aui:button-row>
-					<a class="btn btn-info btn-small" id="addRefRow">Add Bank Reference</a>
+			<c:if test="${showPrincipals}">
+				<liferay-ui:panel cssClass="payCalc" title="principal-info-section" id="principalInfo"
+					state="${openSection=='principalSection'? 'open' : 'collapsed' }">
+					
+					
+					<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
+					
+					<aui:button-row>
+						<a class="btn  btn-info btn-small" id="addRow">Add Principal</a>
 					</aui:button-row>
+					
 					</c:if>
 					
 					<p/>
 					
-					<div id="bankReferenceDataTable"></div>
+					<div id="principalDataTable"></div>
+					
+					
+					<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
+					
+					<aui:button-row>
+						<a class="btn btn-small" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
+											Back to Customer Info</a>
+											
+						<c:if test="${showBankRefs}">
+							<a class="btn btn-small btn-primary"  onclick="navigateToBankReference()"><i class="icon-forward"></i>
+											Continue to Bank Reference</a>
+						</c:if>
+					</aui:button-row>
+					</c:if>
+				</liferay-ui:panel>
+			</c:if>
+			
+			<!-- BANK REFERENCE  -->
+			<c:if test="${showBankRefs}">
+				<liferay-ui:panel cssClass="payCalc" title="bank-reference-info-section"
+					id="bankRefereceInfo"
+					state="${openSection=='bankReferenceSection'? 'open' : 'collapsed' }">
 					
 					<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 					<aui:button-row>
-					<a class="btn btn-small" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-backward"></i> Back to Principal</a>
-					</aui:button-row>
-					</c:if>
-			</liferay-ui:panel>
-			
+						<a class="btn btn-info btn-small" id="addRefRow">Add Bank Reference</a>
+						</aui:button-row>
+						</c:if>
+						
+						<p/>
+						
+						<div id="bankReferenceDataTable"></div>
+						
+						<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
+							<c:if test="${showPrincipals}">
+								<aui:button-row>
+									<a class="btn btn-small" id="navigateToPrincipal" onclick="navigateToPrincipal()"><i class="icon-backward"></i> Back to Principal</a>
+								</aui:button-row>
+							</c:if>
+							<c:if test="${!showPrincipals}">
+								<a class="btn btn-small" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
+											Back to Customer Info</a>
+							</c:if>
+						</c:if>
+				</liferay-ui:panel>
+			</c:if>
 			
 		</c:if>
 
@@ -327,8 +340,13 @@
 
 
 <c:if test="${creditApp.creditAppStatusId == 2 && viewOnly==false}">
-	<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
-	<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
+	<c:if test="${showPrincipals}">
+		<c:import url="/html/paymentcalculator/principals/principalInformationTable.jsp"></c:import>
+	</c:if>
+	
+	<c:if test="${showBankRefs}">
+		<c:import url="/html/paymentcalculator/bankreferences/bankReferenceTable.jsp"></c:import>
+	</c:if>
 
 </c:if>
 
