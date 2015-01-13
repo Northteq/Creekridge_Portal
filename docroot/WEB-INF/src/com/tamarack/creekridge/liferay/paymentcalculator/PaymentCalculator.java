@@ -172,27 +172,56 @@ public class PaymentCalculator extends MVCPortlet {
 			creditApp.setCreditAppStatusId(creditAppStatus.getCreditAppStatusId());
 			CreditAppLocalServiceUtil.updateCreditApp(creditApp);
 			
-			PaymentCalculatorUtil.generateCreditAppXML(creditApp, getPortletContext().getRealPath("/"));
-			
 			//http://portaldevelopment.wordpress.com/2008/06/16/sending-email-in-liferay-portal/
-			_log.info("Credit App has been submitted" + creditApp);
+			_log.info("Credit App has been submitted \n " + creditApp);
 			SessionMessages.add(actionRequest, "appSubmitted");
 			actionRequest.setAttribute("creditApp", creditApp);
 			
+			
+			_log.info("sending email... \n ");
+			
+			themeDisplay = (ThemeDisplay) actionRequest
+					.getAttribute(WebKeys.THEME_DISPLAY);
+			
+			vendorId = themeDisplay.getLayout().getGroupId();
+			currentUser = themeDisplay.getUser();
+			
+			
 			String from = currentUser.getEmailAddress();
+			_log.info("from address:  " + from);
+			
 			Group siteGroup = GroupLocalServiceUtil.getGroup(vendorId);
+			_log.info("sitegroup:  " + siteGroup);
 			String vendorName = siteGroup.getName();
+			
 			String to = (String) siteGroup.getExpandoBridge().getAttribute("Rep Email");
+			
+			_log.info("to address:  " + to);
 			 
 			String subject= vendorName + " submitted an application for Customer: " + creditApp.getCustomerName();
-			String body="An application (Application #:" + creditApp.getCreditAppId() + ") was submitted by " + vendorName +  " \n \n Please login to the vendor portal to view details at the link below: "; 
-			body += themeDisplay.getPortalURL()+themeDisplay.getPathFriendlyURLPrivateGroup()+ "/" + themeDisplay.getLayout().getGroup().getName().toLowerCase();
-			 
+			
+			_log.info("subject  " + subject);
+			
+			String body="An application (Application #:" + creditApp.getCreditAppId() + ") was submitted by ";
+			_log.info("body  " + body);
+			body+= vendorName +  " \n \n Please login to the vendor portal to view details at the link below: ";
+			_log.info("body  " + body);
+			body += themeDisplay.getPortalURL();
+			_log.info("body  " + body);
+			
+			
 			MailEngine.send(from, to, subject, body);
 			
+			_log.info("email sent");
 			
 		} catch (Exception e) {
-			_log.error(e);
+			_log.error("submitApplication error" + e.getStackTrace().toString());
+		}
+		
+		try {
+			PaymentCalculatorUtil.generateCreditAppXML(creditApp, getPortletContext().getRealPath("/"));
+		} catch (Exception e) {
+			_log.error("error generateCreditAppXML:  " + e.getMessage().toString());
 		}
 		
 	}
@@ -201,12 +230,9 @@ public class PaymentCalculator extends MVCPortlet {
 		_log.info("saveAndExitApplication actionrequest started: ");
 		try {
 			saveApplicationInfo (actionRequest, actionResponse);
-			
-			
 			//actionResponse.sendRedirect(PortalUtil.getCurrentURL(actionRequest));
 			actionResponse.setRenderParameter("mvcPath", "/html/viewapplicationstable/view.jsp");
-			
-			
+	
 		} catch (Exception e) {
 			SessionErrors.add(actionRequest, "genericError");
 			_log.error(e);

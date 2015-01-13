@@ -7,7 +7,7 @@
 
 <%@ include file="init.jsp"%>
 
-<div id="termsAndAgreementSection" class="span8" style="display:none;">
+<div id="termsAndAgreementSection" style="display:none;">
 
 	<p style="padding:25px;">
 	By Clicking "I Accept" below, the applicant(s) certifies that all information contained in this application, 
@@ -48,7 +48,7 @@ YUI().use(
 		var termsPanel = new A.Panel({
 	        srcNode      : '#termsAndAgreementSection',
 	        headerContent: 'Terms and Agreement',
-	        //width        : 450,
+	        width        : 650,
 	        zIndex       : 5,
 	        centered     : true,
 	        constrain	 : true,

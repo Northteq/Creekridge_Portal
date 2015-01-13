@@ -136,88 +136,100 @@ public class PaymentCalculatorUtil {
 	}
 	
 	public static void generateCreditAppXML(CreditApp creditApp, String path) {
+		
+		_log.info("generateCreditAppXML running...");
+		
 		String creditAppXML = "";
 		creditAppXML += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		creditAppXML += "<CreditApp>";
 		creditAppXML += creditApp.toXmlString();
-		creditAppXML += "<CreditAppPrincipals>";
+		
+		
+		
 		
 		try {
+			
+			//PRINCIPALS
+			
+			creditAppXML += "<CreditAppPrincipals>";
+			
 			List<CreditAppPrincipal> principals = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId());
-			for (CreditAppPrincipal principal : principals) {
-				creditAppXML += principal.toXmlString();
+			
+			_log.info("generateCreditAppXML principals" + principals.toString());
+			
+			if (principals != null && !principals.isEmpty()) {
+				for (CreditAppPrincipal principal : principals) {
+					creditAppXML += principal.toXmlString();
+				}
 			}
 
 			creditAppXML += "</CreditAppPrincipals>";
+			
+			//REFS
+			
 			creditAppXML += "<CreditAppBankReferences>";
 			
 			List<CreditAppBankReference> bankReferences = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
-			for (CreditAppBankReference bankReference : bankReferences) {
-				creditAppXML += bankReference.toXmlString();
+			_log.info("generateCreditAppXML bankReferences" + bankReferences.toString());
+			if (bankReferences != null && !bankReferences.isEmpty()) {
+				for (CreditAppBankReference bankReference : bankReferences) {
+					creditAppXML += bankReference.toXmlString();
+				}
 			}
 			
 			creditAppXML += "</CreditAppBankReferences>";
+			
+			//PURCHASE OPTIONS
 			creditAppXML += "<PurchaseOption>";
 			
-			try {
-				PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(creditApp.getPurchaseOptionId());
+			PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(creditApp.getPurchaseOptionId());
+			_log.info("generateCreditAppXML purchaseOption" + purchaseOption);
+			if (purchaseOption != null)
 				creditAppXML += purchaseOption.toXmlString();
-			}
-			catch (PortalException pe) {
-				_log.error(pe);
-			}
-			catch (SystemException se) {
-				_log.error(se);
-			}
 			
 			creditAppXML += "</PurchaseOption>";
+			
+			//TERMS
 			creditAppXML += "<Term>";
 			
-			try {
-				Term term = TermLocalServiceUtil.getTerm(creditApp.getTermId());
+			Term term = TermLocalServiceUtil.getTerm(creditApp.getTermId());
+			_log.info("generateCreditAppXML term" + term);
+			if (term != null)
 				creditAppXML += term.toXmlString();
-			}
-			catch (PortalException pe) {
-				_log.error(pe);
-			}
-			catch (SystemException se) {
-				_log.error(se);
-			}
 			
 			creditAppXML += "</Term>";
+			
+			
+			//PRODUCTS
 			creditAppXML += "<Product>";
 			
-			try {
-				Product product = ProductLocalServiceUtil.getProduct(creditApp.getProductId());
+			Product product = ProductLocalServiceUtil.getProduct(creditApp.getProductId());
+			_log.info("generateCreditAppXML product" + product);
+			if (product != null)
 				creditAppXML += product.toXmlString();
-			}
-			catch (PortalException pe) {
-				_log.error(pe);
-			}
-			catch (SystemException se) {
-				_log.error(se);
-			}
 			
 			creditAppXML += "</Product>";
+			
+			
+			//RATE FACTOR RULES
 			creditAppXML += "<RateFactorRule>";
 			
-			try {
-				RateFactorRule rateFactorRule = RateFactorRuleLocalServiceUtil.getRateFactorRule(creditApp.getRateFactorRuleId());
+			RateFactorRule rateFactorRule = RateFactorRuleLocalServiceUtil.getRateFactorRule(creditApp.getRateFactorRuleId());
+			_log.info("generateCreditAppXML rateFactorRule" + rateFactorRule);
+			if (rateFactorRule != null)
 				creditAppXML += rateFactorRule.toXmlString();
-			}
-			catch (PortalException pe) {
-				_log.error(pe);
-			}
-			catch (SystemException se) {
-				_log.error(se);
-			}
 			
 			creditAppXML += "</RateFactorRule>";
+			
+			//VENDOR
 			creditAppXML += "<Vendor>";
 			
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
+				_log.info("generateCreditAppXML group" + group);
 				ExpandoBridge bridge = group.getExpandoBridge();
+				_log.info("generateCreditAppXML bridge" + bridge);
+				
 				
 				creditAppXML += "<model><model-name>com.liferay.portal.model.Group</model-name>";
 				creditAppXML += "<column><column-name>VendorName</column-name><column-value><![CDATA[";
@@ -239,16 +251,17 @@ public class PaymentCalculatorUtil {
 				creditAppXML += bridge.getAttribute("Vendor Phone");
 				creditAppXML += "]]></column-value></column>";
 				creditAppXML += "</model>";
-			}
-			catch (PortalException pe) {
-				_log.error(pe);
-			}
-			catch (SystemException se) {
-				_log.error(se);
+			} catch (Exception ex) {
+				_log.error("generateCreditAppXML error while getting vendor info. Please check custom fields for Vendor Info");
 			}
 			
 			creditAppXML += "</Vendor>";
+			
+			
+			
 			creditAppXML += "</CreditApp>";
+			//CREDIT APP END
+			
 			
 			DateFormat dateFormat = new SimpleDateFormat("MMddyyyy_HHmm");
 			String fileName = "..\\..\\..\\..\\..\\creditApps\\creditApp_" + creditApp.getCustomerName()  + "_" +  dateFormat.format(new Date()) + ".xml";
@@ -261,7 +274,7 @@ public class PaymentCalculatorUtil {
 			_log.error(ioe);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("generateCreditAppXML generic exception " + e);
 		}
 	}
 }
