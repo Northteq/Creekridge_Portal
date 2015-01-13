@@ -106,13 +106,13 @@
 <script type="text/javascript">
 
 var isVendorSaleRep = ${isVendorSaleRep};
-var isCreekRidgeSalesManager  = ${isCreekRidgeSalesManager}
+var isCreekRidgeSalesManager  = ${isCreekRidgeSalesManager};
 
 $(document).ready(function() {
 	
 	var repNames = ${siteUsers};
 	
-	if (isCreekRidgeSalesManager) {
+	if (isVendorSaleRep == false) {
 		$("#salesRepFilterSection").show();
 	}
 	
@@ -141,7 +141,7 @@ $(document).ready(function() {
         ],
         "columnDefs": [ {
         		"targets": 1,
-        		"visible": isCreekRidgeSalesManager,
+        		"visible": !isVendorSaleRep,
         	},{
             "targets": 5,
             "data": "creditApp.creditAppId",

@@ -17,6 +17,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -200,8 +201,11 @@ public class PaymentCalculator extends MVCPortlet {
 		_log.info("saveAndExitApplication actionrequest started: ");
 		try {
 			saveApplicationInfo (actionRequest, actionResponse);
-			//actionResponse.sendRedirect("/html/viewCreditApplication/view.jsp");
-			actionResponse.setRenderParameter("jspPage", "/html/viewapplicationstable/view.jsp");
+			
+			
+			//actionResponse.sendRedirect(PortalUtil.getCurrentURL(actionRequest));
+			actionResponse.setRenderParameter("mvcPath", "/html/viewapplicationstable/view.jsp");
+			
 			
 		} catch (Exception e) {
 			SessionErrors.add(actionRequest, "genericError");
@@ -308,7 +312,7 @@ public class PaymentCalculator extends MVCPortlet {
 	
 		
 		actionRequest.setAttribute("creditApp", creditApp);
-		actionResponse.setRenderParameter("creditAppId", String.valueOf(creditApp.getCreditAppId()));
+		//actionResponse.setRenderParameter("creditAppId", String.valueOf(creditApp.getCreditAppId()));
 	}
 	
 	public List<ProposalOptionWrapper> calculatePayments(String selectedOptions) throws Exception {

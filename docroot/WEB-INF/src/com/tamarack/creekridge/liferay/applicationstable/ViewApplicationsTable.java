@@ -40,8 +40,8 @@ public class ViewApplicationsTable extends MVCPortlet {
 	
 	private static Log _log = LogFactory.getLog(ViewApplicationsTable.class);
 	private boolean isSiteMember = false;
-	boolean isCreekRidgeSalesManager=false;
-	boolean isVendorSaleRep=false;
+	boolean isCreekRidgeSalesManager = false;
+	boolean isVendorSaleRep = false;
 	
 	@Override 
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
@@ -132,7 +132,7 @@ public class ViewApplicationsTable extends MVCPortlet {
 			try {
 				_log.info ("getCreditApplicationsJson called");
 				List <CreditApp> creditAppList;
-				if (isCreekRidgeSalesManager) {
+				if (!isVendorSaleRep) {
 					creditAppList = CreditAppLocalServiceUtil.getCreditAppByGroupId(groupId);
 				} else {
 					creditAppList = CreditAppLocalServiceUtil.getCreditAppByGroupIdByUserId(groupId, themeDisplay.getUser().getUserId());
