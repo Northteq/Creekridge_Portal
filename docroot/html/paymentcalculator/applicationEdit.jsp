@@ -336,4 +336,20 @@
 .purchaseOptionsColumn {
 	text-align: center !important;
 }
+
+.yui3-calendarnav-nextmonth {
+	background: url(<%=request.getContextPath()%>/images/forward_enabled_hover.png) !important;
+	width: 15px !important;
+	height: 20px !important;
+}
+
+.yui3-calendarnav-prevmonth {
+	background: url(<%=request.getContextPath()%>/images/back_enabled_hover.png) !important;
+	width: 15px !important;
+	height: 20px !important;
+}
+
+.yui3-calendar-header-label {
+	width:90%;
+}
 </style>
