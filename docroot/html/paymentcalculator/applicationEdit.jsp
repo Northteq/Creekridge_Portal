@@ -287,9 +287,9 @@
 				<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
 				
 				<aui:button-row>
-					<a class="btn btn-small" id="addRow" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
+					<a class="btn btn-small" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
 										Back to Customer Info</a>
-					<a class="btn btn-small" id="addRow" onclick="navigateToBankReference()"><i class="icon-forward"></i>
+					<a class="btn btn-small btn-primary"  onclick="navigateToBankReference()"><i class="icon-forward"></i>
 										Continue to Bank Reference</a>
 				</aui:button-row>
 				</c:if>
