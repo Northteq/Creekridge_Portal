@@ -168,7 +168,9 @@ public void manageDocument(ActionRequest actionRequest, ActionResponse response)
 	//Generate CreditApp Proposal APIpropGenerated
 	String realPath = getPortletContext().getRealPath("/");
     _log.info("realPath " + realPath);
-    ManageDocumentUtil.generateDocument(creditAppDocumentId, userId, documentType, realPath);
+	String companyLogoURL = themeDisplay.getURLHome() + "/../.." + themeDisplay.getCompanyLogo();
+    _log.info("companyLogoURL " + companyLogoURL);
+    ManageDocumentUtil.generateDocument(creditAppDocumentId, userId, documentType, realPath, companyLogoURL);
 
 	if("proposal".equalsIgnoreCase(documentType)) {
 	    SessionMessages.add(actionRequest, "propGenerated");

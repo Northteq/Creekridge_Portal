@@ -57,7 +57,7 @@ import com.tamarack.creekridge.service.TermLocalServiceUtil;
 public class ManageDocumentUtil {
 	private static Log _log = LogFactory.getLog(ManageDocumentUtil.class);
 	
-	public static void generateDocument(String creditAppId, long userId, String documentType, String realPath) {
+	public static void generateDocument(String creditAppId, long userId, String documentType, String realPath, String companyLogoURL) {
 		CreditApp creditApp = null;
 		
 		try {
@@ -65,9 +65,9 @@ public class ManageDocumentUtil {
 			String path = realPath + "html\\manageDocument\\";
 			
 			if (documentType.equals("creditApp")) {
-				generateCreditApp(creditApp, path);
+				generateCreditApp(creditApp, path, companyLogoURL);
 			} else if (documentType.equals("proposal")) {
-				generateProposalLetter(creditApp, path);
+				generateProposalLetter(creditApp, path, companyLogoURL);
 			}
 		}
 		catch (PortalException pe) {
@@ -78,11 +78,12 @@ public class ManageDocumentUtil {
 		}
 	}
 	
-	private static void generateCreditApp(CreditApp creditApp, String path) {
+	private static void generateCreditApp(CreditApp creditApp, String path, String companyLogoURL) {
 		Scanner scanner = null;
 		
 		try {
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
+			tokenMap.put("companyLogoURL", companyLogoURL);
 			File file = new File(path + "CreditAppTemplate_Section1.html");
 			scanner = new Scanner(file);
 			String templateSection = scanner.useDelimiter("\\A").next();
@@ -178,11 +179,12 @@ public class ManageDocumentUtil {
 		}
 	}
 	
-	private static void generateProposalLetter(CreditApp creditApp, String path) {
+	private static void generateProposalLetter(CreditApp creditApp, String path, String companyLogoURL) {
 		Scanner scanner = null;
 		
 		try {
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
+			tokenMap.put("companyLogoURL", companyLogoURL);
 			File file = new File(path + "ProposalLetterTemplate_Section1.html");
 			scanner = new Scanner(file);
 			String templateSection = scanner.useDelimiter("\\A").next();
