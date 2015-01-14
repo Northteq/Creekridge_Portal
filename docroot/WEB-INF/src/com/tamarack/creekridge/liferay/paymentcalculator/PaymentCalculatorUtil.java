@@ -264,7 +264,7 @@ public class PaymentCalculatorUtil {
 			
 			
 			DateFormat dateFormat = new SimpleDateFormat("MMddyyyy_HHmm");
-			String fileName = "..\\..\\..\\..\\..\\creditApps\\creditApp_" + creditApp.getCustomerName()  + "_" +  dateFormat.format(new Date()) + ".xml";
+			String fileName = "..\\..\\..\\creditApps\\creditApp_" + creditApp.getCustomerName()  + "_" +  dateFormat.format(new Date()) + ".xml";
 			File generatedFile = new File(path + fileName);
 	        FileWriter fileWriter = new FileWriter(generatedFile);
 	        fileWriter.write(creditAppXML);
