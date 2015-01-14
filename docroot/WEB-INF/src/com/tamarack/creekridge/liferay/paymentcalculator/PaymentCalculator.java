@@ -79,7 +79,7 @@ public class PaymentCalculator extends MVCPortlet {
 	private PaymentCalculatorQueryUtil queryUtil;
 	private boolean showPrincipals = true;//show per user story
 	private boolean showBankRefs = true; //show per user story
-	
+	private String customPaymentAmountMessage = "";
 	
 	@Override 
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
@@ -106,20 +106,40 @@ public class PaymentCalculator extends MVCPortlet {
 			
 			
 			if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null) {
+				
 				showBankRefs = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
+				_log.info("showBankRefs:  " + showBankRefs);
 			}
 			
 			if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null) {
 				showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
+				_log.info("showPrincipals:  " + showPrincipals);
 			}
 			
+			if (!String.valueOf(siteGroup.getExpandoBridge().getAttribute("Rep Name")).isEmpty()
+					&& !String.valueOf(siteGroup.getExpandoBridge().getAttribute("Rep Phone")).isEmpty()) {
+				
+				
+					customPaymentAmountMessage = "Please call ";
+					customPaymentAmountMessage += siteGroup.getExpandoBridge().getAttribute("Rep Name").toString();
+					customPaymentAmountMessage += " at ";
+					customPaymentAmountMessage +=  siteGroup.getExpandoBridge().getAttribute("Rep Phone").toString();
+					customPaymentAmountMessage += " for Payment Amount";
+			
+			} else {
+				customPaymentAmountMessage = "Please submit a <a href=\"contact\" target=\"_blank\">contact form</a> for payment amount information on this pricing option.";
+			}
+			
+			_log.info("customPaymentAmountMessage:  " + customPaymentAmountMessage);
+			
 		} catch (Exception ex) {
-			_log.error ("error getting sitegroup - " + ex);
+			_log.error ("error getting values from custom fields - " + ex);
 		}
 		
 		renderRequest.setAttribute("showBankRefs", showBankRefs);
 		renderRequest.setAttribute("showPrincipals", showPrincipals);
-	
+		renderRequest.setAttribute("customPaymentAmountMessage", customPaymentAmountMessage);
+		
 		try {
 			List <RateFactorRule> rfrList = RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendor(vendorId, true);
 			
@@ -223,18 +243,26 @@ public class PaymentCalculator extends MVCPortlet {
 			 
 			String subject= vendorName + " submitted an application for Customer: " + creditApp.getCustomerName();
 			
-			_log.info("subject  " + subject);
-			
-			String body="An application (Application #:" + creditApp.getCreditAppId() + ") was submitted by ";
-			_log.info("body  " + body);
-			body+= vendorName +  " \n \n Please login to the vendor portal to view details at the link below: ";
-			_log.info("body  " + body);
-			body += themeDisplay.getPortalURL();
-			_log.info("body  " + body);
-			
-			
-			MailEngine.send(from, to, subject, body);
-			
+			String body="An application (Application #:" + creditApp.getCreditAppId() + ") was submitted by " + vendorName +  " \n \n Please login to the vendor portal to view details at the link below: "; 
+			body += themeDisplay.getPortalURL()+themeDisplay.getPathFriendlyURLPrivateGroup()+ "/" + themeDisplay.getLayout().getGroup().getName().toLowerCase();
+			 
+			String[] toArray= new String[]{""};
+			if (to != null){
+				if (to.contains(",")){
+					toArray=to.split(",");
+				} else if (to.contains(";")){
+					toArray= to.split(";");
+				}
+				
+			}
+			if (toArray.length > 1) {
+			   for (int i=0;i<toArray.length;i++){
+				   MailEngine.send(from, toArray[i], subject, body); 
+			   }
+			} else {
+			     MailEngine.send(from, to, subject, body);
+			}	
+
 			_log.info("email sent");
 			
 		} catch (Exception e) {
@@ -423,8 +451,9 @@ public class PaymentCalculator extends MVCPortlet {
 			proposalOption.setRateFactorRuleId(rate.getRateFactorRuleId());
 			 
 			Term tempTerm = TermLocalServiceUtil.getTerm(rate.getTermId());
-			 
-			Double paymentAmount = (equipmentPrice/tempTerm.getTermMonths()) * (1+rate.getRateFactor()) ;
+			Double paymentAmount = -1.0;
+			if (rate.getRateFactor() > 0)
+				paymentAmount = (equipmentPrice/tempTerm.getTermMonths()) * (1+rate.getRateFactor()) ;
 			 
 			proposalOption.setPaymentAmount(paymentAmount);
 			proposalOption.setEquipmentPrice(equipmentPrice);

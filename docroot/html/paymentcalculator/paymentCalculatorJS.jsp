@@ -512,7 +512,9 @@ $(document).ready(function() {
 			function(Y) {
 
 				var currencyFormatter = function(o) {
-					return Y.DataType.Number
+					
+					if (o.value > 0) {
+						return Y.DataType.Number
 						.format(
 								o.value,
 								{
@@ -524,6 +526,10 @@ $(document).ready(function() {
 									thousandsSeparator : o.column.thousandsSeparator
 											|| ','
 								});
+					}
+					
+					
+					else return '${customPaymentAmountMessage}';
 				}
 
 				var propFormatter = function(o) {
@@ -544,7 +550,10 @@ $(document).ready(function() {
 
 						radioBox += ' onchange="updateUseForApplication($(this))"/>';
 
-						return radioBox;
+						if (o.data.propOption.paymentAmount == -1)
+							return '';
+						
+						else return radioBox;
 
 					} else if (o.column.name == 'includeInProposal') {
 						var disabledBox = '${viewOnly==true ? "disabled=\"disabled\"" : ""}';
@@ -559,8 +568,12 @@ $(document).ready(function() {
 						}
 
 						inputBox += ' onchange="updateUseInProposalSelection($(this))"/>';
-
-						return inputBox;
+						
+						if (o.data.propOption.paymentAmount == -1)
+							return '';
+						
+						else return inputBox;
+						
 					} else {
 						return o.data.propOption[o.column.name];
 					}
@@ -588,6 +601,7 @@ $(document).ready(function() {
 					label : 'Payment Amount',
 					sortable : true,
 					formatter : currencyFormatter,
+					allowHTML : true,
 					className : 'purchaseOptionsColumn'
 				}, {
 					key : 'propOption',
