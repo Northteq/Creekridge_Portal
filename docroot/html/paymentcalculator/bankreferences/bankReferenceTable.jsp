@@ -39,7 +39,7 @@
 			<aui:input name="bankReferenceId" type="hidden"/>
 			<aui:input inlineField="true" required="true" name="bankReferenceName"></aui:input>
 			<aui:input inlineField="true" name="bankReferenceContact"></aui:input>
-			<aui:input inlineField="true" name="bankReferencePhone"></aui:input>
+			<aui:input inlineField="true" name="bankReferencePhone" cssClass="phone"></aui:input>
 			<aui:select inlineField="true"
 				name="bankReferenceAccountType" showEmptyOption="true">
 				<c:forEach items="${accountTypesList}" var="accType">
