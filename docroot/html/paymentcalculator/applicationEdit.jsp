@@ -254,10 +254,15 @@
 					<a class="btn btn-small" id="navigateToPricingOverview"
 						onclick="navigateToPricingOverview()"><i class="icon-backward"></i>
 						Back to Pricing Overview</a>
-						
-					<a class="btn btn-primary btn-small" id="navigateToBankReference"
-						onclick="navigateToPrincipal()"><i class="icon-forward"></i>
-						Continue to Principal</a>
+					<c:if test="${showPrincipals}">
+						<a class="btn btn-primary btn-small" id="navigateToBankReference"
+							onclick="navigateToPrincipal()"><i class="icon-forward"></i>
+							Continue to Principal</a>
+					</c:if>
+					<c:if test="${!showPrincipals && showBankRefs}">
+						<a class="btn btn-small btn-primary"  onclick="navigateToBankReference()"><i class="icon-forward"></i>
+											Continue to Bank Reference</a>
+					</c:if>
 				</aui:button-row>
 				
 			</liferay-ui:panel>
@@ -274,29 +279,25 @@
 					
 					
 					<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-					
-					<aui:button-row>
-						<a class="btn  btn-info btn-small" id="addRow">Add Principal</a>
-					</aui:button-row>
-					
+						<aui:button-row>
+							<a class="btn  btn-info btn-small" id="addRow">Add Principal</a>
+						</aui:button-row>
 					</c:if>
 					
 					<p/>
 					
 					<div id="principalDataTable"></div>
 					
-					
 					<c:if test="${creditApp.creditAppStatusId == 2  && viewOnly==false}">
-					
-					<aui:button-row>
-						<a class="btn btn-small" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
-											Back to Customer Info</a>
-											
-						<c:if test="${showBankRefs}">
-							<a class="btn btn-small btn-primary"  onclick="navigateToBankReference()"><i class="icon-forward"></i>
-											Continue to Bank Reference</a>
-						</c:if>
-					</aui:button-row>
+						<aui:button-row>
+							<a class="btn btn-small" onclick="navigateTocustomerAndEquipmentInfo()"><i class="icon-backward"></i>
+												Back to Customer Info</a>
+												
+							<c:if test="${showBankRefs}">
+								<a class="btn btn-small btn-primary"  onclick="navigateToBankReference()"><i class="icon-forward"></i>
+												Continue to Bank Reference</a>
+							</c:if>
+						</aui:button-row>
 					</c:if>
 				</liferay-ui:panel>
 			</c:if>
