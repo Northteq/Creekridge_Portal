@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.sql.Blob;
 import java.util.Date;
 
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -271,7 +272,35 @@ public void emailCreditAppDocument(ActionRequest actionRequest, ActionResponse r
     mailMessage.setBody(body);
     mailMessage.setFrom(new InternetAddress(fromAddress));
     mailMessage.setSubject(subject);
-    mailMessage.setTo(new InternetAddress(toAddress));
+    String[] toAddressArray= new String[]{""};
+	InternetAddress[] toInternetAddress;
+	try {
+		toInternetAddress = new InternetAddress[]{new InternetAddress("")};
+	
+	if (toAddress != null){
+		if (toAddress.contains(",")){
+			toAddressArray=toAddress.split(",");
+		} else if (toAddress.contains(";")){
+			toAddressArray= toAddress.split(";");
+		}
+	}
+	if (toAddressArray.length > 1) {
+		   for (int i=0;i<toAddressArray.length;i++){
+				toInternetAddress[i]=new InternetAddress(toAddressArray[i]);
+			 }
+		} 
+	 
+    if(toInternetAddress.length > 1) {
+      mailMessage.setTo(new InternetAddress(toAddress));
+      } else {
+    	 mailMessage.setTo(new InternetAddress(toAddress));
+      }
+	} catch (AddressException e) {
+		_log.error(e);
+	}
+    
+    
+    
     mailMessage.addFileAttachment(attachment);
     MailServiceUtil.sendEmail(mailMessage);
     SessionMessages.add(actionRequest, "emailSent");
