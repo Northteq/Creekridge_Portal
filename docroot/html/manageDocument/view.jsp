@@ -63,7 +63,7 @@ try {
 <div class="container-fluid">
 	<div>
 		<h4 class="screenTitle pull-left">Manage Documents for Application #<%=creditApp11.getCreditAppId() %></h4>
-		<span class="pull-right">
+		<span class="pull-left">
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/payment-calculator?creditAppId=<%=creditApp11.getCreditAppId() %>"><i class="icon-backward"></i>
 			Back to Credit App</a> 
