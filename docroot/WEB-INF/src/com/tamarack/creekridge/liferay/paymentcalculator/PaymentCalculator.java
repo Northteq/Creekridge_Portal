@@ -106,11 +106,11 @@ public class PaymentCalculator extends MVCPortlet {
 			
 			
 			if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null) {
-				showBankRefs = (boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
+				showBankRefs = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
 			}
 			
 			if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null) {
-				showPrincipals = (boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
+				showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
 			}
 			
 		} catch (Exception ex) {
