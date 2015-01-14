@@ -63,8 +63,13 @@ YUI().use(
 				validateForm();
 				
 				if (!validator.hasErrors()) {
-					$('#termsAndAgreementSection').show();
-					 termsPanel.show();
+					if ($('[name="useForCreditApp"]:checked').length > 0) {
+						$('#termsAndAgreementSection').show();
+						 termsPanel.show();
+					} else {
+						addCustomError ('At least on option needs to be used on the application.');
+					}
+					
 				}
 		  });
 		}

@@ -53,6 +53,16 @@ var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
 var appFormId = '<portlet:namespace/>applicationForm';
 var validator;
 
+var addCustomError = function (message) {
+	
+	errMessage = '<ul><li><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only"></span>';
+	errMessage += message;
+	errMessage += '</li></ul>';
+	
+	$('#validationErrors').append(errMessage);
+	$('#validationErrors').show();
+};
+
 var outputErrors = function (errors, errorSection) {
 	var htmlError = '<ul>';
 	
@@ -127,7 +137,7 @@ function processAppButton(action){
 	  	           type: "POST",
 	  	           url: '<%=saveAndExitApplicationURL%>',
 	  	           data: $(formEl).serialize(), // serializes the form's elements.
-	  	           success: function(data){
+	  	           success: function(data, request){
 	  	        	 console.log ('save and exit post success');
 	  	        	 window.location.href = 'view-applications';
 	  	           }
@@ -612,7 +622,7 @@ $(document).ready(function() {
 					className : 'purchaseOptionsColumn'
 				}, {
 					key : 'useForCreditApp',
-					label : 'Use for Credit Application',
+					label : 'Use for Application',
 					formatter : propFormatter,
 					allowHTML : true,
 					name : 'useForCreditApp',
