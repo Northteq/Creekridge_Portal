@@ -136,10 +136,6 @@ public class PaymentCalculator extends MVCPortlet {
 			_log.error ("error getting values from custom fields - " + ex);
 		}
 		
-		renderRequest.setAttribute("showBankRefs", showBankRefs);
-		renderRequest.setAttribute("showPrincipals", showPrincipals);
-		renderRequest.setAttribute("customPaymentAmountMessage", customPaymentAmountMessage);
-		
 		try {
 			List <RateFactorRule> rfrList = RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendor(vendorId, true);
 			
@@ -198,6 +194,11 @@ public class PaymentCalculator extends MVCPortlet {
 			_log.error(e);
 			e.printStackTrace();
 		}
+		
+		renderRequest.setAttribute("showBankRefs", showBankRefs);
+		renderRequest.setAttribute("showPrincipals", showPrincipals);
+		renderRequest.setAttribute("customPaymentAmountMessage", customPaymentAmountMessage);
+		
 		super.render(renderRequest, renderResponse);
 		_log.info("render ended");
 	}

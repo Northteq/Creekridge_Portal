@@ -39,7 +39,6 @@ import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
 public class ViewApplicationsTable extends MVCPortlet {
 	
 	private static Log _log = LogFactory.getLog(ViewApplicationsTable.class);
-	private boolean isSiteMember = false;
 	boolean isCreekRidgeSalesManager = false;
 	boolean isVendorSaleRep = false;
 	
@@ -50,42 +49,37 @@ public class ViewApplicationsTable extends MVCPortlet {
 			
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			long groupId = themeDisplay.getLayout().getGroupId();
-			
-			//boolean isOmniAdmin=themeDisplay.getPermissionChecker().isOmniadmin();
-			//boolean isGroupOwner = themeDisplay.getPermissionChecker().isGroupOwner(themeDisplay.getScopeGroupId());
-			isSiteMember =themeDisplay.getPermissionChecker().isGroupMember(themeDisplay.getScopeGroupId());
 
-			if(isSiteMember) {
-				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(themeDisplay.getUserId());
-				List<UserGroupRole> siteRoles = new ArrayList<UserGroupRole>();
-				
+			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(themeDisplay.getUserId());
+			List<UserGroupRole> siteRoles = new ArrayList<UserGroupRole>();
+			
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				int roleType = userGroupRole.getRole().getType();
+				if (roleType == com.liferay.portal.model.RoleConstants.TYPE_SITE) {
+		 			siteRoles.add(userGroupRole);
+		 			System.out.println(" Custom Role "+userGroupRole.getRole().getName());
+		 			if("salesManager".equalsIgnoreCase(userGroupRole.getRole().getName())){
+			 			isCreekRidgeSalesManager=true;
+						break;
+					}
+		 		}
+			}
+			
+			if(!isCreekRidgeSalesManager) {
 				for (UserGroupRole userGroupRole : userGroupRoles) {
 					int roleType = userGroupRole.getRole().getType();
-					if (roleType == com.liferay.portal.model.RoleConstants.TYPE_SITE) {
+						if (roleType == RoleConstants.TYPE_SITE) {
 			 			siteRoles.add(userGroupRole);
 			 			System.out.println(" Custom Role "+userGroupRole.getRole().getName());
-			 			if("salesManager".equalsIgnoreCase(userGroupRole.getRole().getName())){
-				 			isCreekRidgeSalesManager=true;
+			 			if("salesRep".equalsIgnoreCase(userGroupRole.getRole().getName())){
+							isVendorSaleRep=true;
 							break;
-						}
-			 		}
-				}
-				
-				if(!isCreekRidgeSalesManager) {
-					for (UserGroupRole userGroupRole : userGroupRoles) {
-						int roleType = userGroupRole.getRole().getType();
-							if (roleType == RoleConstants.TYPE_SITE) {
-				 			siteRoles.add(userGroupRole);
-				 			System.out.println(" Custom Role "+userGroupRole.getRole().getName());
-				 			if("salesRep".equalsIgnoreCase(userGroupRole.getRole().getName())){
-								isVendorSaleRep=true;
-								break;
-					         }
-				          }
-				      }
-			  	} //if !isCreekRidgeSalesManager
-				
-			}//end if sitemember
+				         }
+			          }
+			      }
+		  	} //if !isCreekRidgeSalesManager
+			
+	
 			
 			
 			Set <String> repNames = new HashSet<String>();
