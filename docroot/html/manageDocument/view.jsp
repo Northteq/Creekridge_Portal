@@ -63,14 +63,14 @@ try {
 <div class="container-fluid">
 	<div>
 		<h4 class="screenTitle pull-left">Manage Documents for Application #<%=creditApp11.getCreditAppId() %></h4>
-		<span class="pull-left">
+		<div>
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/payment-calculator?creditAppId=<%=creditApp11.getCreditAppId() %>"><i class="icon-backward"></i>
 			Back to Credit App</a> 
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/view-applications"><i class="icon-backward"></i>
 			Back to View Applications</a>
-		</span>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 	<div>
