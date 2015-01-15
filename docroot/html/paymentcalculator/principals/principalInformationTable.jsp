@@ -133,6 +133,15 @@ YUI().use(
 			
 		  	return addressOut;
 		},
+		
+		ssnFormatter = function (o) {
+		  	console.log(o);
+		  	var ssnString = "";
+			if (o.value != "")
+				ssnString = "XXX-XX-" + o.value.substring(o.value.length-4, o.value.length+1);
+			
+		  	return ssnString;
+		},
 	    
 	    cols = [{key:'principalId',
 	    		label:'Id',
@@ -151,6 +160,7 @@ YUI().use(
 	            },
 	            {
 	    			key: 'principalSSN',
+	    			formatter : ssnFormatter,
 	    			label: 'SSN',
 	    		
 	            },
