@@ -60,10 +60,10 @@
 		<label style="display:inline">Status </label>
 		<span id="creditApplicationStatusFilter"></span>
 		
-		<div style="display:none" id="salesRepFilterSection">
+		<span style="display:none" id="salesRepFilterSection">
 			<label style="display:inline">Sales Rep </label>
 			<span id="salesRepFilter"></span>
-		</div>
+		</span>
 		
 	</aui:row>
 	
