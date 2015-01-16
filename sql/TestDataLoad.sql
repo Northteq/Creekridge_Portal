@@ -114,15 +114,7 @@ INSERT INTO [dbo].[eCreekRidge_RateFactorRule] (
       ,[expirationDate]) VALUES
 	  (1, 10157, 10201, 'test', SYSDATETIME(), SYSDATETIME(), 501, 101, 101, @vendorID, 0, .005, DATEFROMPARTS ( 2014, 01, 01 ), 1, DATEFROMPARTS ( 2016, 01, 01 ))
 
---000 Rates
-INSERT INTO [dbo].[eCreekRidge_RateFactorRule] ( [rateFactorRuleId] ,[companyId],[userId] ,[userName] ,[createDate] ,[modifiedDate] ,[productId] ,[termId] ,[purchaseOptionId] ,[vendorId]
-      ,[minPrice]
-      ,[rateFactor]
-      ,[effectiveDate]
-      ,[active_]
-      ,[expirationDate]) VALUES
-	  (3, 10157, 10201, 'test', SYSDATETIME(), SYSDATETIME(), 0, 0, 0, @vendorID, 0, .005, DATEFROMPARTS ( 2014, 01, 01 ), 1, DATEFROMPARTS ( 2016, 01, 01 ))
-	
+
 	INSERT INTO [dbo].[eCreekRidge_RateFactorRule] (
 		   [rateFactorRuleId] ,[companyId],[userId] ,[userName] ,[createDate] ,[modifiedDate] ,[productId] ,[termId] ,[purchaseOptionId] ,[vendorId]
 	      ,[minPrice]
