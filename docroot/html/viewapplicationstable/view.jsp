@@ -117,6 +117,9 @@ $(document).ready(function() {
 	}
 	
     $('#appTable').dataTable( {
+    	"oLanguage": {
+            "sLengthMenu": "Display _MENU_ Applications"
+          },
         "ajax": "<%=creditApplicationsJsonURL%>",
         "columns": [
             { "data": "statusName" },
