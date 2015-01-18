@@ -18,6 +18,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -45,6 +46,13 @@ import com.tamarack.creekridge.model.Product;
 import com.tamarack.creekridge.model.ProposalOption;
 import com.tamarack.creekridge.model.PurchaseOption;
 import com.tamarack.creekridge.model.Term;
+import com.tamarack.creekridge.model.impl.CreditAppBankReferenceModelImpl;
+import com.tamarack.creekridge.model.impl.CreditAppModelImpl;
+import com.tamarack.creekridge.model.impl.CreditAppPrincipalModelImpl;
+import com.tamarack.creekridge.model.impl.ProductModelImpl;
+import com.tamarack.creekridge.model.impl.ProposalOptionModelImpl;
+import com.tamarack.creekridge.model.impl.PurchaseOptionModelImpl;
+import com.tamarack.creekridge.model.impl.TermModelImpl;
 import com.tamarack.creekridge.service.CreditAppBankReferenceLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppDocumentLocalServiceUtil;
 import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
@@ -57,17 +65,33 @@ import com.tamarack.creekridge.service.TermLocalServiceUtil;
 public class ManageDocumentUtil {
 	private static Log _log = LogFactory.getLog(ManageDocumentUtil.class);
 	
-	public static void generateDocument(String creditAppId, long userId, String documentType, String realPath, String companyLogoURL) {
+	public static void generateDocument(String creditAppId, long userId, String realPath, String companyLogoURL) {
 		CreditApp creditApp = null;
 		
 		try {
 			creditApp = CreditAppLocalServiceUtil.getCreditApp(Long.valueOf(creditAppId).longValue());
 			String path = realPath + "html\\manageDocument\\";
 			
-			if (documentType.equals("creditApp")) {
-				generateCreditApp(creditApp, path, companyLogoURL);
-			} else if (documentType.equals("proposal")) {
-				generateProposalLetter(creditApp, path, companyLogoURL);
+			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
+			ExpandoBridge bridge = group.getExpandoBridge();
+			String htmlFiles = (String)bridge.getAttribute("Vendor Template HTML Files");
+			String titles = (String)bridge.getAttribute("Vendor Template Titles");
+			String hidePrincipals = (String)bridge.getAttribute("Hide Principals");
+			String hideBankReferences = (String)bridge.getAttribute("Hide Bank References");
+			_log.info("hidePrincipals " + hidePrincipals);
+			_log.info("hideBankReferences " + hideBankReferences);
+			
+			String[] htmlFilesArray = htmlFiles.split(";");
+			String[] titlesArray = titles.split(";");
+			String htmlFile = "";
+			String title = "";
+			
+			for (int i = 0; i < htmlFilesArray.length; i++) {
+				htmlFile = htmlFilesArray[i];
+				title = (i < titlesArray.length ? titlesArray[i] : "");
+				_log.info("htmlFile " + htmlFile);
+				_log.info("title " + title);
+				generateDocument(htmlFile, title, creditApp, path, companyLogoURL, hidePrincipals, hideBankReferences);
 			}
 		}
 		catch (PortalException pe) {
@@ -78,82 +102,46 @@ public class ManageDocumentUtil {
 		}
 	}
 	
-	private static void generateCreditApp(CreditApp creditApp, String path, String companyLogoURL) {
+	private static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, String hidePrincipals, String hideBankReferences) {
 		Scanner scanner = null;
 		
 		try {
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
 			tokenMap.put("companyLogoURL", companyLogoURL);
-			File file = new File(path + "CreditAppTemplate_Section1.html");
+
+			DateFormat dateFormat2 = new SimpleDateFormat("MMM d, yyyy");
+			tokenMap.put("Date", dateFormat2.format(new Date()));
+			
+			File file = new File(path + htmlFile);
 			scanner = new Scanner(file);
-			String templateSection = scanner.useDelimiter("\\A").next();
-			updateTokenMapCreditApp(tokenMap, creditApp);
-			String generatedTemplate = replaceTokens(templateSection, tokenMap);
+			String template = scanner.useDelimiter("\\A").next();
+			updateTokenMap(tokenMap, creditApp);
+			String generatedTemplate = replaceTokens(creditApp, path, template, tokenMap);
 			scanner.close();
 			
-			file = new File(path + "CreditAppTemplate_Section2.html");
-			scanner = new Scanner(file);
-			templateSection = scanner.useDelimiter("\\A").next();
-			
-			List<CreditAppPrincipal> principals = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId());
-			for (CreditAppPrincipal principal : principals) {
-				updateTokenMapPrincipal(tokenMap, principal);
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
-			}
-			
-			if (principals.size() == 0) {
-				updateTokenMapPrincipal(tokenMap, null);
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
-			}
-			
-			scanner.close();
-			
-			file = new File(path + "CreditAppTemplate_Section3.html");
-			scanner = new Scanner(file);
-			templateSection = scanner.useDelimiter("\\A").next();
-			generatedTemplate += replaceTokens(templateSection, tokenMap);
-			scanner.close();
-			
-			file = new File(path + "CreditAppTemplate_Section4.html");
-			scanner = new Scanner(file);
-			templateSection = scanner.useDelimiter("\\A").next();
-			
-			List<CreditAppBankReference> bankReferences = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
-			for (CreditAppBankReference bankReference : bankReferences) {
-				updateTokenMapBankReference(tokenMap, bankReference);
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
-			}
-			
-			if (bankReferences.size() == 0) {
-				updateTokenMapBankReference(tokenMap, null);
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
-			}
-			
-			scanner.close();
-			
-			file = new File(path + "CreditAppTemplate_Section5.html");
-			scanner = new Scanner(file);
-			templateSection = scanner.useDelimiter("\\A").next();
-			generatedTemplate += replaceTokens(templateSection, tokenMap);
-			scanner.close();
-			
-			file = new File(path + "CreditAppTemplate_Section6.html");
-			scanner = new Scanner(file);
-			templateSection= scanner.useDelimiter("\\A").next();
-			
-			for (CreditAppPrincipal principal : principals) {
-				updateTokenMapPrincipal(tokenMap, principal);
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
-			}
-			
-			if (principals.size() == 0) {
-				updateTokenMapPrincipal(tokenMap, null);
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
-			}
+			if (hidePrincipals.equals("TRUE") || CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId()).size() == 0) {
+				int indexStartPrincipals = generatedTemplate.indexOf("<!-- PRINCIPALS SECTION START -->");
+				int indexEndPrincipals = generatedTemplate.indexOf("<!-- PRINCIPALS SECTION END -->");
 				
-			scanner.close();
+				if (indexStartPrincipals != -1 && indexEndPrincipals != -1) {
+					String generatedTemplateStart = generatedTemplate.substring(0, indexStartPrincipals);
+					String generatedTemplateEnd = generatedTemplate.substring(indexEndPrincipals, generatedTemplate.length());
+					generatedTemplate = generatedTemplateStart + generatedTemplateEnd;
+				}
+			}
 			
-			File generatedFile = new File(path + "CreditApp.html");
+			if (hideBankReferences.equals("TRUE") || CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId()).size() == 0) {
+				int indexStartBankReferences = generatedTemplate.indexOf("<!-- BANK REFERENCES SECTION START -->");
+				int indexEndBankReferences = generatedTemplate.indexOf("<!-- BANK REFERENCES SECTION END -->");
+				
+				if (indexStartBankReferences != -1 && indexEndBankReferences != -1) {
+					String generatedTemplateStart = generatedTemplate.substring(0, indexStartBankReferences);
+					String generatedTemplateEnd = generatedTemplate.substring(indexEndBankReferences, generatedTemplate.length());
+					generatedTemplate = generatedTemplateStart + generatedTemplateEnd;
+				}
+			}
+			
+			File generatedFile = new File(path + title + ".html");
 	        FileWriter fileWriter = new FileWriter(generatedFile);
 	        fileWriter.write(generatedTemplate);
 	        fileWriter.close();
@@ -161,7 +149,7 @@ public class ManageDocumentUtil {
 			Timestamp stamp = new Timestamp(System.currentTimeMillis());
 			InputStream inputStream = new FileInputStream(generatedFile);
 			File convertedFile = DocumentConversionUtil.convert(String.valueOf(stamp.getTime()), inputStream, "html", "pdf");
-			saveDocument(creditApp, convertedFile, "CreditApp");
+			saveDocument(creditApp, convertedFile, title);
 			convertedFile.delete();
 		}
 		catch (FileNotFoundException fnfe) {
@@ -179,57 +167,57 @@ public class ManageDocumentUtil {
 		}
 	}
 	
-	private static void generateProposalLetter(CreditApp creditApp, String path, String companyLogoURL) {
+	private static String generateSection(CreditApp creditApp, String path, String htmlFile) {
 		Scanner scanner = null;
+		String generatedTemplate = "";
 		
 		try {
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
-			tokenMap.put("companyLogoURL", companyLogoURL);
-			File file = new File(path + "ProposalLetterTemplate_Section1.html");
+			File file = new File(path + htmlFile);
 			scanner = new Scanner(file);
 			String templateSection = scanner.useDelimiter("\\A").next();
-			updateTokenMapProposalLetter(tokenMap, creditApp);
-			String generatedTemplate = replaceTokens(templateSection, tokenMap);
-			scanner.close();
 			
-			file = new File(path + "ProposalLetterTemplate_Section2.html");
-			scanner = new Scanner(file);
-			templateSection = scanner.useDelimiter("\\A").next();
-			
-			List<ProposalOption> options = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditApp.getCreditAppId());
-			int counter = 0;
-			for (ProposalOption option : options) {
-				counter++;
-				Product product = ProductLocalServiceUtil.getProduct(option.getProductId());
-				PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(creditApp.getPurchaseOptionId());
-				Term term = TermLocalServiceUtil.getTerm(creditApp.getTermId());
-				updateTokenMapProposalOption(tokenMap, option, product, purchaseOption, term, counter + "");
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
+			if (htmlFile.contains("Principals")) {
+				List<CreditAppPrincipal> principals = CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId());
+				for (CreditAppPrincipal principal : principals) {
+					updateTokenMapPrincipal(tokenMap, principal);
+					generatedTemplate += replaceTokens(creditApp, path, templateSection, tokenMap);
+				}
+				
+				if (principals.size() == 0) {
+					//updateTokenMapPrincipal(tokenMap, null);
+					//generatedTemplate += replaceTokens(creditApp, path, templateSection, tokenMap);
+				}
+			} else if (htmlFile.contains("BankReferences")) {
+				List<CreditAppBankReference> bankReferences = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
+				for (CreditAppBankReference bankReference : bankReferences) {
+					updateTokenMapBankReference(tokenMap, bankReference);
+					generatedTemplate += replaceTokens(creditApp, path, templateSection, tokenMap);
+				}
+				
+				if (bankReferences.size() == 0) {
+					//updateTokenMapBankReference(tokenMap, null);
+					//generatedTemplate += replaceTokens(creditApp, path, templateSection, tokenMap);
+				}
+			} else if (htmlFile.contains("ProposalOptions")) {
+				List<ProposalOption> options = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditApp.getCreditAppId());
+				int counter = 0;
+				for (ProposalOption option : options) {
+					counter++;
+					Product product = ProductLocalServiceUtil.getProduct(option.getProductId());
+					PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(creditApp.getPurchaseOptionId());
+					Term term = TermLocalServiceUtil.getTerm(creditApp.getTermId());
+					updateTokenMapProposalOption(tokenMap, option, product, purchaseOption, term, counter + "");
+					generatedTemplate += replaceTokens(creditApp, path, templateSection, tokenMap);
+				}
+				
+				if (options.size() == 0) {
+					//updateTokenMapProposalOption(tokenMap, null, null, null, null, counter + "");
+					//generatedTemplate += replaceTokens(creditApp, path, templateSection, tokenMap);
+				}
 			}
 			
-			if (options.size() == 0) {
-				updateTokenMapProposalOption(tokenMap, null, null, null, null, counter + "");
-				generatedTemplate += replaceTokens(templateSection, tokenMap);
-			}
-			
 			scanner.close();
-			
-			file = new File(path + "ProposalLetterTemplate_Section3.html");
-			scanner = new Scanner(file);
-			templateSection = scanner.useDelimiter("\\A").next();
-			generatedTemplate += replaceTokens(templateSection, tokenMap);
-			scanner.close();
-			
-			File generatedFile = new File(path + "ProposalLetter.html");
-	        FileWriter fileWriter = new FileWriter(generatedFile);
-	        fileWriter.write(generatedTemplate);
-	        fileWriter.close();
-			
-			Timestamp stamp = new Timestamp(System.currentTimeMillis());
-			InputStream inputStream = new FileInputStream(generatedFile);
-			File convertedFile = DocumentConversionUtil.convert(String.valueOf(stamp.getTime()), inputStream, "html", "pdf");
-			saveDocument(creditApp, convertedFile, "Proposal");
-			convertedFile.delete();
 		}
 		catch (FileNotFoundException fnfe) {
 			_log.error(fnfe);
@@ -244,65 +232,68 @@ public class ManageDocumentUtil {
 			if (scanner != null)
 				scanner.close();
 		}
+		return generatedTemplate;
 	}
 	
-	private static void updateTokenMapCreditApp(HashMap<String, Object> tokenMap, CreditApp creditApp) {
-		tokenMap.putAll(creditApp.getModelAttributes());
+	private static HashMap<String, Object> addTableName(String tableName, Map<String, Object> attributes) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		Iterator<String> keysIter = attributes.keySet().iterator();
+		String key = "";
+		
+		while (keysIter.hasNext()) {
+			key = keysIter.next();
+			map.put(tableName + "." + key, attributes.get(key));
+		}
+		
+		return map;
+	}
+	
+	private static void updateTokenMap(HashMap<String, Object> tokenMap, CreditApp creditApp) {
+		HashMap<String, Object> creditAppMap = addTableName(CreditAppModelImpl.TABLE_NAME, creditApp.getModelAttributes());
+		tokenMap.putAll(creditAppMap);
+		
 		updateTokenMapVendor(tokenMap, creditApp);
 		updateTokenMapUser(tokenMap, creditApp);
 		
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		tokenMap.put("businessStartDate", dateFormat.format(creditApp.getCustomerBusinessStartDate()));
-		
-		tokenMap.put("purchaseOption", "");
 		try {
 			PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(creditApp.getPurchaseOptionId());
-			tokenMap.put("purchaseOption", purchaseOption.getPurchaseOptionName());
+			HashMap<String, Object> purchaseOptionMap = addTableName(PurchaseOptionModelImpl.TABLE_NAME, purchaseOption.getModelAttributes());
+			tokenMap.putAll(purchaseOptionMap);
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
 		
-		tokenMap.put("term", "");
 		try {
 			Term term = TermLocalServiceUtil.getTerm(creditApp.getTermId());
-			tokenMap.put("term", term.getTermName());
+			HashMap<String, Object> termMap = addTableName(TermModelImpl.TABLE_NAME, term.getModelAttributes());
+			tokenMap.putAll(termMap);
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
 		
-		tokenMap.put("pricingProduct", "");
 		try {
 			Product product = ProductLocalServiceUtil.getProduct(creditApp.getProductId());
-			tokenMap.put("pricingProduct", product.getProductName());
+			HashMap<String, Object> productMap = addTableName(ProductModelImpl.TABLE_NAME, product.getModelAttributes());
+			tokenMap.putAll(productMap);
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
-		
-		DecimalFormat decimalFormat = new DecimalFormat("###,##0.00");
-		tokenMap.put("equipmentPrice", decimalFormat.format(creditApp.getEquipmentPrice()));
-		tokenMap.put("paymentAmount", decimalFormat.format(creditApp.getPaymentAmount()));
 	}
 	
 	private static void updateTokenMapVendor(HashMap<String, Object> tokenMap, CreditApp creditApp) {
-		tokenMap.put("VendorName", "");
-		tokenMap.put("VendorAddress", "");
-		tokenMap.put("VendorCity", "");
-		tokenMap.put("VendorState", "");
-		tokenMap.put("VendorZip", "");
-		tokenMap.put("VendorPhone", "");
-		
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
-			tokenMap.put("VendorName", group.getName());
+			tokenMap.put("Vendor Name", group.getName());
 			ExpandoBridge bridge = group.getExpandoBridge();
-			tokenMap.put("VendorAddress", bridge.getAttribute("Vendor Address") + " " + bridge.getAttribute("Vendor Address 2"));
-			tokenMap.put("VendorCity", bridge.getAttribute("Vendor City"));
-			tokenMap.put("VendorState", bridge.getAttribute("Vendor State"));
-			tokenMap.put("VendorZip", bridge.getAttribute("Vendor Zip"));
-			tokenMap.put("VendorPhone", bridge.getAttribute("Vendor Phone"));
+			tokenMap.put("Vendor Address", bridge.getAttribute("Vendor Address"));
+			tokenMap.put("Vendor Address 2", bridge.getAttribute("Vendor Address 2"));
+			tokenMap.put("Vendor City", bridge.getAttribute("Vendor City"));
+			tokenMap.put("Vendor State", bridge.getAttribute("Vendor State"));
+			tokenMap.put("Vendor Zip", bridge.getAttribute("Vendor Zip"));
+			tokenMap.put("Vendor Phone", bridge.getAttribute("Vendor Phone"));
 		}
 		catch (Exception e) {
 			_log.error(e);
@@ -310,14 +301,10 @@ public class ManageDocumentUtil {
 	}
 	
 	private static void updateTokenMapUser(HashMap<String, Object> tokenMap, CreditApp creditApp) {
-		tokenMap.put("userFirstName", "");
-		tokenMap.put("userLastName", "");
-		tokenMap.put("userEmail", "");
 		try {
 			User user = UserLocalServiceUtil.getUser(creditApp.getUserId());
-			tokenMap.put("userFirstName", user.getFirstName());
-			tokenMap.put("userLastName", user.getLastName());
-			tokenMap.put("userEmail", user.getEmailAddress());
+			HashMap<String, Object> userMap = addTableName("User_", user.getModelAttributes());
+			tokenMap.putAll(userMap);
 		}
 		catch (Exception e) {
 			_log.error(e);
@@ -325,73 +312,58 @@ public class ManageDocumentUtil {
 	}
 	
 	private static void updateTokenMapPrincipal(HashMap<String, Object> tokenMap, CreditAppPrincipal principal) {
-		if (principal == null) {
-			tokenMap.put("principalFirstName", "");
-			tokenMap.put("principalMiddleName", "");
-			tokenMap.put("principalLastName", "");
-			tokenMap.put("principalAddress1", "");
-			tokenMap.put("principalAddress2", "");
-			tokenMap.put("principalCity", "");
-			tokenMap.put("principalState", "");
-			tokenMap.put("principalZip", "");
-			tokenMap.put("principalHomePhoneNumber", "");
-			tokenMap.put("principalEmail", "");
-			tokenMap.put("principalSSN", "");
-		}
-		else
-			tokenMap.putAll(principal.getModelAttributes());
+		HashMap<String, Object> principalMap = addTableName(CreditAppPrincipalModelImpl.TABLE_NAME, principal.getModelAttributes());
+		tokenMap.putAll(principalMap);
 	}
 	
 	private static void updateTokenMapBankReference(HashMap<String, Object> tokenMap, CreditAppBankReference bankReference) {
-		if (bankReference == null) {
-			tokenMap.put("bankReferenceName", "");
-			tokenMap.put("bankReferenceAccountNumber", "");
-			tokenMap.put("bankReferenceContact", "");
-			tokenMap.put("bankReferencePhone", "");
-		}
-		else
-			tokenMap.putAll(bankReference.getModelAttributes());
-	}
-	
-	private static void updateTokenMapProposalLetter(HashMap<String, Object> tokenMap, CreditApp creditApp) {
-		tokenMap.putAll(creditApp.getModelAttributes());
-
-		DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy");
-		tokenMap.put("Date", dateFormat.format(new Date()));
-
-		updateTokenMapVendor(tokenMap, creditApp);
-		updateTokenMapUser(tokenMap, creditApp);
-		
-		DecimalFormat decimalFormat = new DecimalFormat("###,##0.00");
-		tokenMap.put("EquipmentPrice", decimalFormat.format(creditApp.getEquipmentPrice()));
+		HashMap<String, Object> bankReferenceMap = addTableName(CreditAppBankReferenceModelImpl.TABLE_NAME, bankReference.getModelAttributes());
+		tokenMap.putAll(bankReferenceMap);
 	}
 	
 	private static void updateTokenMapProposalOption(HashMap<String, Object> tokenMap, ProposalOption option, Product product, PurchaseOption purchaseOption, Term term, String counter) {
-		if (option == null) {
-			tokenMap.put("Proposal Option Number", "");
-			tokenMap.put("ProductName", "");
-			tokenMap.put("PurchaseOptionName", "");
-			tokenMap.put("TermName", "");
-			tokenMap.put("Payment Amount", "");
-		}
-		else {
-			tokenMap.put("Proposal Option Number", counter);
-			tokenMap.put("ProductName", product.getProductName());
-			tokenMap.put("PurchaseOptionName", purchaseOption.getPurchaseOptionName());
-			tokenMap.put("TermName", term.getTermName());
-			DecimalFormat decimalFormat = new DecimalFormat("###,##0.00");
-			tokenMap.put("Payment Amount", decimalFormat.format(option.getPaymentAmount()));
-		}
+		tokenMap.put("Proposal Option Number", counter);
+		
+		HashMap<String, Object> productMap = addTableName(ProductModelImpl.TABLE_NAME, product.getModelAttributes());
+		tokenMap.putAll(productMap);
+		
+		HashMap<String, Object> purchaseOptionMap = addTableName(PurchaseOptionModelImpl.TABLE_NAME, purchaseOption.getModelAttributes());
+		tokenMap.putAll(purchaseOptionMap);
+		
+		HashMap<String, Object> termMap = addTableName(TermModelImpl.TABLE_NAME, term.getModelAttributes());
+		tokenMap.putAll(termMap);
+
+		HashMap<String, Object> optionMap = addTableName(ProposalOptionModelImpl.TABLE_NAME, option.getModelAttributes());
+		tokenMap.putAll(optionMap);
 	}
 	
-	private static String replaceTokens(String text, Map<String, Object> replacements) {
+	private static String replaceTokens(CreditApp creditApp, String path, String text, Map<String, Object> replacements) {
 		Pattern pattern = Pattern.compile("\\[(.+?)\\]");
 		Matcher matcher = pattern.matcher(text);
 		StringBuffer buffer = new StringBuffer();
 		
 		while (matcher.find()) {
-			String replacement = (String)replacements.get(matcher.group(1));
+			String match = matcher.group(1);
+			String replacement = null;
 			
+			if (match.startsWith("@")) {
+				replacement = generateSection(creditApp, path, match.substring(1));
+			} else { 
+				Object replacementMatch = replacements.get(match);
+
+				if (replacementMatch == null) {
+					replacement = "";
+				} else if (replacementMatch instanceof Date) {
+					DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+					replacement = dateFormat.format(replacementMatch);
+				} else if (replacementMatch instanceof Double) {
+					DecimalFormat decimalFormat = new DecimalFormat("###,##0.00");
+					replacement = decimalFormat.format(replacementMatch);
+				} else {
+					replacement = (String)replacementMatch;
+				}
+			}
+				
 			if (replacement != null) {
 				matcher.appendReplacement(buffer, "");
 				buffer.append(replacement);

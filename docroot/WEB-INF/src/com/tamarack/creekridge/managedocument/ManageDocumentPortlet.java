@@ -171,7 +171,7 @@ public void manageDocument(ActionRequest actionRequest, ActionResponse response)
     _log.info("realPath " + realPath);
 	String companyLogoURL = themeDisplay.getURLHome() + "/../.." + themeDisplay.getCompanyLogo();
     _log.info("companyLogoURL " + companyLogoURL);
-    ManageDocumentUtil.generateDocument(creditAppDocumentId, userId, documentType, realPath, companyLogoURL);
+    ManageDocumentUtil.generateDocument(creditAppDocumentId, userId, realPath, companyLogoURL);
 
 	if("proposal".equalsIgnoreCase(documentType)) {
 	    SessionMessages.add(actionRequest, "propGenerated");
