@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+	<html>
+		<head>
+			<title></title>
+		</head>
+		<body>
+			<img alt="Logo" src="[companyLogoURL]">
+			<p style="font-size: 12px;">
+				[User_.firstName] [User_.lastName]
+				<br />
+				[Vendor Name]
+				<br />
+				[Vendor Address] [Vendor Address 2]
+				<br />
+				[Vendor City], [Vendor State] [Vendor Zip]
+			</p>
+			<p style="font-size: 12px;">
+				[Date]
+			</p>			
+			<p style="font-size: 12px;">
+				[eCreekRidge_CreditApp.CustomerContact]
+				<br />
+				[eCreekRidge_CreditApp.CustomerName]
+				<br />
+				[eCreekRidge_CreditApp.CustomerAddress1]
+				<br />
+				[eCreekRidge_CreditApp.CustomerAddress2]
+				<br />
+				[eCreekRidge_CreditApp.CustomerCity] [eCreekRidge_CreditApp.CustomerState], [eCreekRidge_CreditApp.CustomerZip]
+			</p>
+			<p style="font-size: 12px;">
+				Dear [eCreekRidge_CreditApp.CustomerContact]
+			</p>
+			<p style="font-size: 12px;">
+			Pursuant to your request for a proposal to facilitate the acquisition of your equipment, software and/or related services (collectively, the "Equipment"), we are pleased to offer a structure under the following terms and conditions:
+			</p>
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">						<tr">
+					<td width="30%" valign="top" style="font-size: 12px;"><b>USER:</b></td>
+					<td valign="top" width="70%" style="font-size: 12px;">[eCreekRidge_CreditApp.CustomerName]</td>
+				</tr>
+				<tr">
+					<td valign="top" nowrap style="font-size: 12px;><b>EQUIPMENT:</b></td>
+					<td valign="top" style="font-size: 12px;>[eCreekRidge_CreditApp.equipmentDesc]</td>
+				</tr>
+				<tr>
+					<td valign="top" nowrap style="font-size: 12px;><b>COST OF EQUIPMENT:</b></td>
+					<td valign="top" style="font-size: 12px;>[eCreekRidge_CreditApp.EquipmentPrice]</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td valign="top" nowrap style="font-size: 12px;"><b><u>OPTION</u></b></td>
+					<td valign="top" style="font-size: 12px;"></td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td style="font-size: 12px;">Option #</td>
+					<td style="font-size: 12px;">Product</td>
+					<td style="font-size: 12px;">Purchase Option</td>
+					<td style="font-size: 12px;">Term</td>
+					<td style="font-size: 12px;">Payment Amount</td>
+				</tr>
+				[@ProposalLetterTemplate_ProposalOptions.html]
+            <table>
+                <tr>
+                    <td valign="top" nowrap style="font-size: 12px;"><b>SECURITY DEPOSIT:</b></td>
+                    <td valign="top" style="font-size: 12px;">A security deposit in an amount equal to one Rent Payment will be required.</td>
+                </tr>
+                <tr>
+                    <td valign="top" nowrap style="font-size: 12px;"><b>EXPIRATION:</b></td>
+                    <td valign="top" style="font-size: 12px;">This proposal will automatically expire ten (10) business days from the date of issue.</td>
+                </tr>
+            </table>
+
+            
+            <p  style="font-size: 12px;">This transaction is subject to Provider's Credit Committee's approval and documentation must be satisfactory to Provider.<br />Thank you for this opportunity. Should you have any questions, please contact me at [VendorPhone].</p>
+            
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top">
+                    <p style="font-size: 12px;">Sincerely,</p>
+                    <p style="font-size: 12px;">
+                        [User_.firstName] [User_.lastName]
+                        <br />
+                        [Vendor Name]    
+                    </p>
+                </td>
+                <td valign="top">
+                    <table border="0" cellpadding="5" cellspacing="0">
+                        <tr>
+                            <td colspan="2" style="font-size: 12px;"><b>AGREED TO AND ACCEPTED BY: [eCreekRidge_CreditApp.CustomerName]</b><br /><br /></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 12px;">By: </td>
+                            <td width="100%" style="font-size: 12px;">__________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 12px;">Its: </td>
+                            <td style="font-size: 12px;">__________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 12px;">Date: </td>
+                            <td style="font-size: 12px;">________________________________________</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
