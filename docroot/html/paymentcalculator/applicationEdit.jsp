@@ -36,7 +36,7 @@
 				<fmt:formatNumber value="${creditApp.equipmentPrice}" var="eqPrice" type="CURRENCY"/>
 				<aui:input id="equipmentPrice" step="any"
 					name="equipmentPrice" size="7" style="width:150px"
-					value="${eqPrice}" onchange="checkSelectedOptions(); $(this).val(numeral($(this).val()).format('$0,0.00'))">
+					value="${eqPrice}" onchange="getProductOptions(); checkSelectedOptions(); $(this).val(numeral($(this).val()).format('$0,0.00'))">
 					<%-- <aui:validator name="min">0.01</aui:validator> --%>
 					 <aui:validator name="required" errorMessage="*"/>
 					 <%-- <aui:validator name="number"/> --%>
@@ -48,11 +48,11 @@
 				<aui:fieldset column="true">
 
 					<div id="productList">
-						<c:forEach items="${productOptions}" var="product">
+						<%-- <c:forEach items="${productOptions}" var="product">
 							<aui:input type="checkbox" name="${product.productId}"
 								label="${product.productName}" value="${product.productId}"
 								onchange="getPurchaseOptions()"></aui:input>
-						</c:forEach>
+						</c:forEach> --%>
 					</div>
 				</aui:fieldset>
 			</aui:col>

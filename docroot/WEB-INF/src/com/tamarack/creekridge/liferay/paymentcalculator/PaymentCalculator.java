@@ -489,7 +489,7 @@ public class PaymentCalculator extends MVCPortlet {
 		_log.info(resourceRequest.getResourceID());
 		
 		String selectedOptionsParam = PortalUtil.getOriginalServletRequest(request).getParameter("selectedOptions");
-		
+		_log.info("selectedOptionsParam:" + selectedOptionsParam);
 		if (selectedOptionsParam != null) {
 			try {
 				//rateFactorList = fetchRatefactorOption(selectedOptionsParam);
@@ -518,6 +518,37 @@ public class PaymentCalculator extends MVCPortlet {
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
 			}
 			resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(purchaseOptionList));
+		}
+		
+		if (resourceRequest.getResourceID().equalsIgnoreCase(
+				"getProductsForEqPrice")) {
+			try {
+				List <Product> productList = new ArrayList <Product> ();
+				List <RateFactorRule> rfrListForProducts = new ArrayList <RateFactorRule> ();
+				String eqPriceString = PortalUtil.getOriginalServletRequest(request).getParameter("eqPrice");
+				_log.info ("eqPriceString when getting products " + eqPriceString);
+				if (eqPriceString != null) {
+					double eqPrice = PaymentCalculatorUtil.getDoubleFromCurrency(eqPriceString);
+					rfrListForProducts = queryUtil.fetchActiveProductsForEquipmentPrice(vendorId, eqPrice);
+					
+					_log.info ("rfrListForProducts size " + rfrListForProducts.size());
+					Set <Long> prodSet = new HashSet <Long> ();
+					for (RateFactorRule rateFactorValue : rfrListForProducts) {
+						_log.info(rateFactorValue);
+						if (!prodSet.contains(rateFactorValue.getProductId())) {
+							prodSet.add(rateFactorValue.getProductId());
+							Product product = ProductLocalServiceUtil.getProduct(rateFactorValue.getProductId());
+							productList.add(product);
+						} 
+					}
+				}
+				
+				
+				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(productList));
+			} catch (Exception e) {
+				_log. error(e);
+				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
+			}
 		}
 		
 		if (resourceRequest.getResourceID().equalsIgnoreCase(

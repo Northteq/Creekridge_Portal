@@ -118,16 +118,16 @@ public class RateFactorRuleLocalServiceClpInvoker {
 
 		_methodParameterTypes82 = new String[] { "long", "boolean" };
 
-		_methodName83 = "getRateFactorRuleByProductPurchaseOption";
+		_methodName83 = "getRateFactorRuleByVendorProductPrice";
 
 		_methodParameterTypes83 = new String[] {
-				"java.lang.Boolean", "long", "long", "long"
+				"java.lang.Boolean", "long", "long", "double"
 			};
 
-		_methodName84 = "getRateFactorRuleByVendorProduct";
+		_methodName84 = "getRateFactorRuleByProductPurchaseOptionPrice";
 
 		_methodParameterTypes84 = new String[] {
-				"java.lang.Boolean", "long", "long"
+				"java.lang.Boolean", "long", "long", "long", "double"
 			};
 
 		_methodName85 = "getRateFactorRuleByVendorProductOptionTermPrice";
@@ -246,17 +246,19 @@ public class RateFactorRuleLocalServiceClpInvoker {
 
 		if (_methodName83.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByProductPurchaseOption((java.lang.Boolean)arguments[0],
+			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorProductPrice((java.lang.Boolean)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue());
+				((Double)arguments[3]).doubleValue());
 		}
 
 		if (_methodName84.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorProduct((java.lang.Boolean)arguments[0],
+			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByProductPurchaseOptionPrice((java.lang.Boolean)arguments[0],
 				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue());
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				((Double)arguments[4]).doubleValue());
 		}
 
 		if (_methodName85.equals(name) &&

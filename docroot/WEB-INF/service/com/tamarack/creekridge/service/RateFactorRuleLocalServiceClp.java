@@ -119,16 +119,16 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 
 		_methodParameterTypes19 = new String[] { "long", "boolean" };
 
-		_methodName20 = "getRateFactorRuleByProductPurchaseOption";
+		_methodName20 = "getRateFactorRuleByVendorProductPrice";
 
 		_methodParameterTypes20 = new String[] {
-				"java.lang.Boolean", "long", "long", "long"
+				"java.lang.Boolean", "long", "long", "double"
 			};
 
-		_methodName21 = "getRateFactorRuleByVendorProduct";
+		_methodName21 = "getRateFactorRuleByProductPurchaseOptionPrice";
 
 		_methodParameterTypes21 = new String[] {
-				"java.lang.Boolean", "long", "long"
+				"java.lang.Boolean", "long", "long", "long", "double"
 			};
 
 		_methodName22 = "getRateFactorRuleByVendorProductOptionTermPrice";
@@ -717,9 +717,8 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 	}
 
 	@Override
-	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOption(
-		java.lang.Boolean active, long vendorId, long productId,
-		long purchaseOptionId)
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductPrice(
+		java.lang.Boolean active, long vendorId, long productId, double eqPrice)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -733,7 +732,7 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 						
 					productId,
 						
-					purchaseOptionId
+					eqPrice
 					});
 		}
 		catch (Throwable t) {
@@ -756,8 +755,9 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 	}
 
 	@Override
-	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProduct(
-		java.lang.Boolean active, long vendorId, long productId)
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOptionPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, double eqPrice)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -769,7 +769,11 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 						
 					vendorId,
 						
-					productId
+					productId,
+						
+					purchaseOptionId,
+						
+					eqPrice
 					});
 		}
 		catch (Throwable t) {

@@ -280,20 +280,21 @@ public class RateFactorRuleLocalServiceUtil {
 		return getService().getRateFactorRuleByVendor(vendorId, active);
 	}
 
-	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOption(
-		java.lang.Boolean active, long vendorId, long productId,
-		long purchaseOptionId)
+	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductPrice(
+		java.lang.Boolean active, long vendorId, long productId, double eqPrice)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getRateFactorRuleByProductPurchaseOption(active, vendorId,
-			productId, purchaseOptionId);
+				   .getRateFactorRuleByVendorProductPrice(active, vendorId,
+			productId, eqPrice);
 	}
 
-	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProduct(
-		java.lang.Boolean active, long vendorId, long productId)
+	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOptionPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, double eqPrice)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getRateFactorRuleByVendorProduct(active, vendorId, productId);
+				   .getRateFactorRuleByProductPurchaseOptionPrice(active,
+			vendorId, productId, purchaseOptionId, eqPrice);
 	}
 
 	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice(

@@ -617,56 +617,48 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 	private static final String _FINDER_COLUMN_VENDOR_ACTIVE_2 = "rateFactorRule.active = ? AND ";
 	private static final String _FINDER_COLUMN_VENDOR_VENDORID_2 = "rateFactorRule.vendorId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCT =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTPRICE =
 		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
 			RateFactorRuleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByVendorProduct",
+			"findByVendorProductPrice",
 			new String[] {
 				Boolean.class.getName(), Long.class.getName(),
-				Long.class.getName(),
+				Long.class.getName(), Double.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCT =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_VENDORPRODUCTPRICE =
 		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
-			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
-			RateFactorRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVendorProduct",
-			new String[] {
-				Boolean.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			RateFactorRuleModelImpl.ACTIVE_COLUMN_BITMASK |
-			RateFactorRuleModelImpl.VENDORID_COLUMN_BITMASK |
-			RateFactorRuleModelImpl.PRODUCTID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_VENDORPRODUCT = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVendorProduct",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByVendorProductPrice",
 			new String[] {
 				Boolean.class.getName(), Long.class.getName(),
-				Long.class.getName()
+				Long.class.getName(), Double.class.getName()
 			});
 
 	/**
-	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @return the matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByVendorProduct(boolean active,
-		long vendorId, long productId) throws SystemException {
-		return findByVendorProduct(active, vendorId, productId,
+	public List<RateFactorRule> findByVendorProductPrice(boolean active,
+		long vendorId, long productId, double minPrice)
+		throws SystemException {
+		return findByVendorProductPrice(active, vendorId, productId, minPrice,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -675,20 +667,22 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @param start the lower bound of the range of rate factor rules
 	 * @param end the upper bound of the range of rate factor rules (not inclusive)
 	 * @return the range of matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByVendorProduct(boolean active,
-		long vendorId, long productId, int start, int end)
+	public List<RateFactorRule> findByVendorProductPrice(boolean active,
+		long vendorId, long productId, double minPrice, int start, int end)
 		throws SystemException {
-		return findByVendorProduct(active, vendorId, productId, start, end, null);
+		return findByVendorProductPrice(active, vendorId, productId, minPrice,
+			start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -697,6 +691,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @param start the lower bound of the range of rate factor rules
 	 * @param end the upper bound of the range of rate factor rules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -704,27 +699,19 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByVendorProduct(boolean active,
-		long vendorId, long productId, int start, int end,
+	public List<RateFactorRule> findByVendorProductPrice(boolean active,
+		long vendorId, long productId, double minPrice, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCT;
-			finderArgs = new Object[] { active, vendorId, productId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCT;
-			finderArgs = new Object[] {
-					active, vendorId, productId,
-					
-					start, end, orderByComparator
-				};
-		}
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTPRICE;
+		finderArgs = new Object[] {
+				active, vendorId, productId, minPrice,
+				
+				start, end, orderByComparator
+			};
 
 		List<RateFactorRule> list = (List<RateFactorRule>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
@@ -733,7 +720,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			for (RateFactorRule rateFactorRule : list) {
 				if ((active != rateFactorRule.getActive()) ||
 						(vendorId != rateFactorRule.getVendorId()) ||
-						(productId != rateFactorRule.getProductId())) {
+						(productId != rateFactorRule.getProductId()) ||
+						(minPrice <= rateFactorRule.getMinPrice())) {
 					list = null;
 
 					break;
@@ -745,20 +733,22 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(5 +
+				query = new StringBundler(6 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(5);
+				query = new StringBundler(6);
 			}
 
 			query.append(_SQL_SELECT_RATEFACTORRULE_WHERE);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCT_ACTIVE_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_ACTIVE_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCT_VENDORID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_VENDORID_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCT_PRODUCTID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_PRODUCTID_2);
+
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_MINPRICE_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -785,6 +775,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 				qPos.add(vendorId);
 
 				qPos.add(productId);
+
+				qPos.add(minPrice);
 
 				if (!pagination) {
 					list = (List<RateFactorRule>)QueryUtil.list(q,
@@ -817,28 +809,30 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule findByVendorProduct_First(boolean active,
-		long vendorId, long productId, OrderByComparator orderByComparator)
+	public RateFactorRule findByVendorProductPrice_First(boolean active,
+		long vendorId, long productId, double minPrice,
+		OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
-		RateFactorRule rateFactorRule = fetchByVendorProduct_First(active,
-				vendorId, productId, orderByComparator);
+		RateFactorRule rateFactorRule = fetchByVendorProductPrice_First(active,
+				vendorId, productId, minPrice, orderByComparator);
 
 		if (rateFactorRule != null) {
 			return rateFactorRule;
 		}
 
-		StringBundler msg = new StringBundler(8);
+		StringBundler msg = new StringBundler(10);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -851,27 +845,31 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		msg.append(", productId=");
 		msg.append(productId);
 
+		msg.append(", minPrice=");
+		msg.append(minPrice);
+
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchRateFactorRuleException(msg.toString());
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rate factor rule, or <code>null</code> if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule fetchByVendorProduct_First(boolean active,
-		long vendorId, long productId, OrderByComparator orderByComparator)
-		throws SystemException {
-		List<RateFactorRule> list = findByVendorProduct(active, vendorId,
-				productId, 0, 1, orderByComparator);
+	public RateFactorRule fetchByVendorProductPrice_First(boolean active,
+		long vendorId, long productId, double minPrice,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<RateFactorRule> list = findByVendorProductPrice(active, vendorId,
+				productId, minPrice, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -881,28 +879,30 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule findByVendorProduct_Last(boolean active,
-		long vendorId, long productId, OrderByComparator orderByComparator)
+	public RateFactorRule findByVendorProductPrice_Last(boolean active,
+		long vendorId, long productId, double minPrice,
+		OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
-		RateFactorRule rateFactorRule = fetchByVendorProduct_Last(active,
-				vendorId, productId, orderByComparator);
+		RateFactorRule rateFactorRule = fetchByVendorProductPrice_Last(active,
+				vendorId, productId, minPrice, orderByComparator);
 
 		if (rateFactorRule != null) {
 			return rateFactorRule;
 		}
 
-		StringBundler msg = new StringBundler(8);
+		StringBundler msg = new StringBundler(10);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -915,33 +915,38 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		msg.append(", productId=");
 		msg.append(productId);
 
+		msg.append(", minPrice=");
+		msg.append(minPrice);
+
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchRateFactorRuleException(msg.toString());
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rate factor rule, or <code>null</code> if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule fetchByVendorProduct_Last(boolean active,
-		long vendorId, long productId, OrderByComparator orderByComparator)
-		throws SystemException {
-		int count = countByVendorProduct(active, vendorId, productId);
+	public RateFactorRule fetchByVendorProductPrice_Last(boolean active,
+		long vendorId, long productId, double minPrice,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByVendorProductPrice(active, vendorId, productId,
+				minPrice);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<RateFactorRule> list = findByVendorProduct(active, vendorId,
-				productId, count - 1, count, orderByComparator);
+		List<RateFactorRule> list = findByVendorProductPrice(active, vendorId,
+				productId, minPrice, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -951,21 +956,22 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param rateFactorRuleId the primary key of the current rate factor rule
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a rate factor rule with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule[] findByVendorProduct_PrevAndNext(
+	public RateFactorRule[] findByVendorProductPrice_PrevAndNext(
 		long rateFactorRuleId, boolean active, long vendorId, long productId,
-		OrderByComparator orderByComparator)
+		double minPrice, OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
 		RateFactorRule rateFactorRule = findByPrimaryKey(rateFactorRuleId);
 
@@ -976,13 +982,15 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 			RateFactorRule[] array = new RateFactorRuleImpl[3];
 
-			array[0] = getByVendorProduct_PrevAndNext(session, rateFactorRule,
-					active, vendorId, productId, orderByComparator, true);
+			array[0] = getByVendorProductPrice_PrevAndNext(session,
+					rateFactorRule, active, vendorId, productId, minPrice,
+					orderByComparator, true);
 
 			array[1] = rateFactorRule;
 
-			array[2] = getByVendorProduct_PrevAndNext(session, rateFactorRule,
-					active, vendorId, productId, orderByComparator, false);
+			array[2] = getByVendorProductPrice_PrevAndNext(session,
+					rateFactorRule, active, vendorId, productId, minPrice,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -994,9 +1002,10 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		}
 	}
 
-	protected RateFactorRule getByVendorProduct_PrevAndNext(Session session,
-		RateFactorRule rateFactorRule, boolean active, long vendorId,
-		long productId, OrderByComparator orderByComparator, boolean previous) {
+	protected RateFactorRule getByVendorProductPrice_PrevAndNext(
+		Session session, RateFactorRule rateFactorRule, boolean active,
+		long vendorId, long productId, double minPrice,
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1009,11 +1018,13 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		query.append(_SQL_SELECT_RATEFACTORRULE_WHERE);
 
-		query.append(_FINDER_COLUMN_VENDORPRODUCT_ACTIVE_2);
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_ACTIVE_2);
 
-		query.append(_FINDER_COLUMN_VENDORPRODUCT_VENDORID_2);
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_VENDORID_2);
 
-		query.append(_FINDER_COLUMN_VENDORPRODUCT_PRODUCTID_2);
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_PRODUCTID_2);
+
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_MINPRICE_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1089,6 +1100,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		qPos.add(productId);
 
+		qPos.add(minPrice);
+
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(rateFactorRule);
 
@@ -1108,51 +1121,56 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; from the database.
+	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63; from the database.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByVendorProduct(boolean active, long vendorId,
-		long productId) throws SystemException {
-		for (RateFactorRule rateFactorRule : findByVendorProduct(active,
-				vendorId, productId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByVendorProductPrice(boolean active, long vendorId,
+		long productId, double minPrice) throws SystemException {
+		for (RateFactorRule rateFactorRule : findByVendorProductPrice(active,
+				vendorId, productId, minPrice, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(rateFactorRule);
 		}
 	}
 
 	/**
-	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63;.
+	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
+	 * @param minPrice the min price
 	 * @return the number of matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByVendorProduct(boolean active, long vendorId,
-		long productId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_VENDORPRODUCT;
+	public int countByVendorProductPrice(boolean active, long vendorId,
+		long productId, double minPrice) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_VENDORPRODUCTPRICE;
 
-		Object[] finderArgs = new Object[] { active, vendorId, productId };
+		Object[] finderArgs = new Object[] { active, vendorId, productId, minPrice };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_COUNT_RATEFACTORRULE_WHERE);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCT_ACTIVE_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_ACTIVE_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCT_VENDORID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_VENDORID_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCT_PRODUCTID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_PRODUCTID_2);
+
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPRICE_MINPRICE_2);
 
 			String sql = query.toString();
 
@@ -1171,6 +1189,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 				qPos.add(productId);
 
+				qPos.add(minPrice);
+
 				count = (Long)q.uniqueResult();
 
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
@@ -1188,65 +1208,56 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_VENDORPRODUCT_ACTIVE_2 = "rateFactorRule.active = ? AND ";
-	private static final String _FINDER_COLUMN_VENDORPRODUCT_VENDORID_2 = "rateFactorRule.vendorId = ? AND ";
-	private static final String _FINDER_COLUMN_VENDORPRODUCT_PRODUCTID_2 = "rateFactorRule.productId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTION =
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_ACTIVE_2 = "rateFactorRule.active = ? AND ";
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_VENDORID_2 = "rateFactorRule.vendorId = ? AND ";
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_PRODUCTID_2 = "rateFactorRule.productId = ? AND ";
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_MINPRICE_2 = "rateFactorRule.minPrice < ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTIONPRICE =
 		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
 			RateFactorRuleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByVendorProductPurchaseOption",
+			"findByVendorProductPurchaseOptionPrice",
 			new String[] {
 				Boolean.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName(),
+				Double.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTION =
-		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
-			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
-			RateFactorRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByVendorProductPurchaseOption",
-			new String[] {
-				Boolean.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			RateFactorRuleModelImpl.ACTIVE_COLUMN_BITMASK |
-			RateFactorRuleModelImpl.VENDORID_COLUMN_BITMASK |
-			RateFactorRuleModelImpl.PRODUCTID_COLUMN_BITMASK |
-			RateFactorRuleModelImpl.PURCHASEOPTIONID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_VENDORPRODUCTPURCHASEOPTION =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_VENDORPRODUCTPURCHASEOPTIONPRICE =
 		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByVendorProductPurchaseOption",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByVendorProductPurchaseOptionPrice",
 			new String[] {
 				Boolean.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
+				Long.class.getName(), Long.class.getName(),
+				Double.class.getName()
 			});
 
 	/**
-	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
+	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @return the matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByVendorProductPurchaseOption(
-		boolean active, long vendorId, long productId, long purchaseOptionId)
-		throws SystemException {
-		return findByVendorProductPurchaseOption(active, vendorId, productId,
-			purchaseOptionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<RateFactorRule> findByVendorProductPurchaseOptionPrice(
+		boolean active, long vendorId, long productId, long purchaseOptionId,
+		double minPrice) throws SystemException {
+		return findByVendorProductPurchaseOptionPrice(active, vendorId,
+			productId, purchaseOptionId, minPrice, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
+	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1256,21 +1267,22 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @param start the lower bound of the range of rate factor rules
 	 * @param end the upper bound of the range of rate factor rules (not inclusive)
 	 * @return the range of matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByVendorProductPurchaseOption(
+	public List<RateFactorRule> findByVendorProductPurchaseOptionPrice(
 		boolean active, long vendorId, long productId, long purchaseOptionId,
-		int start, int end) throws SystemException {
-		return findByVendorProductPurchaseOption(active, vendorId, productId,
-			purchaseOptionId, start, end, null);
+		double minPrice, int start, int end) throws SystemException {
+		return findByVendorProductPurchaseOptionPrice(active, vendorId,
+			productId, purchaseOptionId, minPrice, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
+	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1280,6 +1292,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @param start the lower bound of the range of rate factor rules
 	 * @param end the upper bound of the range of rate factor rules (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1287,30 +1300,20 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RateFactorRule> findByVendorProductPurchaseOption(
+	public List<RateFactorRule> findByVendorProductPurchaseOptionPrice(
 		boolean active, long vendorId, long productId, long purchaseOptionId,
-		int start, int end, OrderByComparator orderByComparator)
+		double minPrice, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTION;
-			finderArgs = new Object[] {
-					active, vendorId, productId, purchaseOptionId
-				};
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTION;
-			finderArgs = new Object[] {
-					active, vendorId, productId, purchaseOptionId,
-					
-					start, end, orderByComparator
-				};
-		}
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTIONPRICE;
+		finderArgs = new Object[] {
+				active, vendorId, productId, purchaseOptionId, minPrice,
+				
+				start, end, orderByComparator
+			};
 
 		List<RateFactorRule> list = (List<RateFactorRule>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
@@ -1320,7 +1323,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 				if ((active != rateFactorRule.getActive()) ||
 						(vendorId != rateFactorRule.getVendorId()) ||
 						(productId != rateFactorRule.getProductId()) ||
-						(purchaseOptionId != rateFactorRule.getPurchaseOptionId())) {
+						(purchaseOptionId != rateFactorRule.getPurchaseOptionId()) ||
+						(minPrice <= rateFactorRule.getMinPrice())) {
 					list = null;
 
 					break;
@@ -1332,22 +1336,24 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(6 +
+				query = new StringBundler(7 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(6);
+				query = new StringBundler(7);
 			}
 
 			query.append(_SQL_SELECT_RATEFACTORRULE_WHERE);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_ACTIVE_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_ACTIVE_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_VENDORID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_VENDORID_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PRODUCTID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PRODUCTID_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PURCHASEOPTIONID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PURCHASEOPTIONID_2);
+
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_MINPRICE_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1376,6 +1382,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 				qPos.add(productId);
 
 				qPos.add(purchaseOptionId);
+
+				qPos.add(minPrice);
 
 				if (!pagination) {
 					list = (List<RateFactorRule>)QueryUtil.list(q,
@@ -1408,30 +1416,32 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule findByVendorProductPurchaseOption_First(
+	public RateFactorRule findByVendorProductPurchaseOptionPrice_First(
 		boolean active, long vendorId, long productId, long purchaseOptionId,
-		OrderByComparator orderByComparator)
+		double minPrice, OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
-		RateFactorRule rateFactorRule = fetchByVendorProductPurchaseOption_First(active,
-				vendorId, productId, purchaseOptionId, orderByComparator);
+		RateFactorRule rateFactorRule = fetchByVendorProductPurchaseOptionPrice_First(active,
+				vendorId, productId, purchaseOptionId, minPrice,
+				orderByComparator);
 
 		if (rateFactorRule != null) {
 			return rateFactorRule;
 		}
 
-		StringBundler msg = new StringBundler(10);
+		StringBundler msg = new StringBundler(12);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -1447,105 +1457,33 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		msg.append(", purchaseOptionId=");
 		msg.append(purchaseOptionId);
 
+		msg.append(", minPrice=");
+		msg.append(minPrice);
+
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchRateFactorRuleException(msg.toString());
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rate factor rule, or <code>null</code> if a matching rate factor rule could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule fetchByVendorProductPurchaseOption_First(
+	public RateFactorRule fetchByVendorProductPurchaseOptionPrice_First(
 		boolean active, long vendorId, long productId, long purchaseOptionId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<RateFactorRule> list = findByVendorProductPurchaseOption(active,
-				vendorId, productId, purchaseOptionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
-	 *
-	 * @param active the active
-	 * @param vendorId the vendor ID
-	 * @param productId the product ID
-	 * @param purchaseOptionId the purchase option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching rate factor rule
-	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a matching rate factor rule could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public RateFactorRule findByVendorProductPurchaseOption_Last(
-		boolean active, long vendorId, long productId, long purchaseOptionId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRateFactorRuleException, SystemException {
-		RateFactorRule rateFactorRule = fetchByVendorProductPurchaseOption_Last(active,
-				vendorId, productId, purchaseOptionId, orderByComparator);
-
-		if (rateFactorRule != null) {
-			return rateFactorRule;
-		}
-
-		StringBundler msg = new StringBundler(10);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("active=");
-		msg.append(active);
-
-		msg.append(", vendorId=");
-		msg.append(vendorId);
-
-		msg.append(", productId=");
-		msg.append(productId);
-
-		msg.append(", purchaseOptionId=");
-		msg.append(purchaseOptionId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchRateFactorRuleException(msg.toString());
-	}
-
-	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
-	 *
-	 * @param active the active
-	 * @param vendorId the vendor ID
-	 * @param productId the product ID
-	 * @param purchaseOptionId the purchase option ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching rate factor rule, or <code>null</code> if a matching rate factor rule could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public RateFactorRule fetchByVendorProductPurchaseOption_Last(
-		boolean active, long vendorId, long productId, long purchaseOptionId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByVendorProductPurchaseOption(active, vendorId,
-				productId, purchaseOptionId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<RateFactorRule> list = findByVendorProductPurchaseOption(active,
-				vendorId, productId, purchaseOptionId, count - 1, count,
+		double minPrice, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<RateFactorRule> list = findByVendorProductPurchaseOptionPrice(active,
+				vendorId, productId, purchaseOptionId, minPrice, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1556,22 +1494,109 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 *
+	 * @param active the active
+	 * @param vendorId the vendor ID
+	 * @param productId the product ID
+	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching rate factor rule
+	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a matching rate factor rule could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RateFactorRule findByVendorProductPurchaseOptionPrice_Last(
+		boolean active, long vendorId, long productId, long purchaseOptionId,
+		double minPrice, OrderByComparator orderByComparator)
+		throws NoSuchRateFactorRuleException, SystemException {
+		RateFactorRule rateFactorRule = fetchByVendorProductPurchaseOptionPrice_Last(active,
+				vendorId, productId, purchaseOptionId, minPrice,
+				orderByComparator);
+
+		if (rateFactorRule != null) {
+			return rateFactorRule;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("active=");
+		msg.append(active);
+
+		msg.append(", vendorId=");
+		msg.append(vendorId);
+
+		msg.append(", productId=");
+		msg.append(productId);
+
+		msg.append(", purchaseOptionId=");
+		msg.append(purchaseOptionId);
+
+		msg.append(", minPrice=");
+		msg.append(minPrice);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRateFactorRuleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 *
+	 * @param active the active
+	 * @param vendorId the vendor ID
+	 * @param productId the product ID
+	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching rate factor rule, or <code>null</code> if a matching rate factor rule could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RateFactorRule fetchByVendorProductPurchaseOptionPrice_Last(
+		boolean active, long vendorId, long productId, long purchaseOptionId,
+		double minPrice, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByVendorProductPurchaseOptionPrice(active, vendorId,
+				productId, purchaseOptionId, minPrice);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<RateFactorRule> list = findByVendorProductPurchaseOptionPrice(active,
+				vendorId, productId, purchaseOptionId, minPrice, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param rateFactorRuleId the primary key of the current rate factor rule
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rate factor rule
 	 * @throws com.tamarack.creekridge.NoSuchRateFactorRuleException if a rate factor rule with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public RateFactorRule[] findByVendorProductPurchaseOption_PrevAndNext(
+	public RateFactorRule[] findByVendorProductPurchaseOptionPrice_PrevAndNext(
 		long rateFactorRuleId, boolean active, long vendorId, long productId,
-		long purchaseOptionId, OrderByComparator orderByComparator)
+		long purchaseOptionId, double minPrice,
+		OrderByComparator orderByComparator)
 		throws NoSuchRateFactorRuleException, SystemException {
 		RateFactorRule rateFactorRule = findByPrimaryKey(rateFactorRuleId);
 
@@ -1582,15 +1607,15 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 			RateFactorRule[] array = new RateFactorRuleImpl[3];
 
-			array[0] = getByVendorProductPurchaseOption_PrevAndNext(session,
+			array[0] = getByVendorProductPurchaseOptionPrice_PrevAndNext(session,
 					rateFactorRule, active, vendorId, productId,
-					purchaseOptionId, orderByComparator, true);
+					purchaseOptionId, minPrice, orderByComparator, true);
 
 			array[1] = rateFactorRule;
 
-			array[2] = getByVendorProductPurchaseOption_PrevAndNext(session,
+			array[2] = getByVendorProductPurchaseOptionPrice_PrevAndNext(session,
 					rateFactorRule, active, vendorId, productId,
-					purchaseOptionId, orderByComparator, false);
+					purchaseOptionId, minPrice, orderByComparator, false);
 
 			return array;
 		}
@@ -1602,9 +1627,9 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		}
 	}
 
-	protected RateFactorRule getByVendorProductPurchaseOption_PrevAndNext(
+	protected RateFactorRule getByVendorProductPurchaseOptionPrice_PrevAndNext(
 		Session session, RateFactorRule rateFactorRule, boolean active,
-		long vendorId, long productId, long purchaseOptionId,
+		long vendorId, long productId, long purchaseOptionId, double minPrice,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1618,13 +1643,15 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		query.append(_SQL_SELECT_RATEFACTORRULE_WHERE);
 
-		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_ACTIVE_2);
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_ACTIVE_2);
 
-		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_VENDORID_2);
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_VENDORID_2);
 
-		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PRODUCTID_2);
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PRODUCTID_2);
 
-		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PURCHASEOPTIONID_2);
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PURCHASEOPTIONID_2);
+
+		query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_MINPRICE_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1702,6 +1729,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 		qPos.add(purchaseOptionId);
 
+		qPos.add(minPrice);
+
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(rateFactorRule);
 
@@ -1721,60 +1750,64 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; from the database.
+	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63; from the database.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByVendorProductPurchaseOption(boolean active,
-		long vendorId, long productId, long purchaseOptionId)
+	public void removeByVendorProductPurchaseOptionPrice(boolean active,
+		long vendorId, long productId, long purchaseOptionId, double minPrice)
 		throws SystemException {
-		for (RateFactorRule rateFactorRule : findByVendorProductPurchaseOption(
-				active, vendorId, productId, purchaseOptionId,
+		for (RateFactorRule rateFactorRule : findByVendorProductPurchaseOptionPrice(
+				active, vendorId, productId, purchaseOptionId, minPrice,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(rateFactorRule);
 		}
 	}
 
 	/**
-	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63;.
+	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
 	 * @param productId the product ID
 	 * @param purchaseOptionId the purchase option ID
+	 * @param minPrice the min price
 	 * @return the number of matching rate factor rules
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByVendorProductPurchaseOption(boolean active,
-		long vendorId, long productId, long purchaseOptionId)
+	public int countByVendorProductPurchaseOptionPrice(boolean active,
+		long vendorId, long productId, long purchaseOptionId, double minPrice)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_VENDORPRODUCTPURCHASEOPTION;
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_VENDORPRODUCTPURCHASEOPTIONPRICE;
 
 		Object[] finderArgs = new Object[] {
-				active, vendorId, productId, purchaseOptionId
+				active, vendorId, productId, purchaseOptionId, minPrice
 			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(6);
 
 			query.append(_SQL_COUNT_RATEFACTORRULE_WHERE);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_ACTIVE_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_ACTIVE_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_VENDORID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_VENDORID_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PRODUCTID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PRODUCTID_2);
 
-			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PURCHASEOPTIONID_2);
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PURCHASEOPTIONID_2);
+
+			query.append(_FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_MINPRICE_2);
 
 			String sql = query.toString();
 
@@ -1795,6 +1828,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 				qPos.add(purchaseOptionId);
 
+				qPos.add(minPrice);
+
 				count = (Long)q.uniqueResult();
 
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
@@ -1812,14 +1847,16 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_ACTIVE_2 =
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_ACTIVE_2 =
 		"rateFactorRule.active = ? AND ";
-	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_VENDORID_2 =
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_VENDORID_2 =
 		"rateFactorRule.vendorId = ? AND ";
-	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PRODUCTID_2 =
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PRODUCTID_2 =
 		"rateFactorRule.productId = ? AND ";
-	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTION_PURCHASEOPTIONID_2 =
-		"rateFactorRule.purchaseOptionId = ?";
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PURCHASEOPTIONID_2 =
+		"rateFactorRule.purchaseOptionId = ? AND ";
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_MINPRICE_2 =
+		"rateFactorRule.minPrice < ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTOPTIONTERMPRICE =
 		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
@@ -1845,7 +1882,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			});
 
 	/**
-	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1866,7 +1903,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1893,7 +1930,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1937,7 +1974,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 						(productId != rateFactorRule.getProductId()) ||
 						(purchaseOptionId != rateFactorRule.getPurchaseOptionId()) ||
 						(termId != rateFactorRule.getTermId()) ||
-						(minPrice < rateFactorRule.getMinPrice())) {
+						(minPrice <= rateFactorRule.getMinPrice())) {
 					list = null;
 
 					break;
@@ -2033,7 +2070,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2087,7 +2124,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2116,7 +2153,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2170,7 +2207,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2206,7 +2243,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param rateFactorRuleId the primary key of the current rate factor rule
 	 * @param active the active
@@ -2382,7 +2419,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63; from the database.
+	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63; from the database.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2404,7 +2441,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
+	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2496,7 +2533,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	private static final String _FINDER_COLUMN_VENDORPRODUCTOPTIONTERMPRICE_TERMID_2 =
 		"rateFactorRule.termId = ? AND ";
 	private static final String _FINDER_COLUMN_VENDORPRODUCTOPTIONTERMPRICE_MINPRICE_2 =
-		"rateFactorRule.minPrice <= ?";
+		"rateFactorRule.minPrice < ?";
 
 	public RateFactorRulePersistenceImpl() {
 		setModelClass(RateFactorRule.class);
@@ -2742,58 +2779,6 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VENDOR, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDOR,
-					args);
-			}
-
-			if ((rateFactorRuleModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCT.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						rateFactorRuleModelImpl.getOriginalActive(),
-						rateFactorRuleModelImpl.getOriginalVendorId(),
-						rateFactorRuleModelImpl.getOriginalProductId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VENDORPRODUCT,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCT,
-					args);
-
-				args = new Object[] {
-						rateFactorRuleModelImpl.getActive(),
-						rateFactorRuleModelImpl.getVendorId(),
-						rateFactorRuleModelImpl.getProductId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VENDORPRODUCT,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCT,
-					args);
-			}
-
-			if ((rateFactorRuleModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTION.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						rateFactorRuleModelImpl.getOriginalActive(),
-						rateFactorRuleModelImpl.getOriginalVendorId(),
-						rateFactorRuleModelImpl.getOriginalProductId(),
-						rateFactorRuleModelImpl.getOriginalPurchaseOptionId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VENDORPRODUCTPURCHASEOPTION,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTION,
-					args);
-
-				args = new Object[] {
-						rateFactorRuleModelImpl.getActive(),
-						rateFactorRuleModelImpl.getVendorId(),
-						rateFactorRuleModelImpl.getProductId(),
-						rateFactorRuleModelImpl.getPurchaseOptionId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VENDORPRODUCTPURCHASEOPTION,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTION,
 					args);
 			}
 		}

@@ -47,21 +47,19 @@ public class RateFactorRuleLocalServiceImpl
 		
 	}
 	
-	public List <RateFactorRule> getRateFactorRuleByProductPurchaseOption  (Boolean active, long vendorId, long productId, long purchaseOptionId) throws SystemException
+	public List <RateFactorRule> getRateFactorRuleByVendorProductPrice (Boolean active, long vendorId, long productId, double eqPrice) throws SystemException
 	{		
-		return rateFactorRulePersistence.findByVendorProductPurchaseOption(active, vendorId, productId, purchaseOptionId);
+		return rateFactorRulePersistence.findByVendorProductPrice(active, vendorId, productId, eqPrice);
+	}
+	
+	public List <RateFactorRule> getRateFactorRuleByProductPurchaseOptionPrice  (Boolean active, long vendorId, long productId, long purchaseOptionId, double eqPrice) throws SystemException
+	{		
+		return rateFactorRulePersistence.findByVendorProductPurchaseOptionPrice(active, vendorId, productId, purchaseOptionId, eqPrice);
 
 	}
 	
-	public List <RateFactorRule> getRateFactorRuleByVendorProduct (Boolean active, long vendorId, long productId) throws SystemException
-	{		
-		return rateFactorRulePersistence.findByVendorProduct(active, vendorId, productId);
-	}
-	
-	public List<RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice (Boolean active, long vendorId ,long productId, long purchaseOptionId, long termId, long minPrice) throws Exception
-	{
+	public List<RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice 
+				(Boolean active, long vendorId ,long productId, long purchaseOptionId, long termId, long minPrice) throws Exception{
 		return rateFactorRulePersistence.findByVendorProductOptionTermPrice(active, vendorId, productId, purchaseOptionId, termId, minPrice);
-		
 	}
-
 }

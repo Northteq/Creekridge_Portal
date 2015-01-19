@@ -13,6 +13,9 @@
 
 <portlet:resourceURL var="processPurchaseOptionsSelectionURL"
 	id="processPurchaseOptionsSelection" />
+	
+<portlet:resourceURL var="getProductsForEqPriceURL"
+	id="getProductsForEqPrice" />
 
 <portlet:resourceURL var="calculatePaymentsURL" id="calculatePayments" />
 
@@ -49,6 +52,7 @@ var processPurchaseOptionsSelectionURL = "<%=processPurchaseOptionsSelectionURL%
 var updateUseForApplicationURL = "<%=updateUseForApplicationURL%>";
 var updateIncludeInProposalURL = "<%=updateIncludeInProposalURL%>";
 var calculatePaymentsURL = "<%=calculatePaymentsURL%>";
+var getProductsForEqPriceURL = "<%=getProductsForEqPriceURL%>";
 
 var appFormId = '<portlet:namespace/>applicationForm';
 var validator;
@@ -130,8 +134,6 @@ function processAppButton(action){
   		validateForm();
   		if (!validator.hasErrors()) {
   			
-  			
-  			
   			if(action==0){
   				formEl.attr('action',"<%=saveApplicationInfoURL%>");
   				$(formEl).submit();
@@ -169,8 +171,6 @@ function processAppButton(action){
 
   		} 
   	}
-	
-	
 }
 
 var copyCustomerAddress = function(sameAddressEl) {
@@ -194,9 +194,7 @@ var copyCustomerAddress = function(sameAddressEl) {
 	}
 };
 
-$(document).ready(function() {
-		var proposals;
-		var proposalsString = '${proposalList}';
+	$(document).ready(function() {
 		
 		$('.label-required').text('*');
 		
@@ -208,66 +206,13 @@ $(document).ready(function() {
 		} catch (ex) {
 			console.log (ex);
 		}
-		
-		
+	
 		//mask date
 		//$(".date").mask("99/99/9999",{placeholder:"mm/dd/yyyy"});
 		
 		try {
+			getProductOptions(true);
 			
-			if (proposalsString != "") {
-				proposals = jQuery.parseJSON('${proposalList}');
-				buildProposalOptionsTable(proposals);
-				
-				var poOptions = '';
-				var poNameMap = {};
-				var termNameMap = {};
-				var termOptions = '';
-				console.log(proposals);
-				for (var i = 0; i < proposals.length; i++){
-					var po = proposals[i];
-					$.each ($('#productList').find('input'), function (index, el){
-						if ($(el).val() == po.propOption.productId) {
-							$(el).prop('checked', true);
-						}
-							
-					});
-					
-					var poNameId = po.propOption.purchaseOptionId;
-					
-					if (poNameMap[poNameId] == undefined) {
-						poNameMap[poNameId] = po.prodOptionName;
-						
-						poOptions += '<label class="checkbox">'
-						poOptions += '<input type="checkbox" name="'
-								+ po.prodOptionName + '" value="'
-								+ po.propOption.purchaseOptionId
-								+ '"  onchange="getTermsOptions()" checked="checked">'
-								+ po.prodOptionName + '</input>';
-						poOptions += '</label>';
-					}
-					
-					var termNameId = po.propOption.termId;
-					if (termNameMap[termNameId] == undefined) {
-						termNameMap[termNameId] = po.termName;
-						termOptions += '<label class="checkbox">'
-						termOptions += '<input type="checkbox" checked="checked" name="'+ po.termName + '" value="'+ po.propOption.termId+'">'
-								+ po.termName + '</input>';
-						termOptions += '</label>';
-					}
-					
-				} //end for po
-
-				$('#purchaseOptionsList').append(poOptions);
-				$('#purchaseOptionSection').show();
-				
-				$('#termsList').append(termOptions);
-				$('#termSection').show();
-				
-				//need to disable claculate button
-				$('#calculatePaymentsButton').attr("disabled", "disabled");
-				
-			}
 		} catch (e) {
 			console.log('error getting proposals ', e);
 		}
@@ -275,6 +220,67 @@ $(document).ready(function() {
 		$(".alert-error:contains('Your request failed to complete.')").hide();
 		checkSelectedOptions();
 	});
+	
+	var populateProposalOptions = function () {
+		var proposals;
+		var proposalsString = '${proposalList}';
+		
+		if (proposalsString != "") {
+			
+			proposals = jQuery.parseJSON('${proposalList}');
+			buildProposalOptionsTable(proposals);
+			
+			var poOptions = '';
+			var poNameMap = {};
+			var termNameMap = {};
+			var termOptions = '';
+			console.log(proposals);
+			for (var i = 0; i < proposals.length; i++){
+				var po = proposals[i];
+				
+				$.each ($('#productList').find('input'), function (index, el){
+					if ($(el).val() == po.propOption.productId) {
+						$(el).prop('checked', true);
+					}
+						
+				});
+				
+				var poNameId = po.propOption.purchaseOptionId;
+				
+				if (poNameMap[poNameId] == undefined) {
+					poNameMap[poNameId] = po.prodOptionName;
+					
+					poOptions += '<label class="checkbox">'
+					poOptions += '<input type="checkbox" name="'
+							+ po.prodOptionName + '" value="'
+							+ po.propOption.purchaseOptionId
+							+ '"  onchange="getTermsOptions()" checked="checked">'
+							+ po.prodOptionName + '</input>';
+					poOptions += '</label>';
+				}
+				
+				var termNameId = po.propOption.termId;
+				if (termNameMap[termNameId] == undefined) {
+					termNameMap[termNameId] = po.termName;
+					termOptions += '<label class="checkbox">'
+					termOptions += '<input type="checkbox" checked="checked" name="'+ po.termName + '" value="'+ po.propOption.termId+'">'
+							+ po.termName + '</input>';
+					termOptions += '</label>';
+				}
+				
+			} //end for po
+
+			$('#purchaseOptionsList').append(poOptions);
+			$('#purchaseOptionSection').show();
+			
+			$('#termsList').append(termOptions);
+			$('#termSection').show();
+			
+			//need to disable claculate button
+			$('#calculatePaymentsButton').attr("disabled", "disabled");
+			
+		}
+	};
 
 	var navigateToCalculator = function() {
 		$("*[data-persist-id='paymentCalculator']").click();
@@ -298,7 +304,7 @@ $(document).ready(function() {
 
 	var createRateFactorRuleRequestObjectString = function() {
 
-		var eqPrice = $('[id$=equipmentPrice]').val();
+		
 
 		//get products
 		var productBoxes = $('#productList input:checked');
@@ -325,7 +331,7 @@ $(document).ready(function() {
 		});
 
 		var selectedOptions = {
-			equipmentPrice : eqPrice,
+			equipmentPrice : getEquipmentPrice(),
 			products : prodList,
 			purchaseOptions : poList,
 			termOptions : termList,
@@ -340,15 +346,66 @@ $(document).ready(function() {
 	};
 
 	var resetAllSections = function() {
-		
-		console.log($('#<portlet:namespace/>equipmentPrice').val());
-		//$('#<portlet:namespace/>equipmentPrice').val(0);
 		$('#purchaseOptionsList').empty();
 		$('#termsList').empty();
 		$('#termSection').hide();
 		$('#purchaseOptionSection').hide();
 		checkSelectedOptions();
 	};
+	
+	var getEquipmentPrice = function () {
+		var price = $('#<portlet:namespace/>equipmentPrice').val();
+		price = price.replace(/[$,]+/g, "");
+		
+		console.log(price);
+		return price;
+	}
+	
+	var getProductOptions = function(onload) {
+		$('#productList').empty();
+		$('#productList').hide();
+		
+		$.ajax({
+			type : "POST",
+			url : getProductsForEqPriceURL,
+			cache : false,
+			dataType : "Json",
+			data : {
+				eqPrice : getEquipmentPrice()
+			},
+			success : function(data) {
+				console.log('getProductOptions success: ', data);
+
+				var prodOptions = '';
+				$('#productList').empty();
+				
+				$.each(
+					data,
+					function(i, el) {
+						prodOptions += '<label class="checkbox">';
+						prodOptions += '<input type="checkbox" onchange="getPurchaseOptions();" name="'+ el.productName + '" value="'+ el.productId +'">' + el.productName + '</input>';
+						prodOptions += '</label>';
+					});
+
+				$('#productList').append(prodOptions);
+				$('#productList').show();
+				
+				if (onload) {
+					populateProposalOptions(); //this populates the list of PO on load.
+				} else {
+					resetAllSections();
+				}
+					
+					
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(textStatus);
+				console.log(XMLHttpRequest);
+				console.log(errorThrown);
+			}
+		});
+	};
+
 
 	var getPurchaseOptions = function() {
 		
