@@ -103,7 +103,7 @@
 					<a class="btn btn-small" id="navigateToCalculator"
 						onclick="navigateToCalculator()"><i class="icon-backward"></i> Back to Calculator</a>
 					<a class="btn btn-primary btn-small" id="createApplicationButton"
-						onClick="processAppButton(0)"><i class="icon-forward"></i>
+						onClick="processAppButton(-1)"><i class="icon-forward"></i>
 						Continue to Customer Info </a>
 				</aui:button-row>
 			</div>
