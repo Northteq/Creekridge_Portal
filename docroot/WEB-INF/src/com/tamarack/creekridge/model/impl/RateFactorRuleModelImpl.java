@@ -79,8 +79,8 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 		};
 	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_RateFactorRule (rateFactorRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productId LONG,termId LONG,purchaseOptionId LONG,vendorId LONG,minPrice DOUBLE,rateFactor DOUBLE,effectiveDate DATE null,active_ BOOLEAN,expirationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eCreekRidge_RateFactorRule";
-	public static final String ORDER_BY_JPQL = " ORDER BY rateFactorRule.rateFactorRuleId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_RateFactorRule.rateFactorRuleId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY rateFactorRule.minPrice DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_RateFactorRule.minPrice DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -99,7 +99,6 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 	public static long PURCHASEOPTIONID_COLUMN_BITMASK = 8L;
 	public static long TERMID_COLUMN_BITMASK = 16L;
 	public static long VENDORID_COLUMN_BITMASK = 32L;
-	public static long RATEFACTORRULEID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.tamarack.creekridge.model.RateFactorRule"));
 
@@ -422,7 +421,7 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 
 	@Override
 	public void setMinPrice(double minPrice) {
-		_columnBitmask |= MINPRICE_COLUMN_BITMASK;
+		_columnBitmask = -1L;
 
 		if (!_setOriginalMinPrice) {
 			_setOriginalMinPrice = true;
@@ -548,17 +547,25 @@ public class RateFactorRuleModelImpl extends BaseModelImpl<RateFactorRule>
 
 	@Override
 	public int compareTo(RateFactorRule rateFactorRule) {
-		long primaryKey = rateFactorRule.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getMinPrice() < rateFactorRule.getMinPrice()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getMinPrice() > rateFactorRule.getMinPrice()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

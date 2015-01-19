@@ -80,7 +80,10 @@ public class ProposalOptionLocalServiceImpl
    		//resourceLocalService.addResources(newApp.getCompanyId(), newApp.getGroupId(), newApp.getUserId(), CreditApp.class.getName(), 
    		//			newApp.getCreditAppId(), false, false, false);
    		
-   		return proposalOptionPersistence.update(newOp);
+   		
+   		//removed 1-19-15 to avoid creating empty propoptions
+   		//return proposalOptionPersistence.update(newOp);
+   		return newOp;
    		
    	}
 }

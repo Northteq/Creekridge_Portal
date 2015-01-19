@@ -103,7 +103,8 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVendor",
 			new String[] { Boolean.class.getName(), Long.class.getName() },
 			RateFactorRuleModelImpl.ACTIVE_COLUMN_BITMASK |
-			RateFactorRuleModelImpl.VENDORID_COLUMN_BITMASK);
+			RateFactorRuleModelImpl.VENDORID_COLUMN_BITMASK |
+			RateFactorRuleModelImpl.MINPRICE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_VENDOR = new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVendor",

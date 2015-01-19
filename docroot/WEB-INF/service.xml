@@ -394,6 +394,9 @@
 		<column name="effectiveDate" type="Date" />
 		<column name="active" type="boolean" />
 		<column name="expirationDate" type="Date" />
+        <order by="desc">
+            <order-column name="minPrice" order-by="desc"></order-column>
+        </order>
 		
 		<finder name="Vendor" return-type="Collection">
 			<finder-column name="active" />
