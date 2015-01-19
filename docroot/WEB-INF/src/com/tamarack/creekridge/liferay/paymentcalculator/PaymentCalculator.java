@@ -451,10 +451,13 @@ public class PaymentCalculator extends MVCPortlet {
 			proposalOption.setTermId(rate.getTermId());
 			proposalOption.setRateFactorRuleId(rate.getRateFactorRuleId());
 			 
-			Term tempTerm = TermLocalServiceUtil.getTerm(rate.getTermId());
 			Double paymentAmount = -1.0;
 			if (rate.getRateFactor() > 0)
-				paymentAmount = (equipmentPrice/tempTerm.getTermMonths()) * (1+rate.getRateFactor()) ;
+				paymentAmount = equipmentPrice * rate.getRateFactor() ;
+				//paymentAmount = (equipmentPrice/tempTerm.getTermMonths()) * (1+rate.getRateFactor()) ;
+				//https://github.com/TamarackConsulting/Creekridge_Portal/issues/160
+				
+				
 			 
 			proposalOption.setPaymentAmount(paymentAmount);
 			proposalOption.setEquipmentPrice(equipmentPrice);
