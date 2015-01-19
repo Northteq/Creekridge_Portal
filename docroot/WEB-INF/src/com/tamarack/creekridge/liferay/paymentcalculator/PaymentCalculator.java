@@ -84,6 +84,10 @@ public class PaymentCalculator extends MVCPortlet {
 	@Override 
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		
+		showPrincipals = true;
+		showBankRefs = true;
+		customPaymentAmountMessage = "";
+		
 		_log.info("render started");
 
 		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));

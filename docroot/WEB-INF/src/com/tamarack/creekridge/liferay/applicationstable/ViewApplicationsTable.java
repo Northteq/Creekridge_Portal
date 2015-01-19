@@ -44,7 +44,7 @@ public class ViewApplicationsTable extends MVCPortlet {
 	
 	@Override 
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-		
+		isVendorSaleRep = false;
 		try {
 			
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
