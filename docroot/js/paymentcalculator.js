@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 alert ('included');
 =======
 alert('hellp');
@@ -359,4 +360,6 @@ var buildProposalOptionsTable = function (remoteData) {
 			  }
 	);	
 };
+>>>>>>> master
+=======
 >>>>>>> master

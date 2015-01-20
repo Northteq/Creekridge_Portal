@@ -1,4 +1,4 @@
- SET @vendorID = 11607;
+SET @vendorID = 11607;
 -- SET @vendorID = 12201;
 DELETE FROM eCreekRidge_CreditApp;
 DELETE FROM eCreekRidge_CreditAppBankReference;
@@ -112,7 +112,7 @@ INSERT INTO eCreekRidge_RateFactorRule ( rateFactorRuleId ,companyId,userId ,use
       ,effectiveDate
       ,active_
       ,expirationDate) VALUES
-		(2, 10157, 10201, 'test', SYSDATE(), SYSDATE(), 0, 0, 0, @vendorID, 0, .005, str_to_date("03/02/2009","%d/%m/%Y"), 1,str_to_date("03/02/2015","%d/%m/%Y"));
+		(2, 10157, 10201, 'test', SYSDATE(), SYSDATE(), 501, 101, 102, @vendorID, 0, .005, str_to_date("03/02/2009","%d/%m/%Y"), 1,str_to_date("03/02/2015","%d/%m/%Y"));
         
 INSERT INTO eCreekRidge_RateFactorRule (
                    rateFactorRuleId 

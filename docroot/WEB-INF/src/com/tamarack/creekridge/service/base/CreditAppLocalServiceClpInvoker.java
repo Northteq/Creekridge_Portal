@@ -19,7 +19,7 @@ import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public class CreditAppLocalServiceClpInvoker {
@@ -128,6 +128,18 @@ public class CreditAppLocalServiceClpInvoker {
 		_methodName83 = "getCreditAppByGroupId";
 
 		_methodParameterTypes83 = new String[] { "long" };
+
+		_methodName84 = "getCreditAppByGroupIdByUserId";
+
+		_methodParameterTypes84 = new String[] { "long", "long" };
+
+		_methodName85 = "getCreditAppByNotDraftByGroupId";
+
+		_methodParameterTypes85 = new String[] { "long" };
+
+		_methodName86 = "getCreditAppByNotDraftByGroupIdUserId";
+
+		_methodParameterTypes86 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -246,6 +258,23 @@ public class CreditAppLocalServiceClpInvoker {
 			return CreditAppLocalServiceUtil.getCreditAppByGroupId(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName84.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
+			return CreditAppLocalServiceUtil.getCreditAppByGroupIdByUserId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName85.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+			return CreditAppLocalServiceUtil.getCreditAppByNotDraftByGroupId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName86.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
+			return CreditAppLocalServiceUtil.getCreditAppByNotDraftByGroupIdUserId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -289,4 +318,10 @@ public class CreditAppLocalServiceClpInvoker {
 	private String[] _methodParameterTypes82;
 	private String _methodName83;
 	private String[] _methodParameterTypes83;
+	private String _methodName84;
+	private String[] _methodParameterTypes84;
+	private String _methodName85;
+	private String[] _methodParameterTypes85;
+	private String _methodName86;
+	private String[] _methodParameterTypes86;
 }

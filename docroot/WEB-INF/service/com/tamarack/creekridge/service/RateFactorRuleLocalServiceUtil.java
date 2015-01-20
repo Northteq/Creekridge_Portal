@@ -26,7 +26,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see RateFactorRuleLocalService
  * @see com.tamarack.creekridge.service.base.RateFactorRuleLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.RateFactorRuleLocalServiceImpl
@@ -275,27 +275,35 @@ public class RateFactorRuleLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorIdActiveStatus(
+	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendor(
 		long vendorId, boolean active) throws java.lang.Exception {
-		return getService()
-				   .getRateFactorRuleByVendorIdActiveStatus(vendorId, active);
+		return getService().getRateFactorRuleByVendor(vendorId, active);
 	}
 
-	public static com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId) throws java.lang.Exception {
+	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductPrice(
+		java.lang.Boolean active, long vendorId, long productId, double eqPrice)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(vendorId,
-			active, productId, termId, purchaseOptionId);
+				   .getRateFactorRuleByVendorProductPrice(active, vendorId,
+			productId, eqPrice);
 	}
 
-	public static com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByMatchingEquipmentPrice(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId, double equipmentPrice)
+	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOptionPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, double eqPrice)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getRateFactorRuleByProductPurchaseOptionPrice(active,
+			vendorId, productId, purchaseOptionId, eqPrice);
+	}
+
+	public static java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, long termId, long minPrice)
 		throws java.lang.Exception {
 		return getService()
-				   .getRateFactorRuleByMatchingEquipmentPrice(vendorId, active,
-			productId, termId, purchaseOptionId, equipmentPrice);
+				   .getRateFactorRuleByVendorProductOptionTermPrice(active,
+			vendorId, productId, purchaseOptionId, termId, minPrice);
 	}
 
 	public static void clearService() {

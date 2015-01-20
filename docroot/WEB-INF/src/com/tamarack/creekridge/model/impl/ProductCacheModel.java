@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing Product in entity cache.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see Product
  * @generated
  */

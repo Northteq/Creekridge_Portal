@@ -16,6 +16,7 @@ package com.tamarack.creekridge.service.impl;
 
 import java.util.List;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.service.base.RateFactorRuleLocalServiceBaseImpl;
 
@@ -29,7 +30,7 @@ import com.tamarack.creekridge.service.base.RateFactorRuleLocalServiceBaseImpl;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author pmacha
+ * @author tamarack consulting
  * @see com.tamarack.creekridge.service.base.RateFactorRuleLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil
  */
@@ -40,21 +41,25 @@ public class RateFactorRuleLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil} to access the rate factor rule local service.
 	 */
-	public List<RateFactorRule> getRateFactorRuleByVendorIdActiveStatus(long vendorId, boolean active) throws Exception
+	public List<RateFactorRule> getRateFactorRuleByVendor(long vendorId, boolean active) throws Exception
 	{
-		return rateFactorRulePersistence.findByA_V(vendorId, active);
+		return rateFactorRulePersistence.findByVendor(active, vendorId);
 		
 	}
 	
-	public RateFactorRule getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(long vendorId, boolean active,long productId, long termId, long purchaseOptionId) throws Exception
-	{
-		return rateFactorRulePersistence.findByA_V_P_T_P(active, vendorId, productId, termId, purchaseOptionId);
-		
+	public List <RateFactorRule> getRateFactorRuleByVendorProductPrice (Boolean active, long vendorId, long productId, double eqPrice) throws SystemException
+	{		
+		return rateFactorRulePersistence.findByVendorProductPrice(active, vendorId, productId, eqPrice);
 	}
 	
-	public RateFactorRule getRateFactorRuleByMatchingEquipmentPrice(long vendorId, boolean active,long productId, long termId, long purchaseOptionId, double equipmentPrice) throws Exception
-	{
-		return rateFactorRulePersistence.findByA_V_P_T_P(active, vendorId, productId, termId, purchaseOptionId);
-		
+	public List <RateFactorRule> getRateFactorRuleByProductPurchaseOptionPrice  (Boolean active, long vendorId, long productId, long purchaseOptionId, double eqPrice) throws SystemException
+	{		
+		return rateFactorRulePersistence.findByVendorProductPurchaseOptionPrice(active, vendorId, productId, purchaseOptionId, eqPrice);
+
+	}
+	
+	public List<RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice 
+				(Boolean active, long vendorId ,long productId, long purchaseOptionId, long termId, long minPrice) throws Exception{
+		return rateFactorRulePersistence.findByVendorProductOptionTermPrice(active, vendorId, productId, purchaseOptionId, termId, minPrice);
 	}
 }

@@ -5,11 +5,13 @@
  */
 --%>
 
-<%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>
+
 <%@ include file="init.jsp"%>
 
 <%
+	HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 
+<<<<<<< HEAD
 String openSection = ParamUtil.getString(request, "openSection", "paymentCalculator");
 request.setAttribute("openSection", openSection);
 
@@ -159,31 +161,27 @@ function processAppButton(action){
 						<h4>Purchase Options</h4>
 						<aui:fieldset column="true">
 							<div id="purchaseOptionsList"></div>
-	
-						</aui:fieldset>
-					</div>
-				</aui:col>
-	
-				<aui:col span="2" last="true" id="term">
-					<div id="termSection" style="display: none">
-	
-						<h4>Terms</h4>
-						<aui:fieldset column="true">
-							<div id="termsList"></div>
-	
-						</aui:fieldset>
-					</div>
-				</aui:col>
-				
-				<aui:button-row>
-					<button class="btn btn-danger" type="reset" onclick="resetAllSections();"><i class="icon-remove"></i> Clear</button>
-					<button class="btn btn-success" type="submit" id="calculatePaymentsButton" onclick="return calculatePayments()"><i class="icon-th"></i> Calculate Payments </button>
-				
-				</aui:button-row>
-		</liferay-ui:panel>
+=======
+	String viewOnlyString = httpReq.getParameter("viewOnly");
+			ParamUtil.getString(request, "viewOnly");
+	Boolean viewOnly; 
+	if (viewOnlyString != null) {
 		
-		<!-- PRICING OVERVIEW PANEL  -->
+	} else {
+		viewOnlyString = httpReq.getParameter("viewOnly");
+	} 
+>>>>>>> master
 	
+	viewOnly = Boolean.valueOf (viewOnlyString);
+	request.setAttribute("viewOnly", viewOnly);	
+	
+	String openSection = ParamUtil.getString(request, "openSection", "paymentCalculator");
+	request.setAttribute("openSection", openSection);
+	
+	
+	long appId = ParamUtil.getLong(request, "creditAppId");
+	
+<<<<<<< HEAD
 		<liferay-ui:panel title="Pricing Overview" id="pricingOvervewResults" state="${openSection=='pricingOverview'? 'open' : 'collapsed' }">
 	    	<div id="proposalOptionsSection" style="display:none">
 	    			
@@ -678,20 +676,36 @@ $(document).ready(function () {
 	$(".alert-error:contains('Your request failed to complete.')").hide();
 });
 >>>>>>> master
+=======
+	if (appId != 0) {
+		request.setAttribute("creditApp", CreditAppLocalServiceUtil.getCreditApp(appId)); 
+	}
 
-</script>
+	State[] statesList=StateUtil.STATES;
+	renderRequest.setAttribute("statesList", statesList);
+	
+	String [] corpTypeList =  {"Corporation", "Sole Prop", "LLC", "LLP", "Partnership", "S Corporation", "Government Entity"};
+	renderRequest.setAttribute("corpTypeList", corpTypeList);
+	
+%>
+>>>>>>> master
 
-<style>
-.purchaseOptionsColumn {
-	text-align:center !important;
-}
-</style>
+<script src="<%= renderRequest.getContextPath()%>/js/jquery211.min.js" type="text/javascript"></script>
 
+<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+<c:import url="/html/paymentcalculator/paymentCalculatorJS.jsp"></c:import>
+
+<c:if test="${creditApp.creditAppStatusId != 3 && viewOnly==false}">
+	<c:import url="/html/paymentcalculator/applicationEdit.jsp"></c:import>
+	<c:import url="/html/paymentcalculator/termsAndAgreement.jsp"></c:import>
 </c:if>
 
 <!-- VIEW MODE -->
+<liferay-ui:success key="appSubmitted"
+	message="app-submitted-successfully" />
 
-
-<c:if test="${creditApp.creditAppStatusId == 3 || viewMode}">
+<c:if test="${creditApp.creditAppStatusId == 3 || viewOnly}">
 	<c:import url="/html/paymentcalculator/applicationView.jsp"></c:import>
+	
 </c:if>
+

@@ -11,125 +11,262 @@
 
 <%
 	CreditApp creditApp = (CreditApp) request.getAttribute("creditApp");
+	request.setAttribute("creditAppId", ParamUtil.getString(request, "creditAppId"));
+	State[] statesList=StateUtil.STATES;
+	renderRequest.setAttribute("statesList", statesList);
+			
+	String [] accountTypesList =  {"Checking", "Savings", "Line Of Credit", "Term Loan", "Lease"};
+	renderRequest.setAttribute("accountTypesList", accountTypesList);
+	
+	List <CreditAppBankReference> bankRefs = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
+	
+	request.setAttribute("bankRefs",  JSONFactoryUtil.looseSerialize(bankRefs));
 %>
 
-<liferay-portlet:renderURL varImpl="iteratorURL">
-       <portlet:param name="mvcPath" value="/html/paymentcalculator/view.jsp" />
-       <portlet:param name="creditAppId" value="<%=String.valueOf(creditApp.getCreditAppId()) %>" />
-       <portlet:param name="openSection" value="bankReferenceSection" />
-</liferay-portlet:renderURL>
-<liferay-ui:success key="bankReferenceSaved" message="reference-saved-successfully"/>
-<liferay-ui:search-container emptyResultsMessage="There are no bank references to display" delta="5"  iteratorURL="<%=iteratorURL %>">
-    <liferay-ui:search-container-results>
-    <% 
+<portlet:resourceURL var="createReferenceRecordURL"
+	id="createReferenceRecord" />
+	
+<portlet:resourceURL var="deleteReferenceRecordURL"
+	id="deleteReferenceRecord" />
+
+<div id="enterReferenceSection"class="container">
+
+	<div style="padding:25px;">
+
+	<aui:form method="post" name="bankRefForm">
+	
+		<aui:fieldset column="false">
+			<aui:input name="bankReferenceId" type="hidden"/>
+			<aui:input inlineField="true" required="true" name="bankReferenceName"></aui:input>
+			<aui:input inlineField="true" name="bankReferenceContact"></aui:input>
+			<aui:input inlineField="true" name="bankReferencePhone" cssClass="phone"></aui:input>
+			<aui:select inlineField="true"
+				name="bankReferenceAccountType" showEmptyOption="true">
+				<c:forEach items="${accountTypesList}" var="accType">
+					<aui:option value="${accType}" label="${accType}"/>
+				</c:forEach>
+			</aui:select>
+			
+			<aui:input inlineField="true" name="bankReferenceAccountNumber"></aui:input>
+		</aui:fieldset>
+	</aui:form>
+</div>
+</div>
+
+
+<script type="text/javascript">
+
+YUI().use(
+		  'aui-datatable',
+		  'aui-datatype',
+		  'datatable-sort',
+		  'panel',
+		  'dd-plugin',
+			  
+		function(A) {
+	
+	var createReferenceRecordURL = '<%=createReferenceRecordURL%>';
+	var deleteReferenceRecordURL = '<%=deleteReferenceRecordURL%>';
+	
+	
+	var refTableData = ${bankRefs};
+	
+	
+	//Create the datatable with some gadget information.
+	
+	var bankReferenceIdEl = $('#<portlet:namespace/>bankReferenceId'),
+		bankReferenceNameEl  = $('#<portlet:namespace/>bankReferenceName'),
+		bankReferenceContactEl = $('#<portlet:namespace/>bankReferenceContact'),
+		bankReferencePhoneEl = $('#<portlet:namespace/>bankReferencePhone'),
+		bankReferenceAccountTypeEl = $('#<portlet:namespace/>bankReferenceAccountType'),
+		bankReferenceAccountNumberEl = $('#<portlet:namespace/>bankReferenceAccountNumber'),
+	   
+		
+	    buttonFormatter = function (o) {
+		  	//console.log(o);
+		  	var viewOnly = ${viewOnly};
+			var buttons = '<a class="btn" onclick="editRefAtIndex('+o.rowIndex+')">Edit</a> <a class="btn btn-danger" onclick="removeRefAtIndex('+o.rowIndex+')">Delete</a>';
+		  	
+			if (!viewOnly)
+			return buttons;
+		},
+	    
+	    cols = [
+	            {key:'bankReferenceId',
+	    		label:'Id',
+	    		},
+	            {
+	    			key: 'bankReferenceName',
+	    			label: 'Name'
+	            },
+	            {
+	    			key: 'bankReferenceContact',
+	    			label: 'Contact'
+	            },
+	            {
+	    			key: 'bankReferencePhone',
+	    			label: 'Phone'
+	            },
+	            {
+	    			key: 'bankReferenceAccountType',
+	    			label: 'Account Type',
+	    			
+	            },
+	            {
+	    			key: 'bankReferenceAccountNumber',
+	    			label: 'Account Number'
+	            },
+	            {key: 'actions',
+		    		formatter: buttonFormatter,
+		    		allowHTML: true,
+		    		label: 'Actions',
+		    	}
+	       
+	            
+	    ],
+	
+	    refTable, panel, nestedPanel;
+	
+ 	// Create the DataTable.
+    refTable = new A.DataTable({
+        columns: cols,
+        data   : refTableData,
+        summary: 'Credit App Bank References',
+        caption: '',
+        render : '#bankReferenceDataTable',
+    });
+
+    // Create the main modal form.
+    panel = new A.Panel({
+        srcNode      : '#enterReferenceSection',
+        headerContent: 'Add Bank Reference',
+        zIndex       : 5,
+        centered     : true,
+        modal        : true,
+        visible      : false,
+        render       : document.body,
+        plugins      : [A.Plugin.Drag],
+       
+    });
+
+    panel.addButton({
+        value  : 'Save',
+        section: A.WidgetStdMod.FOOTER,
+        action : function (e) {
+        	//e.preventDefault();
+            saveReference();
+        }
+    });
+
+    panel.addButton({
+        value  : 'Cancel',
+        section: A.WidgetStdMod.FOOTER,
+        action : function (e) {
+            //e.preventDefault();
+            panel.hide();
+        }
+    });
+
+    // When the addRowBtn is pressed, show the modal form.
+    if ( A.one('#addRefRow') != null) {
+    	 A.one('#addRefRow').on('click', function (e) {
+    	    	$('#enterReferenceSection').find('input').val('');
+    			$('#enterReferenceSection').find('select').val('');
+    			
+    	        panel.show();
+    	    });
+    }
     
-    List <CreditAppBankReference> tempResults = CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId());
-    results = ListUtil.subList(tempResults, searchContainer.getStart(), searchContainer.getEnd());
-    total = tempResults.size(); 
     
-    pageContext.setAttribute ("results", results);
-    pageContext.setAttribute ("total", total);
-   	
-    %>
+
+
+     var saveReference = function () {
+		var inputData = {
+			bankReferenceId: bankReferenceIdEl.val(),
+			creditAppId: '${creditApp.creditAppId}',
+			bankReferenceName: bankReferenceNameEl.val(),
+			bankReferenceAccountType : bankReferenceAccountTypeEl.val(),
+			bankReferenceAccountNumber : bankReferenceAccountNumberEl.val(),
+			bankReferenceContact : bankReferenceContactEl.val(),
+			bankReferencePhone :bankReferencePhoneEl.val(),
+			
+		};
+		
+		console.log (inputData);
+		
+		$.ajax({
+				type : "POST",
+				url : createReferenceRecordURL,
+				cache : false,
+				dataType : "Json",
+				data : {
+					reference: JSON.stringify(inputData)
+				},
+				success : function(data) {
+					console.log('createReferenceRecordURL success: ', data);
+					refTableData = data;
+					refTable.data.reset();
+					refTable.data.add(refTableData);
+					panel.hide();
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(textStatus);
+					console.log(XMLHttpRequest);
+					console.log(errorThrown);
+				}
+			});
+	};
+
     
+ // Define the addItem function - this will be called when 'Add Item' is
+    // pressed on the modal form.
+    function addItem(data) {
+		dt.data.add(data);
+        panel.hide();
+    }
+	
+   
     
+ 	Liferay.provide(window, 'editRefAtIndex', function(index) {
+ 		var dataFromIndex = refTableData[index];
+ 		
+ 		console.log ('dataFromIndex', dataFromIndex);
+ 		bankReferenceIdEl.val(dataFromIndex.bankReferenceId);
+ 		bankReferenceNameEl.val(dataFromIndex.bankReferenceName);
+ 		bankReferenceContactEl.val(dataFromIndex.bankReferenceContact);
+ 		bankReferencePhoneEl.val(dataFromIndex.bankReferencePhone);
+ 		bankReferenceAccountTypeEl.val( dataFromIndex.bankReferenceAccountType);
+ 		bankReferenceAccountNumberEl.val(dataFromIndex.bankReferenceAccountNumber);
+		
+ 		panel.show();
+    });
+ 	
+	Liferay.provide(window, 'removeRefAtIndex', function(index) {
+		
+		var ref = refTableData[index];
+		ref.creditAppId = '${creditApp.creditAppId}';
+		
+		$.ajax({
+				type : "POST",
+				url : deleteReferenceRecordURL,
+				cache : false,
+				dataType : "Json",
+				data : {
+					reference: JSON.stringify(ref)
+				},
+				success : function(data) {
+					console.log('removeRefAtIndex success: ', data);
+					refTableData = data;
+					refTable.data.reset();
+					refTable.data.add(refTableData);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(textStatus);
+					console.log(XMLHttpRequest);
+					console.log(errorThrown);
+				}
+			});
+    });
     
-   </liferay-ui:search-container-results>
-
-    <liferay-ui:search-container-row
-        className="com.tamarack.creekridge.model.CreditAppBankReference"
-        keyProperty="bankReferenceId"
-        modelVar="reference" escapedModel="<%= false %>">
-        
-        <liferay-ui:search-container-column-text
-            
-            property="bankReferenceId"
-            
-            
-        />
-        
-        <%-- orderable="<%= true %>" --%>
-        
-       <liferay-ui:search-container-column-text
-            property="bankReferenceName"
-            name="bank-reference-name"
-        />
-        
-        <liferay-ui:search-container-column-text
-            property="bankReferenceContact"
-             name="bank-reference-contact"
-        />
-         
-        <liferay-ui:search-container-column-text
-            property="bankReferencePhone"
-             name="bank-reference-phone"
-        />
-        
-        <liferay-ui:search-container-column-text
-            property="bankReferenceAccountType"
-             name="bank-reference-account-type"
-        />
-        
-    <%-- 
-        <liferay-ui:search-container-column-date
-            name="principal-create-date"
-            property="createDate"
-        />
-        
-        <liferay-ui:search-container-column-date
-            name="principal-modified-date"
-            property="modifiedDate"
-        />
-         --%>
-        
-         <liferay-ui:search-container-column-jsp
-        path="/html/paymentcalculator/bankreferences/referenceActions.jsp"
-        align="right"
-        name="Actions"
- 		/>
-  
-<%-- 
-        <liferay-ui:search-container-column-text
-            name="credit-app-status"
-            property="creditAppStatusId"
-        />
-
-        <liferay-ui:search-container-column-date
-            name="create-date"
-            property="createDate"
-        />
-
-        <liferay-ui:search-container-column-text
-            name="equipment-price"
-            property="equipmentPrice"
-        /> --%>
-        
-        <%-- <liferay-ui:search-container-column-jsp
-        path="/creditapplicationstable/appTableActions.jsp"
-        align="right"
- 		/> --%>
-
-    </liferay-ui:search-container-row>
-
-    <liferay-ui:search-iterator searchContainer="<%=searchContainer %>"/>
-</liferay-ui:search-container>
-
-
-<aui:script>
-    Liferay.provide(window, 'refreshPortlet', function() {
-        var curPortlet = '#p_p_id<portlet:namespace/>';
-        Liferay.Portlet.refresh(curPortlet);
-    },
-    ['aui-dialog','aui-dialog-iframe']
-    );
-</aui:script>
-
-<aui:script>
-    Liferay.provide(window, 'closePopup', function(dialogId) {
-        var A = AUI();
-        var dialog = Liferay.Util.Window.getById(dialogId);
-        dialog.destroy();
-    },
-    ['liferay-util-window']
-    );
-</aui:script>
+	});  
+</script>

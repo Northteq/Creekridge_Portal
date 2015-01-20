@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CreditAppLocalService}.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see CreditAppLocalService
  * @generated
  */
@@ -310,7 +310,7 @@ public class CreditAppLocalServiceWrapper implements CreditAppLocalService,
 
 	/**
 	* @param standard
-	* @return List<Student>
+	* @return List<CreditApp>
 	* @throws SystemException
 	*/
 	@Override
@@ -318,6 +318,44 @@ public class CreditAppLocalServiceWrapper implements CreditAppLocalService,
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _creditAppLocalService.getCreditAppByGroupId(groupId);
+	}
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupIdByUserId(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.getCreditAppByGroupIdByUserId(groupId,
+			userId);
+	}
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.getCreditAppByNotDraftByGroupId(groupId);
+	}
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupIdUserId(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creditAppLocalService.getCreditAppByNotDraftByGroupIdUserId(groupId,
+			userId);
 	}
 
 	/**

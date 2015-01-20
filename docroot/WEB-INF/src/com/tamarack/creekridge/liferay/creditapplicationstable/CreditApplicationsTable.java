@@ -2,7 +2,6 @@ package com.tamarack.creekridge.liferay.creditapplicationstable;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -11,7 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.liferay.util.bridges.mvc.MVCPortlet;
-import com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil;
 
 
 

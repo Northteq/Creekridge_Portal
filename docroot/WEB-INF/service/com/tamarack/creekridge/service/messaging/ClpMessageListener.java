@@ -32,7 +32,7 @@ import com.tamarack.creekridge.service.VendorLocalServiceUtil;
 import com.tamarack.creekridge.service.VendorMessageLocalServiceUtil;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  */
 public class ClpMessageListener extends BaseMessageListener {
 	public static String getServletContextName() {

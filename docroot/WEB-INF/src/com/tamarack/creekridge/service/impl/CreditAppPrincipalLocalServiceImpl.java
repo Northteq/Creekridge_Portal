@@ -22,10 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.tamarack.creekridge.model.CreditApp;
 import com.tamarack.creekridge.model.CreditAppPrincipal;
-import com.tamarack.creekridge.model.CreditAppStatus;
-import com.tamarack.creekridge.service.CreditAppStatusLocalServiceUtil;
 import com.tamarack.creekridge.service.base.CreditAppPrincipalLocalServiceBaseImpl;
 
 /**

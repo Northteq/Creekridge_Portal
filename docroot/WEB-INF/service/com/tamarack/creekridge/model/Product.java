@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the Product service. Represents a row in the &quot;eCreekRidge_Product&quot; database table, with each column mapped to a property of this class.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see ProductModel
  * @see com.tamarack.creekridge.model.impl.ProductImpl
  * @see com.tamarack.creekridge.model.impl.ProductModelImpl

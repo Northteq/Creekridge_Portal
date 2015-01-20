@@ -5,17 +5,28 @@
 	<category name="category.finance">
 		<portlet id="CreekRidgeCapital"></portlet>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<portlet id="paymentcalculator"></portlet>
 		<portlet id="viewCreditApplicationPortlet"></portlet>
 =======
 		<portlet id="paymentcalculatortable"></portlet>
 		<portlet id="insertPaymentCalculatorLookValuesPortlet"></portlet>
+=======
+>>>>>>> master
 		<portlet id="viewCreditApplicationPortlet"></portlet>
 		<portlet id="payment-calculator"></portlet>
 <<<<<<< HEAD
 >>>>>>> master
 =======
 		<portlet id="credit-applications-table"></portlet>
+<<<<<<< HEAD
+>>>>>>> master
+=======
+		<portlet id="manageDocument"></portlet>
+		<portlet id="view-applications-table"></portlet>
+	</category>
+	<category name="category.sample">
+		<portlet id="folder-permissions"></portlet>
 >>>>>>> master
 	</category>
 </display>

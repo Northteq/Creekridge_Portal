@@ -12,7 +12,32 @@
 =======
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>CreekRidgeCapital-portlet</display-name>
-	
+	<servlet>
+    <servlet-name>printdocumentservlet</servlet-name>
+    <servlet-class>com.liferay.portal.kernel.servlet.PortalDelegateServlet</servlet-class>
+    <init-param>
+        <param-name>servlet-class</param-name>
+        <param-value>com.tamarack.creekridge.managedocument.PrintDocumentServlet</param-value>
+    </init-param>
+    <init-param>
+        <param-name>sub-context</param-name>
+        <param-value>printdocumentservlet</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+    <servlet-name>testprintdocumentservlet</servlet-name>
+    <servlet-class>com.tamarack.creekridge.managedocument.PrintDocumentServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>printdocumentservlet</servlet-name>
+    <url-pattern>/delegate/*</url-pattern>
+</servlet-mapping>
+ <servlet-mapping>
+    <servlet-name>testprintdocumentservlet</servlet-name>
+    <url-pattern>/testprintdocumentservlet</url-pattern>
+</servlet-mapping>
 	<jsp-config>
 		<taglib>
 			<taglib-uri>http://java.sun.com/portlet_2_0</taglib-uri>
@@ -30,5 +55,13 @@
 
 =======
 	
+<<<<<<< HEAD
+>>>>>>> master
+=======
+	<resource-ref>
+ 		<res-ref-name>mail/MailSession</res-ref-name>
+ 		<res-type>javax.mail.Session</res-type>
+ 		<res-auth>Container</res-auth>
+ 	</resource-ref> 
 >>>>>>> master
 </web-app>

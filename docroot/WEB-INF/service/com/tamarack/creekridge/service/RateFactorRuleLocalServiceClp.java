@@ -17,7 +17,7 @@ package com.tamarack.creekridge.service;
 import com.liferay.portal.service.InvokableLocalService;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService {
@@ -115,20 +115,26 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getRateFactorRuleByVendorIdActiveStatus";
+		_methodName19 = "getRateFactorRuleByVendor";
 
 		_methodParameterTypes19 = new String[] { "long", "boolean" };
 
-		_methodName20 = "getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId";
+		_methodName20 = "getRateFactorRuleByVendorProductPrice";
 
 		_methodParameterTypes20 = new String[] {
-				"long", "boolean", "long", "long", "long"
+				"java.lang.Boolean", "long", "long", "double"
 			};
 
-		_methodName21 = "getRateFactorRuleByMatchingEquipmentPrice";
+		_methodName21 = "getRateFactorRuleByProductPurchaseOptionPrice";
 
 		_methodParameterTypes21 = new String[] {
-				"long", "boolean", "long", "long", "long", "double"
+				"java.lang.Boolean", "long", "long", "long", "double"
+			};
+
+		_methodName22 = "getRateFactorRuleByVendorProductOptionTermPrice";
+
+		_methodParameterTypes22 = new String[] {
+				"java.lang.Boolean", "long", "long", "long", "long", "long"
 			};
 	}
 
@@ -683,7 +689,7 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 	}
 
 	@Override
-	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorIdActiveStatus(
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendor(
 		long vendorId, boolean active) throws java.lang.Exception {
 		Object returnObj = null;
 
@@ -711,31 +717,29 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId) throws java.lang.Exception {
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductPrice(
+		java.lang.Boolean active, long vendorId, long productId, double eqPrice)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
 					new Object[] {
-						vendorId,
+						ClpSerializer.translateInput(active),
 						
-					active,
+					vendorId,
 						
 					productId,
 						
-					termId,
-						
-					purchaseOptionId
+					eqPrice
 					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
-			if (t instanceof java.lang.Exception) {
-				throw (java.lang.Exception)t;
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -747,31 +751,72 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 			}
 		}
 
-		return (com.tamarack.creekridge.model.RateFactorRule)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.tamarack.creekridge.model.RateFactorRule>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByMatchingEquipmentPrice(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId, double equipmentPrice)
-		throws java.lang.Exception {
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOptionPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, double eqPrice)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
 					new Object[] {
-						vendorId,
+						ClpSerializer.translateInput(active),
 						
-					active,
+					vendorId,
 						
 					productId,
 						
-					termId,
+					purchaseOptionId,
+						
+					eqPrice
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.tamarack.creekridge.model.RateFactorRule>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, long termId, long minPrice)
+		throws java.lang.Exception {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] {
+						ClpSerializer.translateInput(active),
+						
+					vendorId,
+						
+					productId,
 						
 					purchaseOptionId,
 						
-					equipmentPrice
+					termId,
+						
+					minPrice
 					});
 		}
 		catch (Throwable t) {
@@ -790,7 +835,7 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 			}
 		}
 
-		return (com.tamarack.creekridge.model.RateFactorRule)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.tamarack.creekridge.model.RateFactorRule>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -836,4 +881,6 @@ public class RateFactorRuleLocalServiceClp implements RateFactorRuleLocalService
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

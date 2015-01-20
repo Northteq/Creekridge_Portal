@@ -19,7 +19,7 @@ import com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public class RateFactorRuleLocalServiceClpInvoker {
@@ -114,20 +114,26 @@ public class RateFactorRuleLocalServiceClpInvoker {
 
 		_methodParameterTypes77 = new String[] { "java.lang.String" };
 
-		_methodName82 = "getRateFactorRuleByVendorIdActiveStatus";
+		_methodName82 = "getRateFactorRuleByVendor";
 
 		_methodParameterTypes82 = new String[] { "long", "boolean" };
 
-		_methodName83 = "getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId";
+		_methodName83 = "getRateFactorRuleByVendorProductPrice";
 
 		_methodParameterTypes83 = new String[] {
-				"long", "boolean", "long", "long", "long"
+				"java.lang.Boolean", "long", "long", "double"
 			};
 
-		_methodName84 = "getRateFactorRuleByMatchingEquipmentPrice";
+		_methodName84 = "getRateFactorRuleByProductPurchaseOptionPrice";
 
 		_methodParameterTypes84 = new String[] {
-				"long", "boolean", "long", "long", "long", "double"
+				"java.lang.Boolean", "long", "long", "long", "double"
+			};
+
+		_methodName85 = "getRateFactorRuleByVendorProductOptionTermPrice";
+
+		_methodParameterTypes85 = new String[] {
+				"java.lang.Boolean", "long", "long", "long", "long", "long"
 			};
 	}
 
@@ -234,27 +240,35 @@ public class RateFactorRuleLocalServiceClpInvoker {
 
 		if (_methodName82.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
-			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorIdActiveStatus(((Long)arguments[0]).longValue(),
+			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendor(((Long)arguments[0]).longValue(),
 				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName83.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(((Long)arguments[0]).longValue(),
-				((Boolean)arguments[1]).booleanValue(),
+			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorProductPrice((java.lang.Boolean)arguments[0],
+				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue(),
-				((Long)arguments[4]).longValue());
+				((Double)arguments[3]).doubleValue());
 		}
 
 		if (_methodName84.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(((Long)arguments[0]).longValue(),
-				((Boolean)arguments[1]).booleanValue(),
+			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByProductPurchaseOptionPrice((java.lang.Boolean)arguments[0],
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				((Double)arguments[4]).doubleValue());
+		}
+
+		if (_methodName85.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+			return RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorProductOptionTermPrice((java.lang.Boolean)arguments[0],
+				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(),
 				((Long)arguments[4]).longValue(),
-				((Double)arguments[5]).doubleValue());
+				((Long)arguments[5]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -302,4 +316,6 @@ public class RateFactorRuleLocalServiceClpInvoker {
 	private String[] _methodParameterTypes83;
 	private String _methodName84;
 	private String[] _methodParameterTypes84;
+	private String _methodName85;
+	private String[] _methodParameterTypes85;
 }

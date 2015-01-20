@@ -29,7 +29,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see CreditAppLocalServiceUtil
  * @see com.tamarack.creekridge.service.base.CreditAppLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.CreditAppLocalServiceImpl
@@ -267,11 +267,41 @@ public interface CreditAppLocalService extends BaseLocalService,
 
 	/**
 	* @param standard
-	* @return List<Student>
+	* @return List<CreditApp>
 	* @throws SystemException
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupId(
 		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByGroupIdByUserId(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @param standard
+	* @return List<CreditApp>
+	* @throws SystemException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.tamarack.creekridge.model.CreditApp> getCreditAppByNotDraftByGroupIdUserId(
+		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

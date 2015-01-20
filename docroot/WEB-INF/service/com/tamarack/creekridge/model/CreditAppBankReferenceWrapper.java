@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link CreditAppBankReference}.
  * </p>
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see CreditAppBankReference
  * @generated
  */

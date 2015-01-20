@@ -19,7 +19,7 @@ import com.tamarack.creekridge.service.VendorMessageLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public class VendorMessageLocalServiceClpInvoker {

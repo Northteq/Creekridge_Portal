@@ -16,6 +16,7 @@
 <%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
 =======
 <%@page import="com.liferay.util.*"%>
+<%@page import="java.text.NumberFormat" %>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@page import="com.liferay.portal.util.PortalUtil" %>
 <%@page import="com.liferay.portal.theme.ThemeDisplay" %>
@@ -30,16 +31,14 @@
 <%@page import="com.tamarack.creekridge.model.CreditAppBankReference"%>
 <%@page import="com.tamarack.creekridge.service.CreditAppPrincipalLocalServiceUtil"%>
 <%@page import="com.tamarack.creekridge.service.CreditAppBankReferenceLocalServiceUtil"%>
+<%@page import="com.tamarack.creekridge.service.CreditAppLocalServiceUtil"%>
 <%@page import="com.liferay.portal.kernel.util.ListUtil"%>
 <%@page import="com.liferay.portal.kernel.dao.search.ResultRow"%>
-<%@page import=" javax.servlet.http.HttpServletRequest"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+<%@page import="com.liferay.portal.kernel.json.JSONFactoryUtil;" %>
 
 >>>>>>> master
 <portlet:defineObjects/>
 <liferay-theme:defineObjects/>
-
-<script src="<%= renderRequest.getContextPath()%>/js/jquery211.min.js" type="text/javascript"></script>
-
-<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 
 

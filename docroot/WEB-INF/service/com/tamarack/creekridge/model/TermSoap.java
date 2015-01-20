@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public class TermSoap implements Serializable {

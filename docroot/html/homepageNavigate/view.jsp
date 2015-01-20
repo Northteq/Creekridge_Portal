@@ -21,26 +21,23 @@
 <portlet:defineObjects />
 
 
-<%@page import="com.liferay.portal.theme.ThemeDisplay" %>
-<%@page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@page import="com.liferay.portal.service.GroupLocalServiceUtil"%>
 
+<portlet:renderURL var="seedDataURL">
 
-<%
+	<portlet:param name="mvcPath" value="/html/homepageNavigate/seedData.jsp" />
+</portlet:renderURL>
 
-ThemeDisplay td  = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+<portlet:renderURL var="viewApplicationsURL">
 
-String currentUrl = td.getURLCurrent();
-
-String root = currentUrl.substring(0, currentUrl.lastIndexOf("/"));
-
-%>
-
-
-
-
-
+<<<<<<< HEAD
+>>>>>>> master
+=======
+	<portlet:param name="mvcPath" value="/html/viewCreditApplication/view.jsp" />
+</portlet:renderURL>
 >>>>>>> master
 
+<a href="<%=seedDataURL %>" style="display:none">Seed Data</a>
 
 <div class="container">
 	<h3>
@@ -48,6 +45,7 @@ String root = currentUrl.substring(0, currentUrl.lastIndexOf("/"));
 	</h3>
 
 	<div class="span2">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		<a class="btn btn-info btn-block" href="/web/vendor1/payment-calculator">Pricing Calculation</a>
@@ -68,22 +66,30 @@ String root = currentUrl.substring(0, currentUrl.lastIndexOf("/"));
 =======
 		<a class="btn btn-info btn-block" href="<%=root %>/payment-calculator"><i class="icon-pencil"></i> Payment Calculator</a>
 >>>>>>> master
+=======
+		<a class="btn btn-info btn-block" href="payment-calculator"><i class="icon-pencil"></i> Payment Calculator</a>
+>>>>>>> master
 	</div>
 
 	<div class="span2">
-		<a class="btn btn-success btn-block" href="<%=root %>/view-application"><i class="icon-pencil"></i> View Application </a>
+		<a class="btn btn-success btn-block" href="view-applications"><i class="icon-th-list"></i> View Applications </a>
+	</div>
+	
+	
+	<div class="span2">
+		<a class="btn btn-inverse btn-block" href="manage-documents"><i class="icon-book"></i> Document &amp; Materials</a>
 	</div>
 	
 	<div class="span2">
-		<a class="btn btn-inverse btn-block" href="<%=root %>/document-material"><i class="icon-book"></i> Document &amp; Materials</a>
-	</div>
-	
-	<div class="span2">
+<<<<<<< HEAD
 <<<<<<< HEAD
 		<a class="btn btn-warning btn-block" href="<%=root %>/contact-info">Contact Info</a>
 >>>>>>> master
 =======
 		<a class="btn btn-warning btn-block" href="<%=root %>/contact-info"><i class="icon-user"></i> Contact Info</a>
+>>>>>>> master
+=======
+		<a class="btn btn-warning btn-block" href="contact-info"><i class="icon-user"></i> Contact Info</a>
 >>>>>>> master
 	</div>
 	

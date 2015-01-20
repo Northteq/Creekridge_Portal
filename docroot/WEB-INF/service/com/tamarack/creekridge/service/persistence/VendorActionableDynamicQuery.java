@@ -21,7 +21,7 @@ import com.tamarack.creekridge.model.Vendor;
 import com.tamarack.creekridge.service.VendorLocalServiceUtil;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  * @generated
  */
 public abstract class VendorActionableDynamicQuery

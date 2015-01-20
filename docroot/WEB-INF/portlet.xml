@@ -49,7 +49,9 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	
 	<portlet>
+<<<<<<< HEAD
 <<<<<<< HEAD
 		<portlet-name>paymentcalculator</portlet-name>
 		<display-name>Payment Calculator</display-name>
@@ -65,6 +67,14 @@
 		<init-param>
 			<name>view-template</name>
 			<value>/html/paymentcalculatortable/view.jsp</value>
+>>>>>>> master
+=======
+		<portlet-name>viewCreditApplicationPortlet</portlet-name>
+		<display-name>View Credit Application</display-name>
+		<portlet-class>com.tamarack.liferay.payment.ViewApplication</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/viewCreditApplication/view.jsp</value>
 >>>>>>> master
 		</init-param>
 		<init-param>
@@ -87,6 +97,7 @@
 			<portlet-mode>view</portlet-mode>
 		</supports>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Payment Calculator</title>
@@ -96,6 +107,12 @@
 		<portlet-info>
 			<title>Payment Calculator Table</title>
 			<short-title>Payment Calculator Table</short-title>
+>>>>>>> master
+=======
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>View Credit Application</title>
+			<short-title>View Credit Application</short-title>
 >>>>>>> master
 			<keywords></keywords>
 		</portlet-info>
@@ -120,98 +137,13 @@
 		<portlet-class>com.tamarack.liferay.payment.ViewApplication</portlet-class>
 =======
 	
-	
-	
-	<portlet>
-		<portlet-name>viewCreditApplicationPortlet</portlet-name>
-		<display-name>View Credit Application</display-name>
-		<portlet-class>com.tamarack.liferay.payment.ViewApplication
-		</portlet-class>
->>>>>>> master
-		<init-param>
-			<name>view-template</name>
-			<value>/html/viewCreditApplication/view.jsp</value>
-		</init-param>
-		<init-param>
-			<name>add-process-action-success-action</name>
-			<value>false</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-<<<<<<< HEAD
-		
-=======
-		<resource-bundle>content/Language</resource-bundle>
->>>>>>> master
-		<portlet-info>
-			<title>View Credit Application</title>
-			<short-title>View Credit Application</short-title>
-			<keywords></keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-<<<<<<< HEAD
-
-=======
-	
-	<portlet>
-		<portlet-name>insertPaymentCalculatorLookValuesPortlet</portlet-name>
-		<display-name>Payment Calculator Look Values </display-name>
-		<portlet-class>com.tamarack.liferay.payment.InsertPaymentCalculatorLookValuesPortlet
-		</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/lookValuesPortlet/view.jsp</value>
-		</init-param>
-		<init-param>
-			<name>add-process-action-success-action</name>
-			<value>false</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<resource-bundle>/content/Language.porperties</resource-bundle>
-		<portlet-info>
-			<title>Payment Calculator Look Values</title>
-			<short-title>Payment Calculator Look Values</short-title>
-			<keywords></keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	
 	<portlet>
 		<portlet-name>payment-calculator</portlet-name>
 		<display-name>Payment Calculator</display-name>
 		<portlet-class>
 			com.tamarack.creekridge.liferay.paymentcalculator.PaymentCalculator
 		</portlet-class>
+>>>>>>> master
 		<init-param>
 			<name>view-template</name>
 			<value>/html/paymentcalculator/view.jsp</value>
@@ -229,7 +161,15 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
+<<<<<<< HEAD
+<<<<<<< HEAD
+		
+=======
+		<resource-bundle>content/Language</resource-bundle>
+>>>>>>> master
+=======
 		<resource-bundle>content.Language</resource-bundle>
+>>>>>>> master
 		<portlet-info>
 			<title>Payment Calculator</title>
 			<short-title>Payment Calculator</short-title>
@@ -249,8 +189,12 @@
 		</security-role-ref>
 	</portlet>
 <<<<<<< HEAD
->>>>>>> master
+<<<<<<< HEAD
+
 =======
+	
+=======
+>>>>>>> master
 	<portlet>
 		<portlet-name>credit-applications-table</portlet-name>
 		<display-name>Credit Applications Table</display-name>
@@ -295,6 +239,10 @@
 			<name>view-template</name>
 			<value>/html/manageDocument/view.jsp</value>
 		</init-param>
+		<init-param>
+			<name>add-process-action-success-action</name>
+			<value>false</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -304,6 +252,77 @@
 		<portlet-info>
 			<title>Manage Document</title>
 			<short-title>Manage Document</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+<<<<<<< HEAD
+>>>>>>> master
+=======
+	<portlet>
+		<portlet-name>folder-permissions</portlet-name>
+		<display-name>Folder Permissions</display-name>
+		<portlet-class>
+			com.tamarack.creekridge.folderpermissions.FolderPermissions
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/folderpermissions/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Folder Permissions</title>
+			<short-title>Folder Permissions</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>view-applications-table</portlet-name>
+		<display-name>View Applications Table</display-name>
+		<portlet-class>
+			com.tamarack.creekridge.liferay.applicationstable.ViewApplicationsTable
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/viewapplicationstable/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>View Applications Table</title>
+			<short-title>View Applications Table</short-title>
 			<keywords></keywords>
 		</portlet-info>
 		<security-role-ref>

@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ProposalOptionLocalService}.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see ProposalOptionLocalService
  * @generated
  */
@@ -292,6 +292,21 @@ public class ProposalOptionLocalServiceWrapper
 	public java.util.List<com.tamarack.creekridge.model.ProposalOption> getProposalOptionByCreditAppId(
 		long creditAppId) throws java.lang.Exception {
 		return _proposalOptionLocalService.getProposalOptionByCreditAppId(creditAppId);
+	}
+
+	/**
+	* @param user
+	* @param themeDisplay
+	* @return CreditApp
+	* @throws SystemException, PortalException
+	*/
+	@Override
+	public com.tamarack.creekridge.model.ProposalOption addProposalOption(
+		com.liferay.portal.model.User user,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _proposalOptionLocalService.addProposalOption(user, themeDisplay);
 	}
 
 	/**

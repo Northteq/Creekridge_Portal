@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the CreditAppDocument service. Represents a row in the &quot;eCreekRidge_CreditAppDocument&quot; database table, with each column mapped to a property of this class.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see CreditAppDocumentModel
  * @see com.tamarack.creekridge.model.impl.CreditAppDocumentImpl
  * @see com.tamarack.creekridge.model.impl.CreditAppDocumentModelImpl

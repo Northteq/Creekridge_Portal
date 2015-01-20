@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link RateFactorRuleLocalService}.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see RateFactorRuleLocalService
  * @generated
  */
@@ -289,27 +289,36 @@ public class RateFactorRuleLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorIdActiveStatus(
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendor(
 		long vendorId, boolean active) throws java.lang.Exception {
-		return _rateFactorRuleLocalService.getRateFactorRuleByVendorIdActiveStatus(vendorId,
+		return _rateFactorRuleLocalService.getRateFactorRuleByVendor(vendorId,
 			active);
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId) throws java.lang.Exception {
-		return _rateFactorRuleLocalService.getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(vendorId,
-			active, productId, termId, purchaseOptionId);
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductPrice(
+		java.lang.Boolean active, long vendorId, long productId, double eqPrice)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _rateFactorRuleLocalService.getRateFactorRuleByVendorProductPrice(active,
+			vendorId, productId, eqPrice);
 	}
 
 	@Override
-	public com.tamarack.creekridge.model.RateFactorRule getRateFactorRuleByMatchingEquipmentPrice(
-		long vendorId, boolean active, long productId, long termId,
-		long purchaseOptionId, double equipmentPrice)
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByProductPurchaseOptionPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, double eqPrice)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _rateFactorRuleLocalService.getRateFactorRuleByProductPurchaseOptionPrice(active,
+			vendorId, productId, purchaseOptionId, eqPrice);
+	}
+
+	@Override
+	public java.util.List<com.tamarack.creekridge.model.RateFactorRule> getRateFactorRuleByVendorProductOptionTermPrice(
+		java.lang.Boolean active, long vendorId, long productId,
+		long purchaseOptionId, long termId, long minPrice)
 		throws java.lang.Exception {
-		return _rateFactorRuleLocalService.getRateFactorRuleByMatchingEquipmentPrice(vendorId,
-			active, productId, termId, purchaseOptionId, equipmentPrice);
+		return _rateFactorRuleLocalService.getRateFactorRuleByVendorProductOptionTermPrice(active,
+			vendorId, productId, purchaseOptionId, termId, minPrice);
 	}
 
 	/**

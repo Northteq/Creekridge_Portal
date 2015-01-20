@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.tamarack.creekridge.model.CreditAppBankReference;
-import com.tamarack.creekridge.model.CreditAppPrincipal;
 import com.tamarack.creekridge.service.base.CreditAppBankReferenceLocalServiceBaseImpl;
 
 /**

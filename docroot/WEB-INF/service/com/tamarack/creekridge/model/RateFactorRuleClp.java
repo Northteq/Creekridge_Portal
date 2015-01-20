@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  */
 public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 	implements RateFactorRule {
@@ -641,17 +641,25 @@ public class RateFactorRuleClp extends BaseModelImpl<RateFactorRule>
 
 	@Override
 	public int compareTo(RateFactorRule rateFactorRule) {
-		long primaryKey = rateFactorRule.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getMinPrice() < rateFactorRule.getMinPrice()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getMinPrice() > rateFactorRule.getMinPrice()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

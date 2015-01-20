@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author tamarack
+ * @author Tamarack Consulting
  */
 public class TermClp extends BaseModelImpl<Term> implements Term {
 	public TermClp() {

@@ -53,7 +53,7 @@ import com.tamarack.creekridge.service.base.CreditAppLocalServiceBaseImpl;
  * @see com.tamarack.creekridge.service.base.CreditAppLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.CreditAppLocalServiceUtil
  */
-public class CreditAppLocalServiceImpl extends CreditAppLocalServiceBaseImpl {
+public class CreditAppLocalServiceImpl  extends CreditAppLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -91,6 +91,10 @@ private static Log _log = LogFactory.getLog(CreditAppLocalService.class);
 =======
 		newApp.setGroupId (themeDisplay.getLayout().getGroupId());
 		newApp.setVendorId (themeDisplay.getLayout().getGroupId());
+<<<<<<< HEAD
+>>>>>>> master
+=======
+		newApp.setEquipmentLocAsCustomerFlag(true);
 >>>>>>> master
 		CreditAppStatus creditAppStatus;
 		
@@ -127,11 +131,44 @@ private static Log _log = LogFactory.getLog(CreditAppLocalService.class);
 	/** 
 	  *  
 	  * @param standard 
-	  * @return List<Student> 
+	  * @return List<CreditApp> 
 	  * @throws SystemException 
 	  */  
 	 public List<CreditApp> getCreditAppByGroupId (long groupId) throws SystemException{  
 		 return this.creditAppPersistence.findByGroupId(groupId);
+	 } 
+<<<<<<< HEAD
+>>>>>>> master
+=======
+	 
+	 /** 
+	  *  
+	  * @param standard 
+	  * @return List<CreditApp> 
+	  * @throws SystemException 
+	  */  
+	 public List<CreditApp> getCreditAppByGroupIdByUserId (long groupId, long userId) throws SystemException{  
+		 return this.creditAppPersistence.findByGroupIdUserId(groupId, userId);
+	 } 
+	 
+	 /** 
+	  *  
+	  * @param standard 
+	  * @return List<CreditApp> 
+	  * @throws SystemException 
+	  */  
+	 public List<CreditApp> getCreditAppByNotDraftByGroupId (long groupId) throws SystemException{  
+		 return this.creditAppPersistence.findByNotDraftGroupId(groupId);
+	 } 
+	 
+	 /** 
+	  *  
+	  * @param standard 
+	  * @return List<CreditApp> 
+	  * @throws SystemException 
+	  */  
+	 public List<CreditApp> getCreditAppByNotDraftByGroupIdUserId (long groupId, long userId) throws SystemException{  
+		 return this.creditAppPersistence.findByNotDraftGroupIdUserId(groupId, userId);
 	 } 
 >>>>>>> master
 }

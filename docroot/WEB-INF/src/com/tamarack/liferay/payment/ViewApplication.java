@@ -25,7 +25,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -64,7 +63,7 @@ public class ViewApplication extends MVCPortlet {
    public ViewApplication() {
        super();
    }
-   private static Log _log = LogFactory.getLog(PaymentCalculatorTable.class);
+   private static Log _log = LogFactory.getLog(ViewApplication.class);
 
 public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse actionResponse) throws Exception {
 	
@@ -90,7 +89,7 @@ public  void submitPaymentCalculator(ActionRequest actionRequest,	ActionResponse
 				long ratefactorId=ParamUtil.getLong(actionRequest,"ratefactorId");
 				double equipmentPrice=ParamUtil.getDouble(actionRequest,"equipmentPrice");
 				
-				RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
+				RateFactorRule rateFactorRule= null;//(RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
 				request.getSession().setAttribute("rateFactorRuleId",new Long(rateFactorRule.getRateFactorRuleId()).toString());	
 				request.getSession().setAttribute("equipmentPrice",equipmentPrice);	
 				
@@ -194,7 +193,7 @@ public  void createCreditOrProposal(ActionRequest actionRequest,	ActionResponse 
 		boolean optionSelected=false;
 		double equipmentPrice=ParamUtil.getDouble(actionRequest,"equipmentPrice");
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(actionRequest);
-		RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
+		RateFactorRule rateFactorRule= null;//(RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByMatchingEquipmentPrice(0, true, productId, termId, purchaseOptionId, equipmentPrice);
 		request.getSession().setAttribute("rateFactorRuleId",new Long(rateFactorRule.getRateFactorRuleId()).toString());	
 		request.getSession().setAttribute("equipmentPrice",equipmentPrice);	
 		
@@ -305,7 +304,7 @@ public void setPaymentCalculatorResults (ActionRequest actionRequest,	ActionResp
 					System.out.println("Matched Term Id: "+termnameListResult.get(k));
 					tempProporsal.setTermId(new Long(termnameListResult.get(k)).longValue());
 		     try{
-			     RateFactorRule rateFactorRule= (RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(themeDisplay.getScopeGroupId(), true, tempProporsal.getProductId(), tempProporsal.getTermId(), tempProporsal.getPurchaseOptionId());
+			     RateFactorRule rateFactorRule= null;//(RateFactorRule) RateFactorRuleLocalServiceUtil.getRateFactorRuleByVendorIdActiveStatusProductIdTermIdPurchaseOptionId(themeDisplay.getScopeGroupId(), true, tempProporsal.getProductId(), tempProporsal.getTermId(), tempProporsal.getPurchaseOptionId());
 			      if( rateFactorRule.getRateFactor() == 0.0) {
 				     request.getSession().setAttribute("zeroRateFactor",PropsUtil.get("zeroRateFactor"));
 			       }
@@ -611,7 +610,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
 		creditAppBankReference.setModifiedDate(new Date());
 		creditAppBankReference.setCreateDate(new Date());
 	
-		creditAppBankReference.setBankReferencAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
+		creditAppBankReference.setBankReferenceAccountType(ParamUtil.getString(actionRequest,"bankReferencAccountType"));
 		creditAppBankReference.setBankReferenceAccountNumber(ParamUtil.getString(actionRequest,"bankReferenceAccountNumber"));
 		creditAppBankReference.setBankReferenceContact(ParamUtil.getString(actionRequest,"bankReferenceAccountContact"));
 		creditAppBankReference.setBankReferenceName(ParamUtil.getString(actionRequest,"bankReferenceAccountName"));
@@ -626,7 +625,7 @@ public  void updateCreditAppBankAccountReference(ActionRequest actionRequest,Act
 		
 		List<CreditAppBankReference> bankReferenceAccountList= CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(new Long(request.getSession().getAttribute("creditAppId").toString()).longValue());
 		 for (int i=0;i<bankReferenceAccountList.size();i++){
-			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferencAccountType());
+			 tempBankAccount.setBankReferencAccountType(bankReferenceAccountList.get(i).getBankReferenceAccountType());
 			 tempBankAccount.setBankReferenceName(bankReferenceAccountList.get(i).getBankReferenceName());
 			 tempBankAccount.setBankReferenceAccountNumber(bankReferenceAccountList.get(i).getBankReferenceAccountNumber());
 			 tempBankAccount.setBankReferenceContact(bankReferenceAccountList.get(i).getBankReferenceContact());

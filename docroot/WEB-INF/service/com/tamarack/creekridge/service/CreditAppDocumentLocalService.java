@@ -29,7 +29,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author tamarack
+ * @author Tamarack Consulting
  * @see CreditAppDocumentLocalServiceUtil
  * @see com.tamarack.creekridge.service.base.CreditAppDocumentLocalServiceBaseImpl
  * @see com.tamarack.creekridge.service.impl.CreditAppDocumentLocalServiceImpl
