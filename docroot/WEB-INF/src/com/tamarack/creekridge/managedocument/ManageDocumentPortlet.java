@@ -28,10 +28,14 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mail.MailMessage;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadRequest;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -114,16 +118,21 @@ public void serveResource(ResourceRequest resourceRequest,	ResourceResponse reso
 			   		String contentDispositionValue = "attachment; filename=\"" + fileName + "\"";
 			   		resourceResponse.addProperty("Content-Disposition", contentDispositionValue);
                	
-			   		OutputStream out = resourceResponse.getPortletOutputStream();
-	             	
-		              Blob fileContent=fileAttachment.getDocumentFileContent();
-		              byte[ ] content = fileContent.getBytes(1,(int)fileContent.length());
+			   		String extension = GetterUtil.getString(FileUtil.getExtension(fileName));
+			   		if (extension.equals("pdf") || extension.equalsIgnoreCase("pdf")) {
+			   			contentDispositionValue = StringUtil.replace(contentDispositionValue, "attachment; ", "inline; ");
+			   			resourceResponse.setContentType("application/pdf");
+			   			System.out.println("Filename "+fileName);
+			   		  }
+			   		  resourceResponse.setProperty(HttpHeaders.CONTENT_DISPOSITION, contentDispositionValue);
+			   		  OutputStream out = resourceResponse.getPortletOutputStream();
+	                  Blob fileContent=fileAttachment.getDocumentFileContent();
+
+	                  byte[ ] content = fileContent.getBytes(1,(int)fileContent.length());
 		              
 		              out.write(content);
 		              out.flush();
 		              out.close();
-
-	          
 	  
 	      } catch (Exception e) {
 	    	  _log.error("Error downloading file  with filename " + fileName);
