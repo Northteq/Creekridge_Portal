@@ -287,6 +287,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 		
 			
 			String realPath = getPortletContext().getRealPath("/");
+			String path = realPath + "html\\manageDocument\\";
 			_log.info("realPath " + realPath);
 			String companyLogoURL = themeDisplay.getURLHome() + "/../.." + themeDisplay.getCompanyLogo();
 			_log.info("companyLogoURL " + companyLogoURL);
@@ -310,7 +311,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 					_log.info("htmlFile " + htmlFile);
 					_log.info("title " + title);
 					
-					ManageDocumentUtil.generateDocument(htmlFile, title, creditApp, realPath, companyLogoURL, ManageDocumentUtil.getShowPrincipals(group), ManageDocumentUtil.getShowBankRefs(group));
+					ManageDocumentUtil.generateDocument(htmlFile, title, creditApp, path, companyLogoURL, ManageDocumentUtil.getShowPrincipals(group), ManageDocumentUtil.getShowBankRefs(group));
 				}
 				
 			
