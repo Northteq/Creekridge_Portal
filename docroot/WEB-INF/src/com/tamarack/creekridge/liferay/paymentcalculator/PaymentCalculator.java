@@ -86,7 +86,7 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		showPrincipals = true;
 		showBankRefs = true;
-		customPaymentAmountMessage = "";
+		customPaymentAmountMessage = "Please submit a <a href=\"contact\" target=\"_blank\">contact form</a> for payment amount information on this pricing option.";
 		
 		_log.info("render started");
 
@@ -108,30 +108,39 @@ public class PaymentCalculator extends MVCPortlet {
 			siteGroup = GroupLocalServiceUtil.getGroup(vendorId);
 			_log.info("sitegroup:  " + siteGroup);
 			
+			_log.info("expando:  " + siteGroup.getExpandoBridge().getAttributes().toString());
 			
-			if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null) {
+			if (siteGroup.getExpandoBridge().hasAttribute("Include Bank References")) {
+				if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null)
+					showBankRefs = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
 				
-				showBankRefs = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
-				_log.info("showBankRefs:  " + showBankRefs);
+				
 			}
 			
-			if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null) {
-				showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
-				_log.info("showPrincipals:  " + showPrincipals);
+			_log.info("showBankRefs:  " + showBankRefs);
+			
+			
+			if (siteGroup.getExpandoBridge().hasAttribute("Include Principals")) {
+				if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null)
+					showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
+				
 			}
 			
-			if (!String.valueOf(siteGroup.getExpandoBridge().getAttribute("Rep Name")).isEmpty()
-					&& !String.valueOf(siteGroup.getExpandoBridge().getAttribute("Rep Phone")).isEmpty()) {
-				
-				
-					customPaymentAmountMessage = "Please call ";
-					customPaymentAmountMessage += siteGroup.getExpandoBridge().getAttribute("Rep Name").toString();
-					customPaymentAmountMessage += " at ";
-					customPaymentAmountMessage +=  siteGroup.getExpandoBridge().getAttribute("Rep Phone").toString();
-					customPaymentAmountMessage += " for Payment Amount";
+			_log.info("showPrincipals:  " + showPrincipals);
 			
-			} else {
-				customPaymentAmountMessage = "Please submit a <a href=\"contact\" target=\"_blank\">contact form</a> for payment amount information on this pricing option.";
+			
+			if (siteGroup.getExpandoBridge().hasAttribute("Rep Name") && siteGroup.getExpandoBridge().hasAttribute("Rep Phone")) {
+				if (siteGroup.getExpandoBridge().getAttribute("Rep Name") != null
+						&& siteGroup.getExpandoBridge().getAttribute("Rep Phone") != null) {
+					
+					
+						customPaymentAmountMessage = "Please call ";
+						customPaymentAmountMessage += siteGroup.getExpandoBridge().getAttribute("Rep Name").toString();
+						customPaymentAmountMessage += " at ";
+						customPaymentAmountMessage +=  siteGroup.getExpandoBridge().getAttribute("Rep Phone").toString();
+						customPaymentAmountMessage += " for Payment Amount";
+				
+				} 
 			}
 			
 			_log.info("customPaymentAmountMessage:  " + customPaymentAmountMessage);
@@ -527,7 +536,7 @@ public class PaymentCalculator extends MVCPortlet {
 				List <RateFactorRule> rfrListForProducts = new ArrayList <RateFactorRule> ();
 				String eqPriceString = PortalUtil.getOriginalServletRequest(request).getParameter("eqPrice");
 				_log.info ("eqPriceString when getting products " + eqPriceString);
-				if (eqPriceString != null) {
+				if (eqPriceString != null && !eqPriceString.isEmpty()) {
 					double eqPrice = PaymentCalculatorUtil.getDoubleFromCurrency(eqPriceString);
 					rfrListForProducts = queryUtil.fetchActiveProductsForEquipmentPrice(vendorId, eqPrice);
 					
