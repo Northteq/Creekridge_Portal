@@ -74,7 +74,7 @@ public class PaymentCalculatorQueryUtil {
 		
 		rfrQuery.add(PropertyFactoryUtil.forName("active").eq(true));
 		rfrQuery.add(PropertyFactoryUtil.forName("vendorId").eq(vendorId));
-		rfrQuery.add(PropertyFactoryUtil.forName("minPrice").lt(eqPrice));
+		rfrQuery.add(PropertyFactoryUtil.forName("minPrice").le(eqPrice));
 		
 		
 		rfrList = RateFactorRuleLocalServiceUtil.dynamicQuery(rfrQuery);
