@@ -641,7 +641,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			});
 
 	/**
-	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -659,7 +659,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -683,7 +683,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -722,7 +722,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 				if ((active != rateFactorRule.getActive()) ||
 						(vendorId != rateFactorRule.getVendorId()) ||
 						(productId != rateFactorRule.getProductId()) ||
-						(minPrice <= rateFactorRule.getMinPrice())) {
+						(minPrice < rateFactorRule.getMinPrice())) {
 					list = null;
 
 					break;
@@ -810,7 +810,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -855,7 +855,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -880,7 +880,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -925,7 +925,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -957,7 +957,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param rateFactorRuleId the primary key of the current rate factor rule
 	 * @param active the active
@@ -1122,7 +1122,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63; from the database.
+	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63; from the database.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1141,7 +1141,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1212,7 +1212,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_ACTIVE_2 = "rateFactorRule.active = ? AND ";
 	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_VENDORID_2 = "rateFactorRule.vendorId = ? AND ";
 	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_PRODUCTID_2 = "rateFactorRule.productId = ? AND ";
-	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_MINPRICE_2 = "rateFactorRule.minPrice < ?";
+	private static final String _FINDER_COLUMN_VENDORPRODUCTPRICE_MINPRICE_2 = "rateFactorRule.minPrice <= ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTPURCHASEOPTIONPRICE =
 		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
@@ -1238,7 +1238,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			});
 
 	/**
-	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1258,7 +1258,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1283,7 +1283,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1325,7 +1325,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 						(vendorId != rateFactorRule.getVendorId()) ||
 						(productId != rateFactorRule.getProductId()) ||
 						(purchaseOptionId != rateFactorRule.getPurchaseOptionId()) ||
-						(minPrice <= rateFactorRule.getMinPrice())) {
+						(minPrice < rateFactorRule.getMinPrice())) {
 					list = null;
 
 					break;
@@ -1417,7 +1417,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1467,7 +1467,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1495,7 +1495,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1545,7 +1545,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1580,7 +1580,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param rateFactorRuleId the primary key of the current rate factor rule
 	 * @param active the active
@@ -1751,7 +1751,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63; from the database.
+	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63; from the database.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1772,7 +1772,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1857,7 +1857,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_PURCHASEOPTIONID_2 =
 		"rateFactorRule.purchaseOptionId = ? AND ";
 	private static final String _FINDER_COLUMN_VENDORPRODUCTPURCHASEOPTIONPRICE_MINPRICE_2 =
-		"rateFactorRule.minPrice < ?";
+		"rateFactorRule.minPrice <= ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VENDORPRODUCTOPTIONTERMPRICE =
 		new FinderPath(RateFactorRuleModelImpl.ENTITY_CACHE_ENABLED,
 			RateFactorRuleModelImpl.FINDER_CACHE_ENABLED,
@@ -1883,7 +1883,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 			});
 
 	/**
-	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -1904,7 +1904,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1931,7 +1931,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1975,7 +1975,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 						(productId != rateFactorRule.getProductId()) ||
 						(purchaseOptionId != rateFactorRule.getPurchaseOptionId()) ||
 						(termId != rateFactorRule.getTermId()) ||
-						(minPrice <= rateFactorRule.getMinPrice())) {
+						(minPrice < rateFactorRule.getMinPrice())) {
 					list = null;
 
 					break;
@@ -2071,7 +2071,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2125,7 +2125,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2154,7 +2154,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2208,7 +2208,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2244,7 +2244,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param rateFactorRuleId the primary key of the current rate factor rule
 	 * @param active the active
@@ -2420,7 +2420,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63; from the database.
+	 * Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63; from the database.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2442,7 +2442,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	}
 
 	/**
-	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	 * Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	 *
 	 * @param active the active
 	 * @param vendorId the vendor ID
@@ -2534,7 +2534,7 @@ public class RateFactorRulePersistenceImpl extends BasePersistenceImpl<RateFacto
 	private static final String _FINDER_COLUMN_VENDORPRODUCTOPTIONTERMPRICE_TERMID_2 =
 		"rateFactorRule.termId = ? AND ";
 	private static final String _FINDER_COLUMN_VENDORPRODUCTOPTIONTERMPRICE_MINPRICE_2 =
-		"rateFactorRule.minPrice < ?";
+		"rateFactorRule.minPrice <= ?";
 
 	public RateFactorRulePersistenceImpl() {
 		setModelClass(RateFactorRule.class);
