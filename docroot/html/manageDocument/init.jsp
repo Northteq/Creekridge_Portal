@@ -13,14 +13,12 @@
 <%@page import="com.liferay.portal.util.PortalUtil" %>
 <%@page import="com.liferay.portal.theme.ThemeDisplay" %>
 <%@page import="com.liferay.portal.kernel.util.WebKeys" %>
-
-
 <%@page import="com.tamarack.creekridge.model.CreditApp"%>
+
 <portlet:defineObjects/>
 <liferay-theme:defineObjects/>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 
 

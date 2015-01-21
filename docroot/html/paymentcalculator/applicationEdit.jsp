@@ -13,6 +13,7 @@
 <liferay-ui:error key="genericError" message="generic-error"/>
 <liferay-ui:success key="appSaved" message="app-saved-successfully" />
 
+
 <script src="<%=request.getContextPath() %>/js/jquery.maskedinput.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/js/numeral.min.js"></script>
 

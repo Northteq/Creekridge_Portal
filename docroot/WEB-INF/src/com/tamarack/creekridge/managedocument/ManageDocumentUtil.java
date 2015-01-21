@@ -33,11 +33,18 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DocumentConversionUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.model.ExpandoTableConstants;
+import com.liferay.portlet.expando.model.ExpandoValue;
+import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.tamarack.creekridge.model.CreditApp;
 import com.tamarack.creekridge.model.CreditAppBankReference;
 import com.tamarack.creekridge.model.CreditAppDocument;
@@ -108,7 +115,7 @@ public class ManageDocumentUtil {
 				title = (i < titlesArray.length ? titlesArray[i] : "");
 				_log.info("htmlFile " + htmlFile);
 				_log.info("title " + title);
-				generateDocument(htmlFile, title, creditApp, path, companyLogoURL, hidePrincipals, hideBankReferences);
+				//generateDocument(htmlFile, title, creditApp, path, companyLogoURL, hidePrincipals, hideBankReferences);
 			}
 			
 			return true;
@@ -120,7 +127,56 @@ public class ManageDocumentUtil {
 		
 	}
 	
-	private static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, String hidePrincipals, String hideBankReferences) throws Exception {
+	public static boolean getShowBankRefs (Group group) {
+		
+		boolean show = false;
+		
+		try {
+			
+			
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			
+			ExpandoValue includeBankRefsExpando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), "Include Bank References", group.getPrimaryKey());
+			_log.info("includeBankRefsExpando: " + includeBankRefsExpando);
+			
+			if (includeBankRefsExpando != null) {
+				show = includeBankRefsExpando.getBoolean();
+			}
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		
+		return show;
+	}
+	
+	public static boolean getShowPrincipals (Group group) {
+		
+		boolean show = false;
+		
+		try {
+			
+			
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			
+			ExpandoValue includePrincipalsExpando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), "Include Principals", group.getPrimaryKey());
+			_log.info("includePrincipalsExpando: " + includePrincipalsExpando);
+			
+			if (includePrincipalsExpando != null) {
+				show = includePrincipalsExpando.getBoolean();
+			}
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		
+		return show;
+	}
+	
+	
+	
+	
+	
+	
+	public static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, boolean showPrincipals, boolean showBankReferences) throws Exception {
 		Scanner scanner = null;
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
 			tokenMap.put("companyLogoURL", companyLogoURL);
@@ -135,7 +191,7 @@ public class ManageDocumentUtil {
 			String generatedTemplate = replaceTokens(creditApp, path, template, tokenMap);
 			scanner.close();
 			
-			if (hidePrincipals.equals("TRUE") || CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId()).size() == 0) {
+			if (!showPrincipals || CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId()).size() == 0) {
 				int indexStartPrincipals = generatedTemplate.indexOf("<!-- PRINCIPALS SECTION START -->");
 				int indexEndPrincipals = generatedTemplate.indexOf("<!-- PRINCIPALS SECTION END -->");
 				
@@ -146,7 +202,7 @@ public class ManageDocumentUtil {
 				}
 			}
 			
-			if (hideBankReferences.equals("TRUE") || CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId()).size() == 0) {
+			if (!showBankReferences || CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId()).size() == 0) {
 				int indexStartBankReferences = generatedTemplate.indexOf("<!-- BANK REFERENCES SECTION START -->");
 				int indexEndBankReferences = generatedTemplate.indexOf("<!-- BANK REFERENCES SECTION END -->");
 				
@@ -167,7 +223,6 @@ public class ManageDocumentUtil {
 			File convertedFile = DocumentConversionUtil.convert(String.valueOf(stamp.getTime()), inputStream, "html", "pdf");
 			saveDocument(creditApp, convertedFile, title);
 			convertedFile.delete();
-		
 	}
 	
 	private static String generateSection(CreditApp creditApp, String path, String htmlFile) {
