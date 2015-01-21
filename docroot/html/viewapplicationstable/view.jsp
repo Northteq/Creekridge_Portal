@@ -106,7 +106,8 @@
 <script type="text/javascript">
 
 var isVendorSaleRep = ${isVendorSaleRep};
-var isCreekRidgeSalesManager  = ${isCreekRidgeSalesManager};
+
+console.log ("isVendorSaleRep", isVendorSaleRep);
 
 $(document).ready(function() {
 	

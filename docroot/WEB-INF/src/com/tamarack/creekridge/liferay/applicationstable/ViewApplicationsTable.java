@@ -39,51 +39,32 @@ import com.tamarack.creekridge.service.CreditAppLocalServiceUtil;
 public class ViewApplicationsTable extends MVCPortlet {
 	
 	private static Log _log = LogFactory.getLog(ViewApplicationsTable.class);
-	boolean isCreekRidgeSalesManager = false;
 	boolean isVendorSaleRep = false;
 	
 	@Override 
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-		isVendorSaleRep = false;
 		try {
 			
 			ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			long groupId = themeDisplay.getLayout().getGroupId();
 
 			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(themeDisplay.getUserId());
-			List<UserGroupRole> siteRoles = new ArrayList<UserGroupRole>();
+			
+			//set isVendorSaleRep flag to default
+			isVendorSaleRep = false;
 			
 			for (UserGroupRole userGroupRole : userGroupRoles) {
-				int roleType = userGroupRole.getRole().getType();
-				if (roleType == com.liferay.portal.model.RoleConstants.TYPE_SITE) {
-		 			siteRoles.add(userGroupRole);
-		 			System.out.println(" Custom Role "+userGroupRole.getRole().getName());
-		 			if("salesManager".equalsIgnoreCase(userGroupRole.getRole().getName())){
-			 			isCreekRidgeSalesManager=true;
-						break;
-					}
+				if (userGroupRole.getRole().getType() == RoleConstants.TYPE_SITE 
+						&& "salesRep".equalsIgnoreCase(userGroupRole.getRole().getName())) {
+					isVendorSaleRep=true;
+					break;
 		 		}
 			}
 			
-			if(!isCreekRidgeSalesManager) {
-				for (UserGroupRole userGroupRole : userGroupRoles) {
-					int roleType = userGroupRole.getRole().getType();
-						if (roleType == RoleConstants.TYPE_SITE) {
-			 			siteRoles.add(userGroupRole);
-			 			System.out.println(" Custom Role "+userGroupRole.getRole().getName());
-			 			if("salesRep".equalsIgnoreCase(userGroupRole.getRole().getName())){
-							isVendorSaleRep=true;
-							break;
-				         }
-			          }
-			      }
-		  	} //if !isCreekRidgeSalesManager
+			_log.info("isVendorSaleRep: " + isVendorSaleRep);
 			
-	
-			
-			
+			//create picklist values for salesrep filter
 			Set <String> repNames = new HashSet<String>();
-			
 			List <User> siteUsers = UserLocalServiceUtil.getGroupUsers(groupId);
 			
 			for (User u : siteUsers) {
@@ -96,17 +77,15 @@ public class ViewApplicationsTable extends MVCPortlet {
 				siteUserList.add(o.toString());
 			}
 			
+			//write back to the page
 			renderRequest.setAttribute("siteUsers", JSONFactoryUtil.looseSerialize(repNames));
 			renderRequest.setAttribute("isVendorSaleRep", isVendorSaleRep);
-			renderRequest.setAttribute("isCreekRidgeSalesManager", isCreekRidgeSalesManager);
 			
 		} catch (Exception e) {
 			_log.error("error in render");
 			_log.error(e);
-			e.printStackTrace();
 		}
-		
-		
+
 		super.render(renderRequest, renderResponse);
 	}
 	
@@ -125,7 +104,9 @@ public class ViewApplicationsTable extends MVCPortlet {
 				"getCreditApplicationsJson")) {
 			try {
 				_log.info ("getCreditApplicationsJson called");
+				_log.info ("isVendorSaleRep: " + isVendorSaleRep);
 				List <CreditApp> creditAppList;
+				
 				if (!isVendorSaleRep) {
 					creditAppList = CreditAppLocalServiceUtil.getCreditAppByNotDraftByGroupId(groupId);  
 				} else {
@@ -144,16 +125,13 @@ public class ViewApplicationsTable extends MVCPortlet {
 				
 				String creditAppJson = "{ \"data\":" + JSONFactoryUtil.looseSerialize(creditApps) + "}";
 				resourceResponse.getWriter().write(creditAppJson);
-				_log.info ("getCreditApplicationsJson sending apps back \n" +  creditAppJson);
+				_log.info ("found apps:  \n" +  creditApps.size());
 				
 			} catch (Exception e) {
 				_log.error(e.getMessage());
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(e));
 			}
-			
 		}
-		
-		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 	
