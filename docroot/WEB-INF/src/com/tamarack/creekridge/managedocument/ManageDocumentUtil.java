@@ -171,11 +171,6 @@ public class ManageDocumentUtil {
 		return show;
 	}
 	
-	
-	
-	
-	
-	
 	public static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, boolean showPrincipals, boolean showBankReferences) throws Exception {
 		Scanner scanner = null;
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();

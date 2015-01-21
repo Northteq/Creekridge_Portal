@@ -173,7 +173,7 @@ try {
 			<portlet:param name="mvcPath" value="/html/manageDocument/sendEmail.jsp? %>"/>
 </portlet:renderURL>	 	
 			
-<aui:script>
+<%-- <aui:script>
 	AUI().use('aui-base',
 		'aui-dialog-iframe',
 		 
@@ -202,4 +202,4 @@ try {
 		
 		});
 	});
-</aui:script>
+</aui:script> --%>
