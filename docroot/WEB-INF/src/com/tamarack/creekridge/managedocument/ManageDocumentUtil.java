@@ -65,7 +65,7 @@ import com.tamarack.creekridge.service.TermLocalServiceUtil;
 public class ManageDocumentUtil {
 	private static Log _log = LogFactory.getLog(ManageDocumentUtil.class);
 	
-	public static void generateDocument(String creditAppId, long userId, String realPath, String companyLogoURL) {
+	public static boolean generateDocument(String creditAppId, long userId, String realPath, String companyLogoURL, String [] templatesList) {
 		CreditApp creditApp = null;
 		
 		try {
@@ -74,12 +74,29 @@ public class ManageDocumentUtil {
 			
 			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
 			ExpandoBridge bridge = group.getExpandoBridge();
-			String htmlFiles = (String)bridge.getAttribute("Vendor Template HTML Files");
-			String titles = (String)bridge.getAttribute("Vendor Template Titles");
-			String hidePrincipals = (String)bridge.getAttribute("Hide Principals");
-			String hideBankReferences = (String)bridge.getAttribute("Hide Bank References");
-			_log.info("hidePrincipals " + hidePrincipals);
-			_log.info("hideBankReferences " + hideBankReferences);
+			
+			
+			String htmlFiles = "";
+			if (bridge.hasAttribute ("Vendor Template HTML Files") && bridge.getAttribute("Vendor Template HTML Files") != null)
+				htmlFiles = (String) bridge.getAttribute("Vendor Template HTML Files");
+			
+			String titles = "";
+			if (bridge.hasAttribute("Vendor Template Titles") && bridge.getAttribute("Vendor Template Titles") != null)
+				titles = (String)bridge.getAttribute("Vendor Template Titles");
+			
+			String hidePrincipals = "";
+			if (bridge.hasAttribute("Hide Principals") && bridge.getAttribute("Hide Principals")!=null)
+				hidePrincipals = (String)bridge.getAttribute("Hide Principals");
+			
+			String hideBankReferences = "";
+			if (bridge.hasAttribute("Hide Bank References") && bridge.getAttribute("Hide Bank References") != null)
+				hideBankReferences = (String)bridge.getAttribute("Hide Bank References");
+			
+			
+			_log.info("generateDocument htmlFiles " + htmlFiles);
+			_log.info("generateDocument titles " + titles);
+			_log.info("generateDocument hidePrincipals " + hidePrincipals);
+			_log.info("generateDocument hideBankReferences " + hideBankReferences);
 			
 			String[] htmlFilesArray = htmlFiles.split(";");
 			String[] titlesArray = titles.split(";");
@@ -93,19 +110,18 @@ public class ManageDocumentUtil {
 				_log.info("title " + title);
 				generateDocument(htmlFile, title, creditApp, path, companyLogoURL, hidePrincipals, hideBankReferences);
 			}
+			
+			return true;
+			
+		} catch (Exception e) {
+			_log.error ("generateDocument error: " + e);
+			return false;
 		}
-		catch (PortalException pe) {
-			_log.error(pe);
-		}
-		catch (SystemException se) {
-			_log.error(se);
-		}
+		
 	}
 	
-	private static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, String hidePrincipals, String hideBankReferences) {
+	private static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, String hidePrincipals, String hideBankReferences) throws Exception {
 		Scanner scanner = null;
-		
-		try {
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
 			tokenMap.put("companyLogoURL", companyLogoURL);
 
@@ -151,20 +167,7 @@ public class ManageDocumentUtil {
 			File convertedFile = DocumentConversionUtil.convert(String.valueOf(stamp.getTime()), inputStream, "html", "pdf");
 			saveDocument(creditApp, convertedFile, title);
 			convertedFile.delete();
-		}
-		catch (FileNotFoundException fnfe) {
-			_log.error(fnfe);
-		}
-		catch (IOException ioe) {
-			_log.error(ioe);
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-		finally {
-			if (scanner != null)
-				scanner.close();
-		}
+		
 	}
 	
 	private static String generateSection(CreditApp creditApp, String path, String htmlFile) {
@@ -218,17 +221,9 @@ public class ManageDocumentUtil {
 			}
 			
 			scanner.close();
-		}
-		catch (FileNotFoundException fnfe) {
-			_log.error(fnfe);
-		}
-		catch (IOException ioe) {
-			_log.error(ioe);
-		}
-		catch (Exception e) {
+		}catch (Exception e) {
 			_log.error(e);
-		}
-		finally {
+		}finally {
 			if (scanner != null)
 				scanner.close();
 		}

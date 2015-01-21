@@ -31,6 +31,13 @@
 
 
 
+<liferay-ui:success key="appSaved" message="Application Saved Successfully"/>
+<liferay-ui:success key="appUpdated" message="Application Updated Successfully"/>
+<liferay-ui:success key="docGenerated" message="Document Generated Successfully"/>
+<liferay-ui:success key="docUploaded" message="Document Uploaded Successfully"/>
+<liferay-ui:error key="genericError" message="Error occurred while generating file"/>
+
+
 <%
 
 long creditAppId = 0;
@@ -61,25 +68,34 @@ try {
   
 
 <div class="container-fluid">
+
 	<div>
 		<h4 class="screenTitle pull-left">Manage Documents for Application #<%=creditApp11.getCreditAppId() %></h4>
-		<div>
+	</div>
+	
+	<aui:button-row>
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/payment-calculator?creditAppId=<%=creditApp11.getCreditAppId() %>"><i class="icon-backward"></i>
 			Back to Credit App</a> 
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/view-applications"><i class="icon-backward"></i>
 			Back to View Applications</a>
-		</div>
-	</div>
+	</aui:button-row>
+		
+		
 	<div class="clearfix"></div>
-	<div>
+	<div style="margin-bottom: 10px;">
 	<aui:row>
 		<aui:col span="3">
 			<div class="screenSection generateDocs">
 				<h4>Generate Documents</h4>
-				<a href="<%=manageDocumentUrl%>&documentType=creditApp&creditAppId=<%=creditApp11.getCreditAppId() %>" >Generate Credit App</a><br>
-				<a href="<%=manageDocumentUrl%>&documentType=proposal&creditAppId=<%=creditApp11.getCreditAppId()%>" >Generate Proposal</a>
+				<%-- <a href="<%=manageDocumentUrl%>&documentType=creditApp&creditAppId=<%=creditApp11.getCreditAppId() %>" >Generate Credit App</a><br>
+				<a href="<%=manageDocumentUrl%>&documentType=proposal&creditAppId=<%=creditApp11.getCreditAppId()%>" >Generate Proposal</a> --%>
+				
+				<c:forEach items="${templateOptions}" var="template">
+					<aui:input type="checkbox" value="${template.name}" name="htmlTemplates" label="${template.label}"/>
+				</c:forEach>
+				
 			</div>
 		</aui:col> 
 		<aui:col span="1"></aui:col>
@@ -93,11 +109,6 @@ try {
 		</aui:col>
 	</aui:row>
 	</div>					
-
-	<liferay-ui:success key="appSaved" message="Application Saved Successfully"/>
-	<liferay-ui:success key="appUpdated" message="Application Updated Successfully"/>
-	<liferay-ui:success key="docGenerated" message="Document Generated Successfully"/>
-	<liferay-ui:success key="docUploaded" message="Document Uploaded Successfully"/>
 
 	<div class="listingDocs">
 		<h4>Documents Tied to Credit Application:</h4>
