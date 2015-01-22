@@ -93,7 +93,7 @@ try {
 				<a href="<%=manageDocumentUrl%>&documentType=proposal&creditAppId=<%=creditApp11.getCreditAppId()%>" >Generate Proposal</a> --%>
 				<aui:form  method="POST" action="<%=generateDocumentsURL %>" name="docsForm">
 					<c:forEach items="${templateOptions}" var="template">
-						<aui:input type="checkbox" value="${template.name}" name="htmlTemplates" label="${template.label}"/>
+						<aui:input type="checkbox" name="${template.name}" label="${template.label}"/>
 					</c:forEach>
 					<input type="submit" class="btn" value="Generate Selected Documents"/>
 				</aui:form>

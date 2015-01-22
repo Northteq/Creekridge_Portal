@@ -105,6 +105,8 @@ public class ManageDocumentPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest request, RenderResponse response)
 			throws PortletException, IOException {
+		
+		_log.info("render start");
 		HttpServletRequest requestNew = PortalUtil
 				.getHttpServletRequest(request);
 		if (PortalUtil.getOriginalServletRequest(requestNew).getParameter(
@@ -172,6 +174,8 @@ public class ManageDocumentPortlet extends MVCPortlet {
 		}
 		
 		super.render(request, response);
+		
+		_log.info("render end");
 	}
 
 	@Override
@@ -293,31 +297,31 @@ public class ManageDocumentPortlet extends MVCPortlet {
 			_log.info("companyLogoURL " + companyLogoURL);
 			
 			
-			String [] templatesList = ParamUtil.getParameterValues(actionRequest, "htmlTemplates");
-			_log.info("templatesList" + templatesList.toString());
-			
 			CreditApp creditApp = CreditAppLocalServiceUtil.getCreditApp(new Long (creditAppDocumentId));
 			
-			if (creditApp != null && templatesList != null) {
+			if (creditApp != null && templateWrapperMap.keySet() != null) {
 				Group group = GroupLocalServiceUtil.getGroup(creditApp.getGroupId());
 				
-				for (String key: templatesList) {
-					String title = "";
-					String htmlFile = "";
+				for (String key: templateWrapperMap.keySet()) {
 					
-					htmlFile = key;
-					title = templateWrapperMap.get(key);
+					_log.info(ParamUtil.getString(actionRequest, key));
 					
-					_log.info("htmlFile " + htmlFile);
-					_log.info("title " + title);
-					
-					ManageDocumentUtil.generateDocument(htmlFile, title, creditApp, path, companyLogoURL, ManageDocumentUtil.getShowPrincipals(group), ManageDocumentUtil.getShowBankRefs(group));
+					if (ParamUtil.getBoolean(actionRequest, key)) {
+						String title = "";
+						String htmlFile = "";
+						
+						htmlFile = key;
+						title = templateWrapperMap.get(key);
+						
+						_log.info("htmlFile " + htmlFile);
+						_log.info("title " + title);
+						
+						ManageDocumentUtil.generateDocument(htmlFile, title, creditApp, path, companyLogoURL, ManageDocumentUtil.getShowPrincipals(group), ManageDocumentUtil.getShowBankRefs(group));
+					}
+						
 				}
-				
-			
 				SessionMessages.add(actionRequest, "docGenerated");
 						
-				
 			} else {
 				SessionErrors.add(actionRequest, "genericError");
 			}
@@ -326,6 +330,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 			_log.error(e);
 		}
 		
+		_log.info("generateDocuments end");
 		
 	}
 

@@ -72,68 +72,9 @@ import com.tamarack.creekridge.service.TermLocalServiceUtil;
 public class ManageDocumentUtil {
 	private static Log _log = LogFactory.getLog(ManageDocumentUtil.class);
 	
-	public static boolean generateDocument(String creditAppId, long userId, String realPath, String companyLogoURL, String [] templatesList) {
-		CreditApp creditApp = null;
-		
-		try {
-			creditApp = CreditAppLocalServiceUtil.getCreditApp(Long.valueOf(creditAppId).longValue());
-			String path = realPath + "html\\manageDocument\\";
-			
-			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
-			ExpandoBridge bridge = group.getExpandoBridge();
-			
-			
-			String htmlFiles = "";
-			if (bridge.hasAttribute ("Vendor Template HTML Files") && bridge.getAttribute("Vendor Template HTML Files") != null)
-				htmlFiles = (String) bridge.getAttribute("Vendor Template HTML Files");
-			
-			String titles = "";
-			if (bridge.hasAttribute("Vendor Template Titles") && bridge.getAttribute("Vendor Template Titles") != null)
-				titles = (String)bridge.getAttribute("Vendor Template Titles");
-			
-			String hidePrincipals = "";
-			if (bridge.hasAttribute("Hide Principals") && bridge.getAttribute("Hide Principals")!=null)
-				hidePrincipals = (String)bridge.getAttribute("Hide Principals");
-			
-			String hideBankReferences = "";
-			if (bridge.hasAttribute("Hide Bank References") && bridge.getAttribute("Hide Bank References") != null)
-				hideBankReferences = (String)bridge.getAttribute("Hide Bank References");
-			
-			
-			_log.info("generateDocument htmlFiles " + htmlFiles);
-			_log.info("generateDocument titles " + titles);
-			_log.info("generateDocument hidePrincipals " + hidePrincipals);
-			_log.info("generateDocument hideBankReferences " + hideBankReferences);
-			
-			String[] htmlFilesArray = htmlFiles.split(";");
-			String[] titlesArray = titles.split(";");
-			String htmlFile = "";
-			String title = "";
-			
-			for (int i = 0; i < htmlFilesArray.length; i++) {
-				htmlFile = htmlFilesArray[i];
-				title = (i < titlesArray.length ? titlesArray[i] : "");
-				_log.info("htmlFile " + htmlFile);
-				_log.info("title " + title);
-				//generateDocument(htmlFile, title, creditApp, path, companyLogoURL, hidePrincipals, hideBankReferences);
-			}
-			
-			return true;
-			
-		} catch (Exception e) {
-			_log.error ("generateDocument error: " + e);
-			return false;
-		}
-		
-	}
-	
 	public static boolean getShowBankRefs (Group group) {
-		
 		boolean show = false;
-		
 		try {
-			
-			
 			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
 			
 			ExpandoValue includeBankRefsExpando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), "Include Bank References", group.getPrimaryKey());
@@ -150,9 +91,7 @@ public class ManageDocumentUtil {
 	}
 	
 	public static boolean getShowPrincipals (Group group) {
-		
 		boolean show = false;
-		
 		try {
 			
 			
@@ -167,12 +106,12 @@ public class ManageDocumentUtil {
 		} catch (Exception e) {
 			_log.error(e);
 		}
-		
 		return show;
 	}
 	
-	public static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, boolean showPrincipals, boolean showBankReferences) throws Exception {
-		Scanner scanner = null;
+	public static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, boolean showPrincipals, boolean showBankReferences) {
+		try {
+			Scanner scanner = null;
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
 			tokenMap.put("companyLogoURL", companyLogoURL);
 
@@ -181,7 +120,14 @@ public class ManageDocumentUtil {
 			
 			File file = new File(path + htmlFile);
 			scanner = new Scanner(file);
-			String template = scanner.useDelimiter("\\A").next();
+			String template;
+			template = scanner.useDelimiter("\\A").next();
+			
+			if (template == null) 
+				template = scanner.useDelimiter("/A").next();
+			
+			_log.info (template);
+			
 			updateTokenMap(tokenMap, creditApp);
 			String generatedTemplate = replaceTokens(creditApp, path, template, tokenMap);
 			scanner.close();
@@ -218,6 +164,9 @@ public class ManageDocumentUtil {
 			File convertedFile = DocumentConversionUtil.convert(String.valueOf(stamp.getTime()), inputStream, "html", "pdf");
 			saveDocument(creditApp, convertedFile, title);
 			convertedFile.delete();
+		} catch (Exception e) {
+			_log.error(e);
+		}
 	}
 	
 	private static String generateSection(CreditApp creditApp, String path, String htmlFile) {
