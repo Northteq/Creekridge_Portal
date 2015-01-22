@@ -109,6 +109,22 @@ public class ManageDocumentUtil {
 		return show;
 	}
 	
+	public static ExpandoValue getExpandoValue (Group group, String fieldName) {
+		
+		
+		try {
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			
+			ExpandoValue expando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), fieldName, group.getPrimaryKey());
+			_log.info("getExpandoValue: " + expando);
+			return expando;
+			
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+		
+	}	
 	public static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, boolean showPrincipals, boolean showBankReferences) {
 		try {
 			Scanner scanner = null;
@@ -280,14 +296,29 @@ public class ManageDocumentUtil {
 	private static void updateTokenMapVendor(HashMap<String, Object> tokenMap, CreditApp creditApp) {
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
+			
+			
+			
 			tokenMap.put("Vendor Name", group.getName());
-			ExpandoBridge bridge = group.getExpandoBridge();
-			tokenMap.put("Vendor Address", bridge.getAttribute("Vendor Address"));
-			tokenMap.put("Vendor Address 2", bridge.getAttribute("Vendor Address 2"));
-			tokenMap.put("Vendor City", bridge.getAttribute("Vendor City"));
-			tokenMap.put("Vendor State", bridge.getAttribute("Vendor State"));
-			tokenMap.put("Vendor Zip", bridge.getAttribute("Vendor Zip"));
-			tokenMap.put("Vendor Phone", bridge.getAttribute("Vendor Phone"));
+			
+			if (getExpandoValue(group, "VendorAddress") != null)
+				tokenMap.put("Vendor Address", getExpandoValue(group, "VendorAddress").getData());
+			
+			if (getExpandoValue(group, "Vendor Address 2") != null)
+				tokenMap.put("Vendor Address 2", getExpandoValue(group, "Vendor Address 2").getData());
+			
+			if (getExpandoValue(group, "Vendor City") != null)
+				tokenMap.put("Vendor City", getExpandoValue(group, "Vendor City").getData());
+			
+			if (getExpandoValue(group, "Vendor State") != null)
+				tokenMap.put("Vendor State", getExpandoValue(group, "Vendor State").getData());
+			
+			if (getExpandoValue(group, "Vendor Zip") != null)
+				tokenMap.put("Vendor Zip", getExpandoValue(group, "Vendor Zip").getData());
+			
+			if (getExpandoValue(group, "Vendor Phone") != null)
+				tokenMap.put("Vendor Phone", getExpandoValue(group, "Vendor Phone").getData());
+			
 		}
 		catch (Exception e) {
 			_log.error(e);
