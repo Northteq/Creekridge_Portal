@@ -15,6 +15,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.model.ExpandoTableConstants;
+import com.liferay.portlet.expando.model.ExpandoValue;
+import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.tamarack.creekridge.model.RateFactorRule;
 import com.tamarack.creekridge.service.RateFactorRuleLocalServiceUtil;
 
@@ -82,5 +88,17 @@ public class PaymentCalculatorQueryUtil {
 		return rfrList;
 		
 	}
-
+	
+	public static ExpandoValue getExpandoValue (Group group, String fieldName) {
+		try {
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			ExpandoValue expando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), fieldName, group.getPrimaryKey());
+			_log.info("getExpandoValue: " + expando);
+			return expando;
+			
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+	}	
 }

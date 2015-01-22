@@ -86,7 +86,6 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		showPrincipals = true;
 		showBankRefs = true;
-		customPaymentAmountMessage = "Please submit a <a href=\"contact\" target=\"_blank\">contact form</a> for payment amount information on this pricing option.";
 		
 		_log.info("render started");
 
@@ -113,33 +112,30 @@ public class PaymentCalculator extends MVCPortlet {
 			if (siteGroup.getExpandoBridge().hasAttribute("Include Bank References")) {
 				if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null)
 					showBankRefs = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
-				
-				
 			}
-			
 			_log.info("showBankRefs:  " + showBankRefs);
 			
 			
 			if (siteGroup.getExpandoBridge().hasAttribute("Include Principals")) {
 				if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null)
 					showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
-				
 			}
-			
 			_log.info("showPrincipals:  " + showPrincipals);
 			
+			
+			//set the initial message
+			customPaymentAmountMessage = "Please submit a <a href=\"contact\" target=\"_blank\">contact form</a> for payment amount information on this pricing option.";
 			
 			if (siteGroup.getExpandoBridge().hasAttribute("Rep Name") && siteGroup.getExpandoBridge().hasAttribute("Rep Phone")) {
 				if (siteGroup.getExpandoBridge().getAttribute("Rep Name") != null
 						&& siteGroup.getExpandoBridge().getAttribute("Rep Phone") != null) {
-					
-					
+					if (siteGroup.getExpandoBridge().getAttribute("Rep Name") != "" && siteGroup.getExpandoBridge().getAttribute("Rep Phone") != "") {
 						customPaymentAmountMessage = "Please call ";
 						customPaymentAmountMessage += siteGroup.getExpandoBridge().getAttribute("Rep Name").toString();
 						customPaymentAmountMessage += " at ";
 						customPaymentAmountMessage +=  siteGroup.getExpandoBridge().getAttribute("Rep Phone").toString();
 						customPaymentAmountMessage += " for Payment Amount";
-				
+					}
 				} 
 			}
 			

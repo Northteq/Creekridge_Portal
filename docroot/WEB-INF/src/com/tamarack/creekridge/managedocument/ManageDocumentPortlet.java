@@ -278,11 +278,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 		try {
 			_log.info("generateDocuments start");
 			ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-			long userId = themeDisplay.getUserId();
-			
 
-			HttpServletRequest request = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(actionRequest));
-			
 			String creditAppDocumentId = ParamUtil.getString(actionRequest, "creditAppId");
 			actionRequest.setAttribute("creditAppId", creditAppDocumentId);
 			
