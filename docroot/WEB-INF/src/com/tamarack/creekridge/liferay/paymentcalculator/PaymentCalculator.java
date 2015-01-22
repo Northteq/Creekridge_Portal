@@ -474,8 +474,10 @@ public class PaymentCalculator extends MVCPortlet {
 		}
 		
 		if (proposalOptionList.size()==1){
-			proposalOptionList.get(0).propOption.setIncludeInProposal(true);
-			proposalOptionList.get(0).propOption.setUseForCreditApp(true);
+			if (proposalOptionList.get(0).propOption.getPaymentAmount()>0) {
+				proposalOptionList.get(0).propOption.setIncludeInProposal(true);
+				proposalOptionList.get(0).propOption.setUseForCreditApp(true);
+			}
 		}
 		
 		return proposalOptionList;

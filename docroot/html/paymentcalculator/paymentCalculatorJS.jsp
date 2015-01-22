@@ -706,6 +706,17 @@ var copyCustomerAddress = function(sameAddressEl) {
 				$('*[data-persist-id="pricingOvervewResults"]')
 						.click();
 			});
+		
+
+		
+		if (remoteData.length==1 && remoteData[0].propOption.paymentAmount <= 0) {
+			
+			$("#createApplicationButton").attr('disabled', 'true');
+			$('#createApplicationButton').removeAttr('onclick');
+		} else {
+			$("#createApplicationButton").removeAttr('disabled');
+			$('#createApplicationButton').attr('onclick','processAppButton(-1)');
+		}
 	};
 	
 	var checkSelectedOptions = function () {
