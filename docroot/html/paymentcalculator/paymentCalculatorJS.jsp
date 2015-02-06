@@ -82,7 +82,7 @@ var outputErrors = function (errors, errorSection) {
 	}
 	
 	htmlError += '<ul/>';
-	
+	$('.alert-success').remove();
 	errorSection.append(htmlError);
 	$("html, body").animate({ scrollTop: 0 }, "slow");
 };
@@ -220,6 +220,11 @@ var copyCustomerAddress = function(sameAddressEl) {
 
 		$(".alert-error:contains('Your request failed to complete.')").hide();
 		checkSelectedOptions();
+		
+		$("*[data-persist-id='customerAndEquipmentInfo']").hasClass('toggler-header-expanded')
+		$('html, body').animate({
+	        scrollTop: $("*[data-persist-id='customerAndEquipmentInfo']").offset().top
+	    }, 2000);
 	});
 	
 	var populateProposalOptions = function () {
