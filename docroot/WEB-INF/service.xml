@@ -360,7 +360,7 @@
 		
 		<!-- Order -->
 		<order by="asc">
-		    <order-column name="sequenceNumber" />
+		    <order-column order-by="asc" name="termMonths"/>
 		</order>
 		
 		<finder name="TermId" return-type="Collection">

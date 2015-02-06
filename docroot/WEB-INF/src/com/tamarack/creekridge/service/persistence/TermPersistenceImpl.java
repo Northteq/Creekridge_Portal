@@ -97,7 +97,7 @@ public class TermPersistenceImpl extends BasePersistenceImpl<Term>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTermId",
 			new String[] { Long.class.getName() },
 			TermModelImpl.TERMID_COLUMN_BITMASK |
-			TermModelImpl.SEQUENCENUMBER_COLUMN_BITMASK);
+			TermModelImpl.TERMMONTHS_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_TERMID = new FinderPath(TermModelImpl.ENTITY_CACHE_ENABLED,
 			TermModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTermId",

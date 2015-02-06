@@ -72,8 +72,8 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 		};
 	public static final String TABLE_SQL_CREATE = "create table eCreekRidge_Term (termId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,termMonths LONG,termName VARCHAR(75) null,sequenceNumber LONG)";
 	public static final String TABLE_SQL_DROP = "drop table eCreekRidge_Term";
-	public static final String ORDER_BY_JPQL = " ORDER BY term.sequenceNumber ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_Term.sequenceNumber ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY term.termMonths ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY eCreekRidge_Term.termMonths ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -87,7 +87,7 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 				"value.object.column.bitmask.enabled.com.tamarack.creekridge.model.Term"),
 			true);
 	public static long TERMID_COLUMN_BITMASK = 1L;
-	public static long SEQUENCENUMBER_COLUMN_BITMASK = 2L;
+	public static long TERMMONTHS_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.tamarack.creekridge.model.Term"));
 
@@ -292,6 +292,8 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 
 	@Override
 	public void setTermMonths(long termMonths) {
+		_columnBitmask = -1L;
+
 		_termMonths = termMonths;
 	}
 
@@ -317,8 +319,6 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 
 	@Override
 	public void setSequenceNumber(long sequenceNumber) {
-		_columnBitmask = -1L;
-
 		_sequenceNumber = sequenceNumber;
 	}
 
@@ -372,10 +372,10 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 	public int compareTo(Term term) {
 		int value = 0;
 
-		if (getSequenceNumber() < term.getSequenceNumber()) {
+		if (getTermMonths() < term.getTermMonths()) {
 			value = -1;
 		}
-		else if (getSequenceNumber() > term.getSequenceNumber()) {
+		else if (getTermMonths() > term.getTermMonths()) {
 			value = 1;
 		}
 		else {

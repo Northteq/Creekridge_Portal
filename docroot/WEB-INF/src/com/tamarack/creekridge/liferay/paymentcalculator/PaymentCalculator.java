@@ -568,10 +568,10 @@ public class PaymentCalculator extends MVCPortlet {
 					_log.info(rateFactorValue);
 					if (!termSet.contains(rateFactorValue.getTermId())) {
 						termSet.add(rateFactorValue.getTermId());
-						Term term = TermLocalServiceUtil.getTerm(new Long(rateFactorValue.getTermId()).longValue());
-						termList.add(term);
 					} 
 				}
+				
+				termList = queryUtil.getTermsById(new ArrayList <Long> (termSet));
 				
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(termList));
 			} catch (Exception e) {
