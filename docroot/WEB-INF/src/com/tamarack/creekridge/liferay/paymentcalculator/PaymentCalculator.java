@@ -106,6 +106,7 @@ public class PaymentCalculator extends MVCPortlet {
 		try {
 			siteGroup = GroupLocalServiceUtil.getGroup(vendorId);
 			_log.info("sitegroup:  " + siteGroup);
+			renderRequest.setAttribute("siteGroup", siteGroup);
 			
 			_log.info("expando:  " + siteGroup.getExpandoBridge().getAttributes().toString());
 			
@@ -207,6 +208,7 @@ public class PaymentCalculator extends MVCPortlet {
 		renderRequest.setAttribute("showBankRefs", showBankRefs);
 		renderRequest.setAttribute("showPrincipals", showPrincipals);
 		renderRequest.setAttribute("customPaymentAmountMessage", customPaymentAmountMessage);
+		
 		
 		super.render(renderRequest, renderResponse);
 		_log.info("render ended");
