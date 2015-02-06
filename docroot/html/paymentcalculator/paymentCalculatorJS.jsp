@@ -84,6 +84,7 @@ var outputErrors = function (errors, errorSection) {
 	htmlError += '<ul/>';
 	
 	errorSection.append(htmlError);
+	$("html, body").animate({ scrollTop: 0 }, "slow");
 };
 
 var validateForm = function () {
