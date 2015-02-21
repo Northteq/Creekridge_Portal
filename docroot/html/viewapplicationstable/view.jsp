@@ -44,7 +44,7 @@
 <div>
 	<!-- title -->
 	<aui:row>
-		<h4 class="screenTitle">View Credit Applications</h4>
+		<h4 class="screenTitle">View Applications</h4>
 	</aui:row>
 	
 	<!-- new app button -->
@@ -119,7 +119,7 @@ $(document).ready(function() {
 	
     $('#appTable').dataTable( {
     	"oLanguage": {
-            "sLengthMenu": "Display _MENU_ Applications"
+            "sLengthMenu": "Display _MENU_"
           },
         "ajax": "<%=creditApplicationsJsonURL%>",
         "columns": [

@@ -76,7 +76,7 @@ try {
 	<aui:button-row>
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/payment-calculator?creditAppId=<%=creditApp11.getCreditAppId() %>"><i class="icon-backward"></i>
-			Back to Credit App</a> 
+			Back to Application</a> 
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/view-applications"><i class="icon-backward"></i>
 			Back to View Applications</a>
