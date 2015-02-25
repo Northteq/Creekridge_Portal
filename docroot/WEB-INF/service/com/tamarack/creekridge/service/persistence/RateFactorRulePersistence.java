@@ -186,7 +186,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -200,7 +200,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -221,7 +221,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -244,7 +244,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -262,7 +262,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -278,7 +278,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -296,7 +296,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -312,7 +312,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* @param rateFactorRuleId the primary key of the current rate factor rule
 	* @param active the active
@@ -332,7 +332,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63; from the database.
+	* Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63; from the database.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -345,7 +345,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &lt; &#63;.
+	* Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -359,7 +359,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -375,7 +375,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -397,7 +397,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -421,7 +421,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -441,7 +441,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -459,7 +459,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -479,7 +479,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -497,7 +497,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* @param rateFactorRuleId the primary key of the current rate factor rule
 	* @param active the active
@@ -518,7 +518,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63; from the database.
+	* Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63; from the database.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -532,7 +532,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &lt; &#63;.
+	* Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -547,7 +547,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -564,7 +564,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns a range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -587,7 +587,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns an ordered range of all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.tamarack.creekridge.model.impl.RateFactorRuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -612,7 +612,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -633,7 +633,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns the first rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -652,7 +652,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -673,7 +673,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns the last rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -692,7 +692,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns the rate factor rules before and after the current rate factor rule in the ordered set where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* @param rateFactorRuleId the primary key of the current rate factor rule
 	* @param active the active
@@ -714,7 +714,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 			com.tamarack.creekridge.NoSuchRateFactorRuleException;
 
 	/**
-	* Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63; from the database.
+	* Removes all the rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63; from the database.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID
@@ -730,7 +730,7 @@ public interface RateFactorRulePersistence extends BasePersistence<RateFactorRul
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &lt; &#63;.
+	* Returns the number of rate factor rules where active = &#63; and vendorId = &#63; and productId = &#63; and purchaseOptionId = &#63; and termId = &#63; and minPrice &le; &#63;.
 	*
 	* @param active the active
 	* @param vendorId the vendor ID

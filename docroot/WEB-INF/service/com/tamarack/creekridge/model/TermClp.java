@@ -447,10 +447,10 @@ public class TermClp extends BaseModelImpl<Term> implements Term {
 	public int compareTo(Term term) {
 		int value = 0;
 
-		if (getSequenceNumber() < term.getSequenceNumber()) {
+		if (getTermMonths() < term.getTermMonths()) {
 			value = -1;
 		}
-		else if (getSequenceNumber() > term.getSequenceNumber()) {
+		else if (getTermMonths() > term.getTermMonths()) {
 			value = 1;
 		}
 		else {

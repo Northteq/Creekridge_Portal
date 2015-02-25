@@ -10,24 +10,32 @@
 <%@page import="com.tamarack.creekridge.model.CreditAppDocument"%>
 <%@page import="com.liferay.portal.kernel.portlet.*" %>
 
+
 <%@ include file="init.jsp"%>
 
-
-
-<portlet:actionURL  var="manageDocumentUrl">
-	<portlet:param name="<%= javax.portlet.ActionRequest.ACTION_NAME %>" value="manageDocument" />
+<portlet:actionURL var="generateDocumentsURL" 
+	name="generateDocuments">
+	<portlet:param name="creditAppId" value="${creditAppId}"/>
 </portlet:actionURL>
 
-<portlet:actionURL  var="uploadToCreditAppDocumentUrl">
-	<portlet:param name="<%= javax.portlet.ActionRequest.ACTION_NAME %>" value="uploadToCreditAppDocument" />
+<portlet:actionURL  var="uploadToCreditAppDocumentUrl" name="uploadToCreditAppDocument">
 </portlet:actionURL>
 
-<portlet:actionURL  var="emailCreditAppDocumentUrl">
-	<portlet:param name="<%= javax.portlet.ActionRequest.ACTION_NAME %>" value="emailCreditAppDocument" />
+<portlet:actionURL  var="emailCreditAppDocumentUrl" name="emailCreditAppDocument">
 </portlet:actionURL>
+
+
 
 
 <portlet:resourceURL var="ajaxResourceUrl" />
+
+
+<liferay-ui:success key="appSaved" message="Application Saved Successfully"/>
+<liferay-ui:success key="appUpdated" message="Application Updated Successfully"/>
+<liferay-ui:success key="docGenerated" message="Document Generated Successfully"/>
+<liferay-ui:success key="docUploaded" message="Document Uploaded Successfully"/>
+<liferay-ui:error key="genericError" message="Error occurred while generating file"/>
+
 
 
 
@@ -56,48 +64,56 @@ try {
 %>
 
 
-<aui:form action="<%=uploadToCreditAppDocumentUrl.toString() %>" name="fm" enctype="multipart/form-data" method="post">
-<aui:input type="hidden"   name="creditAppId"  value="<%=creditAppId %>" />
+
   
 
 <div class="container-fluid">
+
 	<div>
 		<h4 class="screenTitle pull-left">Manage Documents for Application #<%=creditApp11.getCreditAppId() %></h4>
-		<div>
+	</div>
+	
+	<aui:button-row>
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/payment-calculator?creditAppId=<%=creditApp11.getCreditAppId() %>"><i class="icon-backward"></i>
-			Back to Credit App</a> 
+			Back to Application</a> 
 			<a class="btn btn-small btn-back" id="navigateToCreditApp"
 			href="/group<%=themeDisplay.getScopeGroup().getFriendlyURL()%>/view-applications"><i class="icon-backward"></i>
 			Back to View Applications</a>
-		</div>
-	</div>
+	</aui:button-row>
+		
+		
 	<div class="clearfix"></div>
-	<div>
+	<div style="margin-bottom: 10px;">
 	<aui:row>
 		<aui:col span="3">
 			<div class="screenSection generateDocs">
 				<h4>Generate Documents</h4>
-				<a href="<%=manageDocumentUrl%>&documentType=creditApp&creditAppId=<%=creditApp11.getCreditAppId() %>" >Generate Credit App</a><br>
-				<a href="<%=manageDocumentUrl%>&documentType=proposal&creditAppId=<%=creditApp11.getCreditAppId()%>" >Generate Proposal</a>
+				<%-- <a href="<%=manageDocumentUrl%>&documentType=creditApp&creditAppId=<%=creditApp11.getCreditAppId() %>" >Generate Credit App</a><br>
+				<a href="<%=manageDocumentUrl%>&documentType=proposal&creditAppId=<%=creditApp11.getCreditAppId()%>" >Generate Proposal</a> --%>
+				<aui:form  method="POST" action="<%=generateDocumentsURL %>" name="docsForm">
+					<c:forEach items="${templateOptions}" var="template">
+						<aui:input type="checkbox" name="${template.name}" label="${template.label}"/>
+					</c:forEach>
+					<input type="submit" class="btn" value="Generate Selected Documents"/>
+				</aui:form>
 			</div>
 		</aui:col> 
 		<aui:col span="1"></aui:col>
 		<aui:col span="8" >
 			<div class="screenSection uploadDocs">
 				<h4>Upload Documents</h4>
-				<aui:input type="text"  label= "Document Title" name="documentTitle" inlineLabel="true"  /> 
-				<aui:input type="file"  label= "Select File to Upload" name="uploadedFile" inlineLabel="true" />
-				<aui:button type="submit"  label= "" value="Upload"   /> 
+				
+				<aui:form action="<%=uploadToCreditAppDocumentUrl.toString() %>" name="fm" enctype="multipart/form-data" method="post">
+					<aui:input type="hidden"   name="creditAppId"  value="<%=creditAppId %>" />
+					<aui:input type="text"  label= "Document Title" name="documentTitle" inlineLabel="true"  /> 
+					<aui:input type="file"  label= "Select File to Upload" name="uploadedFile" inlineLabel="true" />
+					<aui:button type="submit"  label= "" value="Upload"   /> 
+				</aui:form>
 			</div>
 		</aui:col>
 	</aui:row>
 	</div>					
-
-	<liferay-ui:success key="appSaved" message="Application Saved Successfully"/>
-	<liferay-ui:success key="appUpdated" message="Application Updated Successfully"/>
-	<liferay-ui:success key="docGenerated" message="Document Generated Successfully"/>
-	<liferay-ui:success key="docUploaded" message="Document Uploaded Successfully"/>
 
 	<div class="listingDocs">
 		<h4>Documents Tied to Credit Application:</h4>
@@ -151,13 +167,13 @@ try {
 	</div>
 </div>
 
-</aui:form>
+
 
 	<portlet:renderURL var="emailPopupWindowURL" windowState="<%=LiferayWindowState.POP_UP.toString()%>" >  
 			<portlet:param name="mvcPath" value="/html/manageDocument/sendEmail.jsp? %>"/>
 </portlet:renderURL>	 	
 			
-<aui:script>
+<%-- <aui:script>
 	AUI().use('aui-base',
 		'aui-dialog-iframe',
 		 
@@ -186,4 +202,4 @@ try {
 		
 		});
 	});
-</aui:script>
+</aui:script> --%>

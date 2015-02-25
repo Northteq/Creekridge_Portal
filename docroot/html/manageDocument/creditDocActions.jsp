@@ -34,8 +34,9 @@
 <liferay-ui:icon-menu>
 	
 		<liferay-ui:icon image="view" message="View"
-			url="<%=ajaxResourceUrl+\"&actionType=downloadAction&creditDocumentId=\"+creditAppDoc.getCreditAppDocumentId()%>" />
-
+			url="<%=ajaxResourceUrl+\"&actionType=downloadAction&creditDocumentId=\"+creditAppDoc.getCreditAppDocumentId()%>" 
+			target="_blank"
+			/>
 </liferay-ui:icon-menu>
 
 <liferay-ui:icon-menu>

@@ -33,11 +33,18 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DocumentConversionUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.model.ExpandoTableConstants;
+import com.liferay.portlet.expando.model.ExpandoValue;
+import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.tamarack.creekridge.model.CreditApp;
 import com.tamarack.creekridge.model.CreditAppBankReference;
 import com.tamarack.creekridge.model.CreditAppDocument;
@@ -65,47 +72,62 @@ import com.tamarack.creekridge.service.TermLocalServiceUtil;
 public class ManageDocumentUtil {
 	private static Log _log = LogFactory.getLog(ManageDocumentUtil.class);
 	
-	public static void generateDocument(String creditAppId, long userId, String realPath, String companyLogoURL) {
-		CreditApp creditApp = null;
-		
+	public static boolean getShowBankRefs (Group group) {
+		boolean show = false;
 		try {
-			creditApp = CreditAppLocalServiceUtil.getCreditApp(Long.valueOf(creditAppId).longValue());
-			String path = realPath + "html\\manageDocument\\";
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
 			
-			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
-			ExpandoBridge bridge = group.getExpandoBridge();
-			String htmlFiles = (String)bridge.getAttribute("Vendor Template HTML Files");
-			String titles = (String)bridge.getAttribute("Vendor Template Titles");
-			String hidePrincipals = (String)bridge.getAttribute("Hide Principals");
-			String hideBankReferences = (String)bridge.getAttribute("Hide Bank References");
-			_log.info("hidePrincipals " + hidePrincipals);
-			_log.info("hideBankReferences " + hideBankReferences);
+			ExpandoValue includeBankRefsExpando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), "Include Bank References", group.getPrimaryKey());
+			_log.info("includeBankRefsExpando: " + includeBankRefsExpando);
 			
-			String[] htmlFilesArray = htmlFiles.split(";");
-			String[] titlesArray = titles.split(";");
-			String htmlFile = "";
-			String title = "";
-			
-			for (int i = 0; i < htmlFilesArray.length; i++) {
-				htmlFile = htmlFilesArray[i];
-				title = (i < titlesArray.length ? titlesArray[i] : "");
-				_log.info("htmlFile " + htmlFile);
-				_log.info("title " + title);
-				generateDocument(htmlFile, title, creditApp, path, companyLogoURL, hidePrincipals, hideBankReferences);
+			if (includeBankRefsExpando != null) {
+				show = includeBankRefsExpando.getBoolean();
 			}
+		} catch (Exception e) {
+			_log.error(e);
 		}
-		catch (PortalException pe) {
-			_log.error(pe);
-		}
-		catch (SystemException se) {
-			_log.error(se);
-		}
+		
+		return show;
 	}
 	
-	private static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, String hidePrincipals, String hideBankReferences) {
-		Scanner scanner = null;
+	public static boolean getShowPrincipals (Group group) {
+		boolean show = false;
+		try {
+			
+			
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			
+			ExpandoValue includePrincipalsExpando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), "Include Principals", group.getPrimaryKey());
+			_log.info("includePrincipalsExpando: " + includePrincipalsExpando);
+			
+			if (includePrincipalsExpando != null) {
+				show = includePrincipalsExpando.getBoolean();
+			}
+		} catch (Exception e) {
+			_log.error(e);
+		}
+		return show;
+	}
+	
+	public static ExpandoValue getExpandoValue (Group group, String fieldName) {
+		
 		
 		try {
+			ExpandoTable table = ExpandoTableLocalServiceUtil.getTable(group.getCompanyId(),  group.getClassNameId(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
+			
+			ExpandoValue expando = ExpandoValueLocalServiceUtil.getValue(group.getCompanyId(), group.getClassNameId(), table.getName(), fieldName, group.getPrimaryKey());
+			_log.info("getExpandoValue: " + expando);
+			return expando;
+			
+		} catch (Exception e) {
+			_log.error(e);
+			return null;
+		}
+		
+	}	
+	public static void generateDocument(String htmlFile, String title, CreditApp creditApp, String path, String companyLogoURL, boolean showPrincipals, boolean showBankReferences) {
+		try {
+			Scanner scanner = null;
 			HashMap<String, Object> tokenMap = new HashMap<String, Object>();
 			tokenMap.put("companyLogoURL", companyLogoURL);
 
@@ -114,12 +136,19 @@ public class ManageDocumentUtil {
 			
 			File file = new File(path + htmlFile);
 			scanner = new Scanner(file);
-			String template = scanner.useDelimiter("\\A").next();
+			String template;
+			template = scanner.useDelimiter("\\A").next();
+			
+			if (template == null) 
+				template = scanner.useDelimiter("/A").next();
+			
+			_log.info (template);
+			
 			updateTokenMap(tokenMap, creditApp);
 			String generatedTemplate = replaceTokens(creditApp, path, template, tokenMap);
 			scanner.close();
 			
-			if (hidePrincipals.equals("TRUE") || CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId()).size() == 0) {
+			if (!showPrincipals || CreditAppPrincipalLocalServiceUtil.getCreditAppPrincipalByCreditAppId(creditApp.getCreditAppId()).size() == 0) {
 				int indexStartPrincipals = generatedTemplate.indexOf("<!-- PRINCIPALS SECTION START -->");
 				int indexEndPrincipals = generatedTemplate.indexOf("<!-- PRINCIPALS SECTION END -->");
 				
@@ -130,7 +159,7 @@ public class ManageDocumentUtil {
 				}
 			}
 			
-			if (hideBankReferences.equals("TRUE") || CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId()).size() == 0) {
+			if (!showBankReferences || CreditAppBankReferenceLocalServiceUtil.getCreditAppBankReferenceByCreditApp(creditApp.getCreditAppId()).size() == 0) {
 				int indexStartBankReferences = generatedTemplate.indexOf("<!-- BANK REFERENCES SECTION START -->");
 				int indexEndBankReferences = generatedTemplate.indexOf("<!-- BANK REFERENCES SECTION END -->");
 				
@@ -151,19 +180,8 @@ public class ManageDocumentUtil {
 			File convertedFile = DocumentConversionUtil.convert(String.valueOf(stamp.getTime()), inputStream, "html", "pdf");
 			saveDocument(creditApp, convertedFile, title);
 			convertedFile.delete();
-		}
-		catch (FileNotFoundException fnfe) {
-			_log.error(fnfe);
-		}
-		catch (IOException ioe) {
-			_log.error(ioe);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.error(e);
-		}
-		finally {
-			if (scanner != null)
-				scanner.close();
 		}
 	}
 	
@@ -218,17 +236,9 @@ public class ManageDocumentUtil {
 			}
 			
 			scanner.close();
-		}
-		catch (FileNotFoundException fnfe) {
-			_log.error(fnfe);
-		}
-		catch (IOException ioe) {
-			_log.error(ioe);
-		}
-		catch (Exception e) {
+		}catch (Exception e) {
 			_log.error(e);
-		}
-		finally {
+		}finally {
 			if (scanner != null)
 				scanner.close();
 		}
@@ -286,14 +296,29 @@ public class ManageDocumentUtil {
 	private static void updateTokenMapVendor(HashMap<String, Object> tokenMap, CreditApp creditApp) {
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(creditApp.getVendorId());
+			
+			
+			
 			tokenMap.put("Vendor Name", group.getName());
-			ExpandoBridge bridge = group.getExpandoBridge();
-			tokenMap.put("Vendor Address", bridge.getAttribute("Vendor Address"));
-			tokenMap.put("Vendor Address 2", bridge.getAttribute("Vendor Address 2"));
-			tokenMap.put("Vendor City", bridge.getAttribute("Vendor City"));
-			tokenMap.put("Vendor State", bridge.getAttribute("Vendor State"));
-			tokenMap.put("Vendor Zip", bridge.getAttribute("Vendor Zip"));
-			tokenMap.put("Vendor Phone", bridge.getAttribute("Vendor Phone"));
+			
+			if (getExpandoValue(group, "VendorAddress") != null)
+				tokenMap.put("Vendor Address", getExpandoValue(group, "VendorAddress").getData());
+			
+			if (getExpandoValue(group, "Vendor Address 2") != null)
+				tokenMap.put("Vendor Address 2", getExpandoValue(group, "Vendor Address 2").getData());
+			
+			if (getExpandoValue(group, "Vendor City") != null)
+				tokenMap.put("Vendor City", getExpandoValue(group, "Vendor City").getData());
+			
+			if (getExpandoValue(group, "Vendor State") != null)
+				tokenMap.put("Vendor State", getExpandoValue(group, "Vendor State").getData());
+			
+			if (getExpandoValue(group, "Vendor Zip") != null)
+				tokenMap.put("Vendor Zip", getExpandoValue(group, "Vendor Zip").getData());
+			
+			if (getExpandoValue(group, "Vendor Phone") != null)
+				tokenMap.put("Vendor Phone", getExpandoValue(group, "Vendor Phone").getData());
+			
 		}
 		catch (Exception e) {
 			_log.error(e);

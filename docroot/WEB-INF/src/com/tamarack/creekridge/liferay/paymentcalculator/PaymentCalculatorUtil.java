@@ -151,7 +151,7 @@ public class PaymentCalculatorUtil {
 		creditApp.setCustomerBusinessType(ParamUtil.getString(actionRequest,"customerBusinessType"));
 		creditApp.setCustomerBusinessIncorporatedState(ParamUtil.getString(actionRequest,"customerBusinessIncorporatedState"));
 		creditApp.setCustomerAddress1(ParamUtil.getString(actionRequest,"customerAddress1"));
-		creditApp.setCustomerAddress2(ParamUtil.getString(actionRequest,"customerAddress1"));
+		creditApp.setCustomerAddress2(ParamUtil.getString(actionRequest,"customerAddress2"));
 		
 		creditApp.setCustomerState(ParamUtil.getString(actionRequest,"customerState"));
 		creditApp.setCustomerCity(ParamUtil.getString(actionRequest,"customerCity"));

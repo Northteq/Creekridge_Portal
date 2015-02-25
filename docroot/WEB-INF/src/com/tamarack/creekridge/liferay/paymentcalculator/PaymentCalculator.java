@@ -139,7 +139,6 @@ public class PaymentCalculator extends MVCPortlet {
 		
 		showPrincipals = true;
 		showBankRefs = true;
-		customPaymentAmountMessage = "";
 		
 		_log.info("render started");
 
@@ -166,31 +165,38 @@ public class PaymentCalculator extends MVCPortlet {
 		try {
 			siteGroup = GroupLocalServiceUtil.getGroup(vendorId);
 			_log.info("sitegroup:  " + siteGroup);
+			renderRequest.setAttribute("siteGroup", siteGroup);
 			
+			_log.info("expando:  " + siteGroup.getExpandoBridge().getAttributes().toString());
 			
-			if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null) {
-				
-				showBankRefs = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
-				_log.info("showBankRefs:  " + showBankRefs);
+			if (siteGroup.getExpandoBridge().hasAttribute("Include Bank References")) {
+				if (siteGroup.getExpandoBridge().getAttribute("Include Bank References") != null)
+					showBankRefs = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Bank References");
 			}
+			_log.info("showBankRefs:  " + showBankRefs);
 			
-			if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null) {
-				showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
-				_log.info("showPrincipals:  " + showPrincipals);
+			
+			if (siteGroup.getExpandoBridge().hasAttribute("Include Principals")) {
+				if (siteGroup.getExpandoBridge().getAttribute("Include Principals") != null)
+					showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
 			}
+			_log.info("showPrincipals:  " + showPrincipals);
 			
-			if (!String.valueOf(siteGroup.getExpandoBridge().getAttribute("Rep Name")).isEmpty()
-					&& !String.valueOf(siteGroup.getExpandoBridge().getAttribute("Rep Phone")).isEmpty()) {
-				
-				
-					customPaymentAmountMessage = "Please call ";
-					customPaymentAmountMessage += siteGroup.getExpandoBridge().getAttribute("Rep Name").toString();
-					customPaymentAmountMessage += " at ";
-					customPaymentAmountMessage +=  siteGroup.getExpandoBridge().getAttribute("Rep Phone").toString();
-					customPaymentAmountMessage += " for Payment Amount";
 			
-			} else {
-				customPaymentAmountMessage = "Please submit a <a href=\"contact\" target=\"_blank\">contact form</a> for payment amount information on this pricing option.";
+			//set the initial message
+			customPaymentAmountMessage = "Please submit a <a href=\"contact\" target=\"_blank\">contact form</a> for payment amount information on this pricing option.";
+			
+			if (siteGroup.getExpandoBridge().hasAttribute("Rep Name") && siteGroup.getExpandoBridge().hasAttribute("Rep Phone")) {
+				if (siteGroup.getExpandoBridge().getAttribute("Rep Name") != null
+						&& siteGroup.getExpandoBridge().getAttribute("Rep Phone") != null) {
+					if (siteGroup.getExpandoBridge().getAttribute("Rep Name") != "" && siteGroup.getExpandoBridge().getAttribute("Rep Phone") != "") {
+						customPaymentAmountMessage = "Please call ";
+						customPaymentAmountMessage += siteGroup.getExpandoBridge().getAttribute("Rep Name").toString();
+						customPaymentAmountMessage += " at ";
+						customPaymentAmountMessage +=  siteGroup.getExpandoBridge().getAttribute("Rep Phone").toString();
+						customPaymentAmountMessage += " for Payment Amount";
+					}
+				} 
 			}
 			
 			_log.info("customPaymentAmountMessage:  " + customPaymentAmountMessage);
@@ -335,6 +341,7 @@ public class PaymentCalculator extends MVCPortlet {
 		renderRequest.setAttribute("showBankRefs", showBankRefs);
 		renderRequest.setAttribute("showPrincipals", showPrincipals);
 		renderRequest.setAttribute("customPaymentAmountMessage", customPaymentAmountMessage);
+		
 		
 		super.render(renderRequest, renderResponse);
 		_log.info("render ended");
@@ -784,8 +791,10 @@ public class PaymentCalculator extends MVCPortlet {
 		}
 		
 		if (proposalOptionList.size()==1){
-			proposalOptionList.get(0).propOption.setIncludeInProposal(true);
-			proposalOptionList.get(0).propOption.setUseForCreditApp(true);
+			if (proposalOptionList.get(0).propOption.getPaymentAmount()>0) {
+				proposalOptionList.get(0).propOption.setIncludeInProposal(true);
+				proposalOptionList.get(0).propOption.setUseForCreditApp(true);
+			}
 		}
 		
 		return proposalOptionList;
@@ -842,7 +851,7 @@ public class PaymentCalculator extends MVCPortlet {
 				List <RateFactorRule> rfrListForProducts = new ArrayList <RateFactorRule> ();
 				String eqPriceString = PortalUtil.getOriginalServletRequest(request).getParameter("eqPrice");
 				_log.info ("eqPriceString when getting products " + eqPriceString);
-				if (eqPriceString != null) {
+				if (eqPriceString != null && !eqPriceString.isEmpty()) {
 					double eqPrice = PaymentCalculatorUtil.getDoubleFromCurrency(eqPriceString);
 					rfrListForProducts = queryUtil.fetchActiveProductsForEquipmentPrice(vendorId, eqPrice);
 					
@@ -876,10 +885,10 @@ public class PaymentCalculator extends MVCPortlet {
 					_log.info(rateFactorValue);
 					if (!termSet.contains(rateFactorValue.getTermId())) {
 						termSet.add(rateFactorValue.getTermId());
-						Term term = TermLocalServiceUtil.getTerm(new Long(rateFactorValue.getTermId()).longValue());
-						termList.add(term);
 					} 
 				}
+				
+				termList = queryUtil.getTermsById(new ArrayList <Long> (termSet));
 				
 				resourceResponse.getWriter().write(JSONFactoryUtil.looseSerialize(termList));
 			} catch (Exception e) {

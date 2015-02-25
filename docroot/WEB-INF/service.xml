@@ -392,7 +392,7 @@
 		
 		<!-- Order -->
 		<order by="asc">
-		    <order-column name="sequenceNumber" />
+		    <order-column order-by="asc" name="termMonths"/>
 		</order>
 		
 		<finder name="TermId" return-type="Collection">
@@ -438,7 +438,7 @@
 			<finder-column name="active" />
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
-            <finder-column name="minPrice" comparator="&lt;"></finder-column>
+            <finder-column name="minPrice" comparator="&lt;="></finder-column>
 		
 		</finder>
 		<finder return-type="Collection" unique="false" name="VendorProductPurchaseOptionPrice" db-index="true">
@@ -446,7 +446,7 @@
 			<finder-column name="vendorId" />
 			<finder-column name="productId" />
 			<finder-column name="purchaseOptionId" />
-            <finder-column name="minPrice" comparator="&lt;"></finder-column>
+            <finder-column name="minPrice" comparator="&lt;="></finder-column>
 		</finder>
 		<finder name="VendorProductOptionTermPrice" return-type="Collection" unique="false">
 			<finder-column name="active" />
@@ -454,7 +454,7 @@
 			<finder-column name="productId" />
 			<finder-column name="purchaseOptionId" />
 			<finder-column name="termId" />
-            <finder-column name="minPrice" comparator="&lt;"></finder-column>
+            <finder-column name="minPrice" comparator="&lt;="></finder-column>
 		</finder>
 		
 </entity>
