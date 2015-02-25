@@ -12,11 +12,11 @@
 	<p style="padding:25px;">
 	By Clicking "I Accept" below, the applicant(s) certifies that all information contained in this application, 
 	and all attachments hereto, are true and accurate to the best of the applicant(s) knowledge and are made for 
-	the purpose of obtaining credit for business purposes. The applicant(s) hereby authorize ${siteGroup.name} and/or its 
+	the purpose of obtaining credit for business purposes. The applicant(s) hereby authorize ${tcProviderName} and/or its 
 	assigns to obtain and use business and consumer reports on the undersigned, now and from time to time, as may be needed in the credit 
 	evaluation and review process and waives any right or claim the applicant(s) would otherwise have under the Fair Credit Reporting Act in 
 	absence of this continuing consent. The applicant(s) further authorize any government agency, bank or financial institution to release credit 
-	information on the applicant(s) account to ${siteGroup.name} and/or its assigns. 
+	information on the applicant(s) account to ${tcProviderName} and/or its assigns. 
 	If credit is extended, Applicant agrees that submitting an electronic, 
 	photocopy or facsimile copy of a signed authorization shall be deemed to be binding, 
 	valid, genuine and authentic as an original-signature document for all purposes.
