@@ -223,8 +223,8 @@ public class ManageDocumentUtil {
 				for (ProposalOption option : options) {
 					counter++;
 					Product product = ProductLocalServiceUtil.getProduct(option.getProductId());
-					PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(creditApp.getPurchaseOptionId());
-					Term term = TermLocalServiceUtil.getTerm(creditApp.getTermId());
+					PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(option.getPurchaseOptionId());
+					Term term = TermLocalServiceUtil.getTerm(option.getTermId());
 					updateTokenMapProposalOption(tokenMap, option, product, purchaseOption, term, counter + "");
 					generatedTemplate += replaceTokens(creditApp, path, templateSection, tokenMap);
 				}
@@ -319,6 +319,8 @@ public class ManageDocumentUtil {
 			if (getExpandoValue(group, "Vendor Phone") != null)
 				tokenMap.put("Vendor Phone", getExpandoValue(group, "Vendor Phone").getData());
 			
+			if (getExpandoValue(group, "Provider Name") != null)
+				tokenMap.put("Provider Name", getExpandoValue(group, "Provider Name").getData());
 		}
 		catch (Exception e) {
 			_log.error(e);
