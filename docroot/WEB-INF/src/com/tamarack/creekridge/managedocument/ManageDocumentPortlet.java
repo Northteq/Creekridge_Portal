@@ -286,9 +286,10 @@ public class ManageDocumentPortlet extends MVCPortlet {
 			_log.info("creditAppDocumentId " + creditAppDocumentId);
 		
 			
-			String realPath = getPortletContext().getRealPath("/");
-			String path = realPath + "html\\manageDocument\\";
-			_log.info("realPath " + realPath);
+			//String realPath = getPortletContext().getRealPath("/");
+			//String path = realPath + "html\\manageDocument\\";
+			String path = "C:\\portal\\templates\\";
+			_log.info("path " + path);
 			String companyLogoURL = themeDisplay.getURLHome() + "/../.." + themeDisplay.getCompanyLogo();
 			_log.info("companyLogoURL " + companyLogoURL);
 			
