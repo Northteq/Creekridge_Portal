@@ -65,6 +65,7 @@ var addCustomError = function (message) {
 	
 	$('#validationErrors').append(errMessage);
 	$('#validationErrors').show();
+	$("html, body").animate({ scrollTop: 0 }, "slow");
 };
 
 var outputErrors = function (errors, errorSection) {
