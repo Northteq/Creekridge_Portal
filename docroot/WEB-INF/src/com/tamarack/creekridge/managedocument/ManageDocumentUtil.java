@@ -179,6 +179,8 @@ public class ManageDocumentUtil {
 			InputStream inputStream = new FileInputStream(generatedFile);
 			File convertedFile = DocumentConversionUtil.convert(String.valueOf(stamp.getTime()), inputStream, "html", "pdf");
 			saveDocument(creditApp, convertedFile, title);
+			inputStream.close();
+			generatedFile.delete();
 			convertedFile.delete();
 		} catch (Exception e) {
 			_log.error(e);
@@ -301,8 +303,8 @@ public class ManageDocumentUtil {
 			
 			tokenMap.put("Vendor Name", group.getName());
 			
-			if (getExpandoValue(group, "VendorAddress") != null)
-				tokenMap.put("Vendor Address", getExpandoValue(group, "VendorAddress").getData());
+			if (getExpandoValue(group, "Vendor Address") != null)
+				tokenMap.put("Vendor Address", getExpandoValue(group, "Vendor Address").getData());
 			
 			if (getExpandoValue(group, "Vendor Address 2") != null)
 				tokenMap.put("Vendor Address 2", getExpandoValue(group, "Vendor Address 2").getData());
@@ -313,8 +315,8 @@ public class ManageDocumentUtil {
 			if (getExpandoValue(group, "Vendor State") != null)
 				tokenMap.put("Vendor State", getExpandoValue(group, "Vendor State").getData());
 			
-			if (getExpandoValue(group, "Vendor Zip") != null)
-				tokenMap.put("Vendor Zip", getExpandoValue(group, "Vendor Zip").getData());
+			if (getExpandoValue(group, "Vendor Zip Code") != null)
+				tokenMap.put("Vendor Zip Code", getExpandoValue(group, "Vendor Zip Code").getData());
 			
 			if (getExpandoValue(group, "Vendor Phone") != null)
 				tokenMap.put("Vendor Phone", getExpandoValue(group, "Vendor Phone").getData());
