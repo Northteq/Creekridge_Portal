@@ -80,6 +80,7 @@ public class PaymentCalculator extends MVCPortlet {
 	private boolean showPrincipals = true;//show per user story
 	private boolean showBankRefs = true; //show per user story
 	private String customPaymentAmountMessage = "";
+	private String tcProviderName = "";
 	
 	@Override 
 	public void render (RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
@@ -122,6 +123,13 @@ public class PaymentCalculator extends MVCPortlet {
 					showPrincipals = (Boolean) siteGroup.getExpandoBridge().getAttribute("Include Principals");
 			}
 			_log.info("showPrincipals:  " + showPrincipals);
+			
+			//https://github.com/TamarackConsulting/Creekridge_Portal/issues/186
+			if (siteGroup.getExpandoBridge().hasAttribute("Provider Name")) {
+				if (siteGroup.getExpandoBridge().getAttribute("Provider Name") != null)
+					tcProviderName = (String) siteGroup.getExpandoBridge().getAttribute("Provider Name");
+			}
+			_log.info("tcProviderName:  " + tcProviderName);
 			
 			
 			//set the initial message
@@ -208,7 +216,7 @@ public class PaymentCalculator extends MVCPortlet {
 		renderRequest.setAttribute("showBankRefs", showBankRefs);
 		renderRequest.setAttribute("showPrincipals", showPrincipals);
 		renderRequest.setAttribute("customPaymentAmountMessage", customPaymentAmountMessage);
-		
+		renderRequest.setAttribute("tcProviderName", tcProviderName);
 		
 		super.render(renderRequest, renderResponse);
 		_log.info("render ended");
