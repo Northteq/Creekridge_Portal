@@ -223,6 +223,7 @@ public class ManageDocumentUtil {
 				List<ProposalOption> options = ProposalOptionLocalServiceUtil.getProposalOptionByCreditAppId(creditApp.getCreditAppId());
 				int counter = 0;
 				for (ProposalOption option : options) {
+					if (!option.getIncludeInProposal()) continue;
 					counter++;
 					Product product = ProductLocalServiceUtil.getProduct(option.getProductId());
 					PurchaseOption purchaseOption = PurchaseOptionLocalServiceUtil.getPurchaseOption(option.getPurchaseOptionId());
@@ -323,6 +324,15 @@ public class ManageDocumentUtil {
 			
 			if (getExpandoValue(group, "Provider Name") != null)
 				tokenMap.put("Provider Name", getExpandoValue(group, "Provider Name").getData());
+
+			if (getExpandoValue(group, "Rep Email") != null)
+				tokenMap.put("Rep Email", getExpandoValue(group, "Rep Email").getData());
+
+			if (getExpandoValue(group, "Rep Name") != null)
+				tokenMap.put("Rep Name", getExpandoValue(group, "Rep Name").getData());
+
+			if (getExpandoValue(group, "Rep Phone") != null)
+				tokenMap.put("Rep Phone", getExpandoValue(group, "Rep Phone").getData());
 		}
 		catch (Exception e) {
 			_log.error(e);
