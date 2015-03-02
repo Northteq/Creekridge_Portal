@@ -82,15 +82,31 @@ public class PaymentCalculatorUtil {
 		creditApp.setCustomerState(ParamUtil.getString(actionRequest,"customerState"));
 		creditApp.setCustomerCity(ParamUtil.getString(actionRequest,"customerCity"));
 		creditApp.setCustomerZip(ParamUtil.getString(actionRequest,"customerZip"));
-		creditApp.setEquipmentAddress1(ParamUtil.getString(actionRequest,"equipmentAddress1"));
-		creditApp.setEquipmentAddress2(ParamUtil.getString(actionRequest,"equipmentAddress2"));
-		creditApp.setEquipmentState(ParamUtil.getString(actionRequest,"equipmentState"));
-		creditApp.setEquipmentCity(ParamUtil.getString(actionRequest,"equipmentCity"));
-		creditApp.setEquipmentZip(ParamUtil.getString(actionRequest,"equipmentZip"));
-		creditApp.setEquipmentDesc(ParamUtil.getString(actionRequest,"equipmentDesc"));
 		
+		//equipment info
 		if(actionRequest.getParameter("equipmentLocAsCustomerFlag") != null)
 			creditApp.setEquipmentLocAsCustomerFlag(ParamUtil.getBoolean(actionRequest,"equipmentLocAsCustomerFlag"));
+		
+		_log.info("equipmentLocAsCustomerFlag = " + creditApp.getEquipmentLocAsCustomerFlag());
+		
+		if (!creditApp.getEquipmentLocAsCustomerFlag()) {
+			creditApp.setEquipmentAddress1(ParamUtil.getString(actionRequest,"equipmentAddress1"));
+			creditApp.setEquipmentAddress2(ParamUtil.getString(actionRequest,"equipmentAddress2"));
+			creditApp.setEquipmentState(ParamUtil.getString(actionRequest,"equipmentState"));
+			creditApp.setEquipmentCity(ParamUtil.getString(actionRequest,"equipmentCity"));
+			creditApp.setEquipmentZip(ParamUtil.getString(actionRequest,"equipmentZip"));
+			
+		} else {
+			creditApp.setEquipmentAddress1(creditApp.getCustomerAddress1());
+			creditApp.setEquipmentAddress2(creditApp.getCustomerAddress2());
+			creditApp.setEquipmentState(creditApp.getCustomerState());
+			creditApp.setEquipmentCity(creditApp.getCustomerCity());
+			creditApp.setEquipmentZip(creditApp.getCustomerZip());	
+		}
+		
+		creditApp.setEquipmentDesc(ParamUtil.getString(actionRequest,"equipmentDesc"));
+		
+		
 		
 		creditApp.setCustomerContact(ParamUtil.getString(actionRequest,"customerContact"));
 		creditApp.setCustomerContactPhone(ParamUtil.getString(actionRequest,"customerContactPhone"));
