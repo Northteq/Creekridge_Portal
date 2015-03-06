@@ -34,7 +34,9 @@
 <liferay-ui:success key="appUpdated" message="Application Updated Successfully"/>
 <liferay-ui:success key="docGenerated" message="Document Generated Successfully"/>
 <liferay-ui:success key="docUploaded" message="Document Uploaded Successfully"/>
+<liferay-ui:success key="emailSent" message="Email successfully sent"/>
 <liferay-ui:error key="genericError" message="Error occurred while generating file"/>
+<liferay-ui:error key="emailError" message="There was an unexpected issue preventing this email from sending. Please contact the site administrator."/>
 
 
 

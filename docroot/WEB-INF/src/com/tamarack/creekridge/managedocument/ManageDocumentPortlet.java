@@ -455,8 +455,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 			String[] toAddressArray = new String[] { "" };
 			InternetAddress[] toInternetAddress;
 			try {
-				toInternetAddress = new InternetAddress[] { new InternetAddress(
-						"") };
+				toInternetAddress = new InternetAddress[1];
 
 				if (toAddress != null) {
 					if (toAddress.contains(",")) {
@@ -466,6 +465,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 					}
 				}
 				if (toAddressArray.length > 1) {
+					toInternetAddress = new InternetAddress[toAddressArray.length];
 					for (int i = 0; i < toAddressArray.length; i++) {
 						toInternetAddress[i] = new InternetAddress(
 								toAddressArray[i]);
@@ -473,7 +473,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 				}
 
 				if (toInternetAddress.length > 1) {
-					mailMessage.setTo(new InternetAddress(toAddress));
+					mailMessage.setTo(toInternetAddress);
 				} else {
 					mailMessage.setTo(new InternetAddress(toAddress));
 				}
@@ -491,6 +491,7 @@ public class ManageDocumentPortlet extends MVCPortlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			SessionErrors.add(actionRequest, "emailError");
 		}
 
 	}
